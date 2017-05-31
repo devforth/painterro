@@ -21,24 +21,32 @@
     display: inline-block;
 }
 
+/* bar */
 .painterro-bar {
     height: 40px;
     bottom: 0;
     position: absolute;
+    background-color: #f0f8ff;
+    width: 100%;
 }
 
-.icon {
+.painterro-bar .icon {
     height: 16px;
     font-size: 20px;
 }
 
-.iconbtn {
-    background-color: rgba(134, 155, 228, 0.32);
+.painterro-bar .icon-btn {
+    background-color: #CDE0FF;
     border: 0;
     padding: 7px 5px 5px 5px;
-    margin: 4px -5px 0 4px;
+    margin: 4px 0 0 4px;
 }
 
-.iconbtn:focus{
+.painterro-bar .btn-active {
+    background-color: #7485B1;
+    color: #f0f8ff;
+}
+
+.painterro-bar .icon-btn:focus{
     outline: none;
 }

@@ -44,9 +44,9 @@
 .icon-line:before {
   content: "\62";
 }
-.icon-pipette:before {
-  content: "\63";
-}
 .icon-rect:before {
   content: "\64";
+}
+.icon-pipette:before {
+  content: "\63";
 }

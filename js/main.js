@@ -3,6 +3,9 @@
 import '../css/styles.css';
 import '../css/icons/styles.css';
 
+
+
+
 class PainterroProc {
 
 
@@ -11,9 +14,48 @@ class PainterroProc {
    * @param params
    */
   constructor(params) {
+    this.buttons = [{
+      name: 'crop'
+    }, {
+      name: 'line'
+    }, {
+      name: 'rect'
+    }, {
+      name: 'pipette'
+    }];
+    this.activeBtn = undefined;
 
+    this.ratioRelation = undefined;
     this.id = params.id;
     this.bgColor = params.backgroundFillColor || '#fff';
+
+    this.baseEl = document.getElementById(this.id);
+
+    let bar = '';
+    for(let b of this.buttons) {
+      bar += `<button class="icon-btn" id="${this.id}-ptrobtn-${b.name}">
+<i class="icon icon-${b.name}"></i></button>`;
+    }
+    this.baseEl.innerHTML = '<div class="painterro-wrapper">' +
+      '<canvas></canvas></div>' +
+      '<div class="painterro-bar">' + bar + '</div>';
+
+    for(let b of this.buttons) {
+       this._getBtnEl(b).onclick =
+         () => {
+            if (this.activeBtn !== undefined) {
+              this._getBtnEl(this.activeBtn).className =
+                this._getBtnEl(this.activeBtn).className.replace(' btn-active', '');
+            }
+            if (this.activeBtn !== b) {
+              this.activeBtn = b;
+              this._getBtnEl(b).className += ' btn-active';
+            } else {
+              this.activeBtn = undefined;
+            }
+          };
+    }
+
     this.wrapper = document.querySelector(`#${this.id} .painterro-wrapper`);
     this.canvas = document.querySelector(`#${this.id} canvas`);
 
@@ -42,25 +84,26 @@ class PainterroProc {
           img.src = URL.createObjectURL(item.getAsFile());
         }
       }
-    }
-
+    };
 
     window.onresize = () => {
-      console.log('res');
       this.adjustSizeFull();
-    }
-
+    };
   }
 
   adjustSizeFull() {
     const ratio = this.wrapper.offsetWidth / this.wrapper.offsetHeight;
-      if (ratio < this.size.ratio) {
+    let newRelation = ratio < this.size.ratio;
+    if (newRelation !== this.ratioRelation) {
+      this.ratioRelation = newRelation;
+      if (newRelation) {
         this.canvas.style.width = '100%';
         this.canvas.style.height = 'auto';
       } else {
         this.canvas.style.width = 'auto';
         this.canvas.style.height = '100%';
       }
+    }
   }
 
   resize(x, y) {
@@ -71,6 +114,11 @@ class PainterroProc {
     };
     this.canvas.setAttribute('width', this.size.w);
     this.canvas.setAttribute('height', this.size.h);
+  }
+
+
+  _getBtnEl(b) {
+    return document.getElementById(`${this.id}-ptrobtn-${b.name}`);
   }
 }
 
