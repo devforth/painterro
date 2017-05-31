@@ -1,0 +1,44 @@
+
+.painterro-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background-color: gray;
+}
+
+.painterro-wrapper:before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+}
+
+.painterro-wrapper canvas {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.painterro-bar {
+    height: 40px;
+    bottom: 0;
+    position: absolute;
+}
+
+.icon {
+    height: 16px;
+    font-size: 20px;
+}
+
+.iconbtn {
+    background-color: rgba(134, 155, 228, 0.32);
+    border: 0;
+    padding: 7px 5px 5px 5px;
+    margin: 4px -5px 0 4px;
+}
+
+.iconbtn:focus{
+    outline: none;
+}

@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <title>Painterro demo</title>
+    <style>
+      html,body,#wrapper {
+        height:100%;
+        margin:0;
+        padding:0;
+        background-color: lightgray;
+      }
+
+      #conatiner {
+        position: absolute;
+        top: 50px;
+        bottom: 50px;
+        left: 20px;
+        right: 20px;
+        background-color: aliceblue;
+      }
+
+    </style>
+  </head>
+<body>
+
+<div id="wrapper">
+  <div id="conatiner">
+    <div class="painterro-wrapper">
+      <canvas class="painterro-canvas"></canvas>
+    </div>
+    <div  class="painterro-bar">
+      <button class="iconbtn"><i class="icon icon-crop"></i></button>
+      <button class="iconbtn"><i class="icon icon-line"></i></button>
+      <button class="iconbtn"><i class="icon icon-rect"></i></button>
+      <button class="iconbtn"><i class="icon icon-pipette"></i></button>
+    </div>
+  </div>
+</div>
+
+<script src="/painterro.js"></script>
+<script>
+
+  new Painterro({
+    id: 'conatiner',
+    backgroundFillColor: '#eee'
+  });
+
+</script>
+</body>
+</html>
