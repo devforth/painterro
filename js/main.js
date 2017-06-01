@@ -15,7 +15,38 @@ class PainterroProc {
    */
   constructor(params) {
     this.buttons = [{
-      name: 'crop'
+      name: 'crop',
+      activate: () => {
+        this.cropper.topl = [30, 30];
+        this.cropper.bottoml = [230, 230];
+
+        this.cropper.l.style.left = '0';
+        this.cropper.l.style.top = '0';
+        this.cropper.l.style.bottom = '0';
+        this.cropper.l.style.width = `${this.cropper.topl[0]}px`;
+        this.cropper.l.removeAttribute('hidden');
+
+        this.cropper.r.style.left = `${this.cropper.bottoml[0]}px`;
+        this.cropper.r.style.top = '0';
+        this.cropper.r.style.bottom = '0';
+        this.cropper.r.style.right = '0';
+        this.cropper.r.removeAttribute('hidden');
+
+        this.cropper.t.style.left = `${this.cropper.topl[0]}px`;
+        this.cropper.t.style.top = '0';
+        this.cropper.t.style.width = `${this.cropper.bottoml[0] - this.cropper.topl[0]}px`;
+        this.cropper.t.style.height = `${this.cropper.topl[1]}px`;
+        this.cropper.t.removeAttribute('hidden');
+
+        this.cropper.b.style.left = `${this.cropper.topl[0]}px`;
+        this.cropper.b.style.top = `${this.cropper.bottoml[1]}px`;
+        this.cropper.b.style.width = `${this.cropper.bottoml[0] - this.cropper.topl[0]}px`;
+        this.cropper.b.style.bottom = '0';
+        this.cropper.b.removeAttribute('hidden');
+
+
+        this.drawCropper();
+      }
     }, {
       name: 'line'
     }, {
@@ -36,8 +67,20 @@ class PainterroProc {
       bar += `<button class="icon-btn" id="${this.id}-ptrobtn-${b.name}">
 <i class="icon icon-${b.name}"></i></button>`;
     }
-    this.baseEl.innerHTML = '<div class="painterro-wrapper">' +
-      '<canvas></canvas></div>' +
+
+    const cropper = `<div class="ptro-crp-el">
+<div class="ptro-crp-l cropper-area" hidden></div>
+<div class="ptro-crp-r cropper-area" hidden></div>
+<div class="ptro-crp-t cropper-area" hidden></div>
+<div class="ptro-crp-b cropper-area" hidden></div>
+<div class="ptro-crp-tlh cropper-handler" hidden></div>
+<div class="ptro-crp-trh cropper-handler" hidden></div>
+<div class="ptro-crp-blh cropper-handler" hidden></div>
+<div class="ptro-crp-brh cropper-handler" hidden></div></div>`;
+
+    this.baseEl.innerHTML = `<div class="painterro-wrapper" id="ptro-wrapper-${this.id}">` +
+      `<canvas id="ptro-canvas-${this.id}"></canvas>` + cropper +
+      '</div>' +
       '<div class="painterro-bar">' + bar + '</div>';
 
     for(let b of this.buttons) {
@@ -50,6 +93,8 @@ class PainterroProc {
             if (this.activeBtn !== b) {
               this.activeBtn = b;
               this._getBtnEl(b).className += ' btn-active';
+              b.activate();
+
             } else {
               this.activeBtn = undefined;
             }
@@ -58,6 +103,14 @@ class PainterroProc {
 
     this.wrapper = document.querySelector(`#${this.id} .painterro-wrapper`);
     this.canvas = document.querySelector(`#${this.id} canvas`);
+    this.cropper = {
+      el: document.querySelector(`#${this.id} .ptro-crp-el`),
+      l: document.querySelector(`#${this.id} .ptro-crp-l`),
+      r: document.querySelector(`#${this.id} .ptro-crp-r`),
+      t: document.querySelector(`#${this.id} .ptro-crp-t`),
+      b: document.querySelector(`#${this.id} .ptro-crp-b`),
+    };
+
 
     this.resize(this.wrapper.offsetWidth, this.wrapper.offsetHeight);
     this.ctx = this.canvas.getContext('2d');
@@ -104,8 +157,17 @@ class PainterroProc {
         this.canvas.style.height = '100%';
       }
     }
+    this.drawCropper();
   }
 
+  drawCropper() {
+    this.cropper.el.style.left = this.canvas.offsetLeft;
+    this.cropper.el.style.top = this.canvas.offsetTop;
+    this.cropper.el.style.width = this.canvas.clientWidth;
+    this.cropper.el.style.height = this.canvas.clientHeight;
+
+
+  }
   resize(x, y) {
     this.size = {
       w: x,
@@ -115,7 +177,6 @@ class PainterroProc {
     this.canvas.setAttribute('width', this.size.w);
     this.canvas.setAttribute('height', this.size.h);
   }
-
 
   _getBtnEl(b) {
     return document.getElementById(`${this.id}-ptrobtn-${b.name}`);
