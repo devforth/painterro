@@ -3,7 +3,17 @@
 import '../css/styles.css';
 import '../css/icons/styles.css';
 
+Object.defineProperty( Element.prototype, 'documentOffsetTop', {
+    get: function () {
+        return this.offsetTop + ( this.offsetParent ? this.offsetParent.documentOffsetTop : 0 );
+    }
+} );
 
+Object.defineProperty( Element.prototype, 'documentOffsetLeft', {
+    get: function () {
+        return this.offsetLeft + ( this.offsetParent ? this.offsetParent.documentOffsetLeft : 0 );
+    }
+} );
 
 
 class PainterroProc {
@@ -19,31 +29,6 @@ class PainterroProc {
       activate: () => {
         this.cropper.topl = [30, 30];
         this.cropper.bottoml = [230, 230];
-
-        this.cropper.l.style.left = '0';
-        this.cropper.l.style.top = '0';
-        this.cropper.l.style.bottom = '0';
-        this.cropper.l.style.width = `${this.cropper.topl[0]}px`;
-        this.cropper.l.removeAttribute('hidden');
-
-        this.cropper.r.style.left = `${this.cropper.bottoml[0]}px`;
-        this.cropper.r.style.top = '0';
-        this.cropper.r.style.bottom = '0';
-        this.cropper.r.style.right = '0';
-        this.cropper.r.removeAttribute('hidden');
-
-        this.cropper.t.style.left = `${this.cropper.topl[0]}px`;
-        this.cropper.t.style.top = '0';
-        this.cropper.t.style.width = `${this.cropper.bottoml[0] - this.cropper.topl[0]}px`;
-        this.cropper.t.style.height = `${this.cropper.topl[1]}px`;
-        this.cropper.t.removeAttribute('hidden');
-
-        this.cropper.b.style.left = `${this.cropper.topl[0]}px`;
-        this.cropper.b.style.top = `${this.cropper.bottoml[1]}px`;
-        this.cropper.b.style.width = `${this.cropper.bottoml[0] - this.cropper.topl[0]}px`;
-        this.cropper.b.style.bottom = '0';
-        this.cropper.b.removeAttribute('hidden');
-
 
         this.drawCropper();
       }
@@ -68,15 +53,15 @@ class PainterroProc {
 <i class="icon icon-${b.name}"></i></button>`;
     }
 
-    const cropper = `<div class="ptro-crp-el">
-<div class="ptro-crp-l cropper-area" hidden></div>
-<div class="ptro-crp-r cropper-area" hidden></div>
-<div class="ptro-crp-t cropper-area" hidden></div>
-<div class="ptro-crp-b cropper-area" hidden></div>
-<div class="ptro-crp-tlh cropper-handler" hidden></div>
-<div class="ptro-crp-trh cropper-handler" hidden></div>
-<div class="ptro-crp-blh cropper-handler" hidden></div>
-<div class="ptro-crp-brh cropper-handler" hidden></div></div>`;
+    const cropper = `<div class="ptro-crp-el" hidden><div class="ptro-crp-rect">
+<div class="ptro-crp-l cropper-handler" ></div>
+<div class="ptro-crp-r cropper-handler" ></div>
+<div class="ptro-crp-t cropper-handler" ></div>
+<div class="ptro-crp-b cropper-handler" ></div>
+<div class="ptro-crp-tl cropper-handler" ></div>
+<div class="ptro-crp-tr cropper-handler" ></div>
+<div class="ptro-crp-bl cropper-handler" ></div>
+<div class="ptro-crp-br cropper-handler" ></div></div></div>`;
 
     this.baseEl.innerHTML = `<div class="painterro-wrapper" id="ptro-wrapper-${this.id}">` +
       `<canvas id="ptro-canvas-${this.id}"></canvas>` + cropper +
@@ -101,16 +86,15 @@ class PainterroProc {
           };
     }
 
+    this.body = document.body;
     this.wrapper = document.querySelector(`#${this.id} .painterro-wrapper`);
     this.canvas = document.querySelector(`#${this.id} canvas`);
     this.cropper = {
       el: document.querySelector(`#${this.id} .ptro-crp-el`),
-      l: document.querySelector(`#${this.id} .ptro-crp-l`),
-      r: document.querySelector(`#${this.id} .ptro-crp-r`),
-      t: document.querySelector(`#${this.id} .ptro-crp-t`),
-      b: document.querySelector(`#${this.id} .ptro-crp-b`),
+      rect: document.querySelector(`#${this.id} .ptro-crp-rect`),
     };
 
+    this.initCallbacks()
 
     this.resize(this.wrapper.offsetWidth, this.wrapper.offsetHeight);
     this.ctx = this.canvas.getContext('2d');
@@ -144,6 +128,136 @@ class PainterroProc {
     };
   }
 
+  initCallbacks() {
+    this.body.onmousedown= (event) => {
+      console.log(event);
+      const mainClass = event.target.classList[0];
+      const mousDownCallbacks = {
+        'ptro-crp-rect': () => {
+          this.cropper.moving = true;
+          this.cropper.xHandle = event.clientX - this.cropper.rect.documentOffsetLeft;
+          this.cropper.yHandle = event.clientY - this.cropper.rect.documentOffsetTop;
+        },
+
+        'ptro-crp-tr': () => {
+          this.cropper.resizingT = true;
+          this.cropper.resizingR = true;
+        },
+        'ptro-crp-br': () => {
+          this.cropper.resizingB = true;
+          this.cropper.resizingR = true;
+        },
+        'ptro-crp-bl': () => {
+          this.cropper.resizingB = true;
+          this.cropper.resizingL = true;
+        },
+        'ptro-crp-tl': () => {
+          this.cropper.resizingT = true;
+          this.cropper.resizingL = true;
+        },
+        'ptro-crp-t': () => {
+          this.cropper.resizingT = true;
+        },
+        'ptro-crp-r': () => {
+          this.cropper.resizingR = true;
+        },
+        'ptro-crp-b': () => {
+          this.cropper.resizingB = true;
+        },
+        'ptro-crp-l': () => {
+          this.cropper.resizingL = true;
+        },
+
+      };
+      if (mainClass in mousDownCallbacks) {
+        mousDownCallbacks[mainClass]();
+      }
+    };
+    document.onmousemove = (event) => {
+      if (this.cropper !== undefined && this.cropper.moving ) {
+        let newLeft = event.clientX - this.cropper.el.documentOffsetLeft - this.cropper.xHandle;
+        if (newLeft < 0) {
+          newLeft = 0;
+        } else if (newLeft + this.cropper.rect.clientWidth >= this.cropper.el.clientWidth - 1) {
+          newLeft = this.cropper.el.clientWidth - this.cropper.rect.clientWidth - 2;
+        }
+        this.cropper.rect.style.left = newLeft;
+
+        let newTop = event.clientY - this.cropper.el.documentOffsetTop - this.cropper.yHandle;
+        if (newTop < 0) {
+          newTop = 0;
+        } else if (newTop + this.cropper.rect.clientHeight >= this.cropper.el.clientHeight - 1) {
+          newTop = this.cropper.el.clientHeight - this.cropper.rect.clientHeight - 2;
+        }
+        this.cropper.rect.style.top = newTop;
+      } else {
+        if (this.cropper.resizingR) {
+          this.cropper.rect.style.width = `${
+            this.fixCropperWidth(event.clientX - this.cropper.rect.documentOffsetLeft)}px`;
+        }
+        if (this.cropper.resizingB) {
+          this.cropper.rect.style.height = `${
+            this.fixCropperHeight(event.clientY - this.cropper.rect.documentOffsetTop)}px`;
+        }
+        if (this.cropper.resizingL) {
+          const origRight = this.cropper.rect.documentOffsetLeft + this.cropper.rect.clientWidth;
+          const absLeft = this.fixCropperLeft(event.clientX);
+          this.cropper.rect.style.left = `${absLeft - this.cropper.el.documentOffsetLeft}px`;
+          this.cropper.rect.style.width = `${origRight - absLeft}px`;
+        }
+        if (this.cropper.resizingT) {
+          const origTop = this.cropper.rect.documentOffsetTop + this.cropper.rect.clientHeight;
+          const absTop = this.fixCropperTop(event.clientY);
+          this.cropper.rect.style.top = `${absTop - this.cropper.el.documentOffsetTop}px`;
+          this.cropper.rect.style.height = `${origTop - absTop}px`;
+        }
+
+
+      }
+    };
+
+    document.onmouseup = (event) => {
+        this.cropper.moving = false;
+        this.cropper.resizingT = false;
+        this.cropper.resizingR = false;
+        this.cropper.resizingB = false;
+        this.cropper.resizingL = false;
+
+    }
+  }
+
+  fixCropperLeft(newLeft) {
+    if (newLeft < this.cropper.el.documentOffsetLeft) {
+      return this.cropper.el.documentOffsetLeft;
+    } else if (newLeft > this.cropper.rect.documentOffsetLeft + this.cropper.rect.clientWidth) {
+      newLeft = this.cropper.rect.documentOffsetLeft + this.cropper.rect.clientWidth;
+    }
+    return newLeft;
+  }
+
+  fixCropperTop(newTop) {
+    if (newTop < this.cropper.el.documentOffsetTop) {
+      return this.cropper.el.documentOffsetTop;
+    } else if (newTop > this.cropper.rect.documentOffsetTop + this.cropper.rect.clientHeight) {
+      newTop = this.cropper.rect.documentOffsetTop + this.cropper.rect.clientHeight;
+    }
+    return newTop;
+  }
+
+  fixCropperWidth(newWidth) {
+    if (this.cropper.rect.documentOffsetLeft + newWidth > this.cropper.el.documentOffsetLeft + this.cropper.el.clientWidth - 1) {
+        return this.cropper.el.documentOffsetLeft + this.cropper.el.clientWidth - this.cropper.rect.documentOffsetLeft - 2;
+    }
+    return newWidth;
+  }
+
+  fixCropperHeight(newHeight) {
+    if (this.cropper.rect.documentOffsetTop + newHeight > this.cropper.el.documentOffsetTop + this.cropper.el.clientHeight - 1) {
+        return this.cropper.el.documentOffsetTop + this.cropper.el.clientHeight - this.cropper.rect.documentOffsetTop - 2;
+    }
+    return newHeight;
+  }
+
   adjustSizeFull() {
     const ratio = this.wrapper.offsetWidth / this.wrapper.offsetHeight;
     let newRelation = ratio < this.size.ratio;
@@ -166,7 +280,14 @@ class PainterroProc {
     this.cropper.el.style.width = this.canvas.clientWidth;
     this.cropper.el.style.height = this.canvas.clientHeight;
 
-
+    const ratio = this.canvas.offsetWidth / this.canvas.getAttribute('width');
+    this.cropper.rect.style.left = `${this.cropper.topl[0] * ratio}px`;
+    this.cropper.rect.style.top = `${this.cropper.topl[1] * ratio}px`;
+    this.cropper.rect.style.height = `${
+      (this.cropper.bottoml[0] - this.cropper.topl[0]) * ratio}px`;
+    this.cropper.rect.style.width = `${
+      (this.cropper.bottoml[1] - this.cropper.topl[1]) * ratio}px`;
+    this.cropper.el.removeAttribute('hidden');
   }
   resize(x, y) {
     this.size = {
