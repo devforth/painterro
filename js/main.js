@@ -3,95 +3,139 @@
 import '../css/styles.css';
 import '../css/icons/styles.css';
 
-Object.defineProperty( Element.prototype, 'documentOffsetTop', {
+import { PainterroCropper } from './cropper';
+
+Object.defineProperty(Element.prototype, 'documentOffsetTop', {
     get: function () {
         return this.offsetTop + ( this.offsetParent ? this.offsetParent.documentOffsetTop : 0 );
     }
-} );
+});
 
-Object.defineProperty( Element.prototype, 'documentOffsetLeft', {
+Object.defineProperty(Element.prototype, 'documentOffsetLeft', {
     get: function () {
         return this.offsetLeft + ( this.offsetParent ? this.offsetParent.documentOffsetLeft : 0 );
     }
-} );
+});
 
+function genId()
+{
+    let text = '';
+    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for(let i=0; i < 8; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+}
 
 class PainterroProc {
-
 
   /**
    *
    * @param params
    */
   constructor(params) {
-    this.buttons = [{
+    this.tools = [{
       name: 'crop',
       activate: () => {
-        this.cropper.el.style.cursor = 'crosshair';
-        this.cropper.activated = true;
-        this.drawCropper();
-      }
+        this.toolEl.style.cursor = 'crosshair';
+        console.log("call act", this.tools[0].controls);
+        this.cropper.activate();
+        this.cropper.draw();
+      },
+      close: () => {
+        this.cropper.cropper.activated = false;
+        this.cropper.cropper.rect.setAttribute('hidden', 'true');
+        this.toolEl.style.cursor = 'auto';
+      },
+      controls: [{
+          name: 'Apply',
+          type: 'btn',
+          action: () => {
+            this.closeActiveTool();
+          }
+        }, {
+          name: 'Cancel',
+          type: 'btn',
+          action: () => {
+            this.closeActiveTool();
+          }
+        },
+      ]
     }, {
-      name: 'line'
+      name: 'line',
+      controls: ''
     }, {
-      name: 'rect'
+      name: 'rect',
+      controls: ''
     }, {
-      name: 'pipette'
+      name: 'pipette',
+      controls: ''
     }];
     this.activeBtn = undefined;
 
     this.ratioRelation = undefined;
     this.id = params.id;
     this.bgColor = params.backgroundFillColor || '#fff';
-
     this.baseEl = document.getElementById(this.id);
 
     let bar = '';
-    for(let b of this.buttons) {
-      bar += `<button class="icon-btn" id="${this.id}-ptrobtn-${b.name}">
-<i class="icon icon-${b.name}"></i></button>`;
+    for(let b of this.tools) {
+      bar += `<button class="icon-btn" id="${this.id}-ptrobtn-${b.name}">`+
+          `<i class="icon icon-${b.name}"></i></button>`;
     }
 
     const cropper = `<div class="ptro-crp-el" ><div class="ptro-crp-rect" hidden>
-<div class="ptro-crp-l cropper-handler" ></div>
-<div class="ptro-crp-r cropper-handler" ></div>
-<div class="ptro-crp-t cropper-handler" ></div>
-<div class="ptro-crp-b cropper-handler" ></div>
-<div class="ptro-crp-tl cropper-handler" ></div>
-<div class="ptro-crp-tr cropper-handler" ></div>
-<div class="ptro-crp-bl cropper-handler" ></div>
-<div class="ptro-crp-br cropper-handler" ></div></div></div>`;
+<div class="ptro-crp-l cropper-handler" ></div><div class="ptro-crp-r cropper-handler" ></div>
+<div class="ptro-crp-t cropper-handler" ></div><div class="ptro-crp-b cropper-handler" ></div>
+<div class="ptro-crp-tl cropper-handler" ></div><div class="ptro-crp-tr cropper-handler" ></div>
+<div class="ptro-crp-bl cropper-handler" ></div><div class="ptro-crp-br cropper-handler" ></div></div></div>`;
 
     this.baseEl.innerHTML = `<div class="painterro-wrapper" id="ptro-wrapper-${this.id}">` +
       `<canvas id="ptro-canvas-${this.id}"></canvas>` + cropper +
       '</div>' +
-      '<div class="painterro-bar">' + bar + '</div>';
-
-    for(let b of this.buttons) {
-       this._getBtnEl(b).onclick =
-         () => {
-            if (this.activeBtn !== undefined) {
-              this._getBtnEl(this.activeBtn).className =
-                this._getBtnEl(this.activeBtn).className.replace(' btn-active', '');
-            }
-            if (this.activeBtn !== b) {
-              this.activeBtn = b;
-              this._getBtnEl(b).className += ' btn-active';
-              b.activate();
-
-            } else {
-              this.activeBtn = undefined;
-            }
-          };
-    }
+      '<div class="painterro-bar"><span>' + bar + '</span><span class="tool-controls"></span></div>';
 
     this.body = document.body;
     this.wrapper = document.querySelector(`#${this.id} .painterro-wrapper`);
     this.canvas = document.querySelector(`#${this.id} canvas`);
-    this.cropper = {
-      el: document.querySelector(`#${this.id} .ptro-crp-el`),
-      rect: document.querySelector(`#${this.id} .ptro-crp-rect`),
-    };
+    this.toolControls = document.querySelector(`#${this.id} .tool-controls`);
+    this.toolEl = document.querySelector(`#${this.id} .ptro-crp-el`);
+    this.cropper = new PainterroCropper(this.id, this.canvas, this.toolEl, (notEmpty) => {
+      console.log("cb", this.tools[0].controls);
+      if (notEmpty) {
+        document.getElementById(this.tools[0].controls[0].id).removeAttribute('disabled');
+      } else {
+        document.getElementById(this.tools[0].controls[0].id).setAttribute('disabled', 'true');
+      }
+    });
+
+    for(let b of this.tools) {
+      this._getBtnEl(b).onclick = () => {
+        const currentActive = this.activeBtn;
+        this.closeActiveTool();
+        if (currentActive !== b) {
+          this.activeBtn = b;
+          this._getBtnEl(b).className += ' btn-active';
+          let ctrls = '';
+          for (let ctl of b.controls) {
+            ctl.id = genId();
+            if (ctl.type === 'btn') {
+              ctrls += `<button class="${ctl.icon?'icon-btn':'named-btn'}" ` +
+                `id=${ctl.id}>${ctl.icon && ('<i class="icon icon-'+ctl.icon+'></i>') || ''}` +
+                `<p>${ctl.name || ''}</p></button>`;
+            }
+          }
+          this.toolControls.innerHTML = ctrls;
+          for (let ctl of b.controls) {
+            document.getElementById(ctl.id).onclick = ctl.action;
+          }
+          console.log("before act", this.tools[0].controls);
+          b.activate();
+        }
+      };
+    }
+
+
     this.initCallbacks();
     this.resize(this.wrapper.offsetWidth, this.wrapper.offsetHeight);
     this.ctx = this.canvas.getContext('2d');
@@ -125,175 +169,28 @@ class PainterroProc {
     };
   }
 
-  reCalcCropperCords() {
-    const ratio = this.canvas.offsetWidth / this.canvas.getAttribute('width');
-    this.cropper.topl = [
-      (this.cropper.rect.documentOffsetLeft - this.cropper.el.documentOffsetLeft) / ratio,
-      (this.cropper.rect.documentOffsetTop - this.cropper.el.documentOffsetTop) / ratio];
-
-    this.cropper.bottoml = [
-      this.cropper.topl[0] + (this.cropper.rect.clientWidth) / ratio,
-      this.cropper.topl[1] + (this.cropper.rect.clientHeight) / ratio]
-  }
-  initCallbacks() {
-    this.body.onmousedown= (event) => {
-      console.log(event);
-      const mainClass = event.target.classList[0];
-      const mousDownCallbacks = {
-        'ptro-crp-el': () => {
-          if (this.cropper.activated) {
-            this.cropper.rect.style.left = event.clientX - this.cropper.el.documentOffsetLeft;
-            this.cropper.rect.style.top = event.clientY - this.cropper.el.documentOffsetTop;
-            this.cropper.rect.style.width = '0px';
-            this.cropper.rect.style.height = '0px';
-            this.reCalcCropperCords();
-            this.cropper.rect.removeAttribute('hidden');
-            this.cropper.resizingB = true;
-            this.cropper.resizingR = true;
-          }
-        },
-        'ptro-crp-rect': () => {
-          this.cropper.moving = true;
-          this.cropper.xHandle = event.clientX - this.cropper.rect.documentOffsetLeft;
-          this.cropper.yHandle = event.clientY - this.cropper.rect.documentOffsetTop;
-        },
-        'ptro-crp-tr': () => {
-          this.cropper.resizingT = true;
-          this.cropper.resizingR = true;
-        },
-        'ptro-crp-br': () => {
-          this.cropper.resizingB = true;
-          this.cropper.resizingR = true;
-        },
-        'ptro-crp-bl': () => {
-          this.cropper.resizingB = true;
-          this.cropper.resizingL = true;
-        },
-        'ptro-crp-tl': () => {
-          this.cropper.resizingT = true;
-          this.cropper.resizingL = true;
-        },
-        'ptro-crp-t': () => {
-          this.cropper.resizingT = true;
-        },
-        'ptro-crp-r': () => {
-          this.cropper.resizingR = true;
-        },
-        'ptro-crp-b': () => {
-          this.cropper.resizingB = true;
-        },
-        'ptro-crp-l': () => {
-          this.cropper.resizingL = true;
-        },
-      };
-      if (mainClass in mousDownCallbacks) {
-        mousDownCallbacks[mainClass]();
+  closeActiveTool() {
+    if (this.activeBtn !== undefined) {
+      if (this.activeBtn.close !== undefined) {
+        this.activeBtn.close();
       }
+      this.toolControls.innerHTML = '';
+      this._getBtnEl(this.activeBtn).className =
+        this._getBtnEl(this.activeBtn).className.replace(' btn-active', '');
+      this.activeBtn = undefined;
+    }
+  }
+
+  initCallbacks() {
+    this.body.onmousedown = (event) => {
+      this.cropper.procMouseDown(event);
     };
     document.onmousemove = (event) => {
-      if (this.cropper !== undefined && this.cropper.moving ) {
-        let newLeft = event.clientX - this.cropper.el.documentOffsetLeft - this.cropper.xHandle;
-        if (newLeft < 0) {
-          newLeft = 0;
-        } else if (newLeft + this.cropper.rect.clientWidth >= this.cropper.el.clientWidth - 1) {
-          newLeft = this.cropper.el.clientWidth - this.cropper.rect.clientWidth - 2;
-        }
-        this.cropper.rect.style.left = newLeft;
-        let newTop = event.clientY - this.cropper.el.documentOffsetTop - this.cropper.yHandle;
-        if (newTop < 0) {
-          newTop = 0;
-        } else if (newTop + this.cropper.rect.clientHeight >= this.cropper.el.clientHeight - 1) {
-          newTop = this.cropper.el.clientHeight - this.cropper.rect.clientHeight - 2;
-        }
-        this.cropper.rect.style.top = newTop;
-        this.reCalcCropperCords();
-      } else {
-        if (this.cropper.resizingR) {
-          this.cropper.rect.style.width = `${
-            this.fixCropperWidth(event.clientX - this.cropper.rect.documentOffsetLeft)}px`;
-          this.reCalcCropperCords();
-        }
-        if (this.cropper.resizingB) {
-          this.cropper.rect.style.height = `${
-            this.fixCropperHeight(event.clientY - this.cropper.rect.documentOffsetTop)}px`;
-          this.reCalcCropperCords();
-        }
-        if (this.cropper.resizingL) {
-          const origRight = this.cropper.rect.documentOffsetLeft + this.cropper.rect.clientWidth;
-          const absLeft = this.fixCropperLeft(event.clientX);
-          this.cropper.rect.style.left = `${absLeft - this.cropper.el.documentOffsetLeft}px`;
-          this.cropper.rect.style.width = `${origRight - absLeft}px`;
-          this.reCalcCropperCords();
-        }
-        if (this.cropper.resizingT) {
-          const origTop = this.cropper.rect.documentOffsetTop + this.cropper.rect.clientHeight;
-          const absTop = this.fixCropperTop(event.clientY);
-          this.cropper.rect.style.top = `${absTop - this.cropper.el.documentOffsetTop}px`;
-          this.cropper.rect.style.height = `${origTop - absTop}px`;
-          this.reCalcCropperCords();
-        }
-
-      }
+      this.cropper.procMouseMove(event);
     };
     document.onmouseup = (event) => {
-        this.cropper.moving = false;
-        this.cropper.resizingT = false;
-        this.cropper.resizingR = false;
-        this.cropper.resizingB = false;
-        this.cropper.resizingL = false;
+      this.cropper.procMoseUp()
     }
-  }
-
-  fixCropperLeft(newLeft) {
-    if (newLeft < this.cropper.el.documentOffsetLeft) {
-      return this.cropper.el.documentOffsetLeft;
-    } else if (newLeft > this.cropper.rect.documentOffsetLeft + this.cropper.rect.clientWidth) {
-      newLeft = this.cropper.rect.documentOffsetLeft + this.cropper.rect.clientWidth;
-      if (this.cropper.resizingL) {
-        this.cropper.resizingL = false;
-        this.cropper.resizingR = true;
-      }
-    }
-    return newLeft;
-  }
-
-  fixCropperTop(newTop) {
-    if (newTop < this.cropper.el.documentOffsetTop) {
-      return this.cropper.el.documentOffsetTop;
-    } else if (newTop > this.cropper.rect.documentOffsetTop + this.cropper.rect.clientHeight) {
-      newTop = this.cropper.rect.documentOffsetTop + this.cropper.rect.clientHeight;
-      if (this.cropper.resizingT) {
-        this.cropper.resizingT = false;
-        this.cropper.resizingB = true;
-      }
-    }
-    return newTop;
-  }
-
-  fixCropperWidth(newWidth) {
-    if (this.cropper.rect.documentOffsetLeft + newWidth > this.cropper.el.documentOffsetLeft + this.cropper.el.clientWidth - 1) {
-        return this.cropper.el.documentOffsetLeft + this.cropper.el.clientWidth - this.cropper.rect.documentOffsetLeft - 2;
-    } else if (newWidth < 0) {
-      if (this.cropper.resizingR) {
-        this.cropper.resizingR = false;
-        this.cropper.resizingL = true;
-      }
-      return 0;
-    }
-    return newWidth;
-  }
-
-  fixCropperHeight(newHeight) {
-    if (this.cropper.rect.documentOffsetTop + newHeight > this.cropper.el.documentOffsetTop + this.cropper.el.clientHeight - 1) {
-        return this.cropper.el.documentOffsetTop + this.cropper.el.clientHeight - this.cropper.rect.documentOffsetTop - 2;
-    } else if (newHeight < 0) {
-      if (this.cropper.resizingB) {
-        this.cropper.resizingB = false;
-        this.cropper.resizingT = true;
-      }
-      return 0;
-    }
-    return newHeight;
   }
 
   adjustSizeFull() {
@@ -309,26 +206,9 @@ class PainterroProc {
         this.canvas.style.height = '100%';
       }
     }
-    this.drawCropper();
+    this.cropper.draw();
   }
 
-  drawCropper() {
-    this.cropper.el.style.left = this.canvas.offsetLeft;
-    this.cropper.el.style.top = this.canvas.offsetTop;
-    this.cropper.el.style.width = this.canvas.clientWidth;
-    this.cropper.el.style.height = this.canvas.clientHeight;
-
-    if (this.cropper.topl) {
-      const ratio = this.canvas.offsetWidth / this.canvas.getAttribute('width');
-      this.cropper.rect.style.left = `${this.cropper.topl[0] * ratio}px`;
-      this.cropper.rect.style.top = `${this.cropper.topl[1] * ratio}px`;
-      this.cropper.rect.style.width = `${
-        (this.cropper.bottoml[0] - this.cropper.topl[0]) * ratio}px`;
-      this.cropper.rect.style.height = `${
-        (this.cropper.bottoml[1] - this.cropper.topl[1]) * ratio}px`;
-    }
-
-  }
   resize(x, y) {
     this.size = {
       w: x,

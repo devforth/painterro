@@ -35,6 +35,12 @@
     font-size: 20px;
 }
 
+.painterro-bar .tool-controls {
+    margin-left: 150px;
+    margin-top: -32px;
+    display: block;
+}
+
 .painterro-bar .icon-btn {
     background-color: #CDE0FF;
     border: 0;
@@ -42,14 +48,40 @@
     margin: 4px 0 0 4px;
 }
 
+.painterro-bar .named-btn {
+    background-color: #CDE0FF;
+    border: 0;
+    display: inline-block;
+    height: 32px;
+    margin: 0 4px 0 0;
+    font-family: "Open Sans", sans-serif;
+}
+
 .painterro-bar .btn-active {
     background-color: #7485B1;
     color: #f0f8ff;
 }
 
-.painterro-bar .icon-btn:focus {
+.painterro-bar .icon-btn:focus,
+.painterro-bar .named-btn:focus {
     outline: none;
 }
+
+.painterro-bar .named-btn:active {
+    background-color: #7485B1;
+}
+
+.painterro-bar .named-btn p {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+    margin: 0px;
+}
+
 
 .painterro-wrapper .cropper-handler {
     background-color: white;
@@ -59,13 +91,7 @@
     position: absolute;
     z-index: 10;
 
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-user-drag: none;
-    user-drag: none;
-    -webkit-touch-callout: none;
+
 }
 
 .painterro-wrapper .ptro-crp-el {
@@ -151,4 +177,16 @@
     bottom: 0;
     margin: 0 0 -4px -4px;
     cursor: s-resize;
+}
+
+.painterro-wrapper div,
+.painterro-wrapper span,
+.painterro-wrapper i{
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    user-drag: none;
+    -webkit-touch-callout: none;
 }
