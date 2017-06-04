@@ -17,12 +17,13 @@ export class PainterroCropper {
   reCalcCropperCords() {
     const ratio = this.canvas.offsetWidth / this.canvas.getAttribute('width');
     this.cropper.topl = [
-      (this.cropper.rect.documentOffsetLeft - this.cropper.el.documentOffsetLeft) / ratio,
-      (this.cropper.rect.documentOffsetTop - this.cropper.el.documentOffsetTop) / ratio];
+      Math.round( (this.cropper.rect.documentOffsetLeft - this.cropper.el.documentOffsetLeft) / ratio ),
+      Math.round( (this.cropper.rect.documentOffsetTop - this.cropper.el.documentOffsetTop) / ratio )];
 
     this.cropper.bottoml = [
-      this.cropper.topl[0] + (this.cropper.rect.clientWidth) / ratio,
-      this.cropper.topl[1] + (this.cropper.rect.clientHeight) / ratio]
+      Math.round( this.cropper.topl[0] + (this.cropper.rect.clientWidth) / ratio ),
+      Math.round( this.cropper.topl[1] + (this.cropper.rect.clientHeight) / ratio )];
+
   }
 
   procMouseDown(event) {
@@ -84,14 +85,14 @@ export class PainterroCropper {
       let newLeft = event.clientX - this.cropper.el.documentOffsetLeft - this.cropper.xHandle;
       if (newLeft < 0) {
         newLeft = 0;
-      } else if (newLeft + this.cropper.rect.clientWidth >= this.cropper.el.clientWidth - 1) {
+      } else if (newLeft + this.cropper.rect.clientWidth > this.cropper.el.clientWidth - 2) {
         newLeft = this.cropper.el.clientWidth - this.cropper.rect.clientWidth - 2;
       }
       this.cropper.rect.style.left = newLeft;
       let newTop = event.clientY - this.cropper.el.documentOffsetTop - this.cropper.yHandle;
       if (newTop < 0) {
         newTop = 0;
-      } else if (newTop + this.cropper.rect.clientHeight >= this.cropper.el.clientHeight - 1) {
+      } else if (newTop + this.cropper.rect.clientHeight > this.cropper.el.clientHeight - 2) {
         newTop = this.cropper.el.clientHeight - this.cropper.rect.clientHeight - 2;
       }
       this.cropper.rect.style.top = newTop;
@@ -177,7 +178,7 @@ export class PainterroCropper {
   }
 
   fixCropperWidth(newWidth) {
-    if (this.cropper.rect.documentOffsetLeft + newWidth > this.cropper.el.documentOffsetLeft + this.cropper.el.clientWidth - 1) {
+    if (this.cropper.rect.documentOffsetLeft + newWidth > this.cropper.el.documentOffsetLeft + this.cropper.el.clientWidth - 2) {
         return this.cropper.el.documentOffsetLeft + this.cropper.el.clientWidth - this.cropper.rect.documentOffsetLeft - 2;
     } else if (newWidth < 0) {
       if (this.cropper.resizingR) {
@@ -190,7 +191,7 @@ export class PainterroCropper {
   }
 
   fixCropperHeight(newHeight) {
-    if (this.cropper.rect.documentOffsetTop + newHeight > this.cropper.el.documentOffsetTop + this.cropper.el.clientHeight - 1) {
+    if (this.cropper.rect.documentOffsetTop + newHeight > this.cropper.el.documentOffsetTop + this.cropper.el.clientHeight - 2) {
         return this.cropper.el.documentOffsetTop + this.cropper.el.clientHeight - this.cropper.rect.documentOffsetTop - 2;
     } else if (newHeight < 0) {
       if (this.cropper.resizingB) {

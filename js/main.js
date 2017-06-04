@@ -104,10 +104,13 @@ class PainterroProc {
     this.baseEl.innerHTML = `<div class="painterro-wrapper" id="ptro-wrapper-${this.id}">` +
       `<canvas id="ptro-canvas-${this.id}"></canvas>` + cropper +
       '</div>' +
-      '<div class="painterro-bar"><span>' + bar + '</span><span class="tool-controls"></span></div>';
+      '<div class="painterro-bar"><span>' + bar + '</span><span class="tool-controls"></span>' +
+      '<span class="painterro-info"></span>' +
+      '</div>';
 
     this.body = document.body;
     this.wrapper = document.querySelector(`#${this.id} .painterro-wrapper`);
+    this.info = document.querySelector(`#${this.id} .painterro-info`);
     this.canvas = document.querySelector(`#${this.id} canvas`);
     this.toolControls = document.querySelector(`#${this.id} .tool-controls`);
     this.toolEl = document.querySelector(`#${this.id} .ptro-crp-el`);
@@ -148,7 +151,7 @@ class PainterroProc {
 
 
     this.initCallbacks();
-    this.resize(this.wrapper.offsetWidth, this.wrapper.offsetHeight);
+    this.resize(this.wrapper.clientWidth, this.wrapper.clientHeight);
     this.ctx = this.canvas.getContext('2d');
 
     this.ctx.beginPath();
@@ -203,22 +206,31 @@ class PainterroProc {
   }
 
   adjustSizeFull() {
-    const ratio = this.wrapper.offsetWidth / this.wrapper.offsetHeight;
-    let newRelation = ratio < this.size.ratio;
-    if (newRelation !== this.ratioRelation) {
-      this.ratioRelation = newRelation;
-      if (newRelation) {
-        this.canvas.style.width = '100%';
-        this.canvas.style.height = 'auto';
-      } else {
-        this.canvas.style.width = 'auto';
-        this.canvas.style.height = '100%';
+    console.log((this.size.w > this.wrapper.clientWidth || this.size.h > this.wrapper.clientHeight), this.size.w > this.wrapper.clientWidth, this.size.h > this.wrapper.clientHeight,
+      this.wrapper.clientWidth, this.wrapper.clientHeight);
+    if (this.size.w > this.wrapper.clientWidth || this.size.h > this.wrapper.clientHeight) {
+      const ratio = this.wrapper.clientWidth / this.wrapper.clientHeight;
+      let newRelation = ratio < this.size.ratio;
+      if (newRelation !== this.ratioRelation) {
+        this.ratioRelation = newRelation;
+        if (newRelation) {
+          this.canvas.style.width = '100%';
+          this.canvas.style.height = 'auto';
+        } else {
+          this.canvas.style.width = 'auto';
+          this.canvas.style.height = '100%';
+        }
       }
+    } else {
+      this.canvas.style.width = 'auto';
+      this.canvas.style.height = 'auto';
+      this.ratioRelation = 0;
     }
     this.cropper.draw();
   }
 
   resize(x, y) {
+    this.info.innerHTML = `${x} x ${y}`;
     this.size = {
       w: x,
       h: y,

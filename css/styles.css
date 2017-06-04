@@ -190,3 +190,13 @@
     user-drag: none;
     -webkit-touch-callout: none;
 }
+
+.painterro-info {
+    font-family: "Open Sans", sans-serif;
+    font-size: 10px;
+    float: right;
+    padding: 4px 4px 4px 0;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
