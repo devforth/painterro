@@ -67,7 +67,7 @@
     outline: none;
 }
 
-.painterro-bar .named-btn:active {
+.painterro-bar .named-btn:active:enabled {
     background-color: #7485B1;
 }
 

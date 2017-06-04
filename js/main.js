@@ -48,19 +48,30 @@ class PainterroProc {
         this.toolEl.style.cursor = 'auto';
       },
       controls: [{
-          name: 'Apply',
-          type: 'btn',
-          action: () => {
-            this.closeActiveTool();
-          }
-        }, {
-          name: 'Cancel',
-          type: 'btn',
-          action: () => {
-            this.closeActiveTool();
-          }
-        },
-      ]
+        name: 'Apply',
+        type: 'btn',
+        action: () => {
+          const img = new Image;
+          img.onload = () => {
+            this.resize(
+              this.cropper.cropper.bottoml[0] - this.cropper.cropper.topl[0],
+              this.cropper.cropper.bottoml[1] - this.cropper.cropper.topl[1]);
+            this.ctx.drawImage(img,
+              -this.cropper.cropper.topl[0],
+              -this.cropper.cropper.topl[1]);
+            this.adjustSizeFull();
+          };
+          img.src = this.canvas.toDataURL();
+
+          this.closeActiveTool();
+        }
+      }, {
+        name: 'Cancel',
+        type: 'btn',
+        action: () => {
+          this.closeActiveTool();
+        }
+      }]
     }, {
       name: 'line',
       controls: ''
@@ -144,8 +155,6 @@ class PainterroProc {
     this.ctx.rect(0, 0, this.size.w, this.size.h);
     this.ctx.fillStyle = this.bgColor;
     this.ctx.fill();
-    const ctx = this.ctx;
-    const obj = this;
 
     document.onpaste = (event) => {
       const items = (event.clipboardData || event.originalEvent.clipboardData).items;
@@ -153,11 +162,11 @@ class PainterroProc {
         const item = items[index];
         if (item.kind === 'file' && item.type.split('/')[0] === "image") {
           const img = new Image;
-          img.onload = function() {
-              //ctx.scale(2,2);
-              obj.resize(img.naturalWidth, img.naturalHeight);
-              ctx.drawImage(img, 0, 0);
-              obj.adjustSizeFull();
+          img.onload = () => {
+            //ctx.scale(2,2);
+            this.resize(img.naturalWidth, img.naturalHeight);
+            this.ctx.drawImage(img, 0, 0);
+            this.adjustSizeFull();
           };
           img.src = URL.createObjectURL(item.getAsFile());
         }
