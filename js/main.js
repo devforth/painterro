@@ -4,36 +4,17 @@ import '../css/styles.css';
 import '../css/icons/styles.css';
 
 import { PainterroCropper } from './cropper';
+import { WorkLog } from './worklog';
+import { genId, addDocumentOffset } from './utils';
 
-Object.defineProperty(Element.prototype, 'documentOffsetTop', {
-    get: function () {
-        return this.offsetTop + ( this.offsetParent ? this.offsetParent.documentOffsetTop : 0 );
-    }
-});
-
-Object.defineProperty(Element.prototype, 'documentOffsetLeft', {
-    get: function () {
-        return this.offsetLeft + ( this.offsetParent ? this.offsetParent.documentOffsetLeft : 0 );
-    }
-});
-
-function genId()
-{
-    let text = '';
-    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for(let i=0; i < 8; i++) {
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return text;
-}
 
 class PainterroProc {
 
   /**
-   *
    * @param params
    */
   constructor(params) {
+    addDocumentOffset();
     this.tools = [{
       name: 'crop',
       activate: () => {
@@ -57,12 +38,11 @@ class PainterroProc {
               this.cropper.cropper.bottoml[0] - this.cropper.cropper.topl[0],
               this.cropper.cropper.bottoml[1] - this.cropper.cropper.topl[1]);
             this.ctx.drawImage(img,
-              -this.cropper.cropper.topl[0],
-              -this.cropper.cropper.topl[1]);
+              - this.cropper.cropper.topl[0], - this.cropper.cropper.topl[1]);
             this.adjustSizeFull();
+            this.worklog.captureState();
           };
           img.src = this.canvas.toDataURL();
-
           this.closeActiveTool();
         }
       }, {
@@ -95,7 +75,7 @@ class PainterroProc {
           `<i class="icon icon-${b.name}"></i></button>`;
     }
 
-    const cropper = `<div class="ptro-crp-el" ><div class="ptro-crp-rect" hidden>
+    const cropper = `<div class="ptro-crp-el"><div class="ptro-crp-rect" hidden>
 <div class="ptro-crp-l cropper-handler" ></div><div class="ptro-crp-r cropper-handler" ></div>
 <div class="ptro-crp-t cropper-handler" ></div><div class="ptro-crp-b cropper-handler" ></div>
 <div class="ptro-crp-tl cropper-handler" ></div><div class="ptro-crp-tr cropper-handler" ></div>
@@ -112,16 +92,18 @@ class PainterroProc {
     this.wrapper = document.querySelector(`#${this.id} .painterro-wrapper`);
     this.info = document.querySelector(`#${this.id} .painterro-info`);
     this.canvas = document.querySelector(`#${this.id} canvas`);
+    this.ctx = this.canvas.getContext('2d');
     this.toolControls = document.querySelector(`#${this.id} .tool-controls`);
     this.toolEl = document.querySelector(`#${this.id} .ptro-crp-el`);
     this.cropper = new PainterroCropper(this.id, this.canvas, this.toolEl, (notEmpty) => {
-      console.log("cb", this.tools[0].controls);
       if (notEmpty) {
         document.getElementById(this.tools[0].controls[0].id).removeAttribute('disabled');
       } else {
         document.getElementById(this.tools[0].controls[0].id).setAttribute('disabled', 'true');
       }
     });
+    this.worklog = new WorkLog(this);
+
 
     for(let b of this.tools) {
       this._getBtnEl(b).onclick = () => {
@@ -143,42 +125,13 @@ class PainterroProc {
           for (let ctl of b.controls) {
             document.getElementById(ctl.id).onclick = ctl.action;
           }
-          console.log("before act", this.tools[0].controls);
           b.activate();
         }
       };
     }
 
-
     this.initCallbacks();
-    this.resize(this.wrapper.clientWidth, this.wrapper.clientHeight);
-    this.ctx = this.canvas.getContext('2d');
-
-    this.ctx.beginPath();
-    this.ctx.rect(0, 0, this.size.w, this.size.h);
-    this.ctx.fillStyle = this.bgColor;
-    this.ctx.fill();
-
-    document.onpaste = (event) => {
-      const items = (event.clipboardData || event.originalEvent.clipboardData).items;
-      for (let index in items) {
-        const item = items[index];
-        if (item.kind === 'file' && item.type.split('/')[0] === "image") {
-          const img = new Image;
-          img.onload = () => {
-            //ctx.scale(2,2);
-            this.resize(img.naturalWidth, img.naturalHeight);
-            this.ctx.drawImage(img, 0, 0);
-            this.adjustSizeFull();
-          };
-          img.src = URL.createObjectURL(item.getAsFile());
-        }
-      }
-    };
-
-    window.onresize = () => {
-      this.adjustSizeFull();
-    };
+    this.clear();
   }
 
   closeActiveTool() {
@@ -202,7 +155,41 @@ class PainterroProc {
     };
     document.onmouseup = (event) => {
       this.cropper.procMoseUp()
-    }
+    };
+
+    document.onkeydown = (e) => {
+      const evt = window.event ? event : e;
+      if (
+        (evt.keyCode == 89 && evt.ctrlKey) ||  // 89 is 'y' key
+        (evt.keyCode == 90 && evt.ctrlKey && evt.shiftKey) ){  // 90 is 'z' key
+          console.log('ctl+y');
+          this.worklog.redoState();
+      } else if (evt.keyCode == 90 && evt.ctrlKey) {
+          console.log('ctl+z');
+          this.worklog.undoState();
+      }
+    };
+    document.onpaste = (event) => {
+      const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+      for (let index in items) {
+        const item = items[index];
+        if (item.kind === 'file' && item.type.split('/')[0] === "image") {
+          const img = new Image;
+          img.onload = () => {
+            this.resize(img.naturalWidth, img.naturalHeight);
+            this.ctx.drawImage(img, 0, 0);
+            this.adjustSizeFull();
+            this.worklog.captureState();
+          };
+          img.src = URL.createObjectURL(item.getAsFile());
+        }
+      }
+    };
+
+    window.onresize = () => {
+      this.adjustSizeFull();
+    };
+
   }
 
   adjustSizeFull() {
@@ -238,6 +225,15 @@ class PainterroProc {
     };
     this.canvas.setAttribute('width', this.size.w);
     this.canvas.setAttribute('height', this.size.h);
+  }
+
+  clear() {
+    this.resize(this.wrapper.clientWidth, this.wrapper.clientHeight);
+    this.ctx.beginPath();
+    this.ctx.rect(0, 0, this.size.w, this.size.h);
+    this.ctx.fillStyle = this.bgColor;
+    this.ctx.fill();
+    this.worklog.captureState();
   }
 
   _getBtnEl(b) {
