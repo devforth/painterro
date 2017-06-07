@@ -48,7 +48,8 @@
     margin: 4px 0 0 4px;
 }
 
-.painterro-bar .named-btn {
+.painterro-bar .named-btn,
+.painterro-wrapper .named-btn {
     background-color: #CDE0FF;
     border: 0;
     display: inline-block;
@@ -63,12 +64,16 @@
 }
 
 .painterro-bar .icon-btn:focus,
-.painterro-bar .named-btn:focus {
+.painterro-bar .named-btn:focus,
+.painterro-wrapper .icon-btn:focus,
+.painterro-wrapper .named-btn:focus {
     outline: none;
 }
 
-.painterro-bar .named-btn:active:enabled {
+.painterro-bar .named-btn:active:enabled,
+.painterro-wrapper .named-btn:active:enabled{
     background-color: #7485B1;
+    color:#ffffff;
 }
 
 .painterro-bar .named-btn p {
@@ -199,4 +204,66 @@
     position: absolute;
     right: 0;
     bottom: 0;
+}
+
+.color-diwget-btn {
+    height: 32px;
+    width: 32px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.color-diwget-btn:focus {
+    outline: none;
+}
+
+.painterro-wrapper .ptro-color-widget-wrapper {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.6);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.painterro-wrapper .ptro-pallet canvas {
+    cursor: crosshair;
+}
+
+.painterro-wrapper .ptro-pallet {
+    width: 180px;
+    height: 215px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -115px;
+    margin-left: -90px;
+    background-color: #f0f8ff;
+    padding: 10px;
+    z-index: 100;
+}
+
+.painterro-wrapper .ptro-color-edit {
+    margin-top: 10px;
+}
+.painterro-wrapper .ptro-color-edit input {
+    max-width: 80px;
+    float: left;
+    height: 24px;
+    border-style:solid;
+    border: 1px solid #7485B1;
+    text-align: center;
+    font-family: monospace;
+    font-size: 16px;
+}
+
+.painterro-wrapper .ptro-color-edit button {
+    float: right;
+    height: 24px;
+    margin: 0;
+}
+
+
+.painterro-wrapper .ptro-color-edit button:active {
+    outline: none;
 }

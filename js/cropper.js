@@ -9,6 +9,15 @@ export class PainterroCropper {
     };
   }
 
+  static code() {
+    return '<div class="ptro-crp-rect" hidden>' +
+        '<div class="ptro-crp-l cropper-handler" ></div><div class="ptro-crp-r cropper-handler" ></div>' +
+        '<div class="ptro-crp-t cropper-handler" ></div><div class="ptro-crp-b cropper-handler" ></div>' +
+        '<div class="ptro-crp-tl cropper-handler" ></div><div class="ptro-crp-tr cropper-handler" ></div>' +
+        '<div class="ptro-crp-bl cropper-handler" ></div><div class="ptro-crp-br cropper-handler" ></div>' +
+      '</div>';
+  }
+
   activate() {
     this.cropper.activated = true;
     this.selectionCallback(false);
@@ -23,7 +32,6 @@ export class PainterroCropper {
     this.cropper.bottoml = [
       Math.round( this.cropper.topl[0] + (this.cropper.rect.clientWidth) / ratio ),
       Math.round( this.cropper.topl[1] + (this.cropper.rect.clientHeight) / ratio )];
-
   }
 
   procMouseDown(event) {
@@ -137,10 +145,6 @@ export class PainterroCropper {
   }
 
   draw() {
-    this.cropper.el.style.left = this.canvas.offsetLeft;
-    this.cropper.el.style.top = this.canvas.offsetTop;
-    this.cropper.el.style.width = this.canvas.clientWidth;
-    this.cropper.el.style.height = this.canvas.clientHeight;
     if (this.cropper.topl) {
       const ratio = this.canvas.offsetWidth / this.canvas.getAttribute('width');
       this.cropper.rect.style.left = `${this.cropper.topl[0] * ratio}px`;
