@@ -23,7 +23,7 @@ function format2Hex(val) {
   return hex.length == 1 && ("0" + hex) || hex;
 }
 
-function RGBToHex(r, g, b) {
+function rgbToHex(r, g, b) {
   return `#${format2Hex(r)}${format2Hex(g)}${format2Hex(b)}`;
 }
 
@@ -37,6 +37,7 @@ function reversedColor(color) {
 export class ColorWidget {
   constructor(main) {
     this.main = main;
+    this.opacity = 1.0;
     this.w = 180;
     this.h = 180;
     const w = this.w;
@@ -44,7 +45,9 @@ export class ColorWidget {
 
     this.wrapper = document.querySelector(`#${main.id} .ptro-color-widget-wrapper`);
 
-    this.input = document.querySelector(`#${main.id} .ptro-color-widget-wrapper input`);
+    this.input = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-color`);
+    this.inputAlpha = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-color-opacity`);
+
     this.button = document.querySelector(`#${main.id} .ptro-color-widget-wrapper button`);
     this.canvas = document.querySelector(`#${main.id} .ptro-color-widget-wrapper canvas`);
     this.ctx = this.canvas.getContext('2d');
@@ -84,12 +87,17 @@ export class ColorWidget {
     this.button.onclick = () => {this.wrapper.setAttribute('hidden', 'true');}
     this.setActiveColor(this.main.params.activeColor);
     this.input.onkeyup = () => {
-      try {
-        this.setActiveColor(this.input.value, true);
-      }catch(e) {
-        console.log(e);
-      }
+      this.setActiveColor(this.input.value, true);
+    };
+    this.inputAlpha.value  = this.opacity;
+    this.inputAlpha.onclick = () => {
+      this.opacity = this.inputAlpha.value;
+      this.setActiveColor(this.color, true);
     }
+    this.inputAlpha.addEventListener('change', () => {
+      this.opacity = this.inputAlpha.value;
+      this.setActiveColor(this.color, true);
+    })
   }
 
   open() {
@@ -106,7 +114,7 @@ export class ColorWidget {
     y = y > this.h && this.h - 1 || y;
 
     const p = this.ctx.getImageData(x, y, 1, 1).data;
-    this.setActiveColor(RGBToHex(p[0], p[1], p[2]));
+    this.setActiveColor(rgbToHex(p[0], p[1], p[2]));
   }
 
   handleMouseMove(e) {
@@ -120,15 +128,22 @@ export class ColorWidget {
   }
 
   setActiveColor(color, ignoreUpdateText) {
-    this.input.style.color = reversedColor(color);
-    this.input.style['background-color'] = color;
-    if (this.toolBtn != undefined) {
-      this.toolBtn.style['background-color'] = color;
+    try {
+      this.input.style.color = reversedColor(color);
+    } catch (e) {
+      return
     }
+    this.input.style['background-color'] = color;
+
     if (ignoreUpdateText == undefined) {
       this.input.value = color;
     }
     this.color = color;
+    const rgb = HexToRGB(color);
+    this.alphaColor = `rgba(${rgb.r},${rgb.g},${rgb.b},${this.opacity})`;
+    if (this.toolBtn != undefined) {
+      this.toolBtn.style['background-color'] = this.alphaColor;
+    }
   }
 
   static html() {
@@ -138,7 +153,8 @@ export class ColorWidget {
       '<canvas></canvas>' +
       '<div class="ptro-colors"></div>' +
       '<div class="ptro-color-edit">' +
-      '<input type="text"/>' +
+      '<input class="ptro-color" type="text" size="7"/>' +
+      '<input class="ptro-color-opacity" type="number" min="0" max="1" step="0.1"/>' +
       '<button class="named-btn">Close</button>' +
       '</div>' +
       '</div>' +
@@ -146,6 +162,6 @@ export class ColorWidget {
       '</div>' +
       '</div>';
   }
-
+//move checkers to toolbar, not show color on opacity input at all
 
 }

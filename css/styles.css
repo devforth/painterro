@@ -211,6 +211,8 @@
     width: 32px;
     border: 1px solid black;
     cursor: pointer;
+    z-index: 201;
+    position: absolute;
 }
 
 .color-diwget-btn:focus {
@@ -247,14 +249,22 @@
     margin-top: 10px;
 }
 .painterro-wrapper .ptro-color-edit input {
-    max-width: 80px;
+    max-width: 75px;
     float: left;
     height: 24px;
-    border-style:solid;
+    border-style: solid;
     border: 1px solid #7485B1;
     text-align: center;
     font-family: monospace;
-    font-size: 16px;
+    font-size: 14px;
+}
+
+.painterro-wrapper .ptro-color-edit input:focus {
+    outline: none;
+}
+
+.painterro-wrapper .ptro-color-edit .ptro-color-opacity {
+    margin-left: 8px;
 }
 
 .painterro-wrapper .ptro-color-edit button {
@@ -266,4 +276,56 @@
 
 .painterro-wrapper .ptro-color-edit button:active {
     outline: none;
+}
+
+.painterro-bar .ptro-btn-color-bg {
+    z-index: 200;
+    position: absolute;
+}
+
+
+.painterro-bar .ptro-btn-color-bg span {
+    width: 8px;
+    background-color: rgb(103, 103, 103);
+    display: block;
+    height: 8px;
+    position: absolute;
+}
+
+.painterro-bar .ptro-btn-color-bg span:nth-of-type(1) {
+    left: 0;
+}
+
+.painterro-bar .ptro-btn-color-bg span:nth-of-type(2) {
+    left: 8px;
+    margin-top: 8px;
+}
+
+.painterro-bar .ptro-btn-color-bg span:nth-of-type(3) {
+    left: 16px;
+}
+
+.painterro-bar .ptro-btn-color-bg span:nth-of-type(4) {
+    left: 24px;
+    margin-top: 8px;
+}
+
+.painterro-bar .ptro-btn-color-bg span:nth-of-type(5) {
+    left: 0;
+    margin-top: 16px;
+}
+
+.painterro-bar .ptro-btn-color-bg span:nth-of-type(6) {
+    left: 8px;
+    margin-top: 24px;
+}
+
+.painterro-bar .ptro-btn-color-bg span:nth-of-type(7) {
+    left: 16px;
+    margin-top: 16px;
+}
+
+.painterro-bar .ptro-btn-color-bg span:nth-of-type(8) {
+    left: 24px;
+    margin-top: 24px;
 }

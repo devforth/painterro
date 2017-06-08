@@ -79,7 +79,22 @@ class PainterroProc {
       }
     }, {
       name: 'rect',
-      controls: ''
+      controls: [{
+          type: 'color',
+          action: () => {
+            this.colorWidget.open();
+          }
+        },
+      ],
+      activate: () => {
+        this.toolEl.style.cursor = 'crosshair';
+        this.primitiveTool.activate('rect');
+      },
+      handlers: {
+        md: (e) => this.primitiveTool.procMouseDown(e),
+        mu: (e) => this.primitiveTool.procMoseUp(e),
+        mm: (e) => this.primitiveTool.procMouseMove(e)
+      }
     }, {
       name: 'pipette',
       controls: ''
@@ -144,7 +159,10 @@ class PainterroProc {
                 `id=${ctl.id}>${ctl.icon && ('<i class="icon icon-'+ctl.icon+'></i>') || ''}` +
                 `<p>${ctl.name || ''}</p></button>`;
             } else if (ctl.type === 'color') {
-              ctrls += `<button id=${ctl.id} style="background-color: ${this.colorWidget.color}" class="color-diwget-btn"></button>`
+              ctrls += `<button id=${ctl.id} style="background-color: ${this.colorWidget.alphaColor}" class="color-diwget-btn"></button>`+
+                  '<span class="ptro-btn-color-bg">' +
+                  '<span></span><span></span><span></span><span></span>' +
+                  '<span></span><span></span><span></span><span></span></span>';
             }
           }
           this.toolControls.innerHTML = ctrls;
@@ -225,8 +243,6 @@ class PainterroProc {
     return this.canvas.getAttribute('width') / this.canvas.offsetWidth;
   }
   adjustSizeFull() {
-    console.log((this.size.w > this.wrapper.clientWidth || this.size.h > this.wrapper.clientHeight), this.size.w > this.wrapper.clientWidth, this.size.h > this.wrapper.clientHeight,
-      this.wrapper.clientWidth, this.wrapper.clientHeight);
     if (this.size.w > this.wrapper.clientWidth || this.size.h > this.wrapper.clientHeight) {
       const ratio = this.wrapper.clientWidth / this.wrapper.clientHeight;
       let newRelation = ratio < this.size.ratio;
