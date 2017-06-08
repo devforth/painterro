@@ -39,21 +39,26 @@ export class ColorWidget {
     this.main = main;
     this.opacity = 1.0;
     this.w = 180;
-    this.h = 180;
+    this.h = 150;
     const w = this.w;
     const h = this.h;
+    this.lightPosition = this.w - 1;
+    this.palleteColor = this.main.params.activeColor;
 
     this.wrapper = document.querySelector(`#${main.id} .ptro-color-widget-wrapper`);
-
     this.input = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-color`);
     this.inputAlpha = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-color-opacity`);
-
     this.button = document.querySelector(`#${main.id} .ptro-color-widget-wrapper button`);
+    this.colorRegulator = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-color-light-regulator`);
     this.canvas = document.querySelector(`#${main.id} .ptro-color-widget-wrapper canvas`);
     this.ctx = this.canvas.getContext('2d');
-
+    this.canvasLight = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-canvas-light`);
+    this.ctxLight  = this.canvasLight.getContext('2d');
     this.canvas.setAttribute('width', w);
     this.canvas.setAttribute('height', h);
+    this.canvasLight.setAttribute('width', w);
+    this.canvasLight.setAttribute('height', 20);
+
     const palette = this.ctx.createLinearGradient(0, 0, w, 0);
     palette.addColorStop(1 / 15, '#ff0000');
     palette.addColorStop(4 / 15, '#ffff00');
@@ -61,31 +66,32 @@ export class ColorWidget {
     palette.addColorStop(9 / 15, '#00ffff');
     palette.addColorStop(12 / 15, '#0000ff');
     palette.addColorStop(14 / 15, '#ff00ff');
-   // palette.addColorStop(6 / 6, '#ff0000');
     this.ctx.fillStyle = palette;
     this.ctx.fillRect(0, 0, w, h);
 
-    const whiteOverlay = this.ctx.createLinearGradient(0, 0, 0, h*2/5 + 20);
-    whiteOverlay.addColorStop(0, 'rgba(255, 255, 255, 1)');
-    whiteOverlay.addColorStop(0.05, 'rgba(255, 255, 255, 1)');
-    whiteOverlay.addColorStop(1, 'rgba(255, 255, 255, 0)');
-    this.ctx.fillStyle = whiteOverlay;
-    this.ctx.fillRect(0, 0, w, h*2/5+ 20);
-
-    const darkOverlay = this.ctx.createLinearGradient(0, h*3/5 - 20, 0, h);
+    const darkOverlay = this.ctx.createLinearGradient(0, 0, 0, h);
     darkOverlay.addColorStop(0, 'rgba(0, 0, 0, 0)');
     darkOverlay.addColorStop(0.99, 'rgba(0, 0, 0, 1)');
     darkOverlay.addColorStop(1, 'rgba(0, 0, 0, 1)');
     this.ctx.fillStyle = darkOverlay;
-    this.ctx.fillRect(0, h*3/5 - 20, w, h);
+    this.ctx.fillRect(0, 0, w, h);
 
     this.canvas.onmousedown = (e) => {
       this.selecting = true;
-      this.getColorAtClick(e)
+      this.getPaletteColorAtPoint(e)
     };
 
+    const startLightSelecting = (e) => {
+      this.lightSelecting = true;
+      this.getColorLightAtClick(e);
+    };
+
+    this.canvasLight.onmousedown = startLightSelecting;
+    this.colorRegulator.onmousedown = startLightSelecting;
+
     this.button.onclick = () => {this.wrapper.setAttribute('hidden', 'true');}
-    this.setActiveColor(this.main.params.activeColor);
+
+
     this.input.onkeyup = () => {
       this.setActiveColor(this.input.value, true);
     };
@@ -93,11 +99,16 @@ export class ColorWidget {
     this.inputAlpha.onclick = () => {
       this.opacity = this.inputAlpha.value;
       this.setActiveColor(this.color, true);
-    }
+    };
     this.inputAlpha.addEventListener('change', () => {
       this.opacity = this.inputAlpha.value;
       this.setActiveColor(this.color, true);
-    })
+    });
+
+    // this.setActiveColor(this.main.params.activeColor);
+    this.drawLighter();
+    this.colorRegulator.style.left = this.lightPosition;
+    this.regetColor();
   }
 
   open() {
@@ -105,26 +116,45 @@ export class ColorWidget {
     this.wrapper.removeAttribute('hidden');
   }
 
-  getColorAtClick(e) {
+  getPaletteColorAtPoint(e) {
     let x = e.clientX - this.canvas.documentOffsetLeft;
     let y = e.clientY - this.canvas.documentOffsetTop;
     x = x < 1 && 1 || x;
     y = y < 1 && 1 || y;
     x = x > this.w && this.w - 1 || x;
     y = y > this.h && this.h - 1 || y;
-
     const p = this.ctx.getImageData(x, y, 1, 1).data;
+    this.palleteColor = rgbToHex(p[0], p[1], p[2]);
+    this.drawLighter();
+    this.regetColor();
+  }
+
+  regetColor() {
+    const p = this.ctxLight.getImageData(this.lightPosition, 5, 1, 1).data;
     this.setActiveColor(rgbToHex(p[0], p[1], p[2]));
+  }
+
+  getColorLightAtClick(e) {
+    let x = e.clientX - this.canvasLight.documentOffsetLeft;
+    x = x < 1 && 1 || x;
+    x = x > this.w - 1 && this.w - 1 || x;
+    this.lightPosition = x;
+    this.colorRegulator.style.left = x;
+    this.regetColor();
   }
 
   handleMouseMove(e) {
     if (this.selecting) {
-      this.getColorAtClick(e)
+      this.getPaletteColorAtPoint(e)
+    }
+    if (this.lightSelecting) {
+      this.getColorLightAtClick(e)
     }
   }
 
   handleMouseUp(e) {
     this.selecting = false;
+    this.lightSelecting = false;
   }
 
   setActiveColor(color, ignoreUpdateText) {
@@ -149,19 +179,28 @@ export class ColorWidget {
   static html() {
     return '<div class="ptro-color-widget-wrapper" hidden>' +
       '<div class="ptro-color-widget">' +
-      '<div class="ptro-pallet">' +
-      '<canvas></canvas>' +
-      '<div class="ptro-colors"></div>' +
-      '<div class="ptro-color-edit">' +
-      '<input class="ptro-color" type="text" size="7"/>' +
-      '<input class="ptro-color-opacity" type="number" min="0" max="1" step="0.1"/>' +
-      '<button class="named-btn">Close</button>' +
-      '</div>' +
-      '</div>' +
-
-      '</div>' +
+        '<div class="ptro-pallet">' +
+          '<canvas></canvas>' +
+          '<canvas class="ptro-canvas-light"></canvas>' +
+          '<span class="ptro-color-light-regulator"></span>' +
+          '<div class="ptro-colors"></div>' +
+            '<div class="ptro-color-edit">' +
+            '<input class="ptro-color" type="text" size="7"/>' +
+            '<input class="ptro-color-opacity" type="number" min="0" max="1" step="0.1"/>' +
+            '<button class="named-btn">Close</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
       '</div>';
   }
-//move checkers to toolbar, not show color on opacity input at all
 
+  drawLighter() {
+    const lightGradient = this.ctxLight.createLinearGradient(0, 0, this.w, 0);
+    lightGradient.addColorStop(0, '#ffffff');
+    lightGradient.addColorStop(0.05, '#ffffff');
+    lightGradient.addColorStop(0.95, this.palleteColor);
+    lightGradient.addColorStop(1, this.palleteColor);
+    this.ctxLight.fillStyle = lightGradient;
+    this.ctxLight.fillRect(0, 0, this.w, 15);
+  }
 }

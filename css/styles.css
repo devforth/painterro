@@ -248,6 +248,7 @@
 .painterro-wrapper .ptro-color-edit {
     margin-top: 10px;
 }
+
 .painterro-wrapper .ptro-color-edit input {
     max-width: 75px;
     float: left;
@@ -292,6 +293,11 @@
     position: absolute;
 }
 
+.painterro-wrapper .ptro-color-widget-wrapper .ptro-canvas-light {
+    margin-top: 10px;
+}
+
+
 .painterro-bar .ptro-btn-color-bg span:nth-of-type(1) {
     left: 0;
 }
@@ -329,3 +335,17 @@
     left: 24px;
     margin-top: 24px;
 }
+
+.ptro-color-light-regulator {
+    display: block;
+    margin-top: -5px;
+    margin-left: 5px;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid #7485B1;
+    cursor: crosshair;
+}
+
