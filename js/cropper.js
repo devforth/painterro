@@ -1,11 +1,12 @@
 export class PainterroCropper {
 
-  constructor(ptroId, canvas, toolHolder, selectionCallback) {
-    this.canvas = canvas;
+  constructor(main, selectionCallback) {
+    this.main = main;
+    this.canvas = main.canvas;
     this.selectionCallback = selectionCallback;
     this.cropper = {
-      el: toolHolder,
-      rect: document.querySelector(`#${ptroId} .ptro-crp-rect`),
+      el: main.toolEl,
+      rect: document.querySelector(`#${main.id} .ptro-crp-rect`),
     };
   }
 
@@ -21,6 +22,20 @@ export class PainterroCropper {
   activate() {
     this.cropper.activated = true;
     this.selectionCallback(false);
+  }
+
+  doCrop() {
+    const img = new Image;
+    img.onload = () => {
+      this.main.resize(
+        this.cropper.bottoml[0] - this.cropper.topl[0],
+        this.cropper.bottoml[1] - this.cropper.topl[1]);
+      this.main.ctx.drawImage(img,
+        - this.cropper.topl[0], - this.cropper.topl[1]);
+      this.main.adjustSizeFull();
+      this.main.worklog.captureState();
+    };
+    img.src = this.canvas.toDataURL();
   }
 
   reCalcCropperCords() {

@@ -1,3 +1,5 @@
+import { Translation } from './translation';
+
 function HexToRGB(hex) {
   let parse = /^#?([a-fA-F\d]{2})([a-fA-F\d]{2})([a-fA-F\d]{2})$/i.exec(hex);
   if (parse) {
@@ -17,6 +19,10 @@ function HexToRGB(hex) {
   }
 }
 
+export function HexToRGBA(hex, alpha) {
+  const rgb = HexToRGB(hex);
+  return `rgba(${rgb.r},${rgb.g},${rgb.b},${alpha})`;
+}
 
 function format2Hex(val) {
   const hex = val.toString(16);
@@ -27,27 +33,25 @@ function rgbToHex(r, g, b) {
   return `#${format2Hex(r)}${format2Hex(g)}${format2Hex(b)}`;
 }
 
-
 function reversedColor(color) {
   const rgb = HexToRGB(color);
   const index = ((rgb.r * 299) + (rgb.g * 587) + (rgb.b * 114))/1000;
   return index >= 128 && 'black' || 'white';
 }
 
-export class ColorWidget {
-  constructor(main) {
+export class ColorPicker {
+  constructor(main, callback) {
+    this.callback = callback;
     this.main = main;
-    this.opacity = 1.0;
     this.w = 180;
     this.h = 150;
     const w = this.w;
     const h = this.h;
     this.lightPosition = this.w - 1;
-    this.palleteColor = this.main.params.activeColor;
 
     this.wrapper = document.querySelector(`#${main.id} .ptro-color-widget-wrapper`);
     this.input = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-color`);
-    this.inputAlpha = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-color-opacity`);
+    this.inputAlpha = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-color-alpha`);
     this.button = document.querySelector(`#${main.id} .ptro-color-widget-wrapper button`);
     this.colorRegulator = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-color-light-regulator`);
     this.canvas = document.querySelector(`#${main.id} .ptro-color-widget-wrapper canvas`);
@@ -89,31 +93,39 @@ export class ColorWidget {
     this.canvasLight.onmousedown = startLightSelecting;
     this.colorRegulator.onmousedown = startLightSelecting;
 
-    this.button.onclick = () => {this.wrapper.setAttribute('hidden', 'true');}
-
-
+    this.button.onclick = () => {
+      this.wrapper.setAttribute('hidden', 'true');
+      this.opened = false;
+    };
     this.input.onkeyup = () => {
       this.setActiveColor(this.input.value, true);
     };
-    this.inputAlpha.value  = this.opacity;
+    this.inputAlpha.value  = this.alpha;
     this.inputAlpha.onclick = () => {
-      this.opacity = this.inputAlpha.value;
+      this.alpha = this.inputAlpha.value;
       this.setActiveColor(this.color, true);
     };
     this.inputAlpha.addEventListener('change', () => {
-      this.opacity = this.inputAlpha.value;
+      this.alpha = this.inputAlpha.value;
       this.setActiveColor(this.color, true);
     });
 
-    // this.setActiveColor(this.main.params.activeColor);
+
+  }
+
+  open(state) {
+    this.target = state.target;
+    this.palleteColor = state.palleteColor;
+    this.alpha = state.alpha;
+    this.lightPosition = this.lightPosition || this.w - 1;
+
     this.drawLighter();
     this.colorRegulator.style.left = this.lightPosition;
     this.regetColor();
-  }
+    this.inputAlpha.value = this.alpha;
 
-  open() {
-    this.toolBtn = document.querySelector(`#${this.main.id} .color-diwget-btn`);
     this.wrapper.removeAttribute('hidden');
+    this.opened = true;
   }
 
   getPaletteColorAtPoint(e) {
@@ -144,11 +156,13 @@ export class ColorWidget {
   }
 
   handleMouseMove(e) {
-    if (this.selecting) {
-      this.getPaletteColorAtPoint(e)
-    }
-    if (this.lightSelecting) {
-      this.getColorLightAtClick(e)
+    if (this.opened) {
+      if (this.selecting) {
+        this.getPaletteColorAtPoint(e)
+      }
+      if (this.lightSelecting) {
+        this.getColorLightAtClick(e)
+      }
     }
   }
 
@@ -164,15 +178,19 @@ export class ColorWidget {
       return
     }
     this.input.style['background-color'] = color;
-
     if (ignoreUpdateText == undefined) {
       this.input.value = color;
     }
     this.color = color;
-    const rgb = HexToRGB(color);
-    this.alphaColor = `rgba(${rgb.r},${rgb.g},${rgb.b},${this.opacity})`;
-    if (this.toolBtn != undefined) {
-      this.toolBtn.style['background-color'] = this.alphaColor;
+    this.alphaColor = HexToRGBA(color, this.alpha);
+    if (this.callback !== undefined && this.opened) {
+      this.callback({
+        alphaColor: this.alphaColor,
+        lightPosition: this.lightPosition,
+        alpha: this.alpha,
+        palleteColor: this.palleteColor,
+        target: this.target
+      });
     }
   }
 
@@ -186,7 +204,8 @@ export class ColorWidget {
           '<div class="ptro-colors"></div>' +
             '<div class="ptro-color-edit">' +
             '<input class="ptro-color" type="text" size="7"/>' +
-            '<input class="ptro-color-opacity" type="number" min="0" max="1" step="0.1"/>' +
+             `<span class="ptro-color-alpha-label" title="${Translation.get().tr('alphaFull')}">${Translation.get().tr('alpha')}</span>` +
+            '<input class="ptro-color-alpha" type="number" min="0" max="1" step="0.1"/>' +
             '<button class="named-btn">Close</button>' +
             '</div>' +
           '</div>' +

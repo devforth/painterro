@@ -7,7 +7,7 @@ import { PainterroCropper } from './cropper';
 import { WorkLog } from './worklog';
 import { genId, addDocumentOffset } from './utils';
 import { PrimitiveTool } from './primitive';
-import { ColorWidget } from './colorWidget';
+import { ColorPicker } from './colorPicker';
 import { setDefaults } from './params';
 import { Translation } from './translation';
 
@@ -35,17 +35,7 @@ class PainterroProc {
         name: 'Apply',
         type: 'btn',
         action: () => {
-          const img = new Image;
-          img.onload = () => {
-            this.resize(
-              this.cropper.cropper.bottoml[0] - this.cropper.cropper.topl[0],
-              this.cropper.cropper.bottoml[1] - this.cropper.cropper.topl[1]);
-            this.ctx.drawImage(img,
-              - this.cropper.cropper.topl[0], - this.cropper.cropper.topl[1]);
-            this.adjustSizeFull();
-            this.worklog.captureState();
-          };
-          img.src = this.canvas.toDataURL();
+          this.cropper.doCrop();
           this.closeActiveTool();
         }
       }, {
@@ -65,9 +55,10 @@ class PainterroProc {
       controls: [{
           type: 'color',
           title: 'lineColor',
+          target: 'line',
           titleFull: 'lineColorFull',
           action: () => {
-            this.colorWidget.open();
+            this.colorPicker.open(this.colorWidgetState.line);
           }
         },
       ],
@@ -86,8 +77,17 @@ class PainterroProc {
           type: 'color',
           title: 'lineColor',
           titleFull: 'lineColorFull',
+          target: 'line',
           action: () => {
-            this.colorWidget.open();
+            this.colorPicker.open(this.colorWidgetState.line);
+          }
+        }, {
+          type: 'color',
+          title: 'fillColor',
+          titleFull: 'fillColorFull',
+          target: 'fill',
+          action: () => {
+            this.colorPicker.open(this.colorWidgetState.fill);
           }
         },
       ],
@@ -123,7 +123,7 @@ class PainterroProc {
       `<div class="painterro-wrapper" id="ptro-wrapper-${this.id}">` +
         `<canvas id="ptro-canvas-${this.id}"></canvas>` +
         cropper +
-        ColorWidget.html() +
+        ColorPicker.html() +
       '</div>' +
       '<div class="painterro-bar">' +
         '<span>' + bar + '</span>' +
@@ -138,7 +138,7 @@ class PainterroProc {
     this.ctx = this.canvas.getContext('2d');
     this.toolControls = document.querySelector(`#${this.id} .tool-controls`);
     this.toolEl = document.querySelector(`#${this.id} .ptro-crp-el`);
-    this.cropper = new PainterroCropper(this.id, this.canvas, this.toolEl, (notEmpty) => {
+    this.cropper = new PainterroCropper(this, (notEmpty) => {
       if (notEmpty) {
         document.getElementById(this.tools[0].controls[0].id).removeAttribute('disabled');
       } else {
@@ -147,9 +147,28 @@ class PainterroProc {
     });
     this.primitiveTool = new PrimitiveTool(this);
     this.worklog = new WorkLog(this);
-    this.colorWidget = new ColorWidget(this);
-    this.translator = new Translation();
-    this.tr = (n) => this.translator.tr(n);
+    this.colorPicker = new ColorPicker(this, (widgetState) => {
+      this.colorWidgetState[widgetState.target] = widgetState;
+      document.querySelector(
+        `#${this.id} .color-diwget-btn[data-id='${widgetState.target}']`).style['background-color'] =
+          widgetState.alphaColor;
+    });
+    this.colorWidgetState = {
+      line: {
+        target: 'line',
+        palleteColor: this.params.activeColor,
+        alpha: this.params.activeColorAlpha,
+        alphaColor: this.params.activeAlphaColor
+      },
+      fill: {
+        target: 'fill',
+        palleteColor: this.params.activeFillColor,
+        alpha: this.params.activeFillColorAlpha,
+        alphaColor: this.params.activeFillAlphaColor
+      }
+    };
+
+    this.tr = (n) => Translation.get().tr(n);
 
     for(let b of this.tools) {
       this._getBtnEl(b).onclick = () => {
@@ -169,10 +188,13 @@ class PainterroProc {
                 `id=${ctl.id}>${ctl.icon && ('<i class="icon icon-'+ctl.icon+'></i>') || ''}` +
                 `<p>${ctl.name || ''}</p></button>`;
             } else if (ctl.type === 'color') {
-              ctrls += `<button id=${ctl.id} style="background-color: ${this.colorWidget.alphaColor}" class="color-diwget-btn"></button>`+
+              ctrls += `<button id=${ctl.id} data-id='${ctl.target}' `+
+                `style="background-color: ${this.colorWidgetState[ctl.target].alphaColor}" ` +
+                `class="color-diwget-btn"></button>`+
                   '<span class="ptro-btn-color-bg">' +
-                  '<span></span><span></span><span></span><span></span>' +
-                  '<span></span><span></span><span></span><span></span></span>';
+                    '<span></span><span></span><span></span><span></span>' +
+                    '<span></span><span></span><span></span><span></span>' +
+                  '</span>';
             }
           }
           this.toolControls.innerHTML = ctrls;
@@ -205,18 +227,18 @@ class PainterroProc {
     this.activeTool.handlers[eventName] && this.activeTool.handlers[eventName](event);
   }
   initCallbacks() {
-    this.body.onmousedown = (e) => {
+    this.body.addEventListener('mousedown', (e) => {
       this.handleToolEvent('md', e);
-    };
-    document.onmousemove = (e) => {
+    });
+    document.addEventListener('mousemove', (e) => {
       this.handleToolEvent('mm', e);
-      this.colorWidget.handleMouseMove(e);
-    };
-    document.onmouseup = (e) => {
+      this.colorPicker.handleMouseMove(e);
+    });
+    document.addEventListener('mouseup', (e) => {
       this.handleToolEvent('mu', e);
-      this.colorWidget.handleMouseUp(e);
-    };
-    document.onkeydown = (e) => {
+      this.colorPicker.handleMouseUp(e);
+    });
+    document.addEventListener('keydown', (e) => {
       const evt = window.event ? event : e;
       if (
         (evt.keyCode == 89 && evt.ctrlKey) ||  // 89 is 'y' key
@@ -225,8 +247,8 @@ class PainterroProc {
       } else if (evt.keyCode == 90 && evt.ctrlKey) {
           this.worklog.undoState();
       }
-    };
-    document.onpaste = (event) => {
+    });
+    document.addEventListener('paste', (event) => {
       const items = (event.clipboardData || event.originalEvent.clipboardData).items;
       for (let index in items) {
         const item = items[index];
@@ -241,12 +263,11 @@ class PainterroProc {
           img.src = URL.createObjectURL(item.getAsFile());
         }
       }
-    };
-
-    window.onresize = () => {
+    });
+    window.addEventListener('resize', () => {
       this.adjustSizeFull();
       this.syncToolElement();
-    };
+    });
   }
 
   getScale() {

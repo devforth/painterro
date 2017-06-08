@@ -15,8 +15,11 @@ export class PrimitiveTool {
 
   procMouseDown(event) {
     const mainClass = event.target.classList[0];
-    this.ctx.lineWidth = 5;
-    this.ctx.strokeStyle  = this.main.colorWidget.alphaColor;
+    this.lineWidth = 5;
+    this.ctx.lineWidth = this.lineWidth;
+    this.halfLineWidth = this.lineWidth / 2;
+    this.ctx.strokeStyle = this.main.colorWidgetState.line.alphaColor;
+    this.ctx.fillStyle =  this.main.colorWidgetState.fill.alphaColor;
     if (mainClass === 'ptro-crp-el') {
       this.tmpData = this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h);
       this.state.cornerMarked = true;
@@ -63,6 +66,13 @@ export class PrimitiveTool {
         this.ctx.stroke();
       } else {
         this.ctx.beginPath();
+
+        this.ctx.fillRect(
+          this.centerCord[0]+this.halfLineWidth * (this.centerCord[0] < this.curCord[0] && 1 || - 1),
+          this.centerCord[1]+this.halfLineWidth * (this.centerCord[1] < this.curCord[1] && 1 || - 1),
+          this.curCord[0]- this.centerCord[0] - this.lineWidth * (this.centerCord[0] < this.curCord[0] && 1 || - 1),
+          this.curCord[1]-this.centerCord[1] - this.lineWidth * (this.centerCord[1] < this.curCord[1] && 1 || - 1));
+
         this.ctx.moveTo(this.centerCord[0], this.centerCord[1]);
         this.ctx.lineTo(this.curCord[0], this.centerCord[1]);
         this.ctx.lineTo(this.curCord[0], this.curCord[1]);

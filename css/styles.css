@@ -186,7 +186,8 @@
 
 .painterro-wrapper div,
 .painterro-wrapper span,
-.painterro-wrapper i{
+.painterro-wrapper i,
+.painterro-bar .ptro-tool-ctl-name{
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
@@ -264,8 +265,16 @@
     outline: none;
 }
 
-.painterro-wrapper .ptro-color-edit .ptro-color-opacity {
-    margin-left: 8px;
+.painterro-wrapper .ptro-color-edit .ptro-color-alpha {
+    font-size: 14px;
+}
+
+.painterro-wrapper .ptro-color-alpha-label {
+    float: left;
+    padding: 0 2px 0 0;
+    margin-left: 5px;
+    line-height: 25px;
+    font-family: "Open Sans", sans-serif;
 }
 
 .painterro-wrapper .ptro-color-edit button {
@@ -352,6 +361,10 @@
 
 .painterro-bar .ptro-tool-ctl-name {
     padding: 0 2px 0 0;
-    line-height: 28px;
+    line-height: 30px;
     font-family: "Open Sans", sans-serif;
+}
+
+.painterro-bar .ptro-tool-ctl-name:not(:first-of-type) {
+    margin-left: 40px;
 }

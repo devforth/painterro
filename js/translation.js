@@ -1,16 +1,29 @@
-export class Translation {
 
+let instance = null;
+
+export class Translation {
   constructor() {
     this.translations = {
       en: {
         lineColor: 'L:',
         lineColorFull: 'Line color',
-        fillColor: 'F',
-        fillColorFull: 'Fill color'
+        fillColor: 'F:',
+        fillColorFull: 'Fill color',
+        alpha: 'A:',
+        alphaFull: 'Alpha'
       }
     };
     this.activate('en');
     this.defaultTranslator = this.translations['en']
+  }
+
+  static get() {
+    if (instance) {
+      return instance
+    } else {
+      instance = new Translation();
+      return instance;
+    }
   }
 
   addTranslation(name, dict) {
