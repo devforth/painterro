@@ -349,3 +349,9 @@
     cursor: crosshair;
 }
 
+
+.painterro-bar .ptro-tool-ctl-name {
+    padding: 0 2px 0 0;
+    line-height: 28px;
+    font-family: "Open Sans", sans-serif;
+}

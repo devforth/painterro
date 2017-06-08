@@ -9,6 +9,7 @@ import { genId, addDocumentOffset } from './utils';
 import { PrimitiveTool } from './primitive';
 import { ColorWidget } from './colorWidget';
 import { setDefaults } from './params';
+import { Translation } from './translation';
 
 class PainterroProc {
 
@@ -63,6 +64,8 @@ class PainterroProc {
       name: 'line',
       controls: [{
           type: 'color',
+          title: 'lineColor',
+          titleFull: 'lineColorFull',
           action: () => {
             this.colorWidget.open();
           }
@@ -81,6 +84,8 @@ class PainterroProc {
       name: 'rect',
       controls: [{
           type: 'color',
+          title: 'lineColor',
+          titleFull: 'lineColorFull',
           action: () => {
             this.colorWidget.open();
           }
@@ -143,6 +148,8 @@ class PainterroProc {
     this.primitiveTool = new PrimitiveTool(this);
     this.worklog = new WorkLog(this);
     this.colorWidget = new ColorWidget(this);
+    this.translator = new Translation();
+    this.tr = (n) => this.translator.tr(n);
 
     for(let b of this.tools) {
       this._getBtnEl(b).onclick = () => {
@@ -154,6 +161,9 @@ class PainterroProc {
           let ctrls = '';
           for (let ctl of b.controls) {
             ctl.id = genId();
+            if (ctl.title) {
+              ctrls += `<span class="ptro-tool-ctl-name" title="${this.tr(ctl.titleFull)}">${this.tr(ctl.title)}</span>`
+            }
             if (ctl.type === 'btn') {
               ctrls += `<button class="${ctl.icon?'icon-btn':'named-btn'}" ` +
                 `id=${ctl.id}>${ctl.icon && ('<i class="icon icon-'+ctl.icon+'></i>') || ''}` +
