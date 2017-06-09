@@ -2,7 +2,7 @@ export class PrimitiveTool {
 
   constructor (main) {
     this.ctx = main.ctx;
-    this.el = main.toolEl;
+    this.el = main.toolContainer;
     this.main = main;
   }
 
@@ -21,7 +21,7 @@ export class PrimitiveTool {
     this.halfLineWidth = this.lineWidth / 2;
     this.ctx.strokeStyle = this.main.colorWidgetState.line.alphaColor;
     this.ctx.fillStyle =  this.main.colorWidgetState.fill.alphaColor;
-    if (mainClass === 'ptro-crp-el') {
+    if (mainClass === 'ptro-crp-el' || mainClass === 'ptro-zoomer') {
       this.tmpData = this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h);
       this.state.cornerMarked = true;
       this.centerCord = [

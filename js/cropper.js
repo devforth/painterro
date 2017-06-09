@@ -5,7 +5,7 @@ export class PainterroCropper {
     this.canvas = main.canvas;
     this.selectionCallback = selectionCallback;
     this.cropper = {
-      el: main.toolEl,
+      el: main.toolContainer,
       rect: document.querySelector(`#${main.id} .ptro-crp-rect`),
     };
   }
@@ -50,10 +50,8 @@ export class PainterroCropper {
   }
 
   procMouseDown(event) {
-    const mainClass = event.target.classList[0];
-      const mousDownCallbacks = {
-        'ptro-crp-el': () => {
-          if (this.cropper.activated) {
+    const handleStart = () => {
+      if (this.cropper.activated) {
             this.cropper.rect.style.left = event.clientX - this.cropper.el.documentOffsetLeft;
             this.cropper.rect.style.top = event.clientY - this.cropper.el.documentOffsetTop;
             this.cropper.rect.style.width = '0px';
@@ -63,7 +61,12 @@ export class PainterroCropper {
             this.cropper.resizingB = true;
             this.cropper.resizingR = true;
           }
-        },
+    }
+
+    const mainClass = event.target.classList[0];
+      const mousDownCallbacks = {
+        'ptro-zoomer' : handleStart,
+        'ptro-crp-el':handleStart,
         'ptro-crp-rect': () => {
           this.cropper.moving = true;
           this.cropper.xHandle = event.clientX - this.cropper.rect.documentOffsetLeft;

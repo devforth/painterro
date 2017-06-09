@@ -52,7 +52,8 @@ export class ColorPicker {
     this.wrapper = document.querySelector(`#${main.id} .ptro-color-widget-wrapper`);
     this.input = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-color`);
     this.inputAlpha = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-color-alpha`);
-    this.button = document.querySelector(`#${main.id} .ptro-color-widget-wrapper button`);
+    this.pipetteButton = document.querySelector(`#${main.id} .ptro-color-widget-wrapper button.ptro-pipette`);
+    this.closeButton = document.querySelector(`#${main.id} .ptro-color-widget-wrapper button.ptro-close`);
     this.colorRegulator = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-color-light-regulator`);
     this.canvas = document.querySelector(`#${main.id} .ptro-color-widget-wrapper canvas`);
     this.ctx = this.canvas.getContext('2d');
@@ -93,10 +94,17 @@ export class ColorPicker {
     this.canvasLight.onmousedown = startLightSelecting;
     this.colorRegulator.onmousedown = startLightSelecting;
 
-    this.button.onclick = () => {
+    this.closeButton.onclick = () => {
       this.wrapper.setAttribute('hidden', 'true');
       this.opened = false;
     };
+
+    this.pipetteButton.onclick = () => {
+      this.wrapper.setAttribute('hidden', 'true');
+      this.opened = false;
+      this.choosing = true;
+    };
+
     this.input.onkeyup = () => {
       this.setActiveColor(this.input.value, true);
     };
@@ -109,8 +117,6 @@ export class ColorPicker {
       this.alpha = this.inputAlpha.value;
       this.setActiveColor(this.color, true);
     });
-
-
   }
 
   open(state) {
@@ -155,6 +161,16 @@ export class ColorPicker {
     this.regetColor();
   }
 
+  handleMouseDown(e) {
+    if (this.choosing && e.button === 0) { //0 - m1, 1 middle, 2-m2
+      this.choosingActive = true;
+      this.handleMouseMove(e);
+      return true;
+    } else {
+      this.choosing = false;
+    }
+  }
+
   handleMouseMove(e) {
     if (this.opened) {
       if (this.selecting) {
@@ -163,12 +179,31 @@ export class ColorPicker {
       if (this.lightSelecting) {
         this.getColorLightAtClick(e)
       }
+    } else if (this.choosingActive) {
+      const scale = this.main.getScale();
+      let x = (e.clientX - this.main.canvas.documentOffsetLeft)*scale;
+      x = x < 1 && 1 || x;
+      x = x > this.main.size.w - 1 && this.main.size.w - 1 || x;
+      let y = (e.clientY - this.main.canvas.documentOffsetTop)*scale;
+      y = y < 1 && 1 || y;
+      y = y > this.main.size.h - 1 && this.main.size.h - 1 || y;
+      const p = this.main.ctx.getImageData(x, y, 1, 1).data;
+      const color = rgbToHex(p[0], p[1], p[2]);
+      this.callback({
+        alphaColor: HexToRGBA(color, 1),
+        lightPosition: this.w - 1,
+        alpha: 1,
+        palleteColor: color,
+        target: this.target
+      });
     }
   }
 
   handleMouseUp(e) {
     this.selecting = false;
     this.lightSelecting = false;
+    this.choosing = false;
+    this.choosingActive = false;
   }
 
   setActiveColor(color, ignoreUpdateText) {
@@ -203,10 +238,12 @@ export class ColorPicker {
           '<span class="ptro-color-light-regulator"></span>' +
           '<div class="ptro-colors"></div>' +
             '<div class="ptro-color-edit">' +
-            '<input class="ptro-color" type="text" size="7"/>' +
-             `<span class="ptro-color-alpha-label" title="${Translation.get().tr('alphaFull')}">${Translation.get().tr('alpha')}</span>` +
-            '<input class="ptro-color-alpha" type="number" min="0" max="1" step="0.1"/>' +
-            '<button class="named-btn">Close</button>' +
+              '<button class="icon-btn ptro-pipette" style="float: left; margin-right: 5px"><i class="icon icon-pipette"></i></button>' +
+              '<input class="ptro-color" type="text" size="7"/>' +
+              `<span style="float:right"><span class="ptro-color-alpha-label" title="${Translation.get().tr('alphaFull')}">${Translation.get().tr('alpha')}</span>` +
+              '<input class="ptro-color-alpha" type="number" min="0" max="1" step="0.1"/></span>' +
+              '<div><button class="named-btn ptro-close" ' +
+                'style="margin-top: 8px;position: absolute; top: 225px; right: 10px;width: 50px;">Close</button></div>' +
             '</div>' +
           '</div>' +
         '</div>' +

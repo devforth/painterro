@@ -10,6 +10,7 @@ import { PrimitiveTool } from './primitive';
 import { ColorPicker } from './colorPicker';
 import { setDefaults } from './params';
 import { Translation } from './translation';
+import { ZoomHelper } from './zoomHelper';
 
 class PainterroProc {
 
@@ -22,14 +23,14 @@ class PainterroProc {
     this.tools = [{
       name: 'crop',
       activate: () => {
-        this.toolEl.style.cursor = 'crosshair';
+        this.toolContainer.style.cursor = 'crosshair';
         this.cropper.activate();
         this.cropper.draw();
       },
       close: () => {
         this.cropper.cropper.activated = false;
         this.cropper.cropper.rect.setAttribute('hidden', 'true');
-        this.toolEl.style.cursor = 'auto';
+        this.toolContainer.style.cursor = 'auto';
       },
       controls: [{
         name: 'Apply',
@@ -77,7 +78,7 @@ class PainterroProc {
         }
       ],
       activate: () => {
-        this.toolEl.style.cursor = 'crosshair';
+        this.toolContainer.style.cursor = 'crosshair';
         this.primitiveTool.activate('line');
       },
       handlers: {
@@ -120,7 +121,7 @@ class PainterroProc {
         }
       ],
       activate: () => {
-        this.toolEl.style.cursor = 'crosshair';
+        this.toolContainer.style.cursor = 'crosshair';
         this.primitiveTool.activate('rect');
       },
       handlers: {
@@ -128,10 +129,7 @@ class PainterroProc {
         mu: (e) => this.primitiveTool.procMoseUp(e),
         mm: (e) => this.primitiveTool.procMouseMove(e)
       }
-    }, {
-      name: 'pipette',
-      controls: ''
-    }];
+    }, ];
     this.activeTool = undefined;
 
     this.ratioRelation = undefined;
@@ -152,20 +150,22 @@ class PainterroProc {
         `<canvas id="ptro-canvas-${this.id}"></canvas>` +
         cropper +
         ColorPicker.html() +
+        ZoomHelper.html() +
       '</div>' +
       '<div class="painterro-bar">' +
         '<span>' + bar + '</span>' +
         '<span class="tool-controls"></span>' +
-        '<span class="painterro-info"></span>' +
+        '<span class="ptro-info"></span>' +
       '</div>';
 
     this.body = document.body;
     this.wrapper = document.querySelector(`#${this.id} .painterro-wrapper`);
-    this.info = document.querySelector(`#${this.id} .painterro-info`);
+    this.info = document.querySelector(`#${this.id} .ptro-info`);
     this.canvas = document.querySelector(`#${this.id} canvas`);
     this.ctx = this.canvas.getContext('2d');
     this.toolControls = document.querySelector(`#${this.id} .tool-controls`);
-    this.toolEl = document.querySelector(`#${this.id} .ptro-crp-el`);
+    this.toolContainer = document.querySelector(`#${this.id} .ptro-crp-el`);
+    this.zoomHelper = new ZoomHelper(this);
     this.cropper = new PainterroCropper(this, (notEmpty) => {
       if (notEmpty) {
         document.getElementById(this.tools[0].controls[0].id).removeAttribute('disabled');
@@ -243,7 +243,6 @@ class PainterroProc {
         }
       };
     }
-
     this.initCallbacks();
     this.clear();
   }
@@ -266,11 +265,14 @@ class PainterroProc {
   }
   initCallbacks() {
     this.body.addEventListener('mousedown', (e) => {
-      this.handleToolEvent('md', e);
+      if (this.colorPicker.handleMouseDown(e) !== true) {
+        this.handleToolEvent('md', e);
+      }
     });
     document.addEventListener('mousemove', (e) => {
       this.handleToolEvent('mm', e);
       this.colorPicker.handleMouseMove(e);
+      this.zoomHelper.handleMouseMove(e);
     });
     document.addEventListener('mouseup', (e) => {
       this.handleToolEvent('mu', e);
@@ -346,10 +348,15 @@ class PainterroProc {
   }
 
   syncToolElement() {
-    this.toolEl.style.left = this.canvas.offsetLeft;
-    this.toolEl.style.top = this.canvas.offsetTop;
-    this.toolEl.style.width = this.canvas.clientWidth;
-    this.toolEl.style.height = this.canvas.clientHeight;
+    // save values before changing, changing one in toolContainer may lead to changing other in canvas
+    const w = this.canvas.clientWidth;
+    const l = this.canvas.offsetLeft;
+    const h = this.canvas.clientHeight;
+    const t = this.canvas.offsetTop;
+    this.toolContainer.style.left = `${l}px`;
+    this.toolContainer.style.width = `${w}px`;
+    this.toolContainer.style.top = `${t}px`;
+    this.toolContainer.style.height = `${h}px`;
   }
 
   clear() {

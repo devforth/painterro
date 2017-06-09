@@ -41,7 +41,8 @@
     display: block;
 }
 
-.painterro-bar .icon-btn {
+.painterro-bar .icon-btn,
+.painterro-wrapper .icon-btn{
     background-color: #CDE0FF;
     border: 0;
     padding: 7px 5px 5px 5px;
@@ -198,13 +199,13 @@
     -webkit-touch-callout: none;
 }
 
-.painterro-info {
+.ptro-info {
     font-family: "Open Sans", sans-serif;
     font-size: 10px;
     float: right;
     padding: 4px 4px 4px 0;
     position: absolute;
-    right: 0;
+    right: 40px;
     bottom: 0;
 }
 
@@ -236,7 +237,7 @@
 
 .painterro-wrapper .ptro-pallet {
     width: 180px;
-    height: 215px;
+    height: 245px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -376,4 +377,11 @@
     width: 40px;
     font-family: "Open Sans", sans-serif;
     font-size: 16px;
+}
+
+.painterro-wrapper .ptro-zoomer{
+    border-top:1px solid white;
+    border-left:1px solid white;
+    position: absolute;
+    z-index: 2000;
 }
