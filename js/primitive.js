@@ -8,14 +8,15 @@ export class PrimitiveTool {
 
   activate(type) {
     this.type = type;
-    this.state = {
+    this.state = {};
+  }
 
-    };
+  setLineWidth(width) {
+    this.lineWidth = width;
   }
 
   procMouseDown(event) {
     const mainClass = event.target.classList[0];
-    this.lineWidth = 5;
     this.ctx.lineWidth = this.lineWidth;
     this.halfLineWidth = this.lineWidth / 2;
     this.ctx.strokeStyle = this.main.colorWidgetState.line.alphaColor;

@@ -187,7 +187,8 @@
 .painterro-wrapper div,
 .painterro-wrapper span,
 .painterro-wrapper i,
-.painterro-bar .ptro-tool-ctl-name{
+.painterro-bar .ptro-tool-ctl-name,
+.painterro-bar input {
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
@@ -210,7 +211,7 @@
 .color-diwget-btn {
     height: 32px;
     width: 32px;
-    border: 1px solid black;
+    border: 1px solid #7485b1;
     cursor: pointer;
     z-index: 201;
     position: absolute;
@@ -367,4 +368,12 @@
 
 .painterro-bar .ptro-tool-ctl-name:not(:first-of-type) {
     margin-left: 40px;
+}
+
+.painterro-bar .ptro-input {
+    padding: 5px 2px 4px 2px;
+    border: 1px solid #7485b1;
+    width: 40px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
 }

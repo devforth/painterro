@@ -9,6 +9,8 @@ export function setDefaults(params) {
   params.activeFillColorAlpha = params.activeFillColorAlpha || 0;
   params.activeFillAlphaColor = HexToRGBA(params.activeFillColor, params.activeFillColorAlpha);
 
+  params.defaultLineWidth = params.defaultLineWidth || 5;
+
   params.backgroundFillColor = params.backgroundFillColor || "#ffffff";
 
   return params;

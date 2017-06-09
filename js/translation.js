@@ -10,7 +10,9 @@ export class Translation {
         fillColor: 'F:',
         fillColorFull: 'Fill color',
         alpha: 'A:',
-        alphaFull: 'Alpha'
+        alphaFull: 'Alpha',
+        lineWidth: 'W:',
+        lineWidthFull: 'Line width'
       }
     };
     this.activate('en');

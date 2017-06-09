@@ -60,7 +60,21 @@ class PainterroProc {
           action: () => {
             this.colorPicker.open(this.colorWidgetState.line);
           }
-        },
+        }, {
+          type: 'int',
+          title: 'lineWidth',
+          titleFull: 'lineWidthFull',
+          target: 'lineWidth',
+          min: 1,
+          max: 50,
+          action: () => {
+            const width = document.getElementById(this.activeTool.controls[1].id);
+            this.primitiveTool.setLineWidth(width.value);
+          },
+          getValue: () => {
+            return this.primitiveTool.lineWidth;
+          }
+        }
       ],
       activate: () => {
         this.toolEl.style.cursor = 'crosshair';
@@ -89,7 +103,21 @@ class PainterroProc {
           action: () => {
             this.colorPicker.open(this.colorWidgetState.fill);
           }
-        },
+        }, {
+          type: 'int',
+          title: 'lineWidth',
+          titleFull: 'lineWidthFull',
+          target: 'lineWidth',
+          min: 1,
+          max: 50,
+          action: () => {
+            const width = document.getElementById(this.activeTool.controls[2].id);
+            this.primitiveTool.setLineWidth(width.value);
+          },
+          getValue: () => {
+            return this.primitiveTool.lineWidth;
+          }
+        }
       ],
       activate: () => {
         this.toolEl.style.cursor = 'crosshair';
@@ -146,6 +174,7 @@ class PainterroProc {
       }
     });
     this.primitiveTool = new PrimitiveTool(this);
+    this.primitiveTool.setLineWidth(this.params.defaultLineWidth)
     this.worklog = new WorkLog(this);
     this.colorPicker = new ColorPicker(this, (widgetState) => {
       this.colorWidgetState[widgetState.target] = widgetState;
@@ -195,11 +224,20 @@ class PainterroProc {
                     '<span></span><span></span><span></span><span></span>' +
                     '<span></span><span></span><span></span><span></span>' +
                   '</span>';
+            } else if (ctl.type === 'int') {
+              ctrls += `<input id=${ctl.id} class="ptro-input" type="number" min="${ctl.min}" max="${ctl.max}" ` +
+                `data-id='${ctl.target}'/>`
             }
           }
           this.toolControls.innerHTML = ctrls;
           for (let ctl of b.controls) {
-            document.getElementById(ctl.id).onclick = ctl.action;
+            if (ctl.type === 'int') {
+              document.getElementById(ctl.id).value = ctl.getValue();
+              document.getElementById(ctl.id).onclick = ctl.action;
+              document.getElementById(ctl.id).onchange = ctl.action;
+            } else {
+              document.getElementById(ctl.id).onclick = ctl.action;
+            }
           }
           b.activate();
         }
