@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --optimize-minimize --progress",
-    "dev": "webpack-dev-server --inline --hot --content-base build/"
+    "dev": "webpack-dev-server --inline --hot --content-base build/ --port 8080 --host 0.0.0.0"
   },
   "keywords": [
     "paint",

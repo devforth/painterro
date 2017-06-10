@@ -1,13 +1,3 @@
-function passEvent(element, e) {
-  console.log(e);
-  let new_e = new MouseEvent(e.type, e)
-  if (document.createEvent) {
-    element.dispatchEvent(new_e);
-  } else {
-    element.fireEvent("on" + new_e.eventType, new_e);
-  }
-}
-
 export class ZoomHelper {
   constructor(main) {
     this.main = main;
@@ -31,19 +21,17 @@ export class ZoomHelper {
 
     this.captW = 7;
     this.middle = Math.ceil(this.captW / 2) - 1;
-    this.periodW = 14;
+    this.periodW = 8;
 
     this.fullW = this.captW * (this.periodW);
     this.halfFullW = this.fullW / 2;
     this.zomer.setAttribute('width', this.fullW );
     this.zomer.setAttribute('height', this.fullW );
     this.cursor = this.wrapper.style.cursor;
-    this.zomer.onmousedown = (e) => {passEvent(this.wrapper, e)};
-    this.zomer.onmousemove = (e) => {passEvent(this.wrapper, e)};
   }
 
   handleMouseMove(e) {
-    if (e.altKey) {
+    if (this.main.colorPicker.choosing && e.altKey) {
       if (!this.shown) {
         this.shown = true;
         this.zomer.style.display="block";

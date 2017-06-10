@@ -131,7 +131,7 @@ class PainterroProc {
       }
     }, ];
     this.activeTool = undefined;
-
+    this.zoom = false;
     this.ratioRelation = undefined;
     this.id = this.params.id;
     this.bgColor = this.params.backgroundFillColor;
@@ -243,7 +243,7 @@ class PainterroProc {
         }
       };
     }
-    this.initCallbacks();
+    this.initEventHandlers();
     this.clear();
   }
 
@@ -263,51 +263,72 @@ class PainterroProc {
     this.activeTool && this.activeTool.handlers &&
     this.activeTool.handlers[eventName] && this.activeTool.handlers[eventName](event);
   }
-  initCallbacks() {
-    this.body.addEventListener('mousedown', (e) => {
-      if (this.colorPicker.handleMouseDown(e) !== true) {
-        this.handleToolEvent('md', e);
-      }
-    });
-    document.addEventListener('mousemove', (e) => {
-      this.handleToolEvent('mm', e);
-      this.colorPicker.handleMouseMove(e);
-      this.zoomHelper.handleMouseMove(e);
-    });
-    document.addEventListener('mouseup', (e) => {
-      this.handleToolEvent('mu', e);
-      this.colorPicker.handleMouseUp(e);
-    });
-    document.addEventListener('keydown', (e) => {
-      const evt = window.event ? event : e;
-      if (
-        (evt.keyCode == 89 && evt.ctrlKey) ||  // 89 is 'y' key
-        (evt.keyCode == 90 && evt.ctrlKey && evt.shiftKey) ){  // 90 is 'z' key
-          this.worklog.redoState();
-      } else if (evt.keyCode == 90 && evt.ctrlKey) {
-          this.worklog.undoState();
-      }
-    });
-    document.addEventListener('paste', (event) => {
-      const items = (event.clipboardData || event.originalEvent.clipboardData).items;
-      for (let index in items) {
-        const item = items[index];
-        if (item.kind === 'file' && item.type.split('/')[0] === "image") {
-          const img = new Image;
-          img.onload = () => {
-            this.resize(img.naturalWidth, img.naturalHeight);
-            this.ctx.drawImage(img, 0, 0);
-            this.adjustSizeFull();
-            this.worklog.captureState();
-          };
-          img.src = URL.createObjectURL(item.getAsFile());
+
+  initEventHandlers() {
+    this.documentHandlers = {
+      'mousedown': (e) => {
+        if (this.colorPicker.handleMouseDown(e) !== true) {
+          this.handleToolEvent('md', e);
+        }
+      },
+      'mousemove': (e) => {
+        this.handleToolEvent('mm', e);
+        this.colorPicker.handleMouseMove(e);
+        this.zoomHelper.handleMouseMove(e);
+      },
+      'mouseup': (e) => {
+        this.handleToolEvent('mu', e);
+        this.colorPicker.handleMouseUp(e);
+      },
+      'mousewheel': (e) => {
+        if (e.ctrlKey) {
+          this.zoom = e.wheelDelta > 0;
+          this.adjustSizeFull();
+          e.preventDefault();
+        }
+      },
+      'keydown': (e) => {
+        const evt = window.event ? event : e;
+        if (
+          (evt.keyCode == 89 && evt.ctrlKey) ||  // 89 is 'y' key
+          (evt.keyCode == 90 && evt.ctrlKey && evt.shiftKey) ){  // 90 is 'z' key
+            this.worklog.redoState();
+        } else if (evt.keyCode == 90 && evt.ctrlKey) {
+            this.worklog.undoState();
+        }
+      },
+      'paste': (event) => {
+        const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+        for (let item of items) {
+          if (item.kind === 'file' && item.type.split('/')[0] === "image") {
+            const img = new Image;
+            img.onload = () => {
+              this.resize(img.naturalWidth, img.naturalHeight);
+              this.ctx.drawImage(img, 0, 0);
+              this.adjustSizeFull();
+              this.worklog.captureState();
+            };
+            img.src = URL.createObjectURL(item.getAsFile());
+          }
         }
       }
-    });
-    window.addEventListener('resize', () => {
-      this.adjustSizeFull();
-      this.syncToolElement();
-    });
+    };
+
+    this.windowHandlers = {
+      'resize': () => {
+        this.adjustSizeFull();
+        this.syncToolElement();
+      }
+    };
+
+    for (let key of Object.keys(this.documentHandlers)) {
+       document.addEventListener(key, this.documentHandlers[key]);
+    }
+
+    for (let key of Object.keys(this.windowHandlers)) {
+       window.addEventListener(key, this.windowHandlers[key]);
+    }
+
   }
 
   getScale() {
@@ -316,20 +337,33 @@ class PainterroProc {
   adjustSizeFull() {
     if (this.size.w > this.wrapper.clientWidth || this.size.h > this.wrapper.clientHeight) {
       const ratio = this.wrapper.clientWidth / this.wrapper.clientHeight;
-      let newRelation = ratio < this.size.ratio;
-      if (newRelation !== this.ratioRelation) {
-        this.ratioRelation = newRelation;
-        if (newRelation) {
-          this.canvas.style.width = '100%';
-          this.canvas.style.height = 'auto';
-        } else {
-          this.canvas.style.width = 'auto';
-          this.canvas.style.height = '100%';
+
+      if (this.zoom === false) {
+        let newRelation = ratio < this.size.ratio;
+        if (newRelation !== this.ratioRelation) {
+          this.ratioRelation = newRelation;
+          if (newRelation) {
+            this.canvas.style.width = '100%';
+            this.canvas.style.height = 'auto';
+          } else {
+            this.canvas.style.width = 'auto';
+            this.canvas.style.height = '100%';
+          }
         }
+        this.wrapper.style['overflow'] = 'hidden';
+        this.wrapper.className = 'painterro-wrapper ptro-v-aligned';
+      } else {
+        this.wrapper.style['overflow'] = 'scroll';
+        this.canvas.style.width = 'auto';
+        this.canvas.style.height = 'auto';
+        this.ratioRelation = 0;
+        this.wrapper.className = 'painterro-wrapper';
       }
     } else {
+      this.wrapper.style['overflow'] = 'hidden';
       this.canvas.style.width = 'auto';
       this.canvas.style.height = 'auto';
+      this.wrapper.className = 'painterro-wrapper ptro-v-aligned';
       this.ratioRelation = 0;
     }
     this.syncToolElement();

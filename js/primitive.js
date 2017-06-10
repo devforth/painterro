@@ -25,9 +25,10 @@ export class PrimitiveTool {
       this.tmpData = this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h);
       this.state.cornerMarked = true;
       this.centerCord = [
-        event.clientX - this.el.documentOffsetLeft,
-        event.clientY - this.el.documentOffsetTop,
+        event.clientX - this.el.documentOffsetLeft + this.main.wrapper.scrollLeft,
+        event.clientY - this.el.documentOffsetTop + this.main.wrapper.scrollTop ,
       ];
+
       const scale = this.main.getScale();
       this.centerCord = [this.centerCord[0] * scale, this.centerCord[1] * scale];
     }
@@ -37,8 +38,8 @@ export class PrimitiveTool {
     if (this.state.cornerMarked) {
       this.ctx.putImageData(this.tmpData, 0, 0);
       this.curCord = [
-        event.clientX - this.el.documentOffsetLeft,
-        event.clientY - this.el.documentOffsetTop,
+        event.clientX - this.el.documentOffsetLeft + this.main.wrapper.scrollLeft,
+        event.clientY - this.el.documentOffsetTop + this.main.wrapper.scrollTop,
       ];
       const scale = this.main.getScale();
       this.curCord = [this.curCord[0] * scale, this.curCord[1] * scale];

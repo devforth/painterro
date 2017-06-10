@@ -50,10 +50,12 @@ export class PainterroCropper {
   }
 
   procMouseDown(event) {
-    const handleStart = () => {
-      if (this.cropper.activated) {
-            this.cropper.rect.style.left = event.clientX - this.cropper.el.documentOffsetLeft;
-            this.cropper.rect.style.top = event.clientY - this.cropper.el.documentOffsetTop;
+    const mainClass = event.target.classList[0];
+      const mousDownCallbacks = {
+        'ptro-crp-el': () => {
+          if (this.cropper.activated) {
+            this.cropper.rect.style.left = event.clientX - this.cropper.el.documentOffsetLeft + this.main.wrapper.scrollLeft;
+            this.cropper.rect.style.top = event.clientY - this.cropper.el.documentOffsetTop + this.main.wrapper.scrollTop;
             this.cropper.rect.style.width = '0px';
             this.cropper.rect.style.height = '0px';
             this.reCalcCropperCords();
@@ -61,16 +63,11 @@ export class PainterroCropper {
             this.cropper.resizingB = true;
             this.cropper.resizingR = true;
           }
-    }
-
-    const mainClass = event.target.classList[0];
-      const mousDownCallbacks = {
-        'ptro-zoomer' : handleStart,
-        'ptro-crp-el':handleStart,
+        },
         'ptro-crp-rect': () => {
           this.cropper.moving = true;
-          this.cropper.xHandle = event.clientX - this.cropper.rect.documentOffsetLeft;
-          this.cropper.yHandle = event.clientY - this.cropper.rect.documentOffsetTop;
+          this.cropper.xHandle = event.clientX - this.cropper.rect.documentOffsetLeft + this.main.wrapper.scrollLeft;
+          this.cropper.yHandle = event.clientY - this.cropper.rect.documentOffsetTop + this.main.wrapper.scrollTop;
         },
         'ptro-crp-tr': () => {
           this.cropper.resizingT = true;
@@ -108,14 +105,14 @@ export class PainterroCropper {
 
   procMouseMove(event) {
     if (this.cropper.moving ) {
-      let newLeft = event.clientX - this.cropper.el.documentOffsetLeft - this.cropper.xHandle;
+      let newLeft = event.clientX - this.cropper.el.documentOffsetLeft - this.cropper.xHandle + this.main.wrapper.scrollLeft;
       if (newLeft < 0) {
         newLeft = 0;
       } else if (newLeft + this.cropper.rect.clientWidth > this.cropper.el.clientWidth - 2) {
         newLeft = this.cropper.el.clientWidth - this.cropper.rect.clientWidth - 2;
       }
       this.cropper.rect.style.left = newLeft;
-      let newTop = event.clientY - this.cropper.el.documentOffsetTop - this.cropper.yHandle;
+      let newTop = event.clientY - this.cropper.el.documentOffsetTop - this.cropper.yHandle + this.main.wrapper.scrollTop;
       if (newTop < 0) {
         newTop = 0;
       } else if (newTop + this.cropper.rect.clientHeight > this.cropper.el.clientHeight - 2) {
@@ -126,24 +123,24 @@ export class PainterroCropper {
     } else {
       if (this.cropper.resizingR) {
         this.cropper.rect.style.width = `${
-          this.fixCropperWidth(event.clientX - this.cropper.rect.documentOffsetLeft)}px`;
+          this.fixCropperWidth(event.clientX - this.cropper.rect.documentOffsetLeft + this.main.wrapper.scrollLeft)}px`;
         this.reCalcCropperCords();
       }
       if (this.cropper.resizingB) {
         this.cropper.rect.style.height = `${
-          this.fixCropperHeight(event.clientY - this.cropper.rect.documentOffsetTop)}px`;
+          this.fixCropperHeight(event.clientY - this.cropper.rect.documentOffsetTop + this.main.wrapper.scrollTop)}px`;
         this.reCalcCropperCords();
       }
       if (this.cropper.resizingL) {
         const origRight = this.cropper.rect.documentOffsetLeft + this.cropper.rect.clientWidth;
-        const absLeft = this.fixCropperLeft(event.clientX);
+        const absLeft = this.fixCropperLeft(event.clientX + this.main.wrapper.scrollLeft);
         this.cropper.rect.style.left = `${absLeft - this.cropper.el.documentOffsetLeft}px`;
         this.cropper.rect.style.width = `${origRight - absLeft}px`;
         this.reCalcCropperCords();
       }
       if (this.cropper.resizingT) {
         const origTop = this.cropper.rect.documentOffsetTop + this.cropper.rect.clientHeight;
-        const absTop = this.fixCropperTop(event.clientY);
+        const absTop = this.fixCropperTop(event.clientY + this.main.wrapper.scrollTop);
         this.cropper.rect.style.top = `${absTop - this.cropper.el.documentOffsetTop}px`;
         this.cropper.rect.style.height = `${origTop - absTop}px`;
         this.reCalcCropperCords();
