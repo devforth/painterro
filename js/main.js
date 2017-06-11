@@ -382,7 +382,6 @@ class PainterroProc {
   }
 
   syncToolElement() {
-    // save values before changing, changing one in toolContainer may lead to changing other in canvas
     const w = this.canvas.clientWidth;
     const l = this.canvas.offsetLeft;
     const h = this.canvas.clientHeight;
