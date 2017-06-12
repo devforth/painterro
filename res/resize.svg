@@ -15,9 +15,24 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="line.svg">
+   sodipodi:docname="resize.svg">
   <defs
-     id="defs4" />
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lend"
+       style="overflow:visible;"
+       inkscape:isstock="true">
+      <path
+         id="path5315"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;"
+         transform="scale(0.8) rotate(180) translate(12.5,0)" />
+    </marker>
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -25,9 +40,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6568542"
-     inkscape:cx="23.648709"
-     inkscape:cy="41.546861"
+     inkscape:zoom="4"
+     inkscape:cx="37.164255"
+     inkscape:cy="74.92841"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -40,7 +55,10 @@
      width="10mm"
      units="px"
      inkscape:snap-bbox="true"
-     inkscape:bbox-nodes="true">
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-midpoints="false"
+     inkscape:snap-bbox-edge-midpoints="false"
+     inkscape:bbox-paths="true">
     <inkscape:grid
        type="xygrid"
        id="grid4136"
@@ -67,14 +85,10 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-952.36217)">
-    <rect
+    <path
        style="fill:#000000;fill-opacity:1;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-       id="rect4138-4"
-       width="10"
-       height="105"
-       x="737.36469"
-       y="-724.15399"
-       ry="0"
-       transform="matrix(0.70710678,0.70710678,0.70710678,-0.70710678,0,0)" />
+       d="M 85.433594 7.5 L 56.455078 15.263672 L 59.042969 24.923828 L 71.291016 21.642578 L 50.078125 42.855469 L 57.148438 49.925781 L 78.357422 28.716797 L 75.076172 40.962891 L 84.736328 43.550781 L 92.5 14.574219 L 92.5 14.572266 L 92.503906 14.570312 L 85.433594 7.5 z M 42.855469 50.074219 L 21.646484 71.283203 L 24.927734 59.037109 L 15.269531 56.449219 L 7.5039062 85.427734 L 7.5 85.429688 L 14.570312 92.5 L 43.548828 84.736328 L 40.960938 75.076172 L 28.712891 78.357422 L 49.925781 57.144531 L 42.855469 50.074219 z "
+       transform="translate(0,952.36217)"
+       id="rect4138-4-6" />
   </g>
 </svg>
