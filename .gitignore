@@ -58,3 +58,8 @@ typings/
 .env
 
 .idea
+
+# custom 
+build/painterro.js 
+build/painterro.js.map
+ 
