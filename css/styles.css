@@ -31,8 +31,8 @@
 .ptro-named-btn {
     border: 0;
     display: inline-block;
-    height: 32px;
-    margin-right: 4px;
+    height: 30px;
+    margin-left: 4px;
     font-family: "Open Sans", sans-serif;
     position: relative;
     top:-5px
@@ -165,14 +165,7 @@
     bottom: 0;
 }
 
-.color-diwget-btn {
-    height: 32px;
-    width: 32px;
-    cursor: pointer;
-    z-index: 201;
-    position: relative;
-    top: 4px;
-}
+
 
 .ptro-wrapper .ptro-color-widget-wrapper {
     position: absolute;
@@ -272,4 +265,22 @@
     position: absolute;
     z-index: 2000;
     display: none;
+}
+
+.ptro-text-tool-input {
+    position: absolute;
+    background-color: rgba(0,0,0,0);
+    border: 1px solid;
+    border-style: dashed;
+    width: auto;
+    display: block;
+    min-width: 5px;
+    padding: 0 1px;
+    overflow-x: hidden;
+    word-wrap: normal;
+    overflow-y: hidden;
+}
+
+.ptro-text-tool-input:focus {
+    outline: none;
 }

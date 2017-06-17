@@ -1,3 +1,31 @@
+.color-diwget-btn {
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+    z-index: 201;
+    position: absolute;
+    top: 4px;
+}
+
+.color-diwget-btn-substrate {
+    display: inline-block;
+    width: 32px;
+}
+
+.ptro-bar .ptro-btn-color-bg {
+    z-index: 200;
+    position: absolute;
+    top: 4px;
+}
+
+.ptro-bar .ptro-btn-color-bg span {
+    width: 8px;
+    background-color: rgb(103, 103, 103);
+    display: block;
+    height: 8px;
+    position: absolute;
+}
+
 .ptro-bar .ptro-btn-color-bg span:nth-of-type(1) {
     left: 0;
 }
@@ -64,20 +92,7 @@
     width: 42px;
 }
 
-.ptro-bar .ptro-btn-color-bg {
-    z-index: 200;
-    position: relative;
-    right: 32px;
-    bottom: 36px;
-}
 
-.ptro-bar .ptro-btn-color-bg span {
-    width: 8px;
-    background-color: rgb(103, 103, 103);
-    display: block;
-    height: 8px;
-    position: absolute;
-}
 
 .ptro-bar .ptro-named-btn p {
     margin: 0;

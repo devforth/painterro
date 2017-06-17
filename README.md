@@ -25,7 +25,7 @@ written on ES6 which transplited by Babel and packed using webpack.
 |`activeFillColorAlpha` | Transparancy of `activeColor` from 0.0 to 1.0 | 0 |
 |`defaultLineWidth` | Line width in `px` that selected by default | 5 |
 |`backgroundFillColor` | Default background color when image created/erased | "#ffffff" |
-
+|`defaultFontSize` | | 12 |
 ### UI color scheme (`colorScheme` group)
 Next group of params used to configure painterro user interface. 
 They should be placed under `colorScheme` group (see example below)

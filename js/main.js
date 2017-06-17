@@ -1,8 +1,8 @@
 'use strict';
 
 import '../css/styles.css';
+import '../css/bar-styles.css';
 import '../css/icons/styles.css';
-import '../css/icons/bar-styles.css';
 
 import { PainterroCropper } from './cropper';
 import { WorkLog } from './worklog';
@@ -115,10 +115,10 @@ class PainterroProc {
           max: 50,
           action: () => {
             const width = document.getElementById(this.activeTool.controls[2].id).value;
-            this.textTool.setFontSize(width);
+            this.primitiveTool.setLineWidth(width);
           },
           getValue: () => {
-            return this.textTool.fontSize;
+            return this.primitiveTool.lineWidth;
           }
         },
       ],
@@ -140,7 +140,9 @@ class PainterroProc {
           titleFull: 'textColorFull',
           target: 'line',
           action: () => {
-            this.colorPicker.open(this.colorWidgetState.line);
+            this.colorPicker.open(this.colorWidgetState.line, (c) => {
+              this.textTool.setFontColor(c.alphaColor);
+            });
           }
         }, {
           type: 'int',
@@ -150,20 +152,21 @@ class PainterroProc {
           min: 1,
           max: 50,
           action: () => {
-            const width = document.getElementById(this.activeTool.controls[2].id).value;
-            this.primitiveTool.setLineWidth(width);
+            const width = document.getElementById(this.activeTool.controls[1].id).value;
+            this.textTool.setFontSize(width);
+
           },
           getValue: () => {
-            return this.primitiveTool.lineWidth;
+            return this.textTool.fontSize;
           }
-        },
-       {
+        }, {
           type: 'dropdown',
           title: 'fontName',
           titleFull: 'fontNameFull',
           target: 'fontName',
           action: () => {
-            const font = document.getElementById(this.activeTool.controls[3].id).value;
+            const dropdown = document.getElementById(this.activeTool.controls[2].id);
+            const font = dropdown.value;
             this.textTool.setFont(font);
           },
           getValue: () => {
@@ -172,16 +175,24 @@ class PainterroProc {
           getAvilableValues: () => {
             return this.textTool.getFonts()
           }
-        },
+        }, {
+          name: 'Apply',
+          type: 'btn',
+          action: () => {
+            this.textTool.apply();
+            this.closeActiveTool();
+          }
+        }
       ],
       activate: () => {
+        this.textTool.setFontColor(this.colorWidgetState.line.alphaColor);
         this.toolContainer.style.cursor = 'crosshair';
-        this.primitiveTool.activate('rect');
+        this.textTool.activate();
       },
       handlers: {
-        md: (e) => this.primitiveTool.procMouseDown(e),
-        mu: (e) => this.primitiveTool.procMoseUp(e),
-        mm: (e) => this.primitiveTool.procMouseMove(e)
+        md: (e) => this.textTool.procMouseDown(e),
+        //mu: (e) => this.textTool.procMoseUp(e),
+        //mm: (e) => this.textTool.procMouseMove(e)
       }
     }, ];
     this.activeTool = undefined;
@@ -197,7 +208,7 @@ class PainterroProc {
           `<i class="icon icon-${b.name}"></i></button>`;
     }
 
-    const cropper = `<div class="ptro-crp-el">${PainterroCropper.code()}</div>`;
+    const cropper = `<div class="ptro-crp-el">${PainterroCropper.code()}${TextTool.code()}</div>`;
 
     this.baseEl.innerHTML =
       `<div class="ptro-wrapper" id="ptro-wrapper-${this.id}">` +
@@ -279,7 +290,8 @@ class PainterroProc {
                   '<span class="ptro-btn-color-bg">' +
                     '<span></span><span></span><span></span><span></span>' +
                     '<span></span><span></span><span></span><span></span>' +
-                  '</span>';
+                  '</span>' +
+                  '<span class="color-diwget-btn-substrate"></span>';
             } else if (ctl.type === 'int') {
               ctrls += `<input id=${ctl.id} class="ptro-input" type="number" min="${ctl.min}" max="${ctl.max}" ` +
                 `data-id='${ctl.target}'/>`
@@ -287,10 +299,9 @@ class PainterroProc {
               let options = '';
               for (let o of ctl.getAvilableValues()) {
                 options += `<option ${ctl.target === 'fontName' && ('style=\'font-family:'+o.value+'\'') || ''}` +
-                  ` value="${o.value}">${o.name}</option>`;
+                  ` value='${o.value}'>${o.name}</option>`;
               }
-
-              ctrls += `<select id=${ctl.id} class="ptro-input"> ` +
+              ctrls += `<select id=${ctl.id} class="ptro-input" ` +
                 `data-id='${ctl.target}'>${options}</select>`
             }
           }
@@ -299,6 +310,8 @@ class PainterroProc {
             if (ctl.type === 'int') {
               document.getElementById(ctl.id).value = ctl.getValue();
               document.getElementById(ctl.id).onclick = ctl.action;
+              document.getElementById(ctl.id).onchange = ctl.action;
+            } else if (ctl.type === 'dropdown') {
               document.getElementById(ctl.id).onchange = ctl.action;
             } else {
               document.getElementById(ctl.id).onclick = ctl.action;

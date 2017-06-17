@@ -119,7 +119,7 @@ export class ColorPicker {
     });
   }
 
-  open(state) {
+  open(state, addCallback) {
     this.target = state.target;
     this.palleteColor = state.palleteColor;
     this.alpha = state.alpha;
@@ -132,6 +132,7 @@ export class ColorPicker {
 
     this.wrapper.removeAttribute('hidden');
     this.opened = true;
+    this.addCallback = addCallback;
   }
 
   getPaletteColorAtPoint(e) {
@@ -220,6 +221,15 @@ export class ColorPicker {
     this.alphaColor = HexToRGBA(color, this.alpha);
     if (this.callback !== undefined && this.opened) {
       this.callback({
+        alphaColor: this.alphaColor,
+        lightPosition: this.lightPosition,
+        alpha: this.alpha,
+        palleteColor: this.palleteColor,
+        target: this.target
+      });
+    }
+    if (this.addCallback !== undefined && this.opened) {
+      this.addCallback({
         alphaColor: this.alphaColor,
         lightPosition: this.lightPosition,
         alpha: this.alpha,
