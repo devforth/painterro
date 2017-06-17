@@ -54,6 +54,24 @@ Painterro({
 });
 ```
 
+# Building painterro
+Go to project dir and install npm modules:
+```bash
+npm install
+```
+Then run
+```bash
+npm run build
+```
+Result file is 'build/painterro.js'
+
+## Development
+Use dev-server for development
+```js
+npm run dev
+```
+and open http://localhost:8080
+
 # ToDo list
 
 - Support dropping File to painterro
