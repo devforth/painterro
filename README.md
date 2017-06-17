@@ -63,14 +63,14 @@ Then run
 ```bash
 npm run build
 ```
-Result file is 'build/painterro.js'
+Result file is `build/painterro.js`
 
 ## Development
-Use dev-server for development
+Start dev-server for development
 ```js
 npm run dev
 ```
-and open http://localhost:8080
+and open http://localhost:8080 with demo page
 
 # ToDo list
 

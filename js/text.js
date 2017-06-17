@@ -122,6 +122,7 @@ export class TextTool {
       this.scaledCord[1] + this.input.clientHeight * 0.8 * this.main.getScale());
     this.active = false;
     this.input.style.display = 'none';
+    this.main.worklog.captureState();
   }
 
   static code() {
