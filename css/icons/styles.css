@@ -50,3 +50,15 @@
 .icon-pipette:before {
   content: "\63";
 }
+.icon-freepaint:before {
+  content: "\65";
+}
+.icon-resize:before {
+  content: "\66";
+}
+.icon-rotate:before {
+  content: "\67";
+}
+.icon-text:before {
+  content: "\68";
+}

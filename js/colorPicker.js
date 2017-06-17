@@ -232,17 +232,17 @@ export class ColorPicker {
   static html() {
     return '<div class="ptro-color-widget-wrapper" hidden>' +
       '<div class="ptro-color-widget">' +
-        '<div class="ptro-pallet">' +
+        '<div class="ptro-pallet ptro-color-main">' +
           '<canvas></canvas>' +
           '<canvas class="ptro-canvas-light"></canvas>' +
-          '<span class="ptro-color-light-regulator"></span>' +
+          '<span class="ptro-color-light-regulator ptro-bordered-control"></span>' +
           '<div class="ptro-colors"></div>' +
             '<div class="ptro-color-edit">' +
-              '<button class="icon-btn ptro-pipette" style="float: left; margin-right: 5px"><i class="icon icon-pipette"></i></button>' +
+              '<button class="icon-btn ptro-pipette ptro-color-control" style="float: left; margin-right: 5px"><i class="icon icon-pipette"></i></button>' +
               '<input class="ptro-color" type="text" size="7"/>' +
               `<span style="float:right"><span class="ptro-color-alpha-label" title="${Translation.get().tr('alphaFull')}">${Translation.get().tr('alpha')}</span>` +
-              '<input class="ptro-color-alpha" type="number" min="0" max="1" step="0.1"/></span>' +
-              '<div><button class="named-btn ptro-close" ' +
+              '<input class="ptro-color-alpha ptro-input" type="number" min="0" max="1" step="0.1"/></span>' +
+              '<div><button class="ptro-named-btn ptro-close ptro-color-control" ' +
                 'style="margin-top: 8px;position: absolute; top: 225px; right: 10px;width: 50px;">Close</button></div>' +
             '</div>' +
           '</div>' +

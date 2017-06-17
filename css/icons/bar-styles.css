@@ -1,0 +1,100 @@
+.ptro-bar .ptro-btn-color-bg span:nth-of-type(1) {
+    left: 0;
+}
+
+.ptro-bar .ptro-btn-color-bg span:nth-of-type(2) {
+    left: 8px;
+    margin-top: 8px;
+}
+
+.ptro-bar .ptro-btn-color-bg span:nth-of-type(3) {
+    left: 16px;
+}
+
+.ptro-bar .ptro-btn-color-bg span:nth-of-type(4) {
+    left: 24px;
+    margin-top: 8px;
+}
+
+.ptro-bar .ptro-btn-color-bg span:nth-of-type(5) {
+    left: 0;
+    margin-top: 16px;
+}
+
+.ptro-bar .ptro-btn-color-bg span:nth-of-type(6) {
+    left: 8px;
+    margin-top: 24px;
+}
+
+.ptro-bar .ptro-btn-color-bg span:nth-of-type(7) {
+    left: 16px;
+    margin-top: 16px;
+}
+
+.ptro-bar .ptro-btn-color-bg span:nth-of-type(8) {
+    left: 24px;
+    margin-top: 24px;
+}
+
+
+.ptro-bar .ptro-tool-ctl-name {
+    padding: 0 2px 0 0;
+    line-height: 30px;
+    font-family: "Open Sans", sans-serif;
+    position: relative;
+    top: -4px;
+}
+
+.ptro-bar .ptro-tool-ctl-name {
+    margin-left: 5px;
+}
+
+
+.ptro-bar .ptro-input {
+    height: 32px;
+    line-height: 32px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    position: relative;
+    top: -4px;
+    padding-left: 2px;
+}
+
+.ptro-bar .ptro-input[type="number"] {
+    width: 42px;
+}
+
+.ptro-bar .ptro-btn-color-bg {
+    z-index: 200;
+    position: relative;
+    right: 32px;
+    bottom: 36px;
+}
+
+.ptro-bar .ptro-btn-color-bg span {
+    width: 8px;
+    background-color: rgb(103, 103, 103);
+    display: block;
+    height: 8px;
+    position: absolute;
+}
+
+.ptro-bar .ptro-named-btn p {
+    margin: 0;
+}
+
+.ptro-bar {
+    height: 40px;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.ptro-bar .icon {
+    height: 16px;
+    font-size: 20px;
+}
+
+.ptro-bar .tool-controls {
+    padding-left: 10px;
+}

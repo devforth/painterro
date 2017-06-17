@@ -12,7 +12,13 @@ export class Translation {
         alpha: 'A:',
         alphaFull: 'Alpha',
         lineWidth: 'W:',
-        lineWidthFull: 'Line width'
+        lineWidthFull: 'Line width',
+        textColor: 'C:',
+        textColorFull: 'Text color',
+        fontSize: 'S:',
+        fontSizeFull: 'Font Size',
+        fontName: 'F:',
+        fontNameFull: 'Font name'
       }
     };
     this.activate('en');
