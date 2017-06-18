@@ -197,6 +197,15 @@ export class ColorPicker {
         palleteColor: color,
         target: this.target
       });
+      if (this.addCallback !== undefined) {
+        this.addCallback({
+          alphaColor:HexToRGBA(color, 1),
+          lightPosition: this.w - 1,
+          alpha: 1,
+          palleteColor: color,
+          target: this.target
+        });
+      }
     }
   }
 

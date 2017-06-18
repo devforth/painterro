@@ -51,7 +51,7 @@ export class PainterroCropper {
     console.log('recalced cords', ratio, this.cropper.topl, this.cropper.bottoml);
   }
 
-  procMouseDown(event) {
+  handleMouseDown(event) {
     const mainClass = event.target.classList[0];
       const mousDownCallbacks = {
         'ptro-crp-el': () => {
@@ -129,7 +129,7 @@ export class PainterroCropper {
     this.cropper.rect.style.bottom = `${v}px`;
   }
 
-  procMouseMove(event) {
+  handleMouseMove(event) {
     if (this.cropper.moving ) {
       let newLeft = event.clientX - this.cropper.el.documentOffsetLeft - this.cropper.xHandle + this.main.wrapper.scrollLeft;
       if (newLeft < -1) {
@@ -178,7 +178,7 @@ export class PainterroCropper {
     }
   }
 
-  procMoseUp() {
+  handleMouseUp() {
     if (this.cropper.activated) {
       this.selectionCallback(this.cropper.rect.clientWidth > 0 && this.cropper.rect.clientHeight > 0);
     }

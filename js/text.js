@@ -57,6 +57,7 @@ export class TextTool {
   }
 
   setFontColor(color) {
+    console.log('s', color)
     this.color = color;
     this.input.style.color = color;
   }
@@ -82,7 +83,7 @@ export class TextTool {
     }
   }
 
-  procMouseDown(event) {
+  handleMouseDown(event) {
     const mainClass = event.target.classList[0];
     if (mainClass === 'ptro-crp-el') {
       if (! this.active) {

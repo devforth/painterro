@@ -48,11 +48,7 @@ class PainterroProc {
           this.closeActiveTool();
         }
       }],
-      handlers: {
-        md: (e) => this.cropper.procMouseDown(e),
-        mu: (e) => this.cropper.procMoseUp(e),
-        mm: (e) => this.cropper.procMouseMove(e)
-      }
+      eventListner: () => this.cropper
     }, {
       name: 'line',
       controls: [{
@@ -83,11 +79,7 @@ class PainterroProc {
         this.toolContainer.style.cursor = 'crosshair';
         this.primitiveTool.activate('line');
       },
-      handlers: {
-        md: (e) => this.primitiveTool.procMouseDown(e),
-        mu: (e) => this.primitiveTool.procMoseUp(e),
-        mm: (e) => this.primitiveTool.procMouseMove(e)
-      }
+      eventListner: () => this.primitiveTool
     }, {
       name: 'rect',
       controls: [{
@@ -126,11 +118,7 @@ class PainterroProc {
         this.toolContainer.style.cursor = 'crosshair';
         this.primitiveTool.activate('rect');
       },
-      handlers: {
-        md: (e) => this.primitiveTool.procMouseDown(e),
-        mu: (e) => this.primitiveTool.procMoseUp(e),
-        mm: (e) => this.primitiveTool.procMouseMove(e)
-      }
+      eventListner: () => this.primitiveTool
     }, {
       name: 'circle',
       controls: [{
@@ -169,11 +157,7 @@ class PainterroProc {
         this.toolContainer.style.cursor = 'crosshair';
         this.primitiveTool.activate('circle');
       },
-      handlers: {
-        md: (e) => this.primitiveTool.procMouseDown(e),
-        mu: (e) => this.primitiveTool.procMoseUp(e),
-        mm: (e) => this.primitiveTool.procMouseMove(e)
-      }
+      eventListner: () => this.primitiveTool
     },  {
       name: 'text',
       controls: [
@@ -232,11 +216,7 @@ class PainterroProc {
         this.toolContainer.style.cursor = 'crosshair';
         this.textTool.activate();
       },
-      handlers: {
-        md: (e) => this.textTool.procMouseDown(e),
-        //mu: (e) => this.textTool.procMoseUp(e),
-        //mm: (e) => this.textTool.procMouseMove(e)
-      }
+      eventListner: () => this.textTool
     }, ];
     this.activeTool = undefined;
     this.zoom = false;
@@ -380,25 +360,27 @@ class PainterroProc {
     }
   }
 
-  handleToolEvent(eventName, event) {
-    this.activeTool && this.activeTool.handlers &&
-    this.activeTool.handlers[eventName] && this.activeTool.handlers[eventName](event);
+  handleToolEvent(eventHandler, event) {
+    if (this.activeTool && this.activeTool.eventListner) {
+      const listner = this.activeTool.eventListner();
+      listner[eventHandler] && listner[eventHandler](event);
+    }
   }
 
   initEventHandlers() {
     this.documentHandlers = {
       'mousedown': (e) => {
         if (this.colorPicker.handleMouseDown(e) !== true) {
-          this.handleToolEvent('md', e);
+          this.handleToolEvent('handleMouseDown', e);
         }
       },
       'mousemove': (e) => {
-        this.handleToolEvent('mm', e);
+        this.handleToolEvent('handleMouseMove', e);
         this.colorPicker.handleMouseMove(e);
         this.zoomHelper.handleMouseMove(e);
       },
       'mouseup': (e) => {
-        this.handleToolEvent('mu', e);
+        this.handleToolEvent('handleMouseUp', e);
         this.colorPicker.handleMouseUp(e);
       },
       'mousewheel': (e) => {

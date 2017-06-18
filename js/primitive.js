@@ -15,10 +15,9 @@ export class PrimitiveTool {
     this.lineWidth = width;
   }
 
-  procMouseDown(event) {
+  handleMouseDown(event) {
     const mainClass = event.target.classList[0];
     this.ctx.lineWidth = this.lineWidth;
-    this.halfLineWidth = this.lineWidth / 2;
     this.ctx.strokeStyle = this.main.colorWidgetState.line.alphaColor;
     this.ctx.fillStyle =  this.main.colorWidgetState.fill.alphaColor;
     if (mainClass === 'ptro-crp-el' || mainClass === 'ptro-zoomer') {
@@ -34,7 +33,7 @@ export class PrimitiveTool {
     }
   }
 
-  procMouseMove(event) {
+  handleMouseMove(event) {
     if (this.state.cornerMarked) {
       this.ctx.putImageData(this.tmpData, 0, 0);
       this.curCord = [
@@ -111,7 +110,7 @@ export class PrimitiveTool {
     }
   }
 
-  procMoseUp() {
+  handleMouseUp() {
     if (this.state.cornerMarked) {
       this.state.cornerMarked = false;
       this.main.worklog.captureState();
