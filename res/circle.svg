@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="rotate.svg">
+   sodipodi:docname="circle.svg">
   <defs
      id="defs4">
     <marker
@@ -40,16 +40,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2"
-     inkscape:cx="94.874654"
-     inkscape:cy="30.050164"
+     inkscape:zoom="4"
+     inkscape:cx="53.616248"
+     inkscape:cy="49.312238"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
-     inkscape:window-width="1111"
-     inkscape:window-height="588"
-     inkscape:window-x="542"
-     inkscape:window-y="275"
+     inkscape:window-width="1298"
+     inkscape:window-height="1008"
+     inkscape:window-x="613"
+     inkscape:window-y="0"
      inkscape:window-maximized="0"
      borderlayer="true"
      width="10mm"
@@ -93,9 +93,9 @@
      id="layer1"
      transform="translate(0,-952.36217)">
     <path
-       style="fill:#000000;fill-opacity:1;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-       d="M 52.279297 7.5019531 L 54.265625 22.550781 L 49.888672 22.5 C 30.558694 22.5 15.888655 38.171903 15.888672 57.501953 C 15.888672 76.831953 31.558706 92.501953 50.888672 92.501953 C 57.996881 92.501953 64.609701 90.382888 70.130859 86.742188 C 70.929174 86.215788 71.702281 85.654706 72.453125 85.066406 L 65.306641 77.917969 C 65.206831 77.988969 65.110646 78.065566 65.009766 78.134766 C 60.991879 80.889766 56.128389 82.501953 50.888672 82.501953 C 37.081553 82.501953 25.888672 71.309053 25.888672 57.501953 C 25.888655 43.694753 36.081542 32.5 49.888672 32.5 L 49.888672 32.460938 L 54.265625 32.449219 L 52.275391 47.501953 L 87.5 27.5 L 52.279297 7.5019531 z "
+       style="fill:#000000;fill-opacity:1;stroke-width:0;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 50 7.5 A 42.5 42.5 0 0 0 7.5 50 A 42.5 42.5 0 0 0 50 92.5 A 42.5 42.5 0 0 0 92.5 50 A 42.5 42.5 0 0 0 50 7.5 z M 50 17.5 A 32.5 32.5 0 0 1 82.5 50 A 32.5 32.5 0 0 1 50 82.5 A 32.5 32.5 0 0 1 17.5 50 A 32.5 32.5 0 0 1 50 17.5 z "
        transform="translate(0,952.36217)"
-       id="rect4138-4-6" />
+       id="path8658" />
   </g>
 </svg>
