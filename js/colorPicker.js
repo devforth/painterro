@@ -109,14 +109,10 @@ export class ColorPicker {
       this.setActiveColor(this.input.value, true);
     };
     this.inputAlpha.value  = this.alpha;
-    this.inputAlpha.onclick = () => {
+    this.inputAlpha.oninput = () => {
       this.alpha = this.inputAlpha.value;
       this.setActiveColor(this.color, true);
     };
-    this.inputAlpha.addEventListener('change', () => {
-      this.alpha = this.inputAlpha.value;
-      this.setActiveColor(this.color, true);
-    });
   }
 
   open(state, addCallback) {

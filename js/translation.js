@@ -18,7 +18,19 @@ export class Translation {
         fontSize: 'S:',
         fontSizeFull: 'Font Size',
         fontName: 'F:',
-        fontNameFull: 'Font name'
+        fontNameFull: 'Font name',
+        apply: 'Apply',
+        cancel: 'Cancel',
+        tools: {
+          crop: 'Crop image',
+          rect: 'Draw rectangle',
+          circle: 'Draw ellipse',
+          line: 'Draw line',
+          rotate: 'Rotate image',
+          save: 'Save Image',
+          load: 'Load image',
+          text: 'Put text'
+        }
       }
     };
     this.activate('en');
@@ -48,11 +60,16 @@ export class Translation {
   }
 
   tr(sentense) {
-    if (this.translator[sentense] !== undefined) {
-      return this.translator[sentense];
-    } else {
-      return this.defaultTranslator[sentense];
+    const levels = sentense.split('.');
+    let res = this.translator;
+    let fallbackRes = this.defaultTranslator;
+    for (let l of levels) {
+      fallbackRes = fallbackRes[l];
+      if (res !== undefined) {
+        res = res[l];
+      }
     }
+    return res || fallbackRes;
   }
 
 }

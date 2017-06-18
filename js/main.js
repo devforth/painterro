@@ -14,6 +14,8 @@ import { Translation } from './translation';
 import { ZoomHelper } from './zoomHelper';
 import { TextTool } from './text';
 
+const tr = (n) => Translation.get().tr(n);
+
 class PainterroProc {
 
   /**
@@ -35,14 +37,14 @@ class PainterroProc {
         this.toolContainer.style.cursor = 'auto';
       },
       controls: [{
-        name: 'Apply',
+        name: tr('apply'),
         type: 'btn',
         action: () => {
           this.cropper.doCrop();
           this.closeActiveTool();
         }
       }, {
-        name: 'Cancel',
+        name: tr('cancel'),
         type: 'btn',
         action: () => {
           this.closeActiveTool();
@@ -181,7 +183,6 @@ class PainterroProc {
           action: () => {
             const width = document.getElementById(this.activeTool.controls[1].id).value;
             this.textTool.setFontSize(width);
-
           },
           getValue: () => {
             return this.textTool.fontSize;
@@ -203,10 +204,17 @@ class PainterroProc {
             return this.textTool.getFonts()
           }
         }, {
-          name: 'Apply',
+          name: tr('apply'),
           type: 'btn',
           action: () => {
             this.textTool.apply();
+            this.closeActiveTool();
+          }
+        }, {
+          name: tr('cancel'),
+          type: 'btn',
+          action: () => {
+            this.textTool.cancel();
             this.closeActiveTool();
           }
         }
@@ -216,7 +224,31 @@ class PainterroProc {
         this.toolContainer.style.cursor = 'crosshair';
         this.textTool.activate();
       },
+      close: () => {
+        this.textTool.cancel()
+      },
       eventListner: () => this.textTool
+    }, {
+      name: 'rotate',
+      activate: () => {
+        const tmpData = this.canvas.toDataURL();
+        const w = this.size.w;
+        const h = this.size.h;
+        this.resize(h, w);
+
+        this.ctx.save();
+        this.ctx.translate(h / 2, w / 2);
+        this.ctx.rotate(90 * Math.PI / 180);
+        const img = new Image;
+        img.onload = () => {
+          this.ctx.drawImage(img, -w / 2, -h/2);
+          this.adjustSizeFull();
+          this.ctx.restore();
+        };
+        img.src = tmpData;
+
+        this.closeActiveTool();
+      },
     }, ];
     this.activeTool = undefined;
     this.zoom = false;
@@ -227,7 +259,7 @@ class PainterroProc {
 
     let bar = '';
     for(let b of this.tools) {
-      bar += `<button class="icon-btn ptro-color-control" id="${this.id}-ptrobtn-${b.name}">`+
+      bar += `<button class="icon-btn ptro-color-control" title="${tr('tools.'+b.name)}" id="${this.id}-ptrobtn-${b.name}">`+
           `<i class="icon icon-${b.name}"></i></button>`;
     }
 
@@ -287,8 +319,6 @@ class PainterroProc {
       }
     };
 
-    this.tr = (n) => Translation.get().tr(n);
-
     for(let b of this.tools) {
       this._getBtnEl(b).onclick = () => {
         const currentActive = this.activeTool;
@@ -297,10 +327,10 @@ class PainterroProc {
           this.activeTool = b;
           this._getBtnEl(b).className += ' ptro-color-active-control';
           let ctrls = '';
-          for (let ctl of b.controls) {
+          for (let ctl of b.controls || []) {
             ctl.id = genId();
             if (ctl.title) {
-              ctrls += `<span class="ptro-tool-ctl-name" title="${this.tr(ctl.titleFull)}">${this.tr(ctl.title)}</span>`
+              ctrls += `<span class="ptro-tool-ctl-name" title="${tr(ctl.titleFull)}">${tr(ctl.title)}</span>`
             }
             if (ctl.type === 'btn') {
               ctrls += `<button class="ptro-color-control ${ctl.icon?'icon-btn':'ptro-named-btn'}" ` +
@@ -329,11 +359,10 @@ class PainterroProc {
             }
           }
           this.toolControls.innerHTML = ctrls;
-          for (let ctl of b.controls) {
+          for (let ctl of b.controls || []) {
             if (ctl.type === 'int') {
               document.getElementById(ctl.id).value = ctl.getValue();
-              document.getElementById(ctl.id).onclick = ctl.action;
-              document.getElementById(ctl.id).onchange = ctl.action;
+              document.getElementById(ctl.id).oninput = ctl.action;
             } else if (ctl.type === 'dropdown') {
               document.getElementById(ctl.id).onchange = ctl.action;
             } else {

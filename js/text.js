@@ -126,6 +126,11 @@ export class TextTool {
     this.main.worklog.captureState();
   }
 
+  cancel() {
+    this.active = false;
+    this.input.style.display = 'none';
+  }
+
   static code() {
     return '<span contenteditable="true" class="ptro-text-tool-input" style="display:none"/>'
   }
