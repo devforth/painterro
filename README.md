@@ -77,3 +77,4 @@ and open http://localhost:8080 with demo page
 - Support dropping File to painterro
 - Create holder if id not provided
 - Edit button on images (provide selector)
+- Add color pallete

@@ -41,17 +41,11 @@
 .icon-crop:before {
   content: "\61";
 }
-.icon-freepaint:before {
-  content: "\62";
-}
 .icon-line:before {
   content: "\63";
 }
 .icon-linked:before {
   content: "\64";
-}
-.icon-mirror:before {
-  content: "\65";
 }
 .icon-open:before {
   content: "\66";
@@ -77,6 +71,27 @@
 .icon-unlinked:before {
   content: "\6d";
 }
-.icon-circle:before {
+.icon-mirror:before {
+  content: "\65";
+}
+.icon-loading:before {
+  content: "\6f";
+}
+.icon-close:before {
+  content: "\70";
+}
+.icon-brush:before {
+  content: "\62";
+}
+.icon-ellipse:before {
   content: "\6e";
+}
+.icon-loading:before {
+  content: "\6f";
+}
+.icon-close:before {
+  content: "\65";
+}
+.icon-mirror:before {
+  content: "\70";
 }

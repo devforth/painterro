@@ -122,7 +122,7 @@ class PainterroProc {
       },
       eventListner: () => this.primitiveTool
     }, {
-      name: 'circle',
+      name: 'ellipse',
       controls: [{
           type: 'color',
           title: 'lineColor',
@@ -157,10 +157,41 @@ class PainterroProc {
       ],
       activate: () => {
         this.toolContainer.style.cursor = 'crosshair';
-        this.primitiveTool.activate('circle');
+        this.primitiveTool.activate('ellipse');
       },
       eventListner: () => this.primitiveTool
-    },  {
+    }, {
+      name: 'brush',
+      controls: [{
+          type: 'color',
+          title: 'lineColor',
+          target: 'line',
+          titleFull: 'lineColorFull',
+          action: () => {
+            this.colorPicker.open(this.colorWidgetState.line);
+          }
+        }, {
+          type: 'int',
+          title: 'lineWidth',
+          titleFull: 'lineWidthFull',
+          target: 'lineWidth',
+          min: 1,
+          max: 50,
+          action: () => {
+            const width = document.getElementById(this.activeTool.controls[1].id);
+            this.primitiveTool.setLineWidth(width.value);
+          },
+          getValue: () => {
+            return this.primitiveTool.lineWidth;
+          }
+        }
+      ],
+      activate: () => {
+        this.toolContainer.style.cursor = 'crosshair';
+        this.primitiveTool.activate('brush');
+      },
+      eventListner: () => this.primitiveTool
+    }, {
       name: 'text',
       controls: [
         {

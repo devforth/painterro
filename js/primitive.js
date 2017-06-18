@@ -1,3 +1,4 @@
+import {distance} from "./utils";
 export class PrimitiveTool {
 
   constructor (main) {
@@ -9,6 +10,11 @@ export class PrimitiveTool {
   activate(type) {
     this.type = type;
     this.state = {};
+    if (type === 'line' || type === 'brush') {
+      this.ctx.lineJoin = 'round';
+    } else {
+      this.ctx.lineJoin = 'miter';
+    }
   }
 
   setLineWidth(width) {
@@ -22,20 +28,25 @@ export class PrimitiveTool {
     this.ctx.fillStyle =  this.main.colorWidgetState.fill.alphaColor;
     if (mainClass === 'ptro-crp-el' || mainClass === 'ptro-zoomer') {
       this.tmpData = this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h);
-      this.state.cornerMarked = true;
-      this.centerCord = [
-        event.clientX - this.el.documentOffsetLeft + this.main.wrapper.scrollLeft,
-        event.clientY - this.el.documentOffsetTop + this.main.wrapper.scrollTop ,
-      ];
-
-      const scale = this.main.getScale();
-      this.centerCord = [this.centerCord[0] * scale, this.centerCord[1] * scale];
+      if (this.type === 'brush') {
+        this.state.cornerMarked = true;
+        this.points = [];
+      } else {
+        this.state.cornerMarked = true;
+        const scale = this.main.getScale();
+        this.centerCord = [
+          event.clientX - this.el.documentOffsetLeft + this.main.wrapper.scrollLeft,
+          event.clientY - this.el.documentOffsetTop + this.main.wrapper.scrollTop,
+        ];
+        this.centerCord = [this.centerCord[0] * scale, this.centerCord[1] * scale];
+      }
     }
   }
 
   handleMouseMove(event) {
     if (this.state.cornerMarked) {
       this.ctx.putImageData(this.tmpData, 0, 0);
+
       this.curCord = [
         event.clientX - this.el.documentOffsetLeft + this.main.wrapper.scrollLeft,
         event.clientY - this.el.documentOffsetTop + this.main.wrapper.scrollTop,
@@ -43,7 +54,29 @@ export class PrimitiveTool {
       const scale = this.main.getScale();
       this.curCord = [this.curCord[0] * scale, this.curCord[1] * scale];
 
-      if (this.type === 'line') {
+      if (this.type === 'brush') {
+        let prevLast = this.points.slice(-1)[0];
+        const cur = {
+          x: this.curCord[0],
+          y: this.curCord[1]
+        };
+        if (prevLast === undefined || distance(prevLast, cur) > 5) {
+          this.points.push(cur);
+        }
+        const smPoints = this.points;
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.points[0].x, this.points[0].y);
+        let last;
+        for (let p of smPoints.slice(1)) {
+          this.ctx.lineTo(p.x, p.y);
+          last = p;
+        }
+        if (last) {
+          this.ctx.moveTo(last.x, last.y);
+        }
+        this.ctx.closePath();
+        this.ctx.stroke();
+      } else if (this.type === 'line') {
         if (event.ctrlKey || event.shiftKey) {
           const deg = Math.atan(
               -(this.curCord[1] - this.centerCord[1]) / (this.curCord[0] - this.centerCord[0])
@@ -80,7 +113,7 @@ export class PrimitiveTool {
         this.ctx.fill();
         this.ctx.stroke();
         this.ctx.closePath();
-      } else if (this.type == 'circle') {
+      } else if (this.type == 'ellipse') {
         this.ctx.beginPath();
         const x1 = this.centerCord[0];
         const y1 = this.centerCord[1];

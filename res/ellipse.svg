@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="circle.svg">
+   sodipodi:docname="ellipse.svg">
   <defs
      id="defs4">
     <marker
@@ -41,20 +41,20 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="4"
-     inkscape:cx="53.616248"
-     inkscape:cy="49.312238"
+     inkscape:cx="53.330162"
+     inkscape:cy="8.335366"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
-     inkscape:window-width="1298"
-     inkscape:window-height="1008"
-     inkscape:window-x="613"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
      borderlayer="true"
      width="10mm"
      units="px"
-     inkscape:snap-bbox="false"
+     inkscape:snap-bbox="true"
      inkscape:bbox-nodes="true"
      inkscape:snap-bbox-midpoints="true"
      inkscape:snap-bbox-edge-midpoints="true"
@@ -65,12 +65,13 @@
      inkscape:object-paths="true"
      inkscape:snap-intersection-paths="true"
      inkscape:snap-smooth-nodes="true"
-     inkscape:snap-midpoints="true">
+     inkscape:snap-midpoints="true"
+     showguides="false">
     <inkscape:grid
        type="xygrid"
        id="grid4136"
-       spacingx="4.9999999"
-       spacingy="4.9999999"
+       spacingx="2.5"
+       spacingy="2.5"
        empspacing="5"
        originx="2.5"
        originy="2.5" />
@@ -83,7 +84,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -94,8 +95,8 @@
      transform="translate(0,-952.36217)">
     <path
        style="fill:#000000;fill-opacity:1;stroke-width:0;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none"
-       d="M 50 7.5 A 42.5 42.5 0 0 0 7.5 50 A 42.5 42.5 0 0 0 50 92.5 A 42.5 42.5 0 0 0 92.5 50 A 42.5 42.5 0 0 0 50 7.5 z M 50 17.5 A 32.5 32.5 0 0 1 82.5 50 A 32.5 32.5 0 0 1 50 82.5 A 32.5 32.5 0 0 1 17.5 50 A 32.5 32.5 0 0 1 50 17.5 z "
-       transform="translate(0,952.36217)"
-       id="path8658" />
+       d="M 49.999999,964.86217 A 37.499999,37.499971 0 0 0 12.5,1002.3621 a 37.499999,37.499971 0 0 0 37.499999,37.5 37.499999,37.499971 0 0 0 37.499999,-37.5 37.499999,37.499971 0 0 0 -37.499999,-37.49993 z m 0,8.82351 a 28.676469,28.676448 0 0 1 28.67647,28.67642 28.676469,28.676448 0 0 1 -28.67647,28.6765 28.676469,28.676448 0 0 1 -28.67647,-28.6765 28.676469,28.676448 0 0 1 28.67647,-28.67642 z"
+       id="path8658"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>

@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="mirror.svg">
+   sodipodi:docname="loading.svg">
   <defs
      id="defs4">
     <marker
@@ -40,35 +40,37 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="64.042401"
-     inkscape:cy="91.257021"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="46.987024"
+     inkscape:cy="87.956605"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
-     inkscape:window-width="957"
-     inkscape:window-height="679"
-     inkscape:window-x="681"
-     inkscape:window-y="190"
-     inkscape:window-maximized="0"
+     inkscape:window-width="1298"
+     inkscape:window-height="1008"
+     inkscape:window-x="613"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
      borderlayer="true"
      width="10mm"
      units="px"
      inkscape:snap-bbox="true"
      inkscape:bbox-nodes="true"
      inkscape:snap-bbox-midpoints="true"
-     inkscape:snap-bbox-edge-midpoints="false"
+     inkscape:snap-bbox-edge-midpoints="true"
      inkscape:bbox-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-others="false"
+     inkscape:snap-nodes="true"
      inkscape:object-paths="true"
      inkscape:snap-intersection-paths="true"
-     inkscape:object-nodes="true"
      inkscape:snap-smooth-nodes="true"
      inkscape:snap-midpoints="true">
     <inkscape:grid
        type="xygrid"
        id="grid4136"
-       spacingx="0.5"
-       spacingy="0.5"
+       spacingx="0.2"
+       spacingy="0.2"
        empspacing="5"
        originx="2.5"
        originy="2.5" />
@@ -90,10 +92,46 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-952.36217)">
-    <path
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 45 7.5 L 15 92.5 L 45 92.5 L 45 7.5 z M 56 7.5 L 56 92.5 L 86 92.5 L 56 7.5 z M 60.5 34 L 78.5 88 L 60.5 88 L 60.5 34 z M 63.5 52 L 63.5 85 L 74.5 85 L 63.5 52 z "
-       transform="translate(0,952.36217)"
-       id="path4239" />
+    <circle
+       style="fill:#000000;fill-opacity:1;stroke-width:0;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path4154"
+       cx="82.5"
+       cy="999.86218"
+       r="10" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke-width:0;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path4154-9"
+       cx="62.5"
+       cy="971.86218"
+       rx="9"
+       ry="9.0000029" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke-width:0;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path4154-9-8"
+       cx="30.5"
+       cy="975.86218"
+       rx="8"
+       ry="8.0000038" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke-width:0;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path4154-9-8-7"
+       cx="16.5"
+       cy="1000.8622"
+       rx="7"
+       ry="6.9999976" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke-width:0;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path4154-9-8-7-7"
+       cx="26.5"
+       cy="1024.8622"
+       rx="6"
+       ry="5.9999962" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke-width:0;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path4154-9-8-7-7-1"
+       cx="49.5"
+       cy="1035.8622"
+       rx="5"
+       ry="5.0000024" />
   </g>
 </svg>

@@ -24,13 +24,15 @@ export class Translation {
         tools: {
           crop: 'Crop image',
           rect: 'Draw rectangle',
-          circle: 'Draw ellipse',
+          ellipse: 'Draw ellipse',
           line: 'Draw line',
           rotate: 'Rotate image',
           save: 'Save Image',
           load: 'Load image',
-          text: 'Put text'
-        }
+          text: 'Put text',
+          brush: 'Brush'
+        },
+
       }
     };
     this.activate('en');
