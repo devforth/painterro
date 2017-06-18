@@ -131,6 +131,49 @@ class PainterroProc {
         mu: (e) => this.primitiveTool.procMoseUp(e),
         mm: (e) => this.primitiveTool.procMouseMove(e)
       }
+    }, {
+      name: 'circle',
+      controls: [{
+          type: 'color',
+          title: 'lineColor',
+          titleFull: 'lineColorFull',
+          target: 'line',
+          action: () => {
+            this.colorPicker.open(this.colorWidgetState.line);
+          }
+        }, {
+          type: 'color',
+          title: 'fillColor',
+          titleFull: 'fillColorFull',
+          target: 'fill',
+          action: () => {
+            this.colorPicker.open(this.colorWidgetState.fill);
+          }
+        }, {
+          type: 'int',
+          title: 'lineWidth',
+          titleFull: 'lineWidthFull',
+          target: 'lineWidth',
+          min: 1,
+          max: 50,
+          action: () => {
+            const width = document.getElementById(this.activeTool.controls[2].id).value;
+            this.primitiveTool.setLineWidth(width);
+          },
+          getValue: () => {
+            return this.primitiveTool.lineWidth;
+          }
+        },
+      ],
+      activate: () => {
+        this.toolContainer.style.cursor = 'crosshair';
+        this.primitiveTool.activate('circle');
+      },
+      handlers: {
+        md: (e) => this.primitiveTool.procMouseDown(e),
+        mu: (e) => this.primitiveTool.procMoseUp(e),
+        mm: (e) => this.primitiveTool.procMouseMove(e)
+      }
     },  {
       name: 'text',
       controls: [

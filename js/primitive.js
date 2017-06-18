@@ -66,21 +66,37 @@ export class PrimitiveTool {
         this.ctx.lineTo(this.curCord[0], this.curCord[1]);
         this.ctx.closePath();
         this.ctx.stroke();
-      } else {
+      } else if (this.type == 'rect') {
         this.ctx.beginPath();
 
-        this.ctx.fillRect(
-          this.centerCord[0]+this.halfLineWidth * (this.centerCord[0] < this.curCord[0] && 1 || - 1),
-          this.centerCord[1]+this.halfLineWidth * (this.centerCord[1] < this.curCord[1] && 1 || - 1),
-          this.curCord[0]- this.centerCord[0] - this.lineWidth * (this.centerCord[0] < this.curCord[0] && 1 || - 1),
-          this.curCord[1]-this.centerCord[1] - this.lineWidth * (this.centerCord[1] < this.curCord[1] && 1 || - 1));
-
-        this.ctx.moveTo(this.centerCord[0], this.centerCord[1]);
-        this.ctx.lineTo(this.curCord[0], this.centerCord[1]);
-        this.ctx.lineTo(this.curCord[0], this.curCord[1]);
-        this.ctx.lineTo(this.centerCord[0], this.curCord[1]);
-        this.ctx.closePath();
+        this.ctx.rect(
+          this.centerCord[0],
+          this.centerCord[1],
+          this.curCord[0] - this.centerCord[0],
+          this.curCord[1] - this.centerCord[1]);
+        this.ctx.fill();
         this.ctx.stroke();
+        this.ctx.closePath();
+      } else if (this.type == 'circle') {
+        this.ctx.beginPath();
+        const x1 = this.centerCord[0];
+        const y1 = this.centerCord[1];
+        const x2 = this.curCord[0];
+        const y2 = this.curCord[1];
+
+        const r_x = Math.abs((x2 - x1) / 2);
+        const r_y = Math.abs((y2 - y1) / 2)
+
+        const tl_x = Math.min(x1, x2);
+        const tl_y = Math.min(y1, y2)
+
+        this.ctx.ellipse(
+          tl_x + r_x, tl_y + r_y,
+          r_x, r_y,
+          0, 2 * Math.PI, false);
+        this.ctx.fill();
+        this.ctx.stroke();
+        this.ctx.beginPath();
       }
     }
   }
