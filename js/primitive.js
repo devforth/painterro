@@ -69,11 +69,15 @@ export class PrimitiveTool {
       } else if (this.type == 'rect') {
         this.ctx.beginPath();
 
-        this.ctx.rect(
-          this.centerCord[0],
-          this.centerCord[1],
-          this.curCord[0] - this.centerCord[0],
-          this.curCord[1] - this.centerCord[1]);
+        let w = this.curCord[0] - this.centerCord[0];
+        let h = this.curCord[1] - this.centerCord[1];
+
+        if (event.ctrlKey || event.shiftKey) {
+          const min = Math.min(Math.abs(w), Math.abs(h));
+          w = min * Math.sign(w);
+          h = min * Math.sign(h);
+        }
+        this.ctx.rect(this.centerCord[0], this.centerCord[1], w, h);
         this.ctx.fill();
         this.ctx.stroke();
         this.ctx.closePath();
@@ -81,14 +85,20 @@ export class PrimitiveTool {
         this.ctx.beginPath();
         const x1 = this.centerCord[0];
         const y1 = this.centerCord[1];
-        const x2 = this.curCord[0];
-        const y2 = this.curCord[1];
+        let w = this.curCord[0] - x1;
+        let h = this.curCord[1] - y1;
 
-        const r_x = Math.abs((x2 - x1) / 2);
-        const r_y = Math.abs((y2 - y1) / 2)
+        if (event.ctrlKey || event.shiftKey) {
+          const min = Math.min(Math.abs(w), Math.abs(h));
+          w = min * Math.sign(w);
+          h = min * Math.sign(h);
+        }
 
-        const tl_x = Math.min(x1, x2);
-        const tl_y = Math.min(y1, y2)
+        let r_x = Math.abs(w / 2);
+        let r_y = Math.abs(h / 2);
+
+        const tl_x = Math.min(x1, x1 + w);
+        const tl_y = Math.min(y1, y1 + h);
 
         this.ctx.ellipse(
           tl_x + r_x, tl_y + r_y,
