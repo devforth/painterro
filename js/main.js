@@ -259,7 +259,9 @@ class PainterroProc {
 
     let bar = '';
     for(let b of this.tools) {
-      bar += `<button class="icon-btn ptro-color-control" title="${tr('tools.'+b.name)}" id="${this.id}-ptrobtn-${b.name}">`+
+      const id = genId();
+      b.buttonId = id;
+      bar += `<button class="icon-btn ptro-color-control" title="${tr('tools.'+b.name)}" id="${id}">`+
           `<i class="icon icon-${b.name}"></i></button>`;
     }
 
@@ -535,7 +537,7 @@ class PainterroProc {
   }
 
   _getBtnEl(b) {
-    return document.getElementById(`${this.id}-ptrobtn-${b.name}`);
+    return document.getElementById(b.buttonId);
   }
 }
 
