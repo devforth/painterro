@@ -161,7 +161,7 @@
     float: right;
     padding: 4px 4px 4px 0;
     position: absolute;
-    right: 0;
+    right: 105px;
     bottom: 0;
 }
 
@@ -283,4 +283,9 @@
 
 .ptro-text-tool-input:focus {
     outline: none;
+}
+
+.ptro-bar-right {
+    float:right;
+    margin-right: 4px;
 }

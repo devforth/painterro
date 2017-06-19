@@ -110,6 +110,6 @@
     font-size: 20px;
 }
 
-.ptro-bar .tool-controls {
-    padding-left: 10px;
+button.ptro-icon-right:first-of-type {
+    margin-right: 4px;
 }

@@ -277,10 +277,35 @@ class PainterroProc {
           this.ctx.restore();
         };
         img.src = tmpData;
-
         this.closeActiveTool();
       },
-    }, ];
+    }, {
+      name: 'save',
+      right: true,
+      activate: () => {
+        this.closeActiveTool();
+      },
+    }, {
+      name: 'open',
+      right: true,
+      activate: () => {
+        this.closeActiveTool();
+        document.getElementById('ptro-file-input').click();
+        document.getElementById('ptro-file-input').onchange = (event) => {
+          const files = event.target.files || event.dataTransfer.files;
+          if (!files.length) {
+            return;
+          }
+          this.openFile(files[0])
+        }
+      },
+    },  {
+      name: 'close',
+      right: true,
+      activate: () => {
+        this.closeActiveTool();
+      },
+    },];
     this.activeTool = undefined;
     this.zoom = false;
     this.ratioRelation = undefined;
@@ -289,11 +314,18 @@ class PainterroProc {
     this.baseEl = document.getElementById(this.id);
 
     let bar = '';
+    let rightBar = '';
     for(let b of this.tools) {
       const id = genId();
       b.buttonId = id;
-      bar += `<button class="icon-btn ptro-color-control" title="${tr('tools.'+b.name)}" id="${id}">`+
+      const btn =  `<button class="icon-btn ptro-color-control" title="${tr('tools.'+b.name)}" `+
+        `id="${id}" >`+
           `<i class="icon icon-${b.name}"></i></button>`;
+      if (b.right) {
+        rightBar += btn;
+      } else {
+        bar += btn;
+      }
     }
 
     const cropper = `<div class="ptro-crp-el">${PainterroCropper.code()}${TextTool.code()}</div>`;
@@ -309,6 +341,8 @@ class PainterroProc {
         '<span>' + bar + '</span>' +
         '<span class="tool-controls"></span>' +
         '<span class="ptro-info"></span>' +
+        '<span class="ptro-bar-right">' + rightBar + '</span>' +
+        '<input id="ptro-file-input" type="file" style="display: none;" accept="image/x-png,image/gif,image/jpeg" />' +
       '</div>' +
       `<style>${params.styles}</style>`;
 
@@ -466,14 +500,7 @@ class PainterroProc {
         const items = (event.clipboardData || event.originalEvent.clipboardData).items;
         for (let item of items) {
           if (item.kind === 'file' && item.type.split('/')[0] === "image") {
-            const img = new Image;
-            img.onload = () => {
-              this.resize(img.naturalWidth, img.naturalHeight);
-              this.ctx.drawImage(img, 0, 0);
-              this.adjustSizeFull();
-              this.worklog.captureState();
-            };
-            img.src = URL.createObjectURL(item.getAsFile());
+            this.openFile(item.getAsFile());
           }
         }
       }
@@ -493,7 +520,17 @@ class PainterroProc {
     for (let key of Object.keys(this.windowHandlers)) {
        window.addEventListener(key, this.windowHandlers[key]);
     }
+  }
 
+  openFile(f) {
+    const img = new Image;
+    img.onload = () => {
+      this.resize(img.naturalWidth, img.naturalHeight);
+      this.ctx.drawImage(img, 0, 0);
+      this.adjustSizeFull();
+      this.worklog.captureState();
+    };
+    img.src = URL.createObjectURL(f);
   }
 
   getScale() {

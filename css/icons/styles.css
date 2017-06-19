@@ -89,9 +89,9 @@
 .icon-loading:before {
   content: "\6f";
 }
-.icon-close:before {
-  content: "\65";
-}
 .icon-mirror:before {
   content: "\70";
+}
+.icon-close:before {
+  content: "\65";
 }
