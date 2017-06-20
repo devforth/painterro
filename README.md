@@ -36,11 +36,12 @@ They should be placed under `colorScheme` group (see example below)
 |`control` | Color of controls background (e.g. button background) | "#abc6ff" |
 |`controlContent` | Content of controls (e.g. button text) | '#000000' |
 |`activeControl` | Color for control when it active (e.g. button pressed) | '#7485B1' |
-|`activeControlContent` | Color for activated control content | `main` |;
+|`activeControlContent` | Color for activated control content | `main` |
 |`inputBorderColor` | You can add border to inputs, by default color is same as `main` so borders will not be seen | `main` |
 |`inputBackground` | Background of inputs | '#ffffff' |
 |`inputText` | Color of text in input | `activeControl` |
-| `backgroundColor` | Background color of component area which left outside of image due to it size/ratio | '#999999' |
+|`backgroundColor`| Background color of component area which left outside of image due to it size/ratio | '#999999' |
+|`dragOverBarColor`| Color of bar when dropping file to painterro | '#899dff' |
 
 ### Example
 

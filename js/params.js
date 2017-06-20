@@ -23,6 +23,7 @@ export function setDefaults(params) {
   params.colorScheme.inputBackground = params.colorScheme.inputBackground || '#ffffff';
   params.colorScheme.inputText = params.colorScheme.inputText || params.colorScheme.activeControl;
   params.colorScheme.backgroundColor = params.colorScheme.backgroundColor || '#999999';
+  params.colorScheme.dragOverBarColor = params.colorScheme.dragOverBarColor || '#899dff';
 
   params.styles =
     `.ptro-color-main{background-color: ${params.colorScheme.main}}
@@ -35,6 +36,7 @@ export function setDefaults(params) {
       background-color: ${params.colorScheme.inputBackground};
       color: ${params.colorScheme.inputText}
     }
+    .ptro-bar-dragover{background-color:${params.colorScheme.dragOverBarColor}}
     .ptro-color,.ptro-bordered-btn{
       border: 1px solid ${params.colorScheme.inputBorderColor};
     }

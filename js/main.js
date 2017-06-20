@@ -337,7 +337,7 @@ class PainterroProc {
         ColorPicker.html() +
         ZoomHelper.html() +
       '</div>' +
-      '<div class="ptro-color-main ptro-bar">' +
+      '<div class="ptro-bar ptro-color-main">' +
         '<span>' + bar + '</span>' +
         '<span class="tool-controls"></span>' +
         '<span class="ptro-info"></span>' +
@@ -348,6 +348,7 @@ class PainterroProc {
 
     this.body = document.body;
     this.wrapper = document.querySelector(`#${this.id} .ptro-wrapper`);
+    this.bar = document.querySelector(`#${this.id} .ptro-bar`);
     this.info = document.querySelector(`#${this.id} .ptro-info`);
     this.canvas = document.querySelector(`#${this.id} canvas`);
     this.ctx = this.canvas.getContext('2d');
@@ -503,6 +504,23 @@ class PainterroProc {
             this.openFile(item.getAsFile());
           }
         }
+      },
+      'dragover': (event) => {
+        const mainClass = event.target.classList[0];
+        console.log('main cla:' + mainClass)
+        if (mainClass === 'ptro-crp-el' || mainClass === 'ptro-bar') {
+          console.log('cla')
+          this.bar.className = 'ptro-bar ptro-color-main ptro-bar-dragover';
+        }
+        event.preventDefault();
+      },
+      'dragleave': (event) => {
+        this.bar.className = 'ptro-bar ptro-color-main';
+      },
+      'drop': (event) => {
+        this.bar.className = 'ptro-bar ptro-color-main';
+        event.preventDefault();
+        this.openFile(event.dataTransfer.files[0])
       }
     };
 
