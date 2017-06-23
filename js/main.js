@@ -2,7 +2,7 @@
 
 import '../css/styles.css';
 import '../css/bar-styles.css';
-import '../css/icons/styles.css';
+import '../css/icons/iconfont.css';
 
 import { PainterroCropper } from './cropper';
 import { WorkLog } from './worklog';
@@ -283,6 +283,9 @@ class PainterroProc {
       name: 'save',
       right: true,
       activate: () => {
+        const icon = document.querySelector(`#${this.activeTool.buttonId} > i`);
+        icon.className = 'ptro-icon ptro-icon-loading ptro-spinning';
+        //icon.className = 'icon icon-save';
         this.closeActiveTool();
       },
     }, {
@@ -320,7 +323,7 @@ class PainterroProc {
       b.buttonId = id;
       const btn =  `<button class="icon-btn ptro-color-control" title="${tr('tools.'+b.name)}" `+
         `id="${id}" >`+
-          `<i class="icon icon-${b.name}"></i></button>`;
+          `<i class="ptro-icon ptro-icon-${b.name}"></i></button>`;
       if (b.right) {
         rightBar += btn;
       } else {
@@ -402,7 +405,7 @@ class PainterroProc {
             }
             if (ctl.type === 'btn') {
               ctrls += `<button class="ptro-color-control ${ctl.icon?'icon-btn':'ptro-named-btn'}" ` +
-                `id=${ctl.id}>${ctl.icon && ('<i class="icon icon-'+ctl.icon+'></i>') || ''}` +
+                `id=${ctl.id}>${ctl.icon && ('<i class="ptro-icon ptro-icon-'+ctl.icon+'></i>') || ''}` +
                 `<p>${ctl.name || ''}</p></button>`;
             } else if (ctl.type === 'color') {
               ctrls += `<button id=${ctl.id} data-id='${ctl.target}' `+
@@ -507,9 +510,7 @@ class PainterroProc {
       },
       'dragover': (event) => {
         const mainClass = event.target.classList[0];
-        console.log('main cla:' + mainClass)
         if (mainClass === 'ptro-crp-el' || mainClass === 'ptro-bar') {
-          console.log('cla')
           this.bar.className = 'ptro-bar ptro-color-main ptro-bar-dragover';
         }
         event.preventDefault();

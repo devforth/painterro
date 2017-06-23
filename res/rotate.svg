@@ -17,22 +17,7 @@
    inkscape:version="0.91 r13725"
    sodipodi:docname="rotate.svg">
   <defs
-     id="defs4">
-    <marker
-       inkscape:stockid="Arrow1Lend"
-       orient="auto"
-       refY="0.0"
-       refX="0.0"
-       id="Arrow1Lend"
-       style="overflow:visible;"
-       inkscape:isstock="true">
-      <path
-         id="path5315"
-         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;"
-         transform="scale(0.8) rotate(180) translate(12.5,0)" />
-    </marker>
-  </defs>
+     id="defs4" />
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -40,37 +25,27 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2"
-     inkscape:cx="94.874654"
-     inkscape:cy="30.050164"
+     inkscape:zoom="4"
+     inkscape:cx="50.678451"
+     inkscape:cy="53.167416"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
-     inkscape:window-width="1111"
-     inkscape:window-height="588"
-     inkscape:window-x="542"
-     inkscape:window-y="275"
+     inkscape:window-width="1122"
+     inkscape:window-height="636"
+     inkscape:window-x="700"
+     inkscape:window-y="332"
      inkscape:window-maximized="0"
      borderlayer="true"
      width="10mm"
      units="px"
-     inkscape:snap-bbox="false"
-     inkscape:bbox-nodes="true"
-     inkscape:snap-bbox-midpoints="true"
-     inkscape:snap-bbox-edge-midpoints="true"
-     inkscape:bbox-paths="true"
-     inkscape:object-nodes="true"
-     inkscape:snap-others="false"
-     inkscape:snap-nodes="true"
-     inkscape:object-paths="true"
-     inkscape:snap-intersection-paths="true"
-     inkscape:snap-smooth-nodes="true"
-     inkscape:snap-midpoints="true">
+     inkscape:snap-bbox="true"
+     inkscape:bbox-nodes="true">
     <inkscape:grid
        type="xygrid"
        id="grid4136"
-       spacingx="4.9999999"
-       spacingy="4.9999999"
+       spacingx="2.5"
+       spacingy="2.5"
        empspacing="5"
        originx="2.5"
        originy="2.5" />
@@ -83,7 +58,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -93,9 +68,9 @@
      id="layer1"
      transform="translate(0,-952.36217)">
     <path
+       inkscape:connector-curvature="0"
        style="fill:#000000;fill-opacity:1;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-       d="M 52.279297 7.5019531 L 54.265625 22.550781 L 49.888672 22.5 C 30.558694 22.5 15.888655 38.171903 15.888672 57.501953 C 15.888672 76.831953 31.558706 92.501953 50.888672 92.501953 C 57.996881 92.501953 64.609701 90.382888 70.130859 86.742188 C 70.929174 86.215788 71.702281 85.654706 72.453125 85.066406 L 65.306641 77.917969 C 65.206831 77.988969 65.110646 78.065566 65.009766 78.134766 C 60.991879 80.889766 56.128389 82.501953 50.888672 82.501953 C 37.081553 82.501953 25.888672 71.309053 25.888672 57.501953 C 25.888655 43.694753 36.081542 32.5 49.888672 32.5 L 49.888672 32.460938 L 54.265625 32.449219 L 52.275391 47.501953 L 87.5 27.5 L 52.279297 7.5019531 z "
-       transform="translate(0,952.36217)"
+       d="m 49.779297,959.86219 1.986328,15.04883 -4.376953,-0.0508 c -19.329978,0 -34.000017,15.6719 -34,35.00198 0,19.33 15.670034,35 35,35 7.108209,0 13.721029,-2.1191 19.242187,-5.7598 0.798315,-0.5264 1.571422,-1.0875 2.322266,-1.6758 l -7.146484,-7.1484 c -0.09981,0.071 -0.195995,0.1476 -0.296875,0.2168 -4.017887,2.755 -8.881377,4.3672 -14.121094,4.3672 -13.807119,0 -25,-11.1929 -25,-25 -1.7e-5,-13.80723 10.19287,-25.00198 24,-25.00198 l 0,-0.0391 4.376953,-0.0117 -1.990234,15.05273 L 85,979.86022 49.779297,959.86217 Z"
        id="rect4138-4-6" />
   </g>
 </svg>

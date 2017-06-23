@@ -24,8 +24,10 @@
 .ptro-bar .icon-btn,
 .ptro-wrapper .icon-btn {
     border: 0;
-    padding: 7px 5px 5px 5px;
+    padding: 4px 5px 5px;
     margin: 4px 0 0 4px;
+    height: 32px;
+    width: 32px;
 }
 
 .ptro-named-btn {
@@ -161,11 +163,9 @@
     float: right;
     padding: 4px 4px 4px 0;
     position: absolute;
-    right: 105px;
+    right: 110px;
     bottom: 0;
 }
-
-
 
 .ptro-wrapper .ptro-color-widget-wrapper {
     position: absolute;
@@ -228,6 +228,7 @@
 .ptro-wrapper .ptro-color-edit button {
     float: right;
     height: 24px;
+    width: 24px;
     margin: 0;
 }
 

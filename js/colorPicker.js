@@ -253,7 +253,9 @@ export class ColorPicker {
           '<span class="ptro-color-light-regulator ptro-bordered-control"></span>' +
           '<div class="ptro-colors"></div>' +
             '<div class="ptro-color-edit">' +
-              '<button class="icon-btn ptro-pipette ptro-color-control" style="float: left; margin-right: 5px"><i class="icon icon-pipette"></i></button>' +
+              '<button class="icon-btn ptro-pipette ptro-color-control" style="float: left; margin-right: 5px">' +
+                '<i class="ptro-icon ptro-icon-pipette"></i>' +
+              '</button>' +
               '<input class="ptro-color" type="text" size="7"/>' +
               `<span style="float:right"><span class="ptro-color-alpha-label" title="${Translation.get().tr('alphaFull')}">${Translation.get().tr('alpha')}</span>` +
               '<input class="ptro-color-alpha ptro-input" type="number" min="0" max="1" step="0.1"/></span>' +

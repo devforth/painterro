@@ -105,11 +105,40 @@
     width: 100%;
 }
 
-.ptro-bar .icon {
-    height: 16px;
+.ptro-bar .ptro-icon {
     font-size: 20px;
 }
 
 button.ptro-icon-right:first-of-type {
     margin-right: 4px;
+}
+
+
+@-webkit-keyframes ptro-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@keyframes ptro-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+
+.ptro-spinning {
+    -webkit-animation: ptro-spin 0.5s infinite steps(9);
+    animation: ptro-spin 0.8s infinite steps(9);
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
 }

@@ -25,7 +25,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.(ttf|woff|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        test: /\.(ttf|woff|woff2|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: "url-loader"
       }
     ]

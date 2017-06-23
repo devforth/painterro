@@ -44,7 +44,7 @@
     <inkscape:grid
        type="xygrid"
        id="grid4136"
-       spacingx="4.9999999"
+       spacingx="5"
        spacingy="4.9999999"
        empspacing="5"
        originx="2.5"
@@ -58,7 +58,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>

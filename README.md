@@ -55,27 +55,37 @@ Painterro({
 });
 ```
 
-# Building painterro
-Go to project dir and install npm modules:
+# Development
+
+After pulling repo install node modules:
 ```bash
+cd painterro
 npm install
 ```
-Then run
+
+### Building painterro
+
 ```bash
 npm run build
 ```
 Result file is `build/painterro.js`
 
-## Development
-Start dev-server for development
-```js
+### Dev-server
+To start hot-reload dev server for reloading code "on the fly":
+```bash
 npm run dev
 ```
-and open http://localhost:8080 with demo page
+Then open http://localhost:8080 with demo page
+
+### Regenerating icons font
+
+Add/edit icons in `res` folder. Then run
+```bash
+npm run buildfont
+```
 
 # ToDo list
 
-- Support dropping File to painterro
 - Create holder if id not provided
 - Edit button on images (provide selector)
 - Add color pallete
