@@ -29,7 +29,7 @@ def home():
 
 @app.route("/save-as-base64/", methods=['POST'])
 def saver():
-    filename = '{:010d}.png'.format(int(time()))
+    filename = '{:10d}.png'.format(int(time()))  # generate some filename
     filepath = os.path.join(get_tmp_dir(), filename)
     with open(filepath, "wb") as fh:
         base64_data = request.json['image'].replace('data:image/png;base64,', '')

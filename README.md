@@ -7,6 +7,8 @@ With Painterro you can:
 - Paint lines and rectangles (alpha color can be used)
 - Add text
 
+![Painterro preview](docs/preview.png)
+
 Example usecase: You make screenshot by pressing `PrtSc` button, then open Painterro on your website, paste image, 
 crop it to interested area then highlight something with line/rectangle tool and/or add some text 
 to the image.
@@ -59,13 +61,28 @@ They should be placed under `colorScheme` group (see example below)
 
 ```js
 Painterro({
-    id: 'conatiner',
+    // you should provide your save handler, which will post/update image on server:
+    saveHandler: function (image, done) {
+      // of course, instead of raw XHR you may use fetch, jQuery, etc
+      var xhr = new XMLHttpRequest(); 
+      xhr.open("POST", "http://127.0.0.1:5000/save-as-base64/");
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.send(JSON.stringify({
+        image: image.asDataURL('image/png')
+      }));
+      xhr.onload = function (e) {
+        // after saving done, call done!
+        done(true); //done(true) will hide painterro, done(false) will leave opened
+      }
+    },
     activeColor: '#00b400',  // change active color to green
     colorScheme: {
       main: '#fdf6b8' // make panels light-yellow
     }
-});
+}).show();
 ```
+You can see backend part for this example that will receive and save file on server in `example/server.py` directory. 
+Example written on python3 using `Flask`, but it can be implemented using any technology. Saving done in `def saver()` method.
 
 # Development
 
@@ -98,6 +115,5 @@ npm run buildfont
 
 # ToDo list
 
-- Create holder if id not provided
 - Edit button on images (provide selector)
 - Add color pallete
