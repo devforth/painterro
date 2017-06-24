@@ -14,6 +14,18 @@ to the image.
 Painterro is written with vanilla JS, without any additional frameworks to stay lightweight and nimble. Code 
 written on ES6 which transplited by Babel and packed using webpack.
 
+# Supported hotkeys
+
+|||
+|-|-|
+| `Ctrl + Z` | Cancel last operation |
+| `Ctrl + V` | Paste image from clipboard (replace all that drawn) |
+| `Shift` when drawing **rect**/**ellipse** | Draw **square**/**circle** |
+| `Shift` when drawing **line** | draw at angles of `0`, `45`, `90`, `135` etc degrees | 
+| `Alt` when using pipette | Open zoom helper |
+| `Ctrl` + `Wheel mouse up/down` | Zoom image to 100% and back. Works only if image doesn't fit in the draw area (e.g. area `600x600` and you draw image `1920x1080`) |
+
+
 # Configuration
 
 | Param | Description | Default |
