@@ -575,15 +575,15 @@ class PainterroProc {
         this.wrapper.className = 'ptro-wrapper ptro-v-aligned';
       } else {
         this.wrapper.style['overflow'] = 'scroll';
-        this.canvas.style.width = 'auto';
-        this.canvas.style.height = 'auto';
+        this.canvas.style.width = '100%';
+        this.canvas.style.height = '100%';
         this.ratioRelation = 0;
         this.wrapper.className = 'ptro-wrapper';
       }
     } else {
       this.wrapper.style['overflow'] = 'hidden';
-      this.canvas.style.width = 'auto';
-      this.canvas.style.height = 'auto';
+      this.canvas.style.width = '100%';
+      this.canvas.style.height = '100%';
       this.wrapper.className = 'ptro-wrapper ptro-v-aligned';
       this.ratioRelation = 0;
     }
