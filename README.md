@@ -63,7 +63,7 @@ They should be placed under `colorScheme` group (see example below)
 var ptro = Painterro({
     // you should provide your save handler, which will post/update image on server:
     saveHandler: function (image, done) {
-      // of course, instead of raw XHR you may use fetch, jQuery, etc
+      // of course, instead of raw XHR you can use fetch, jQuery, etc
       var xhr = new XMLHttpRequest(); 
       xhr.open("POST", "http://127.0.0.1:5000/save-as-base64/");
       xhr.setRequestHeader("Content-Type", "application/json");
@@ -71,7 +71,7 @@ var ptro = Painterro({
         image: image.asDataURL('image/png')
       }));
       xhr.onload = function (e) {
-        // after saving done, call done!
+        // after saving is done, call done callback
         done(true); //done(true) will hide painterro, done(false) will leave opened
       }
     },
@@ -83,7 +83,7 @@ var ptro = Painterro({
 ptro.show();
 ```
 You can see backend part for this example that will receive and save file on server in `example/server.py` directory. 
-Example written on python3 using `Flask`, but it can be implemented using any technology. Saving done in `def saver()` method.
+Example written on python3 using `Flask`, but it can be implemented using any technology. Please see `def saver()` method.
 
 # Development
 
