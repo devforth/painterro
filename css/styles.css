@@ -9,11 +9,33 @@
     z-index: 10;
 }
 
+.ptro-holder {
+    position: fixed;
+    box-shadow: 3px 3px 15px #787878;
+    left: 35px;
+    right: 35px;
+    top: 35px;
+    bottom: 35px;
+}
+
+.ptro-holder-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.2);
+}
+
 .ptro-wrapper.ptro-v-aligned:before {
     content: "";
     display: inline-block;
     vertical-align: middle;
     height: 100%;
+}
+
+.ptro-bar .icon-btn:disabled {
+    color: gray;
 }
 
 .ptro-wrapper canvas {

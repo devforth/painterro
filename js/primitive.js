@@ -22,6 +22,7 @@ export class PrimitiveTool {
   }
 
   handleMouseDown(event) {
+    this.activate(this.type)
     const mainClass = event.target.classList[0];
     this.ctx.lineWidth = this.lineWidth;
     this.ctx.strokeStyle = this.main.colorWidgetState.line.alphaColor;

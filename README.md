@@ -30,7 +30,7 @@ written on ES6 which transplited by Babel and packed using webpack.
 
 | Param | Description | Default |
 |-|-|-|
-| `id` | Container id that Painterro should be placed to |,
+| `id` | If provided, then Painterro will be placed to some holder on page with this `id`, instead of autoholder | undefined |
 |`activeColor`| Line/Text color that selected by default | '#ff0000' |
 |`activeColorAlpha` | Transparancy of `activeColor` from 0.0 to 1.0, 0.0 = transparent | 1 |
 |`activeFillColor` | Fill color that selected by default | '#000000' |

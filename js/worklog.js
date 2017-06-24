@@ -5,7 +5,7 @@ export class WorkLog {
     this.current = null;
   }
 
-  captureState() {
+  captureState(initial) {
     const state = {
       sizew: this.main.size.w,
       sizeh: this.main.size.h,
@@ -19,6 +19,9 @@ export class WorkLog {
     }
     state.next = null;
     this.current = state;
+    if (initial !== true) {
+      this.main.changedHandler();
+    }
   }
 
   applyState(state) {

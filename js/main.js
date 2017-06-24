@@ -285,7 +285,18 @@ class PainterroProc {
       activate: () => {
         const icon = document.querySelector(`#${this.activeTool.buttonId} > i`);
         icon.className = 'ptro-icon ptro-icon-loading ptro-spinning';
-        //icon.className = 'icon icon-save';
+
+        if (this.params.saveHandler !== undefined) {
+          this.params.saveHandler(this.imageSaver, (hide) => {
+            if (hide === true) {
+              this.hide()
+            }
+            icon.className = 'ptro-icon ptro-icon-save';
+          })
+        } else {
+          console.error("No saveHandler defined, please check documentation")
+          icon.className = 'ptro-icon ptro-icon-save';
+        }
         this.closeActiveTool();
       },
     }, {
@@ -302,11 +313,12 @@ class PainterroProc {
           this.openFile(files[0])
         }
       },
-    },  {
+    }, {
       name: 'close',
       right: true,
       activate: () => {
         this.closeActiveTool();
+        this.hide();
       },
     },];
     this.activeTool = undefined;
@@ -314,8 +326,18 @@ class PainterroProc {
     this.ratioRelation = undefined;
     this.id = this.params.id;
     this.bgColor = this.params.backgroundFillColor;
-    this.baseEl = document.getElementById(this.id);
 
+    if (this.id === undefined) {
+      this.id = genId();
+      this.holderId = genId();
+      document.body.innerHTML += `<div id='${this.holderId}' class="ptro-holder-wrapper">` +
+        `<div id='${this.id}' class="ptro-holder"></div></div>`;
+      this.baseEl = document.getElementById(this.id);
+      this.holderEl = document.getElementById(this.holderId);
+    } else {
+      this.baseEl = document.getElementById(this.id);
+      this.holderEl = null;
+    }
     let bar = '';
     let rightBar = '';
     for(let b of this.tools) {
@@ -348,6 +370,12 @@ class PainterroProc {
         '<input id="ptro-file-input" type="file" style="display: none;" accept="image/x-png,image/gif,image/jpeg" />' +
       '</div>' +
       `<style>${params.styles}</style>`;
+
+    this.saveBtn = document.getElementById(this.tools.filter((t) => t.name === 'save')[0].buttonId);
+    this.saveBtn.setAttribute('disabled', true);
+    this.changedHandler = () => {
+      this.saveBtn.removeAttribute('disabled');
+    };
 
     this.body = document.body;
     this.wrapper = document.querySelector(`#${this.id} .ptro-wrapper`);
@@ -444,8 +472,24 @@ class PainterroProc {
         }
       };
     }
+
+    this.imageSaver = {
+       /**
+       * Returns image as base64 data url
+       * @param {string} type - type of data url, default image/png
+       */
+      asDataURL: (type) => {
+        if (type === undefined) {
+          return this.canvas.toDataURL();
+        } else {
+          return this.canvas.toDataURL(type);
+        }
+      }
+    }
+
     this.initEventHandlers();
     this.clear();
+    this.hide();
   }
 
   closeActiveTool() {
@@ -470,65 +514,85 @@ class PainterroProc {
   initEventHandlers() {
     this.documentHandlers = {
       'mousedown': (e) => {
-        if (this.colorPicker.handleMouseDown(e) !== true) {
-          this.handleToolEvent('handleMouseDown', e);
+        if (this.shown) {
+          if (this.colorPicker.handleMouseDown(e) !== true) {
+            this.handleToolEvent('handleMouseDown', e);
+          }
         }
       },
       'mousemove': (e) => {
-        this.handleToolEvent('handleMouseMove', e);
-        this.colorPicker.handleMouseMove(e);
-        this.zoomHelper.handleMouseMove(e);
+        if (this.shown) {
+          this.handleToolEvent('handleMouseMove', e);
+          this.colorPicker.handleMouseMove(e);
+          this.zoomHelper.handleMouseMove(e);
+        }
       },
       'mouseup': (e) => {
-        this.handleToolEvent('handleMouseUp', e);
-        this.colorPicker.handleMouseUp(e);
+        if (this.shown) {
+          this.handleToolEvent('handleMouseUp', e);
+          this.colorPicker.handleMouseUp(e);
+        }
       },
       'mousewheel': (e) => {
-        if (e.ctrlKey) {
-          this.zoom = e.wheelDelta > 0;
-          this.adjustSizeFull();
-          e.preventDefault();
+        if (this.shown) {
+          if (e.ctrlKey) {
+            this.zoom = e.wheelDelta > 0;
+            this.adjustSizeFull();
+            e.preventDefault();
+          }
         }
       },
       'keydown': (e) => {
-        const evt = window.event ? event : e;
-        if (
-          (evt.keyCode == 89 && evt.ctrlKey) ||  // 89 is 'y' key
-          (evt.keyCode == 90 && evt.ctrlKey && evt.shiftKey) ){  // 90 is 'z' key
+        if (this.shown) {
+          const evt = window.event ? event : e;
+          if (
+            (evt.keyCode == 89 && evt.ctrlKey) ||  // 89 is 'y' key
+            (evt.keyCode == 90 && evt.ctrlKey && evt.shiftKey)) {  // 90 is 'z' key
             this.worklog.redoState();
-        } else if (evt.keyCode == 90 && evt.ctrlKey) {
+          } else if (evt.keyCode == 90 && evt.ctrlKey) {
             this.worklog.undoState();
+          }
         }
       },
       'paste': (event) => {
-        const items = (event.clipboardData || event.originalEvent.clipboardData).items;
-        for (let item of items) {
-          if (item.kind === 'file' && item.type.split('/')[0] === "image") {
-            this.openFile(item.getAsFile());
+        if (this.shown) {
+          const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+          for (let item of items) {
+            if (item.kind === 'file' && item.type.split('/')[0] === "image") {
+              this.openFile(item.getAsFile());
+            }
           }
         }
       },
       'dragover': (event) => {
-        const mainClass = event.target.classList[0];
-        if (mainClass === 'ptro-crp-el' || mainClass === 'ptro-bar') {
-          this.bar.className = 'ptro-bar ptro-color-main ptro-bar-dragover';
+        if (this.shown) {
+          const mainClass = event.target.classList[0];
+          if (mainClass === 'ptro-crp-el' || mainClass === 'ptro-bar') {
+            this.bar.className = 'ptro-bar ptro-color-main ptro-bar-dragover';
+          }
+          event.preventDefault();
         }
-        event.preventDefault();
       },
       'dragleave': (event) => {
-        this.bar.className = 'ptro-bar ptro-color-main';
+        if (this.shown) {
+          this.bar.className = 'ptro-bar ptro-color-main';
+        }
       },
       'drop': (event) => {
-        this.bar.className = 'ptro-bar ptro-color-main';
-        event.preventDefault();
-        this.openFile(event.dataTransfer.files[0])
+        if (this.shown) {
+          this.bar.className = 'ptro-bar ptro-color-main';
+          event.preventDefault();
+          this.openFile(event.dataTransfer.files[0])
+        }
       }
     };
 
     this.windowHandlers = {
       'resize': () => {
-        this.adjustSizeFull();
-        this.syncToolElement();
+        if (this.shown) {
+          this.adjustSizeFull();
+          this.syncToolElement();
+        }
       }
     };
 
@@ -538,6 +602,25 @@ class PainterroProc {
 
     for (let key of Object.keys(this.windowHandlers)) {
        window.addEventListener(key, this.windowHandlers[key]);
+    }
+  }
+
+  show (clear) {
+    this.shown = true;
+    this.baseEl.removeAttribute('hidden');
+    if (this.holderEl) {
+      this.holderEl.removeAttribute('hidden');
+    }
+    if (clear === undefined) {
+      this.clear();
+    }
+  }
+
+  hide () {
+    this.shown = false;
+    this.baseEl.setAttribute('hidden', true);
+    if (this.holderEl) {
+      this.holderEl.setAttribute('hidden', true);
     }
   }
 
@@ -619,7 +702,7 @@ class PainterroProc {
     this.ctx.rect(0, 0, this.size.w, this.size.h);
     this.ctx.fillStyle = this.bgColor;
     this.ctx.fill();
-    this.worklog.captureState();
+    this.worklog.captureState(true);
     this.syncToolElement();
   }
 

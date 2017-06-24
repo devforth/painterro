@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <script src="http://localhost:8080/painterro.js"></script>
+    <style>
+      .img-browse {
+        width: 600px;
+        border: 1px solid gray;
+        padding: 10px;
+        margin: 10px;
+      }
+      .img-browse img {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick='ptro.show()'>OPEN PAINTERRO</button>
+    <div>
+      {% for f in files %}
+        <div class="img-browse">
+          <a href="/image/{{f}}"><img src="/image/{{f}}" /></a>
+        </div>
+      {% endfor %}
+    </div>
+    <script>
+      var ptro = Painterro({
+        saveHandler: function (image, done) {
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", "http://127.0.0.1:5000/save-as-base64/");
+          xhr.setRequestHeader("Content-Type", "application/json");
+          xhr.send(JSON.stringify({
+            image: image.asDataURL('image/png')
+          }));
+          xhr.onload = function (e) {
+            done(true)
+            window.location.reload()
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
