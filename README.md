@@ -60,7 +60,7 @@ They should be placed under `colorScheme` group (see example below)
 ### Example
 
 ```js
-Painterro({
+var ptro = Painterro({
     // you should provide your save handler, which will post/update image on server:
     saveHandler: function (image, done) {
       // of course, instead of raw XHR you may use fetch, jQuery, etc
@@ -79,7 +79,8 @@ Painterro({
     colorScheme: {
       main: '#fdf6b8' // make panels light-yellow
     }
-}).show();
+});
+ptro.show();
 ```
 You can see backend part for this example that will receive and save file on server in `example/server.py` directory. 
 Example written on python3 using `Flask`, but it can be implemented using any technology. Saving done in `def saver()` method.
