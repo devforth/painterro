@@ -26,11 +26,24 @@ export class PrimitiveTool {
     this.ctx.lineWidth = this.lineWidth;
     this.ctx.strokeStyle = this.main.colorWidgetState.line.alphaColor;
     this.ctx.fillStyle =  this.main.colorWidgetState.fill.alphaColor;
+
+
     if (mainClass === 'ptro-crp-el' || mainClass === 'ptro-zoomer') {
       this.tmpData = this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h);
       if (this.type === 'brush') {
         this.state.cornerMarked = true;
-        this.points = [];
+        const cord = [
+          event.clientX - this.el.documentOffsetLeft + this.main.wrapper.scrollLeft,
+          event.clientY - this.el.documentOffsetTop + this.main.wrapper.scrollTop,
+        ];
+        const cur = {
+          x: cord[0],
+          y: cord[1]
+        };
+
+        this.points = [cur];
+        this.drawBrushPath()
+
       } else {
         this.state.cornerMarked = true;
         const scale = this.main.getScale();
@@ -41,6 +54,46 @@ export class PrimitiveTool {
         this.centerCord = [this.centerCord[0] * scale, this.centerCord[1] * scale];
       }
     }
+  }
+
+  drawBrushPath () {
+    const smPoints = this.points;
+    this.ctx.beginPath();
+
+    this.ctx.lineWidth = 0;
+    this.ctx.fillStyle =  this.main.colorWidgetState.line.alphaColor;
+
+    this.ctx.ellipse(
+          this.points[0].x, this.points[0].y,
+          this.lineWidth / 2, this.lineWidth / 2,
+          0, 2 * Math.PI, false);
+
+    this.ctx.ellipse(
+          this.points[this.points.length - 1].x,
+          this.points[this.points.length - 1].y,
+          this.lineWidth / 2, this.lineWidth / 2,
+          0, 2 * Math.PI, false);
+
+    this.ctx.fill();
+    this.ctx.closePath();
+
+
+    this.ctx.beginPath();
+    this.ctx.lineWidth = this.lineWidth;
+    this.ctx.strokeStyle = this.main.colorWidgetState.line.alphaColor;
+    this.ctx.fillStyle =  this.main.colorWidgetState.fill.alphaColor;
+
+    this.ctx.moveTo(this.points[0].x, this.points[0].y);
+    let last;
+    for (let p of smPoints.slice(1)) {
+      this.ctx.lineTo(p.x, p.y);
+      last = p;
+    }
+    if (last) {
+      this.ctx.moveTo(last.x, last.y);
+    }
+    this.ctx.closePath();
+    this.ctx.stroke();
   }
 
   handleMouseMove(event) {
@@ -60,22 +113,12 @@ export class PrimitiveTool {
           x: this.curCord[0],
           y: this.curCord[1]
         };
-        if (prevLast === undefined || distance(prevLast, cur) > 5) {
+
+        if (distance(prevLast, cur) > 5) {
           this.points.push(cur);
         }
-        const smPoints = this.points;
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.points[0].x, this.points[0].y);
-        let last;
-        for (let p of smPoints.slice(1)) {
-          this.ctx.lineTo(p.x, p.y);
-          last = p;
-        }
-        if (last) {
-          this.ctx.moveTo(last.x, last.y);
-        }
-        this.ctx.closePath();
-        this.ctx.stroke();
+
+        this.drawBrushPath();
       } else if (this.type === 'line') {
         if (event.ctrlKey || event.shiftKey) {
           const deg = Math.atan(

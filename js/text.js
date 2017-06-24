@@ -50,9 +50,9 @@ export class TextTool {
   setFontSize(size) {
     this.fontSize = size;
     this.input.style['font-size'] = size;
-    if (this.active) {
-      this.input.focus();
-    }
+    //if (this.active) {
+    //  this.input.focus();
+    //}
     this.reLimit();
   }
 

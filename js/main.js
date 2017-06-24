@@ -6,7 +6,7 @@ import '../css/icons/iconfont.css';
 
 import { PainterroCropper } from './cropper';
 import { WorkLog } from './worklog';
-import { genId, addDocumentOffset } from './utils';
+import { genId, addDocumentObjectHelpers } from './utils';
 import { PrimitiveTool } from './primitive';
 import { ColorPicker } from './colorPicker';
 import { setDefaults } from './params';
@@ -23,7 +23,7 @@ class PainterroProc {
    */
   constructor(params) {
     this.params = setDefaults(params);
-    addDocumentOffset();
+    addDocumentObjectHelpers();
     this.tools = [{
       name: 'crop',
       activate: () => {
@@ -67,7 +67,7 @@ class PainterroProc {
           titleFull: 'lineWidthFull',
           target: 'lineWidth',
           min: 1,
-          max: 50,
+          max: 99,
           action: () => {
             const width = document.getElementById(this.activeTool.controls[1].id);
             this.primitiveTool.setLineWidth(width.value);
@@ -106,7 +106,7 @@ class PainterroProc {
           titleFull: 'lineWidthFull',
           target: 'lineWidth',
           min: 1,
-          max: 50,
+          max: 99,
           action: () => {
             const width = document.getElementById(this.activeTool.controls[2].id).value;
             this.primitiveTool.setLineWidth(width);
@@ -145,7 +145,7 @@ class PainterroProc {
           titleFull: 'lineWidthFull',
           target: 'lineWidth',
           min: 1,
-          max: 50,
+          max: 99,
           action: () => {
             const width = document.getElementById(this.activeTool.controls[2].id).value;
             this.primitiveTool.setLineWidth(width);
@@ -176,7 +176,7 @@ class PainterroProc {
           titleFull: 'lineWidthFull',
           target: 'lineWidth',
           min: 1,
-          max: 50,
+          max: 99,
           action: () => {
             const width = document.getElementById(this.activeTool.controls[1].id);
             this.primitiveTool.setLineWidth(width.value);
@@ -210,7 +210,7 @@ class PainterroProc {
           titleFull: 'fontSizeFull',
           target: 'fontSize',
           min: 1,
-          max: 50,
+          max: 200,
           action: () => {
             const width = document.getElementById(this.activeTool.controls[1].id).value;
             this.textTool.setFontSize(width);
@@ -556,8 +556,8 @@ class PainterroProc {
     return this.canvas.getAttribute('width') / this.canvas.offsetWidth;
   }
   adjustSizeFull() {
-    if (this.size.w > this.wrapper.clientWidth || this.size.h > this.wrapper.clientHeight) {
-      const ratio = this.wrapper.clientWidth / this.wrapper.clientHeight;
+    if (this.size.w > this.wrapper.documentClientWidth || this.size.h > this.wrapper.documentClientHeight) {
+      const ratio = this.wrapper.documentClientWidth / this.wrapper.documentClientHeight;
 
       if (this.zoom === false) {
         let newRelation = ratio < this.size.ratio;
@@ -575,15 +575,15 @@ class PainterroProc {
         this.wrapper.className = 'ptro-wrapper ptro-v-aligned';
       } else {
         this.wrapper.style['overflow'] = 'scroll';
-        this.canvas.style.width = '100%';
-        this.canvas.style.height = '100%';
+        this.canvas.style.width = 'auto';
+        this.canvas.style.height = 'auto';
         this.ratioRelation = 0;
         this.wrapper.className = 'ptro-wrapper';
       }
     } else {
       this.wrapper.style['overflow'] = 'hidden';
-      this.canvas.style.width = '100%';
-      this.canvas.style.height = '100%';
+      this.canvas.style.width = 'auto';
+      this.canvas.style.height = 'auto';
       this.wrapper.className = 'ptro-wrapper ptro-v-aligned';
       this.ratioRelation = 0;
     }

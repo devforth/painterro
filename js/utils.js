@@ -7,7 +7,7 @@ export function genId() {
     return text;
 }
 
-export function addDocumentOffset() {
+export function addDocumentObjectHelpers() {
   Object.defineProperty(Element.prototype, 'documentOffsetTop', {
     get: function () {
         return this.offsetTop + ( this.offsetParent ? this.offsetParent.documentOffsetTop : 0 );
@@ -19,6 +19,20 @@ export function addDocumentOffset() {
           return this.offsetLeft + ( this.offsetParent ? this.offsetParent.documentOffsetLeft : 0 );
       }
   });
+
+  Object.defineProperty(Element.prototype, 'documentClientWidth', {
+      get: function () {
+          return this.getBoundingClientRect().width;
+      }
+  });
+
+  Object.defineProperty(Element.prototype, 'documentClientHeight', {
+      get: function () {
+          return this.getBoundingClientRect().height;
+      }
+  });
+
+
 }
 
 
