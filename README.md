@@ -16,6 +16,25 @@ to the image.
 Painterro is written with vanilla JS, without any additional frameworks to stay lightweight and nimble. Code 
 written on ES6 which transplited by Babel and packed using webpack.
 
+
+Table of contents
+=================
+
+  * [Table of contents](#table-of-contents)
+  * [Supported hotkeys](#supported-hk)
+  * [Configuration](#conf)
+    * [UI color scheme](#colorsch)
+  * [Saving image](#saving)
+    * [Base64 saving](#saving-base64)
+    * [Binary saving](#saving-bin)
+    * [Saving to WYSIWYG](#saving-wysiwyg)
+  * [Development](#dev)
+    * [Building painterro](#build)
+    * [Dev-server](#dev-server)
+    * [Regenerating icons font](#regenerating icons)
+    * [ToDo list](#dev)
+
+
 # Supported hotkeys
 
 |||
@@ -26,7 +45,6 @@ written on ES6 which transplited by Babel and packed using webpack.
 | `Shift` when drawing **line** | draw at angles of `0`, `45`, `90`, `135` etc degrees | 
 | `Alt` when using pipette | Open zoom helper |
 | `Ctrl` + `Wheel mouse up/down` | Zoom image to 100% and back. Works only if image doesn't fit in the draw area (e.g. area `600x600` and you draw image `1920x1080`) |
-
 
 # Configuration
 
@@ -40,9 +58,18 @@ written on ES6 which transplited by Babel and packed using webpack.
 |`defaultLineWidth` | Line width in `px` that selected by default | 5 |
 |`backgroundFillColor` | Default background color when image created/erased | "#ffffff" |
 |`defaultFontSize` | Default font size in pixels | 24 |
-### UI color scheme (`colorScheme` group)
+
+### UI color scheme
 Next group of params used to configure painterro user interface. 
-They should be placed under `colorScheme` group (see example below)
+They should be placed under `colorScheme` group, for example:
+```js
+Painterro({
+  colorScheme: {
+    main: '#fdf6b8', // make panels light-yellow
+    control: '#FECF67' // change controls color
+  }
+}).show()
+```
 
 | Param | Description | Default |
 |-|-|-|
@@ -57,13 +84,17 @@ They should be placed under `colorScheme` group (see example below)
 |`backgroundColor`| Background color of component area which left outside of image due to it size/ratio | '#999999' |
 |`dragOverBarColor`| Color of bar when dropping file to painterro | '#899dff' |
 
-### Example
+# Saving image
+
+You should provide your save handler, which will post/update image on server.
+
+### Base64 saving
+Next example shows how to save base64 via POST json call. Example use raw `XMLHttpRequest`. Of course, 
+instead you can use `fetch`, `jQuery`, etc insead. 
 
 ```js
 var ptro = Painterro({
-    // you should provide your save handler, which will post/update image on server:
     saveHandler: function (image, done) {
-      // of course, instead of raw XHR you may use fetch, jQuery, etc
       var xhr = new XMLHttpRequest(); 
       xhr.open("POST", "http://127.0.0.1:5000/save-as-base64/");
       xhr.setRequestHeader("Content-Type", "application/json");
@@ -75,15 +106,78 @@ var ptro = Painterro({
         done(true); //done(true) will hide painterro, done(false) will leave opened
       }
     },
-    activeColor: '#00b400',  // change active color to green
-    colorScheme: {
-      main: '#fdf6b8' // make panels light-yellow
-    }
+    activeColor: '#00b400'  // change active color to green
 });
 ptro.show();
 ```
-You can see backend part for this example that will receive and save file on server in `example/server.py` directory. 
-Example written on python3 using `Flask`, but it can be implemented using any technology. Saving done in `def saver()` method.
+Backend should convert base64 to binary and save file, here is python flask example (of course same can be implemented using any technology):
+```python
+@app.route("/save-as-base64/", methods=['POST'])
+def base64_saver():
+    filename = '{:10d}.png'.format(int(time()))  # generate some filename
+    filepath = os.path.join(get_tmp_dir(), filename)
+    with open(filepath, "wb") as fh:
+        base64_data = request.json['image'].replace('data:image/png;base64,', '')
+        fh.write(base64.b64decode(base64_data))
+
+    return jsonify({})
+```
+See full example in `example` directory. You can run it with python3 with installed `Flask`.
+
+### Binary saving
+
+You can also post data with binary `multipart/form-data` request which is more efficient. For example some `1920 x 1080` image took `402398` bytes for base64 upload. 
+The same image took `301949` bytes with `multipart/form-data`.
+
+```js
+function dataURItoBlob(dataURI) {
+  var byteString = atob(dataURI.split(',')[1]);
+  var ab = new ArrayBuffer(byteString.length);
+  var ia = new Uint8Array(ab);
+  for (var i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+  return new Blob([ab], {type: 'image/png'});
+}
+
+var ptro = Painterro({
+  saveHandler: function (image, done) {
+    var formData = new FormData()
+    formData.append('image', dataURItoBlob(image.asDataURL()))
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://127.0.0.1:5000/save-as-binary/', true);
+    xhr.onload = xhr.onerror = function () {
+      done(true)
+      window.location.reload()
+    };
+    xhr.send(formData)
+  }
+})
+ptro.show();
+```
+Backend example:
+```python
+@app.route("/save-as-binary/", methods=['POST'])
+def binary_saver():
+    filename = '{:10d}.png'.format(int(time()))  # generate some filename
+    filepath = os.path.join(get_tmp_dir(), filename)
+    request.files['image'].save(filepath)
+
+    return jsonify({})
+```
+
+### Saving to WYSIWYG
+You can just insert image as data urlto any WYSIWYG editor, e.g. TinyMCE. Image that for example can be saved
+```js
+    tinymce.init({ selector:'textarea', });
+    var ptro = Painterro({
+      saveHandler: function (image, done) {
+        tinymce.activeEditor.execCommand('mceInsertContent', false, '<img src="' + image.asDataURL() + '" />');
+        done(true)
+      }
+    })
+```
+
 
 # Development
 
@@ -114,7 +208,7 @@ Add/edit icons in `res` folder. Then run
 npm run buildfont
 ```
 
-# ToDo list
+### ToDo list
 
 - Edit button on images (provide selector)
 - Add color pallete

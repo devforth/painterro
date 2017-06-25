@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <script src="http://localhost:8080/painterro.js"></script>
+  </head>
+  <body>
+    {% include 'common.html' %}
+    {% include 'images_list.html' %}
+    <script>
+      var ptro = Painterro({
+        saveHandler: function (image, done) {
+          var xhr = new XMLHttpRequest()
+          xhr.open('POST', 'http://127.0.0.1:5000/save-as-base64/')
+          xhr.setRequestHeader('Content-Type', 'application/json')
+          xhr.send(JSON.stringify({
+            image: image.asDataURL('image/png')
+          }))
+          xhr.onload = function (e) {
+            done(true)
+            window.location.reload()
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

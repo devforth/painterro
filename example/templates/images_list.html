@@ -1,0 +1,19 @@
+<div>
+  {% for f in files %}
+  <div class="img-browse">
+    <a href="/image/{{f}}"><img src="/image/{{f}}"/></a>
+  </div>
+  {% endfor %}
+</div>
+<style>
+  .img-browse {
+    width: 600px;
+    border: 1px solid gray;
+    padding: 10px;
+    margin: 10px;
+  }
+
+  .img-browse img {
+    width: 100%;
+  }
+</style>

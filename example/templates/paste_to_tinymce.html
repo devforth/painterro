@@ -1,0 +1,25 @@
+<html>
+  <script src="http://localhost:8080/painterro.js"></script>
+  <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+  <script>
+    tinymce.init({
+      selector:'textarea',
+      plugins: [ 'fullscreen' ],
+      height : "700"
+    });
+  </script>
+<body>
+  {% include 'common.html' %}
+
+  <textarea>Example content</textarea>
+
+  <script>
+    var ptro = Painterro({
+      saveHandler: function (image, done) {
+        tinymce.activeEditor.execCommand('mceInsertContent',false, '<img src="' + image.asDataURL() + '" />');
+        done(true)
+      }
+    })
+  </script>
+</body>
+</html>

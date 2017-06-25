@@ -1,0 +1,35 @@
+<html>
+<head>
+  <script src="http://localhost:8080/painterro.js"></script>
+</head>
+<body>
+  {% include 'common.html' %}
+  {% include 'images_list.html' %}
+  <script>
+    function dataURItoBlob(dataURI) {
+      var byteString = atob(dataURI.split(',')[1]);
+      var ab = new ArrayBuffer(byteString.length);
+      var ia = new Uint8Array(ab);
+      for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      return new Blob([ab], {type: 'image/png'});
+    }
+
+    var ptro = Painterro({
+      saveHandler: function (image, done) {
+        var formData = new FormData()
+        formData.append('image', dataURItoBlob(image.asDataURL()))
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://127.0.0.1:5000/save-as-binary/', true);
+        xhr.onload = xhr.onerror = function () {
+          done(true)
+          window.location.reload()
+        };
+        xhr.send(formData)
+      }
+    })
+  </script>
+</body>
+</html>
