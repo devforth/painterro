@@ -25,6 +25,20 @@ export function setDefaults(params) {
   params.colorScheme.backgroundColor = params.colorScheme.backgroundColor || '#999999';
   params.colorScheme.dragOverBarColor = params.colorScheme.dragOverBarColor || '#899dff';
 
+  params.defaultSize = params.defaultSize || 'fill';
+  if (params.defaultSize === 'fill') {
+    params.defaultSize = {
+      width: 'fill',
+      height: 'fill'
+    }
+  } else {
+    const wh = params.defaultSize.split('x');
+    params.defaultSize = {
+      width: wh[0].ptroTrim(),
+      height: wh[1].ptroTrim()
+    }
+  }
+
   params.styles =
     `.ptro-color-main{background-color: ${params.colorScheme.main}}
     .ptro-color-control{

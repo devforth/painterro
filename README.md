@@ -13,7 +13,7 @@ Example usecase: You make screenshot by pressing `PrtSc` button, then open Paint
 crop it to interested area then highlight something with line/rectangle tool and/or add some text 
 to the image.
 
-Painterro is written with vanilla JS, without any additional frameworks to stay lightweight and nimble. Code 
+Painterro is written with vanilla JS, without any additional frameworks to stay lightweight and minimalistic. Code 
 written on ES6 which transplited by Babel and packed using webpack.
 
 
@@ -28,7 +28,7 @@ Table of contents
     * [Base64 saving](#base64-saving)
     * [Binary saving](#binary-saving)
     * [Saving to WYSIWYG](#saving-to-wysiwyg)
-  * [Development](#Development)
+  * [Development](#development)
     * [Building painterro](#building-painterro)
     * [Dev-server](#dev-server)
     * [Regenerating icons font](#regenerating-icons-font)
@@ -60,7 +60,7 @@ Configuration
 |`defaultLineWidth` | Line width in `px` that selected by default | 5 |
 |`backgroundFillColor` | Default background color when image created/erased | "#ffffff" |
 |`defaultFontSize` | Default font size in pixels | 24 |
-
+|`defaultSize` | default image size, should be string in format `<width>x<height>` in pixel, e.g. `'200x100'`. If value is `'fill'`(default) than all container size will be used | `'fill'` |
 UI color scheme
 ===============
 

@@ -32,6 +32,10 @@ export function addDocumentObjectHelpers() {
       }
   });
 
+  String.prototype.ptroTrim = function()
+  {
+      return String(this).replace(/^\s+|\s+$/g, '');
+  };
 
 }
 

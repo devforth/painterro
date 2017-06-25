@@ -22,8 +22,8 @@ class PainterroProc {
    * @param params
    */
   constructor(params) {
-    this.params = setDefaults(params);
     addDocumentObjectHelpers();
+    this.params = setDefaults(params);
     this.tools = [{
       name: 'crop',
       activate: () => {
@@ -611,7 +611,7 @@ class PainterroProc {
     if (this.holderEl) {
       this.holderEl.removeAttribute('hidden');
     }
-    if (clear === undefined) {
+    if (clear !== false) {
       this.clear();
     }
   }
@@ -697,13 +697,16 @@ class PainterroProc {
   }
 
   clear() {
-    this.resize(this.wrapper.clientWidth, this.wrapper.clientHeight);
+    const w = this.params.defaultSize.width === 'fill' && this.wrapper.clientWidth || this.params.defaultSize.width;
+    const h = this.params.defaultSize.height === 'fill' && this.wrapper.clientHeight || this.params.defaultSize.height;
+    this.resize(w, h);
     this.ctx.beginPath();
     this.ctx.rect(0, 0, this.size.w, this.size.h);
     this.ctx.fillStyle = this.bgColor;
     this.ctx.fill();
     this.worklog.captureState(true);
     this.syncToolElement();
+    this.adjustSizeFull();
   }
 
   _getBtnEl(b) {
