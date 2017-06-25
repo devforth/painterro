@@ -95,6 +95,7 @@ instead you can use `fetch`, `jQuery`, etc insead.
 ```js
 var ptro = Painterro({
     saveHandler: function (image, done) {
+      // of course, instead of raw XHR you can use fetch, jQuery, etc
       var xhr = new XMLHttpRequest(); 
       xhr.open("POST", "http://127.0.0.1:5000/save-as-base64/");
       xhr.setRequestHeader("Content-Type", "application/json");
@@ -102,7 +103,7 @@ var ptro = Painterro({
         image: image.asDataURL('image/png')
       }));
       xhr.onload = function (e) {
-        // after saving done, call done!
+        // after saving is done, call done callback
         done(true); //done(true) will hide painterro, done(false) will leave opened
       }
     },
@@ -177,7 +178,6 @@ You can just insert image as data urlto any WYSIWYG editor, e.g. TinyMCE. Image 
       }
     })
 ```
-
 
 # Development
 
