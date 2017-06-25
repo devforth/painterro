@@ -31,11 +31,12 @@ Table of contents
   * [Development](#dev)
     * [Building painterro](#build)
     * [Dev-server](#dev-server)
-    * [Regenerating icons font](#regenerating icons)
+    * [Regenerating icons font](#regenerating-icons)
     * [ToDo list](#dev)
 
 
-# Supported hotkeys
+Supported hotkeys
+=================
 
 |||
 |-|-|
@@ -46,7 +47,8 @@ Table of contents
 | `Alt` when using pipette | Open zoom helper |
 | `Ctrl` + `Wheel mouse up/down` | Zoom image to 100% and back. Works only if image doesn't fit in the draw area (e.g. area `600x600` and you draw image `1920x1080`) |
 
-# Configuration
+Configuration
+=============
 
 | Param | Description | Default |
 |-|-|-|
@@ -59,7 +61,9 @@ Table of contents
 |`backgroundFillColor` | Default background color when image created/erased | "#ffffff" |
 |`defaultFontSize` | Default font size in pixels | 24 |
 
-### UI color scheme
+UI color scheme
+===============
+
 Next group of params used to configure painterro user interface. 
 They should be placed under `colorScheme` group, for example:
 ```js
@@ -84,11 +88,14 @@ Painterro({
 |`backgroundColor`| Background color of component area which left outside of image due to it size/ratio | '#999999' |
 |`dragOverBarColor`| Color of bar when dropping file to painterro | '#899dff' |
 
-# Saving image
+Saving image
+============
 
 You should provide your save handler, which will post/update image on server.
 
-### Base64 saving
+Base64 saving
+-------------
+
 Next example shows how to save base64 via POST json call. Example use raw `XMLHttpRequest`. Of course, 
 instead you can use `fetch`, `jQuery`, etc insead. 
 
@@ -125,7 +132,8 @@ def base64_saver():
 ```
 See full example in `example` directory. You can run it with python3 with installed `Flask`.
 
-### Binary saving
+Binary saving
+-------------
 
 You can also post data with binary `multipart/form-data` request which is more efficient. For example some `1920 x 1080` image took `402398` bytes for base64 upload. 
 The same image took `301949` bytes with `multipart/form-data`.
@@ -167,7 +175,9 @@ def binary_saver():
     return jsonify({})
 ```
 
-### Saving to WYSIWYG
+Saving to WYSIWYG
+-----------------
+
 You can just insert image as data urlto any WYSIWYG editor, e.g. TinyMCE. Image that for example can be saved
 ```js
     tinymce.init({ selector:'textarea', });
@@ -179,7 +189,8 @@ You can just insert image as data urlto any WYSIWYG editor, e.g. TinyMCE. Image 
     })
 ```
 
-# Development
+Development
+===========
 
 After pulling repo install node modules:
 ```bash
@@ -187,28 +198,33 @@ cd painterro
 npm install
 ```
 
-### Building painterro
+Building painterro
+------------------
 
 ```bash
 npm run build
 ```
 Result file is `build/painterro.js`
 
-### Dev-server
+Dev-server
+----------
+
 To start hot-reload dev server for reloading code "on the fly":
 ```bash
 npm run dev
 ```
 Then open http://localhost:8080 with demo page
 
-### Regenerating icons font
+Regenerating icons font
+-----------------------
 
 Add/edit icons in `res` folder. Then run
 ```bash
 npm run buildfont
 ```
 
-### ToDo list
+ToDo list
+---------
 
 - Edit button on images (provide selector)
 - Add color pallete
