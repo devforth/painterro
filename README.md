@@ -21,18 +21,18 @@ Table of contents
 =================
 
   * [Table of contents](#table-of-contents)
-  * [Supported hotkeys](#supported-hk)
-  * [Configuration](#conf)
-    * [UI color scheme](#colorsch)
-  * [Saving image](#saving)
-    * [Base64 saving](#saving-base64)
-    * [Binary saving](#saving-bin)
-    * [Saving to WYSIWYG](#saving-wysiwyg)
-  * [Development](#dev)
-    * [Building painterro](#build)
+  * [Supported hotkeys](#supported-hotkeys)
+  * [Configuration](#configuration)
+    * [UI color scheme](#ui-color-scheme)
+  * [Saving image](#saving-image)
+    * [Base64 saving](#base64-saving)
+    * [Binary saving](#binary-saving)
+    * [Saving to WYSIWYG](#saving-to-wysiwyg)
+  * [Development](#Development)
+    * [Building painterro](#building-painterro)
     * [Dev-server](#dev-server)
-    * [Regenerating icons font](#regenerating-icons)
-    * [ToDo list](#dev)
+    * [Regenerating icons font](#regenerating-icons-font)
+    * [ToDo list](#todo-list)
 
 
 Supported hotkeys
