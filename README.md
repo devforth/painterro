@@ -61,6 +61,7 @@ Configuration
 |`backgroundFillColor` | Default background color when image created/erased | "#ffffff" |
 |`defaultFontSize` | Default font size in pixels | 24 |
 |`defaultSize` | default image size, should be string in format `<width>x<height>` in pixel, e.g. `'200x100'`. If value is `'fill'`(default) than all container size will be used | `'fill'` |
+
 UI color scheme
 ===============
 
@@ -227,4 +228,8 @@ ToDo list
 ---------
 
 - Edit button on images (provide selector)
-- Add color pallete
+- Add recent colors pallete
+- Add recent image sizes in resize tool
+- Blur region
+- Ability to save loacaly
+- API for load file by URL
