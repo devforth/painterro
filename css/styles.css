@@ -34,7 +34,7 @@
     height: 100%;
 }
 
-.ptro-bar .icon-btn:disabled {
+.ptro-icon-btn:disabled {
     color: gray;
 }
 
@@ -43,8 +43,7 @@
     display: inline-block;
 }
 
-.ptro-bar .icon-btn,
-.ptro-wrapper .icon-btn {
+.ptro-icon-btn {
     border: 0;
     padding: 4px 5px 5px;
     margin: 4px 0 0 4px;
@@ -62,8 +61,7 @@
     top:-5px
 }
 
-.ptro-bar .icon-btn:focus,
-.ptro-wrapper .icon-btn:focus,
+.ptro-icon-btn:focus,
 .ptro-named-btn:focus,
 .color-diwget-btn:focus {
     outline: none;
@@ -189,7 +187,8 @@
     bottom: 0;
 }
 
-.ptro-wrapper .ptro-color-widget-wrapper {
+.ptro-wrapper .ptro-color-widget-wrapper,
+.ptro-wrapper .ptro-resize-widget-wrapper{
     position: absolute;
     background-color: rgba(0, 0, 0, 0.6);
     top: 0;
@@ -212,6 +211,24 @@
     margin-left: -90px;
     padding: 10px;
     z-index: 100;
+}
+
+.ptro-wrapper .ptro-resize-widget {
+    width: 200px;
+    height: 125px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -65px;
+    margin-left: -110px;
+    padding: 10px;
+    z-index: 100;
+}
+
+.ptro-resize-table-left {
+    text-align: right;
+    padding-right: 5px;
+    float: none !important;
 }
 
 .ptro-wrapper .ptro-color-edit {
@@ -239,7 +256,8 @@
     width: 55px;
 }
 
-.ptro-wrapper .ptro-color-alpha-label {
+.ptro-wrapper .ptro-color-alpha-label,
+.ptro-wrapper .ptro-label  {
     float: left;
     padding: 0 2px 0 0;
     margin-left: 5px;
@@ -259,8 +277,8 @@
     outline: none;
 }
 
-
-.ptro-wrapper .ptro-color-widget-wrapper .ptro-canvas-light {
+.ptro-wrapper .ptro-color-widget-wrapper .ptro-canvas-light,
+.ptro-wrapper .ptro-resize-widget-wrapper .ptro-canvas-light {
     margin-top: 10px;
 }
 
@@ -311,4 +329,23 @@
 .ptro-bar-right {
     float:right;
     margin-right: 4px;
+}
+
+.ptro-link {
+    float: left;
+    margin-right: 5px;
+    margin-top: -24px;
+}
+
+.ptro-resize-link-wrapper {
+    display: inline-block;
+    height: 20px;
+    padding-left: 10px;
+}
+
+
+.ptro-resize-width-input,
+.ptro-resize-heigth-input {
+    line-height: 22px;
+    padding: 0 0 0 4px;
 }

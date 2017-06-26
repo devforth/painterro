@@ -21,6 +21,9 @@ export class Translation {
         fontNameFull: 'Font name',
         apply: 'Apply',
         cancel: 'Cancel',
+        width: 'Width',
+        height: 'Height',
+        keepRatio: 'Keep width/height ratio',
         tools: {
           crop: 'Crop image',
           rect: 'Draw rectangle',

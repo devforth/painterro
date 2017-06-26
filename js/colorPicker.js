@@ -253,7 +253,7 @@ export class ColorPicker {
           '<span class="ptro-color-light-regulator ptro-bordered-control"></span>' +
           '<div class="ptro-colors"></div>' +
             '<div class="ptro-color-edit">' +
-              '<button class="icon-btn ptro-pipette ptro-color-control" style="float: left; margin-right: 5px">' +
+              '<button class="ptro-icon-btn ptro-pipette ptro-color-control" style="float: left; margin-right: 5px">' +
                 '<i class="ptro-icon ptro-icon-pipette"></i>' +
               '</button>' +
               '<input class="ptro-color" type="text" size="7"/>' +

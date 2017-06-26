@@ -13,6 +13,7 @@ import { setDefaults } from './params';
 import { Translation } from './translation';
 import { ZoomHelper } from './zoomHelper';
 import { TextTool } from './text';
+import { Resizer } from './resizer';
 
 const tr = (n) => Translation.get().tr(n);
 
@@ -280,6 +281,14 @@ class PainterroProc {
         this.closeActiveTool();
       },
     }, {
+      name: 'resize',
+      activate: () => {
+        this.resizer.open();
+      },
+      close: () => {
+        this.resizer.close();
+      }
+    }, {
       name: 'save',
       right: true,
       activate: () => {
@@ -343,7 +352,7 @@ class PainterroProc {
     for(let b of this.tools) {
       const id = genId();
       b.buttonId = id;
-      const btn =  `<button class="icon-btn ptro-color-control" title="${tr('tools.'+b.name)}" `+
+      const btn =  `<button class="ptro-icon-btn ptro-color-control" title="${tr('tools.'+b.name)}" `+
         `id="${id}" >`+
           `<i class="ptro-icon ptro-icon-${b.name}"></i></button>`;
       if (b.right) {
@@ -361,6 +370,7 @@ class PainterroProc {
         cropper +
         ColorPicker.html() +
         ZoomHelper.html() +
+        Resizer.html() +
       '</div>' +
       '<div class="ptro-bar ptro-color-main">' +
         '<span>' + bar + '</span>' +
@@ -393,6 +403,7 @@ class PainterroProc {
         document.getElementById(this.tools[0].controls[0].id).setAttribute('disabled', 'true');
       }
     });
+    this.resizer = new Resizer(this);
     this.primitiveTool = new PrimitiveTool(this);
     this.primitiveTool.setLineWidth(this.params.defaultLineWidth);
     this.worklog = new WorkLog(this);
@@ -432,7 +443,7 @@ class PainterroProc {
               ctrls += `<span class="ptro-tool-ctl-name" title="${tr(ctl.titleFull)}">${tr(ctl.title)}</span>`
             }
             if (ctl.type === 'btn') {
-              ctrls += `<button class="ptro-color-control ${ctl.icon?'icon-btn':'ptro-named-btn'}" ` +
+              ctrls += `<button class="ptro-color-control ${ctl.icon?'ptro-icon-btn':'ptro-named-btn'}" ` +
                 `id=${ctl.id}>${ctl.icon && ('<i class="ptro-icon ptro-icon-'+ctl.icon+'></i>') || ''}` +
                 `<p>${ctl.name || ''}</p></button>`;
             } else if (ctl.type === 'color') {
