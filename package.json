@@ -1,8 +1,8 @@
 {
   "name": "painterro",
-  "version": "0.0.1",
+  "version": "0.1.2",
   "description": "Embуedded html image editor",
-  "main": "painterro.js",
+  "main": "build/painterro.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --optimize-minimize --progress",

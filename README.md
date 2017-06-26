@@ -7,7 +7,7 @@ With Painterro you can:
 - Paint lines and rectangles (alpha color can be used)
 - Add text
 
-![Painterro preview](docs/preview.png)
+![Painterro preview](https://raw.githubusercontent.com/ivictbor/painterro/master/docs/preview.png)
 
 Example usecase: You make screenshot by pressing `PrtSc` button, then open Painterro on your website, paste image, 
 crop it to interested area then highlight something with line/rectangle tool and/or add some text 
