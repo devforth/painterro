@@ -276,9 +276,11 @@ class PainterroProc {
           this.ctx.drawImage(img, -w / 2, -h/2);
           this.adjustSizeFull();
           this.ctx.restore();
+          this.worklog.captureState();
+          this.closeActiveTool();
         };
         img.src = tmpData;
-        this.closeActiveTool();
+
       },
     }, {
       name: 'resize',

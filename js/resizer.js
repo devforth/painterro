@@ -26,18 +26,19 @@ export class Resizer {
 
       this.main.resize(this.newW, this.newH);
 
-        this.main.ctx.save();
-        //this.ctx.translate(h / 2, w / 2);
-        this.main.ctx.scale(this.newW / origW, this.newH / origH);
-        const img = new Image;
-        img.onload = () => {
-          this.main.ctx.drawImage(img, 0, 0);
-          this.main.adjustSizeFull();
-          this.main.ctx.restore();
-        };
-        img.src = tmpData;
+      this.main.ctx.save();
+      //this.ctx.translate(h / 2, w / 2);
+      this.main.ctx.scale(this.newW / origW, this.newH / origH);
+      const img = new Image;
+      img.onload = () => {
+        this.main.ctx.drawImage(img, 0, 0);
+        this.main.adjustSizeFull();
+        this.main.ctx.restore();
+        this.main.worklog.captureState();
+        this.startClose();
+      };
+      img.src = tmpData;
 
-      this.startClose();
     };
 
     this.linkButton.onclick = () => {
@@ -50,18 +51,17 @@ export class Resizer {
     };
 
     this.inputW.oninput = () => {
+      this.newW = this.inputW.value;
       if (this.linked) {
         const ratio = this.main.size.ratio;;
-        this.newW = this.inputW.value;
-
         this.newH = Math.round(this.newW / ratio);
         this.inputH.value = this.newH;
       }
     };
     this.inputH.oninput = () => {
+      this.newH = this.inputH.value;
       if (this.linked) {
         const ratio = this.main.size.ratio;
-        this.newH = this.inputH.value;
         this.newW = Math.round(this.newH * ratio);
         this.inputW.value = this.newW;
       }
