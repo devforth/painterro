@@ -95,7 +95,7 @@ Supported hotkeys
 | `Shift` when drawing **rect**/**ellipse** | Draw **square**/**circle** |
 | `Shift` when drawing **line** | draw at angles of `0`, `45`, `90`, `135` etc degrees | 
 | `Alt` when using pipette | Open zoom helper |
-| `Ctrl` + `Wheel mouse up/down` | Zoom image to 100% and back. Works only if image doesn't fit in the draw area (e.g. area `600x600` and you draw image `1920x1080`) |
+| `Ctrl` + `Wheel mouse up/down` | Zoom image to 100% and back. Works only if image doesn't fit in the draw area (e.g. area `800x600` and you draw `1920x1080` image) |
 
 Configuration
 =============
@@ -111,8 +111,7 @@ Configuration
 |`backgroundFillColor` | Default background color when image created/erased | "#ffffff" |
 |`defaultFontSize` | Default font size in pixels | 24 |
 |`defaultSize` | default image size, should be string in format `<width>x<height>` in pixel, e.g. `'200x100'`. If value is `'fill'`(default) than all container size will be used | `'fill'` |
-|`hiddenTools` | List of tools that you wish to exclude from toolbar
-    e.g. something from this list `['crop', 'line', 'rect', 'ellipse', 'brush', 'text', 'rotate', 'resize',  'save', 'open', 'close']` | [] |
+|`hiddenTools` | List of tools that you wish to exclude from toolbar e.g. something from this list `['crop', 'line', 'rect', 'ellipse', 'brush', 'text', 'rotate', 'resize',  'save', 'open', 'close']` | [] |
 
 UI color scheme
 ---------------
