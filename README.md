@@ -25,6 +25,7 @@ Table of contents
 =================
 
   * [Table of contents](#table-of-contents)
+  * [Installation](#installation)
   * [Supported hotkeys](#supported-hotkeys)
   * [Configuration](#configuration)
     * [UI color scheme](#ui-color-scheme)
@@ -38,6 +39,21 @@ Table of contents
     * [Regenerating icons font](#regenerating-icons-font)
     * [ToDo list](#todo-list)
 
+
+Installation
+============
+
+If you are using npm you can run:
+```bash
+npm install painterro --save
+```
+Then in your code
+
+```js
+import Painterro from 'painterro'
+...
+Painterro().show()
+```
 
 Supported hotkeys
 =================

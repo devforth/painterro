@@ -381,7 +381,7 @@ class PainterroProc {
         '<span class="ptro-bar-right">' + rightBar + '</span>' +
         '<input id="ptro-file-input" type="file" style="display: none;" accept="image/x-png,image/gif,image/jpeg" />' +
       '</div>' +
-      `<style>${params.styles}</style>`;
+      `<style>${this.params.styles}</style>`;
 
     this.saveBtn = document.getElementById(this.tools.filter((t) => t.name === 'save')[0].buttonId);
     this.saveBtn.setAttribute('disabled', true);

@@ -60,4 +60,4 @@ typings/
 .idea
 
 # custom 
-build/painterro.*
+build/painterro*

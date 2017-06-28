@@ -1,6 +1,7 @@
 import { HexToRGBA } from './colorPicker';
 
 export function setDefaults(params) {
+  params = params || {};
   params.activeColor = params.activeColor || "#ff0000";
   params.activeColorAlpha = params.activeColorAlpha || 1.0;
   params.activeAlphaColor = HexToRGBA(params.activeColor, params.activeColorAlpha);
