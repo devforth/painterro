@@ -63,4 +63,15 @@ def binary_saver():
 def get_file(filename):
     return send_from_directory(get_tmp_dir(), filename)
 
+print("""
+====================================================================
+||                WELCOME TO  THE PAINTERRO DEMO                  ||
+||  To make this work, please go to painterro root dir, and run"  ||
+||                                                                ||
+||    npm install                                                 ||
+||    npm run dev                                                 ||
+====================================================================
+""")
+
 app.run()
+

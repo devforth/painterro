@@ -27,7 +27,7 @@ export class PrimitiveTool {
     this.ctx.lineWidth = this.lineWidth;
     this.ctx.strokeStyle = this.main.colorWidgetState.line.alphaColor;
     this.ctx.fillStyle =  this.main.colorWidgetState.fill.alphaColor;
-
+    const scale = this.main.getScale();
 
     if (mainClass === 'ptro-crp-el' || mainClass === 'ptro-zoomer') {
       this.tmpData = this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h);
@@ -38,8 +38,8 @@ export class PrimitiveTool {
           event.clientY - this.el.documentOffsetTop + this.main.wrapper.scrollTop,
         ];
         const cur = {
-          x: cord[0],
-          y: cord[1]
+          x: cord[0] * scale,
+          y: cord[1] * scale
         };
 
         this.points = [cur];
@@ -47,7 +47,6 @@ export class PrimitiveTool {
 
       } else {
         this.state.cornerMarked = true;
-        const scale = this.main.getScale();
         this.centerCord = [
           event.clientX - this.el.documentOffsetLeft + this.main.wrapper.scrollLeft,
           event.clientY - this.el.documentOffsetTop + this.main.wrapper.scrollTop,

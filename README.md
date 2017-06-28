@@ -69,7 +69,7 @@ or [build it by yourself](#building-painterro).
 
 Then insert <script> e.g:
 ```html
-<script src="https://github.com/ivictbor/painterro/releases/download/0.1.5/painterro-0.1.5.min.js"></script>
+<script src="https://github.com/ivictbor/painterro/releases/download/0.1.7/painterro-0.1.7.min.js"></script>
 ```
 Then in your code:
 ```html
