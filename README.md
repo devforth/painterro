@@ -26,6 +26,8 @@ Table of contents
 
   * [Table of contents](#table-of-contents)
   * [Installation](#installation)
+    * [With npm](#with-npm)
+    * [By including script](#by-including-script)
   * [Supported hotkeys](#supported-hotkeys)
   * [Configuration](#configuration)
     * [UI color scheme](#ui-color-scheme)
@@ -43,6 +45,10 @@ Table of contents
 Installation
 ============
 
+
+With npm
+--------
+
 If you are using npm you can run:
 ```bash
 npm install painterro --save
@@ -54,6 +60,28 @@ import Painterro from 'painterro'
 ...
 Painterro().show()
 ```
+
+By including script
+-------------------
+
+You can download latest `painterro-*.min.js` here https://github.com/ivictbor/painterro/releases/ 
+or [build it by yourself](#building-painterro).
+
+Then insert <script> e.g:
+```html
+<script src="https://github.com/ivictbor/painterro/releases/download/0.1.5/painterro-0.1.5.min.js"></script>
+```
+Then in your code:
+```html
+<script>
+  Painterro().show()
+</script>
+```
+
+Read next
+---------
+
+To be able save your images on server see [Saving image](#saving-image). For configurations see [Configuration](#configuration)
 
 Supported hotkeys
 =================
