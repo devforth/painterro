@@ -21,6 +21,7 @@ export class Translation {
         fontNameFull: 'Font name',
         apply: 'Apply',
         cancel: 'Cancel',
+        close: 'Close',
         width: 'Width',
         height: 'Height',
         keepRatio: 'Keep width/height ratio',

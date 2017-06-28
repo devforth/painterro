@@ -110,6 +110,8 @@ Configuration
 |`backgroundFillColor` | Default background color when image created/erased | "#ffffff" |
 |`defaultFontSize` | Default font size in pixels | 24 |
 |`defaultSize` | default image size, should be string in format `<width>x<height>` in pixel, e.g. `'200x100'`. If value is `'fill'`(default) than all container size will be used | `'fill'` |
+|`hiddenTools` | List of tools that you do not want to see in Painterro
+    e.g. something of this list `['crop', 'line', 'rect', 'ellipse', 'brush', 'text', 'rotate', 'resize',  'save', 'open', 'close']` | [] |
 
 UI color scheme
 ===============
@@ -137,6 +139,25 @@ Painterro({
 |`inputText` | Color of text in input | `activeControl` |
 |`backgroundColor`| Background color of component area which left outside of image due to it size/ratio | '#999999' |
 |`dragOverBarColor`| Color of bar when dropping file to painterro | '#899dff' |
+
+
+Translation
+-----------
+
+If you want to translate or change strings you can du this by passing `translation` parameter
+
+```js
+Painterro({
+  translation: {
+    name: 'ua',
+    strings: {
+      apply: 'Застосувати'    
+    }
+  }
+}).show()
+```
+For all values that can be translated see `js/translation.js`
+    
 
 Saving image
 ============

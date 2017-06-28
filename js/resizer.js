@@ -93,11 +93,15 @@ export class Resizer {
           '<table>' +
             '<tr>'+
               `<td class="ptro-label ptro-resize-table-left">${Translation.get().tr("width")}</td>` +
-              '<td><input class="ptro-input ptro-resize-width-input" type="number" min="0" max="3000" step="1"/></span></td>' +
+              '<td>' +
+                '<input class="ptro-input ptro-resize-width-input" type="number" min="0" max="3000" step="1"/>' +
+              '</td>' +
             '</tr>' +
             '<tr>'+
               `<td class="ptro-label ptro-resize-table-left">${Translation.get().tr("height")}</td>` +
-              '<td><input class="ptro-input ptro-resize-heigth-input" type="number" min="0" max="3000" step="1"/></span></td>' +
+              '<td>' +
+                '<input class="ptro-input ptro-resize-heigth-input" type="number" min="0" max="3000" step="1"/>' +
+              '</td>' +
             '</tr>' +
           '</table>' +
         '</div>' +
@@ -108,9 +112,11 @@ export class Resizer {
         '</div>' +
         '<div>' +
           '<button class="ptro-named-btn ptro-apply ptro-color-control" ' +
-                'style="margin-top: 8px;position: absolute; top: 95px; right: 75px;width: 50px;">Apply</button></div>' +
+                'style="margin-top: 8px;position: absolute; top: 95px; right: 75px;">' +
+                `${Translation.get().tr("apply")}</button></div>` +
           '<button class="ptro-named-btn ptro-close ptro-color-control" ' +
-                'style="margin-top: 8px;position: absolute; top: 95px; right: 10px;width: 55px;">Cancel</button></div>' +
+                'style="margin-top: 8px;position: absolute; top: 95px; right: 10px;">'+
+                `${Translation.get().tr("cancel")}</button></div>` +
         '</div>' +
       '</div>';
   }

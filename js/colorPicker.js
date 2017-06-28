@@ -257,10 +257,12 @@ export class ColorPicker {
                 '<i class="ptro-icon ptro-icon-pipette"></i>' +
               '</button>' +
               '<input class="ptro-color" type="text" size="7"/>' +
-              `<span style="float:right"><span class="ptro-color-alpha-label" title="${Translation.get().tr('alphaFull')}">${Translation.get().tr('alpha')}</span>` +
+              `<span style="float:right"><span class="ptro-color-alpha-label" ` +
+                `title="${Translation.get().tr('alphaFull')}">${Translation.get().tr('alpha')}</span>` +
               '<input class="ptro-color-alpha ptro-input" type="number" min="0" max="1" step="0.1"/></span>' +
               '<div><button class="ptro-named-btn ptro-close ptro-color-control" ' +
-                'style="margin-top: 8px;position: absolute; top: 225px; right: 10px;width: 50px;">Close</button></div>' +
+                'style="margin-top: 8px;position: absolute; top: 225px; right: 10px;width: 50px;">'+
+                `${Translation.get().tr('close')}</button></div>` +
             '</div>' +
           '</div>' +
         '</div>' +

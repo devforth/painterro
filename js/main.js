@@ -25,6 +25,7 @@ class PainterroProc {
   constructor(params) {
     addDocumentObjectHelpers();
     this.params = setDefaults(params);
+
     this.tools = [{
       name: 'crop',
       activate: () => {
@@ -332,6 +333,7 @@ class PainterroProc {
         this.hide();
       },
     },];
+
     this.activeTool = undefined;
     this.zoom = false;
     this.ratioRelation = undefined;
@@ -351,7 +353,7 @@ class PainterroProc {
     }
     let bar = '';
     let rightBar = '';
-    for(let b of this.tools) {
+    for(let b of this.tools.filter((t) => !this.params.hiddenTools.includes(t.name))) {
       const id = genId();
       b.buttonId = id;
       const btn =  `<button class="ptro-icon-btn ptro-color-control" title="${tr('tools.'+b.name)}" `+
@@ -377,8 +379,8 @@ class PainterroProc {
       '<div class="ptro-bar ptro-color-main">' +
         '<span>' + bar + '</span>' +
         '<span class="tool-controls"></span>' +
-        '<span class="ptro-info"></span>' +
         '<span class="ptro-bar-right">' + rightBar + '</span>' +
+        '<span class="ptro-info"></span>' +
         '<input id="ptro-file-input" type="file" style="display: none;" accept="image/x-png,image/gif,image/jpeg" />' +
       '</div>' +
       `<style>${this.params.styles}</style>`;
@@ -431,7 +433,7 @@ class PainterroProc {
       }
     };
 
-    for(let b of this.tools) {
+    for(let b of this.tools.filter((t) => !this.params.hiddenTools.includes(t.name))) {
       this._getBtnEl(b).onclick = () => {
         const currentActive = this.activeTool;
         this.closeActiveTool();

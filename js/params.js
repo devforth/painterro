@@ -1,4 +1,5 @@
 import { HexToRGBA } from './colorPicker';
+import { Translation } from './translation';
 
 export function setDefaults(params) {
   params = params || {};
@@ -13,6 +14,7 @@ export function setDefaults(params) {
   params.defaultLineWidth = params.defaultLineWidth || 5;
   params.defaultFontSize = params.defaultFontSize || 24;
   params.backgroundFillColor = params.backgroundFillColor || "#ffffff";
+  params.hiddenTools = params.hiddenTools || [];
 
   params.colorScheme = params.colorScheme || {};
   params.colorScheme.main = params.colorScheme.main || "#dbebff";
@@ -38,6 +40,12 @@ export function setDefaults(params) {
       width: wh[0].ptroTrim(),
       height: wh[1].ptroTrim()
     }
+  }
+
+  if (params.translation) {
+    const name = params.translation.name;
+    Translation.get().addTranslation(name, params.translation.strings)
+    Translation.get().activate(name)
   }
 
   params.styles =
