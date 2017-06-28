@@ -1,3 +1,5 @@
+import { clearSelection } from './utils';
+
 export class PainterroCropper {
 
   constructor(main, selectionCallback) {
@@ -48,7 +50,7 @@ export class PainterroCropper {
       Math.round( this.cropper.topl[0] + (this.cropper.rect.clientWidth) / ratio ),
       Math.round( this.cropper.topl[1] + (this.cropper.rect.clientHeight) / ratio )];
 
-    console.log('recalced cords', ratio, this.cropper.topl, this.cropper.bottoml);
+    // console.log('recalced cords', ratio, this.cropper.topl, this.cropper.bottoml);
   }
 
   handleMouseDown(event) {
@@ -187,6 +189,7 @@ export class PainterroCropper {
     this.cropper.resizingR = false;
     this.cropper.resizingB = false;
     this.cropper.resizingL = false;
+    clearSelection();
   }
 
   draw() {

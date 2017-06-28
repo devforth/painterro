@@ -63,7 +63,8 @@
     margin-left: 4px;
     font-family: "Open Sans", sans-serif;
     position: relative;
-    top:-5px
+    top:-5px;
+    font-size: 14px;
 }
 
 .ptro-icon-btn:focus,
@@ -217,7 +218,7 @@
 }
 
 .ptro-wrapper .ptro-resize-widget {
-    width: 220px;
+    width: 200px;
     height: 145px;
     position: absolute;
     top: 50%;
@@ -321,8 +322,7 @@
 .ptro-text-tool-input {
     position: absolute;
     background-color: rgba(0,0,0,0);
-    border: 1px solid;
-    border-style: dashed;
+    border: 1px dashed;
     width: auto;
     display: block;
     min-width: 5px;
@@ -330,6 +330,7 @@
     overflow-x: hidden;
     word-wrap: normal;
     overflow-y: hidden;
+    box-sizing: content-box;
 }
 
 .ptro-text-tool-input:focus {
@@ -343,8 +344,8 @@
 
 .ptro-link {
     float: left;
-    margin-right: 5px;
-    margin-top: -24px;
+    margin-right: -12px;
+    margin-top: -20px;
 }
 
 .ptro-resize-link-wrapper {

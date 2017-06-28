@@ -39,6 +39,22 @@ export function addDocumentObjectHelpers() {
 
 }
 
+export function clearSelection() {
+	let selection = null;
+	if(window.getSelection){
+		selection = window.getSelection();
+	} else if(document.selection){
+		selection = document.selection;
+	}
+	if(selection){
+		if(selection.empty){
+			selection.empty();
+		}
+		if(selection.removeAllRanges){
+			selection.removeAllRanges();
+		}
+	}
+}
 
 export function distance(p1, p2) {
   const a = p1.x - p2.x;

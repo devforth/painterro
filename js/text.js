@@ -49,7 +49,7 @@ export class TextTool {
 
   setFontSize(size) {
     this.fontSize = size;
-    this.input.style['font-size'] = size;
+    this.input.style['font-size'] = `${size}px`;
     //if (this.active) {
     //  this.input.focus();
     //}
@@ -97,8 +97,8 @@ export class TextTool {
       ];
       const scale = this.main.getScale();
       this.scaledCord = [this.crd[0] * scale, this.crd[1] * scale];
-      this.input.style.left = this.crd[0];
-      this.input.style.top = this.crd[1];
+      this.input.style.left = `${this.crd[0]}px`;
+      this.input.style.top = `${this.crd[1]}px`;
       this.input.style.display = 'inline';
       this.input.focus();
       this.reLimit();

@@ -70,8 +70,8 @@ export class ZoomHelper {
           }
         }
       }
-      this.zomer.style.left = e.clientX - this.wrapper.documentOffsetLeft - this.halfFullW;
-      this.zomer.style.top = e.clientY - this.wrapper.documentOffsetTop - this.halfFullW;
+      this.zomer.style.left = `${e.clientX - this.wrapper.documentOffsetLeft - this.halfFullW}px`;
+      this.zomer.style.top = `${e.clientY - this.wrapper.documentOffsetTop - this.halfFullW}px`;
     } else {
       if (this.shown) {
         this.zomer.style.display = "none";
@@ -80,7 +80,6 @@ export class ZoomHelper {
       }
     }
   }
-
 
   static html() {
     return '<canvas class="ptro-zoomer" width="" height="0"></canvas>'
