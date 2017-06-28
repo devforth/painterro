@@ -32,6 +32,7 @@ Table of contents
   * [Supported hotkeys](#supported-hotkeys)
   * [Configuration](#configuration)
     * [UI color scheme](#ui-color-scheme)
+    * [Translation](#translation)
   * [Saving image](#saving-image)
     * [Base64 saving](#base64-saving)
     * [Binary saving](#binary-saving)
@@ -110,11 +111,11 @@ Configuration
 |`backgroundFillColor` | Default background color when image created/erased | "#ffffff" |
 |`defaultFontSize` | Default font size in pixels | 24 |
 |`defaultSize` | default image size, should be string in format `<width>x<height>` in pixel, e.g. `'200x100'`. If value is `'fill'`(default) than all container size will be used | `'fill'` |
-|`hiddenTools` | List of tools that you do not want to see in Painterro
-    e.g. something of this list `['crop', 'line', 'rect', 'ellipse', 'brush', 'text', 'rotate', 'resize',  'save', 'open', 'close']` | [] |
+|`hiddenTools` | List of tools that you wish to exclude from toolbar
+    e.g. something from this list `['crop', 'line', 'rect', 'ellipse', 'brush', 'text', 'rotate', 'resize',  'save', 'open', 'close']` | [] |
 
 UI color scheme
-===============
+---------------
 
 Next group of params used to configure painterro user interface. 
 They should be placed under `colorScheme` group, for example:
@@ -144,7 +145,8 @@ Painterro({
 Translation
 -----------
 
-If you want to translate or change strings you can du this by passing `translation` parameter
+If you want to translate or change strings you can do this by passing 
+`translation` parameter, for example:
 
 ```js
 Painterro({
@@ -152,11 +154,12 @@ Painterro({
     name: 'ua',
     strings: {
       apply: 'Застосувати'    
+      // other strings
     }
   }
 }).show()
 ```
-For all values that can be translated see `js/translation.js`
+For all strings that can be translated see `js/translation.js`
     
 
 Saving image
