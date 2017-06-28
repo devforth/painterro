@@ -51,6 +51,11 @@
     width: 32px;
 }
 
+.ptro-icon-btn i {
+    line-height: 23px;
+}
+
+
 .ptro-named-btn {
     border: 0;
     display: inline-block;
@@ -202,8 +207,8 @@
 }
 
 .ptro-wrapper .ptro-pallet {
-    width: 180px;
-    height: 245px;
+    width: 200px;
+    height: 265px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -211,18 +216,20 @@
     margin-left: -90px;
     padding: 10px;
     z-index: 100;
+    box-sizing: border-box;
 }
 
 .ptro-wrapper .ptro-resize-widget {
-    width: 200px;
-    height: 125px;
+    width: 220px;
+    height: 145px;
     position: absolute;
     top: 50%;
     left: 50%;
     margin-top: -65px;
-    margin-left: -110px;
+    margin-left: -100px;
     padding: 10px;
     z-index: 100;
+    box-sizing: border-box;
 }
 
 .ptro-resize-table-left {

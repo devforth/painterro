@@ -2,7 +2,7 @@
 [GitHub](https://github.com/ivictbor/painterro) | [npm](https://www.npmjs.com/package/painterro)
 
 Painterro is singlefile JavaScript paint component which allows to edit images directly in browser.
-It can be easily integrated into your website or blog by including only one `painterro.js` file and calling init code.
+It can be easily integrated into your website or blog by including only one js file and calling init code.
 
 With Painterro you can:
 - Paste image from clipboard (for example screenshot)
@@ -28,6 +28,7 @@ Table of contents
   * [Installation](#installation)
     * [With npm](#with-npm)
     * [By including script](#by-including-script)
+    * [Read after installation](#read-after-installation)
   * [Supported hotkeys](#supported-hotkeys)
   * [Configuration](#configuration)
     * [UI color scheme](#ui-color-scheme)
@@ -67,7 +68,7 @@ By including script
 You can download latest `painterro-*.min.js` here https://github.com/ivictbor/painterro/releases/ 
 or [build it by yourself](#building-painterro).
 
-Then insert <script> e.g:
+Then insert `<script>` e.g:
 ```html
 <script src="https://github.com/ivictbor/painterro/releases/download/0.1.7/painterro-0.1.7.min.js"></script>
 ```
@@ -78,8 +79,8 @@ Then in your code:
 </script>
 ```
 
-Read next
----------
+Read after installation
+-----------------------
 
 To be able save your images on server see [Saving image](#saving-image). For configurations see [Configuration](#configuration)
 
