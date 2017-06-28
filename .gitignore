@@ -60,6 +60,4 @@ typings/
 .idea
 
 # custom 
-build/painterro.js 
-build/painterro.js.map
- 
+build/painterro.*
