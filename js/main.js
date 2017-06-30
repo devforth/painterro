@@ -582,6 +582,13 @@ class PainterroProc {
           } else if (evt.keyCode == 90 && evt.ctrlKey) {
             this.worklog.undoState();
           }
+
+          if (this.saveBtn) {
+            if (evt.keyCode == 83 && evt.ctrlKey) { // 's' key pressed
+              this.save();
+              evt.preventDefault();
+            }
+          }
         }
       },
       'paste': (event) => {
