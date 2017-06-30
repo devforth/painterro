@@ -28,7 +28,7 @@ export class PrimitiveTool {
     this.ctx.strokeStyle = this.main.colorWidgetState.line.alphaColor;
     this.ctx.fillStyle =  this.main.colorWidgetState.fill.alphaColor;
     const scale = this.main.getScale();
-
+    this.ctx.lineCap = "round";
     if (mainClass === 'ptro-crp-el' || mainClass === 'ptro-zoomer') {
       this.tmpData = this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h);
       if (this.type === 'brush') {
@@ -58,25 +58,6 @@ export class PrimitiveTool {
 
   drawBrushPath () {
     const smPoints = this.points;
-    this.ctx.beginPath();
-
-    this.ctx.lineWidth = 0;
-    this.ctx.fillStyle =  this.main.colorWidgetState.line.alphaColor;
-
-    this.ctx.ellipse(
-          this.points[0].x, this.points[0].y,
-          this.lineWidth / 2, this.lineWidth / 2,
-          0, 2 * Math.PI, false);
-
-    this.ctx.ellipse(
-          this.points[this.points.length - 1].x,
-          this.points[this.points.length - 1].y,
-          this.lineWidth / 2, this.lineWidth / 2,
-          0, 2 * Math.PI, false);
-
-    this.ctx.fill();
-    this.ctx.closePath();
-
 
     this.ctx.beginPath();
     this.ctx.lineWidth = this.lineWidth;
@@ -92,8 +73,10 @@ export class PrimitiveTool {
     if (last) {
       this.ctx.moveTo(last.x, last.y);
     }
-    this.ctx.closePath();
+
     this.ctx.stroke();
+
+    this.ctx.closePath();
   }
 
   handleMouseMove(event) {
