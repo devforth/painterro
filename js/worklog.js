@@ -38,6 +38,7 @@ export class WorkLog {
     if (this.current.prev !== null) {
       this.current = this.current.prev;
       this.applyState(this.current);
+      this.main.changedHandler();
     }
   }
 
@@ -45,6 +46,7 @@ export class WorkLog {
     if (this.current.next !== null) {
       this.current = this.current.next;
       this.applyState(this.current);
+      this.main.changedHandler();
     }
   }
 }

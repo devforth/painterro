@@ -295,20 +295,7 @@ class PainterroProc {
       name: 'save',
       right: true,
       activate: () => {
-        const icon = document.querySelector(`#${this.activeTool.buttonId} > i`);
-        icon.className = 'ptro-icon ptro-icon-loading ptro-spinning';
-
-        if (this.params.saveHandler !== undefined) {
-          this.params.saveHandler(this.imageSaver, (hide) => {
-            if (hide === true) {
-              this.hide()
-            }
-            icon.className = 'ptro-icon ptro-icon-save';
-          })
-        } else {
-          console.error("No saveHandler defined, please check documentation")
-          icon.className = 'ptro-icon ptro-icon-save';
-        }
+        this.save();
         this.closeActiveTool();
       },
     }, {
@@ -334,6 +321,10 @@ class PainterroProc {
       },
     },];
 
+    this.toolByName = {};
+    for (let t of this.tools) {
+      this.toolByName[t.name] = t;
+    }
     this.activeTool = undefined;
     this.zoom = false;
     this.ratioRelation = undefined;
@@ -385,11 +376,13 @@ class PainterroProc {
       '</div>' +
       `<style>${this.params.styles}</style>`;
 
-    this.saveBtn = document.getElementById(this.tools.filter((t) => t.name === 'save')[0].buttonId);
-    this.saveBtn.setAttribute('disabled', true);
-    this.changedHandler = () => {
-      this.saveBtn.removeAttribute('disabled');
-    };
+    this.saveBtn = document.getElementById(this.toolByName.save.buttonId);
+    if (this.saveBtn) {
+      this.saveBtn.setAttribute('disabled', true);
+      this.changedHandler = () => {
+        this.saveBtn.removeAttribute('disabled');
+      };
+    }
 
     this.body = document.body;
     this.wrapper = document.querySelector(`#${this.id} .ptro-wrapper`);
@@ -402,9 +395,9 @@ class PainterroProc {
     this.zoomHelper = new ZoomHelper(this);
     this.cropper = new PainterroCropper(this, (notEmpty) => {
       if (notEmpty) {
-        document.getElementById(this.tools[0].controls[0].id).removeAttribute('disabled');
+        document.getElementById(this.toolByName.crop.controls[0].id).removeAttribute('disabled');
       } else {
-        document.getElementById(this.tools[0].controls[0].id).setAttribute('disabled', 'true');
+        document.getElementById(this.toolByName.crop.controls[0].id).setAttribute('disabled', 'true');
       }
     });
     this.resizer = new Resizer(this);
@@ -507,7 +500,29 @@ class PainterroProc {
     this.hide();
   }
 
-  closeActiveTool() {
+  save () {
+    const btn = document.getElementById(this.toolByName.save.buttonId);
+    const icon = document.querySelector(`#${this.toolByName.save.buttonId} > i`);
+    btn && (btn.setAttribute('disabled', 'true'));
+    icon && (icon.className = 'ptro-icon ptro-icon-loading ptro-spinning')
+
+    if (this.params.saveHandler !== undefined) {
+      this.params.saveHandler(this.imageSaver, (hide) => {
+        if (hide === true) {
+          this.hide()
+        }
+        icon && (icon.className = 'ptro-icon ptro-icon-save');
+        //btn && (btn.removeAttribute('disabled'));
+      })
+    } else {
+      console.error("No saveHandler defined, please check documentation")
+      icon && (icon.className = 'ptro-icon ptro-icon-save');
+      //btn && (btn.removeAttribute('disabled'))
+    }
+    return this;
+  }
+
+  closeActiveTool () {
     if (this.activeTool !== undefined) {
       if (this.activeTool.close !== undefined) {
         this.activeTool.close();
@@ -620,15 +635,31 @@ class PainterroProc {
     }
   }
 
-  show (clear) {
+  loadImage (source) {
+    const img = new Image;
+    img.onload = () => {
+      this.resize(img.naturalWidth, img.naturalHeight);
+      this.ctx.drawImage(img, 0, 0);
+      this.adjustSizeFull();
+      this.worklog.captureState();
+    };
+    img.src = source;
+  }
+
+  show (openImage) {
     this.shown = true;
     this.baseEl.removeAttribute('hidden');
     if (this.holderEl) {
       this.holderEl.removeAttribute('hidden');
     }
-    if (clear !== false) {
-      this.clear();
+    if (typeof openImage === 'string') {
+      this.loadImage(openImage)
+    } else {
+      if (openImage !== false) {
+        this.clear();
+      }
     }
+    return this;
   }
 
   hide () {
@@ -637,17 +668,11 @@ class PainterroProc {
     if (this.holderEl) {
       this.holderEl.setAttribute('hidden', true);
     }
+    return this;
   }
 
   openFile(f) {
-    const img = new Image;
-    img.onload = () => {
-      this.resize(img.naturalWidth, img.naturalHeight);
-      this.ctx.drawImage(img, 0, 0);
-      this.adjustSizeFull();
-      this.worklog.captureState();
-    };
-    img.src = URL.createObjectURL(f);
+    this.loadImage(URL.createObjectURL(f));
   }
 
   getScale() {

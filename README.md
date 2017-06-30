@@ -141,6 +141,19 @@ Painterro({
 |`dragOverBarColor`| Color of bar when dropping file to painterro | '#899dff' |
 
 
+Methods
+-------
+
+
+**.show(openImage)** - Show painterro instance. `openImage` can have next values:
+* `false` - will open image that already was drawn before last close
+* `some string value`, e.g. `'http://placehold.it/120x120&text=image1'` - will try to load image from url
+* all another values - will clear content before open
+
+**.hide()** - hide instance
+
+**.save()** - call save. Can be used if save button is hidden (`hiddenTools: ['save']`)
+
 Translation
 -----------
 
