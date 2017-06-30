@@ -8,35 +8,42 @@ export function genId() {
 }
 
 export function addDocumentObjectHelpers() {
-  Object.defineProperty(Element.prototype, 'documentOffsetTop', {
-    get: function () {
+  if (!Element.prototype.hasOwnProperty('documentOffsetTop')) {
+    Object.defineProperty(Element.prototype, 'documentOffsetTop', {
+      get: function () {
         return this.offsetTop + ( this.offsetParent ? this.offsetParent.documentOffsetTop : 0 );
-    }
-  });
-
-  Object.defineProperty(Element.prototype, 'documentOffsetLeft', {
-      get: function () {
-          return this.offsetLeft + ( this.offsetParent ? this.offsetParent.documentOffsetLeft : 0 );
       }
-  });
-
-  Object.defineProperty(Element.prototype, 'documentClientWidth', {
+    });
+  }
+  if (!Element.prototype.hasOwnProperty('documentOffsetLeft')) {
+    Object.defineProperty(Element.prototype, 'documentOffsetLeft', {
       get: function () {
-          return this.getBoundingClientRect().width;
+        return this.offsetLeft + ( this.offsetParent ? this.offsetParent.documentOffsetLeft : 0 );
       }
-  });
+    });
+  }
 
-  Object.defineProperty(Element.prototype, 'documentClientHeight', {
+  if (!Element.prototype.hasOwnProperty('documentClientWidth')) {
+    Object.defineProperty(Element.prototype, 'documentClientWidth', {
       get: function () {
-          return this.getBoundingClientRect().height;
+        return this.getBoundingClientRect().width;
       }
-  });
+    });
+  }
 
-  String.prototype.ptroTrim = function()
-  {
+  if (!Element.prototype.hasOwnProperty('documentClientHeight')) {
+    Object.defineProperty(Element.prototype, 'documentClientHeight', {
+      get: function () {
+        return this.getBoundingClientRect().height;
+      }
+    });
+  }
+
+  if (!String.prototype.hasOwnProperty('ptroTrim')) {
+    String.prototype.ptroTrim = function () {
       return String(this).replace(/^\s+|\s+$/g, '');
-  };
-
+    };
+  }
 }
 
 export function clearSelection() {
