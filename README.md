@@ -318,4 +318,3 @@ ToDo list
 - Add recent image sizes in resize tool
 - Blur region
 - Ability to save loacaly
-- API for load file by URL

@@ -330,6 +330,7 @@ class PainterroProc {
     this.ratioRelation = undefined;
     this.id = this.params.id;
     this.bgColor = this.params.backgroundFillColor;
+    this.saving = false;
 
     if (this.id === undefined) {
       this.id = genId();
@@ -501,6 +502,10 @@ class PainterroProc {
   }
 
   save () {
+    if (this.saving) {
+      return
+    }
+    this.saving = true;
     const btn = document.getElementById(this.toolByName.save.buttonId);
     const icon = document.querySelector(`#${this.toolByName.save.buttonId} > i`);
     btn && (btn.setAttribute('disabled', 'true'));
@@ -512,12 +517,12 @@ class PainterroProc {
           this.hide()
         }
         icon && (icon.className = 'ptro-icon ptro-icon-save');
-        //btn && (btn.removeAttribute('disabled'));
+        this.saving = false;
       })
     } else {
       console.error("No saveHandler defined, please check documentation")
       icon && (icon.className = 'ptro-icon ptro-icon-save');
-      //btn && (btn.removeAttribute('disabled'))
+      this.saving = false;
     }
     return this;
   }

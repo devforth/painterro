@@ -59,24 +59,34 @@ export class PrimitiveTool {
   drawBrushPath () {
     const smPoints = this.points;
 
-    this.ctx.beginPath();
-    this.ctx.lineWidth = this.lineWidth;
-    this.ctx.strokeStyle = this.main.colorWidgetState.line.alphaColor;
-    this.ctx.fillStyle =  this.main.colorWidgetState.fill.alphaColor;
+    if (smPoints.length === 1) {
+      this.ctx.beginPath();
+      this.ctx.lineWidth = 0;
+      this.ctx.fillStyle =  this.main.colorWidgetState.line.alphaColor;
+      this.ctx.ellipse(
+          this.points[0].x, this.points[0].y,
+          this.lineWidth / 2, this.lineWidth / 2,
+          0, 2 * Math.PI, false);
+      this.ctx.fill();
+      this.ctx.closePath();
+    } else {
+      this.ctx.beginPath();
+      this.ctx.lineWidth = this.lineWidth;
+      this.ctx.strokeStyle = this.main.colorWidgetState.line.alphaColor;
+      this.ctx.fillStyle = this.main.colorWidgetState.fill.alphaColor;
 
-    this.ctx.moveTo(this.points[0].x, this.points[0].y);
-    let last;
-    for (let p of smPoints.slice(1)) {
-      this.ctx.lineTo(p.x, p.y);
-      last = p;
+      this.ctx.moveTo(this.points[0].x, this.points[0].y);
+      let last;
+      for (let p of smPoints.slice(1)) {
+        this.ctx.lineTo(p.x, p.y);
+        last = p;
+      }
+      if (last) {
+        this.ctx.moveTo(last.x, last.y);
+      }
+      this.ctx.stroke();
+      this.ctx.closePath();
     }
-    if (last) {
-      this.ctx.moveTo(last.x, last.y);
-    }
-
-    this.ctx.stroke();
-
-    this.ctx.closePath();
   }
 
   handleMouseMove(event) {
