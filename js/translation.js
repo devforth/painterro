@@ -34,7 +34,9 @@ export class Translation {
           save: 'Save Image',
           load: 'Load image',
           text: 'Put text',
-          brush: 'Brush'
+          brush: 'Brush',
+          resize: 'Resize image',
+          open: 'Open image'
         },
 
       }
