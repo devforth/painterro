@@ -1,5 +1,5 @@
  
-[GitHub](https://github.com/ivictbor/painterro) | [npm](https://www.npmjs.com/package/painterro)
+[GitHub](https://github.com/ivictbor/painterro) | [npm](https://www.npmjs.com/package/painterro) | [DEMO](https://maketips.net/paste)
 
 Painterro is singlefile JavaScript paint component which allows to edit images directly in browser.
 It can be easily integrated into your website or blog by including only one js file and calling init code.
@@ -15,7 +15,7 @@ With Painterro you can:
 
 Example usecase: You make screenshot by pressing `PrtSc` button, then open Painterro on your website, paste image, 
 crop it to interested area then highlight something with line/rectangle tool and/or add some text 
-to the image.
+to the image. See [DEMO](https://maketips.net/paste)
 
 Painterro is written with vanilla JS, without any additional frameworks to stay lightweight and minimalistic. Code 
 written on ES6 which transplited by Babel and packed using webpack.
