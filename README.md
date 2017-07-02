@@ -226,20 +226,10 @@ You can also post data with binary `multipart/form-data` request which is more e
 The same image took `301949` bytes with `multipart/form-data`.
 
 ```js
-function dataURItoBlob(dataURI) {
-  var byteString = atob(dataURI.split(',')[1]);
-  var ab = new ArrayBuffer(byteString.length);
-  var ia = new Uint8Array(ab);
-  for (var i = 0; i < byteString.length; i++) {
-    ia[i] = byteString.charCodeAt(i);
-  }
-  return new Blob([ab], {type: 'image/png'});
-}
-
 var ptro = Painterro({
   saveHandler: function (image, done) {
     var formData = new FormData()
-    formData.append('image', dataURItoBlob(image.asDataURL()))
+    formData.append('image', image.asBlob())
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://127.0.0.1:5000/save-as-binary/', true);
     xhr.onload = xhr.onerror = function () {
@@ -318,3 +308,5 @@ ToDo list
 - Add recent image sizes in resize tool
 - Blur region
 - Ability to save loacaly
+- Save settings in loaclstorage
+- line arrows

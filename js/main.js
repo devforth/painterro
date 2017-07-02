@@ -493,8 +493,21 @@ class PainterroProc {
         } else {
           return this.canvas.toDataURL(type);
         }
+      },
+      asBlob: (type) => {
+        if (type === undefined) {
+          type = 'image/png';
+        }
+        const uri = this.canvas.toDataURL(type);
+        const byteString = atob(uri.split(',')[1]);
+        const ab = new ArrayBuffer(byteString.length);
+        let ia = new Uint8Array(ab);
+        for (let i = 0; i < byteString.length; i++) {
+          ia[i] = byteString.charCodeAt(i);
+        }
+        return new Blob([ab], {type: type});
       }
-    }
+    };
 
     this.initEventHandlers();
     this.clear();
