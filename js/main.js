@@ -486,19 +486,13 @@ class PainterroProc {
        /**
        * Returns image as base64 data url
        * @param {string} type - type of data url, default image/png
+       * @param {string} quality - number from 0 to 1, works for `image/jpeg` or `image/webp`
        */
-      asDataURL: (type) => {
-        if (type === undefined) {
-          return this.canvas.toDataURL();
-        } else {
-          return this.canvas.toDataURL(type);
-        }
+      asDataURL: (type, quality) => {
+        return this.getAsUri(type, quality);
       },
-      asBlob: (type) => {
-        if (type === undefined) {
-          type = 'image/png';
-        }
-        const uri = this.canvas.toDataURL(type);
+      asBlob: (type, quality) => {
+        const uri = this.getAsUri(type, quality);
         const byteString = atob(uri.split(',')[1]);
         const ab = new ArrayBuffer(byteString.length);
         let ia = new Uint8Array(ab);
@@ -512,6 +506,16 @@ class PainterroProc {
     this.initEventHandlers();
     this.clear();
     this.hide();
+  }
+
+  getAsUri (type, quality) {
+    if (type === undefined) {
+      type = 'image/png';
+    }
+    if (quality === undefined) {
+      quality = 0.92;
+    }
+    return this.canvas.toDataURL(type, quality);
   }
 
   save () {

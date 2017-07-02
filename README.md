@@ -37,6 +37,7 @@ Table of contents
     * [Base64 saving](#base64-saving)
     * [Binary saving](#binary-saving)
     * [Saving to WYSIWYG](#saving-to-wysiwyg)
+    * [Format and quality](#format-and-quality)
   * [Development](#development)
     * [Building painterro](#building-painterro)
     * [Dev-server](#dev-server)
@@ -194,7 +195,7 @@ var ptro = Painterro({
       xhr.open("POST", "http://127.0.0.1:5000/save-as-base64/");
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.send(JSON.stringify({
-        image: image.asDataURL('image/png')
+        image: image.asDataURL()
       }));
       xhr.onload = function (e) {
         // after saving is done, call done callback
@@ -265,6 +266,16 @@ You can just insert image as data urlto any WYSIWYG editor, e.g. TinyMCE. Image 
       }
     })
 ```
+
+Format and quality
+------------------
+
+When you call `image.asDataURL()` or `image.asBlob()`, you can also specify image format, e.g.
+`image.asDataURL('image/jpeg')`. Default format is `'image/png'`. 
+If type is `image/jpeg` or `image/webp`, you can also define image quality from `0.0` to `1.0`, default is `0.92`, 
+example: `image.asDataURL('image/jpeg', 0.5)`
+
+
 
 Development
 ===========
