@@ -489,9 +489,15 @@ class PainterroProc {
        * @param {string} quality - number from 0 to 1, works for `image/jpeg` or `image/webp`
        */
       asDataURL: (type, quality) => {
+        if (type === undefined) {
+          type = 'image/png';
+        }
         return this.getAsUri(type, quality);
       },
       asBlob: (type, quality) => {
+        if (type === undefined) {
+          type = 'image/png';
+        }
         const uri = this.getAsUri(type, quality);
         const byteString = atob(uri.split(',')[1]);
         const ab = new ArrayBuffer(byteString.length);
@@ -509,9 +515,6 @@ class PainterroProc {
   }
 
   getAsUri (type, quality) {
-    if (type === undefined) {
-      type = 'image/png';
-    }
     if (quality === undefined) {
       quality = 0.92;
     }
