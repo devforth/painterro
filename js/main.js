@@ -378,13 +378,10 @@ class PainterroProc {
       `<style>${this.params.styles}</style>`;
 
     this.saveBtn = document.getElementById(this.toolByName.save.buttonId);
-    if (this.saveBtn) {
-      this.saveBtn.setAttribute('disabled', true);
-      this.changedHandler = () => {
-        this.saveBtn.removeAttribute('disabled');
-      };
-    }
-
+    this.saveBtn && this.saveBtn.setAttribute('disabled', true);
+    this.changedHandler = () => {
+      this.saveBtn && this.saveBtn.removeAttribute('disabled');
+    };
     this.body = document.body;
     this.wrapper = document.querySelector(`#${this.id} .ptro-wrapper`);
     this.bar = document.querySelector(`#${this.id} .ptro-bar`);

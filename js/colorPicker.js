@@ -122,7 +122,7 @@ export class ColorPicker {
     this.lightPosition = this.lightPosition || this.w - 1;
 
     this.drawLighter();
-    this.colorRegulator.style.left = this.lightPosition;
+    this.colorRegulator.style.left = `${this.lightPosition}px`;
     this.regetColor();
     this.inputAlpha.value = this.alpha;
 
