@@ -29,6 +29,7 @@ export function setDefaults(params) {
   params.colorScheme.dragOverBarColor = params.colorScheme.dragOverBarColor || '#899dff';
 
   params.defaultSize = params.defaultSize || 'fill';
+  params.defaultPixelSize = params.defaultPixelSize || 4;
   if (params.defaultSize === 'fill') {
     params.defaultSize = {
       width: 'fill',

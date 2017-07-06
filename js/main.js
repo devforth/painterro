@@ -262,6 +262,29 @@ class PainterroProc {
       },
       eventListner: () => this.textTool
     }, {
+      name: 'pixelize',
+      controls: [{
+          type: 'int',
+          title: 'pixelSize',
+          titleFull: 'pixelSizeFull',
+          target: 'pixelSize',
+          min: 1,
+          max: 10,
+          action: () => {
+            const width = document.getElementById(this.activeTool.controls[0].id).value;
+            this.primitiveTool.setPixelSize(width);
+          },
+          getValue: () => {
+            return this.primitiveTool.pixelSize;
+          }
+        },
+      ],
+      activate: () => {
+        this.toolContainer.style.cursor = 'crosshair';
+        this.primitiveTool.activate('pixelize');
+      },
+      eventListner: () => this.primitiveTool
+    }, {
       name: 'rotate',
       activate: () => {
         const tmpData = this.canvas.toDataURL();
@@ -401,6 +424,7 @@ class PainterroProc {
     this.resizer = new Resizer(this);
     this.primitiveTool = new PrimitiveTool(this);
     this.primitiveTool.setLineWidth(this.params.defaultLineWidth);
+    this.primitiveTool.setPixelSize(this.params.defaultPixelSize)
     this.worklog = new WorkLog(this);
     this.textTool = new TextTool(this);
     this.colorPicker = new ColorPicker(this, (widgetState) => {

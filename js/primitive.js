@@ -5,6 +5,8 @@ export class PrimitiveTool {
     this.ctx = main.ctx;
     this.el = main.toolContainer;
     this.main = main;
+    this.helperCanvas = document.createElement('canvas');
+    this.canvas = main.canvas;
   }
 
   activate(type) {
@@ -110,7 +112,6 @@ export class PrimitiveTool {
         if (distance(prevLast, cur) > 5) {
           this.points.push(cur);
         }
-
         this.drawBrushPath();
       } else if (this.type === 'line') {
         if (event.ctrlKey || event.shiftKey) {
@@ -149,6 +150,74 @@ export class PrimitiveTool {
         this.ctx.fill();
         this.ctx.stroke();
         this.ctx.closePath();
+      } else if (this.type == 'pixelize') {
+        const c = [
+          Math.min(this.centerCord[0], this.curCord[0]),
+          Math.min(this.centerCord[1], this.curCord[1])
+        ];
+        const size = [
+          Math.abs(this.curCord[0] - this.centerCord[0]),
+          Math.abs(this.curCord[1] - this.centerCord[1])
+        ];
+
+        let pxData = [];
+        const pxSize = [size[0] / this.pixelSize, size[1] / this.pixelSize];
+        for (let i = 0; i < pxSize[0]; i++) {
+          let row = [];
+          for (let j = 0; j < pxSize[1]; j++) {
+            row.push([0,0,0,0,0])
+          }
+          pxData.push(row);
+        }
+        for (let i = 0; i < size[0]; i++) {
+          for (let j = 0; j < size[1]; j++) {
+            const d = this.ctx.getImageData(
+              c[0] + i, c[1] + j, 1, 1);
+            const ii = Math.floor(i / this.pixelSize);
+            const jj = Math.floor(j / this.pixelSize);
+            pxData[ii][jj][0] += d.data[0];
+            pxData[ii][jj][1] += d.data[1];
+            pxData[ii][jj][2] += d.data[2];
+            pxData[ii][jj][3] += d.data[3];
+            pxData[ii][jj][4] += 1;
+          }
+        }
+
+        let d = new ImageData(1, 1);
+        for (let i = 0; i < pxSize[0]; i++) {
+          for (let j = 0; j < pxSize[1]; j++) {
+            const s = pxData[i][j][4];
+            d.data[0] = pxData[i][j][0] / s;
+            d.data[1] = pxData[i][j][1] / s;
+            d.data[2] = pxData[i][j][2] / s;
+            d.data[3] = pxData[i][j][3] / s;
+            for (let k = 0; k < this.pixelSize; k++) {
+              for (let n = 0; n < this.pixelSize; n++) {
+                this.ctx.putImageData(
+                  d,
+                  c[0] + i * this.pixelSize + k,
+                  c[1] + j * this.pixelSize + n);
+              }
+            }
+
+          }
+        }
+
+        // this.ctx.beginPath();
+        //
+        // let w = this.curCord[0] - this.centerCord[0];
+        // let h = this.curCord[1] - this.centerCord[1];
+        //
+        // if (event.ctrlKey || event.shiftKey) {
+        //   const min = Math.min(Math.abs(w), Math.abs(h));
+        //   w = min * Math.sign(w);
+        //   h = min * Math.sign(h);
+        // }
+        // this.ctx.rect(this.centerCord[0], this.centerCord[1], w, h);
+        // this.ctx.fill();
+        // this.ctx.stroke();
+        // this.ctx.closePath();
+
       } else if (this.type == 'ellipse') {
         this.ctx.beginPath();
         const x1 = this.centerCord[0];
@@ -184,5 +253,9 @@ export class PrimitiveTool {
       this.state.cornerMarked = false;
       this.main.worklog.captureState();
     }
+  }
+
+  setPixelSize(size) {
+    this.pixelSize = size;
   }
 }

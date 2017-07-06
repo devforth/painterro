@@ -25,7 +25,10 @@ export class Translation {
         width: 'Width',
         height: 'Height',
         keepRatio: 'Keep width/height ratio',
+        pixelSize: 'P:',
+        pixelSizeFull: 'Pixel Size',
         tools: {
+          blur: 'Blur',
           crop: 'Crop image',
           rect: 'Draw rectangle',
           ellipse: 'Draw ellipse',
