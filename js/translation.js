@@ -27,9 +27,9 @@ export class Translation {
         keepRatio: 'Keep width/height ratio',
         pixelSize: 'P:',
         pixelSizeFull: 'Pixel Size',
+        crop: 'Crop image to selected area',
+        pixelize: 'Pixelize selected area',
         tools: {
-          blur: 'Blur',
-          crop: 'Crop image',
           rect: 'Draw rectangle',
           ellipse: 'Draw ellipse',
           line: 'Draw line',
@@ -39,7 +39,8 @@ export class Translation {
           text: 'Put text',
           brush: 'Brush',
           resize: 'Resize image',
-          open: 'Open image'
+          open: 'Open image',
+          select: 'Select area'
         },
 
       }

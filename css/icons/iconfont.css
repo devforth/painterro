@@ -1,9 +1,9 @@
 @font-face {
 	font-family: "iconfont";
-	src: url("iconfont.eot?770bb8cfb0d93d5a31b27c7c214b7611?#iefix") format("embedded-opentype"),
-url("iconfont.woff?770bb8cfb0d93d5a31b27c7c214b7611") format("woff"),
-url("iconfont.ttf?770bb8cfb0d93d5a31b27c7c214b7611") format("truetype"),
-url("iconfont.svg?770bb8cfb0d93d5a31b27c7c214b7611#iconfont") format("svg");
+	src: url("iconfont.eot?6718091bda6c2cbf2c5d6872b35c6939?#iefix") format("embedded-opentype"),
+url("iconfont.woff?6718091bda6c2cbf2c5d6872b35c6939") format("woff"),
+url("iconfont.ttf?6718091bda6c2cbf2c5d6872b35c6939") format("truetype"),
+url("iconfont.svg?6718091bda6c2cbf2c5d6872b35c6939#iconfont") format("svg");
 	font-weight: normal;
     font-style: normal;
 }
@@ -70,9 +70,12 @@ url("iconfont.svg?770bb8cfb0d93d5a31b27c7c214b7611#iconfont") format("svg");
 .ptro-icon-save:before {
 	content: "\f110";
 }
-.ptro-icon-text:before {
+.ptro-icon-select:before {
 	content: "\f111";
 }
-.ptro-icon-unlinked:before {
+.ptro-icon-text:before {
 	content: "\f112";
+}
+.ptro-icon-unlinked:before {
+	content: "\f113";
 }
