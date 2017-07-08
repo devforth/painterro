@@ -1,4 +1,4 @@
-export class ZoomHelper {
+export default class ZoomHelper {
   constructor(main) {
     this.main = main;
     this.zomer = document.querySelector(`#${this.main.id} .ptro-zoomer`);
@@ -25,8 +25,8 @@ export class ZoomHelper {
 
     this.fullW = this.captW * (this.periodW);
     this.halfFullW = this.fullW / 2;
-    this.zomer.setAttribute('width', this.fullW );
-    this.zomer.setAttribute('height', this.fullW );
+    this.zomer.setAttribute('width', this.fullW);
+    this.zomer.setAttribute('height', this.fullW);
     this.cursor = this.wrapper.style.cursor;
   }
 
@@ -34,37 +34,41 @@ export class ZoomHelper {
     if (this.main.colorPicker.choosing && e.altKey) {
       if (!this.shown) {
         this.shown = true;
-        this.zomer.style.display="block";
+        this.zomer.style.display = 'block';
         this.cursor = this.wrapper.style.cursor;
         this.wrapper.style.cursor = 'none';
       }
       const scale = this.main.getScale();
 
       let x = (e.clientX - this.canvas.documentOffsetLeft) * scale;
-      x = x < 1 && 1 || x;
-      x = x > this.main.size.w - 1 && this.main.size.w - 1 || x;
+      x = x < 1 ? 1 : x;
+      x = x > this.main.size.w - 1 ? this.main.size.w - 1 : x;
       let y = (e.clientY - this.canvas.documentOffsetTop) * scale;
-      y = y < 1 && 1 || y;
-      y = y > this.main.size.h - 1 && this.main.size.h - 1 || y;
+      y = y < 1 ? 1 : y;
+      y = y > this.main.size.h - 1 ? this.main.size.h - 1 : y;
 
       const captW = this.captW;
       const periodW = this.periodW;
 
-      for (let i = 0; i < captW; i++) {
-        for (let j = 0; j < captW; j++) {
-          const d = this.ctx.getImageData(x + i - this.middle, y + j - this.middle, 1, 1);
-          for (let ii = 0; ii < periodW; ii++) {
-            for (let jj = 0; jj < periodW; jj++) {
-              if (ii == periodW - 1 || jj == periodW - 1) {
-                if ((i == this.middle && j == this.middle) ||
-                  (i == this.middle && j == this.middle - 1 && jj == periodW - 1) ||
-                  (i == this.middle - 1 && j == this.middle && ii == periodW - 1)) {
-                  this.zomerCtx.putImageData(this.gridColorRed, i * periodW + ii, j * periodW + jj);
+      for (let i = 0; i < captW; i += 1) {
+        for (let j = 0; j < captW; j += 1) {
+          const d = this.ctx.getImageData((x + i) - this.middle, (y + j) - this.middle, 1, 1);
+          for (let ii = 0; ii < periodW; ii += 1) {
+            for (let jj = 0; jj < periodW; jj += 1) {
+              if (ii === periodW - 1 || jj === periodW - 1) {
+                if ((i === this.middle && j === this.middle) ||
+                  (i === this.middle && j === this.middle - 1 && jj === periodW - 1) ||
+                  (i === this.middle - 1 && j === this.middle && ii === periodW - 1)) {
+                  this.zomerCtx.putImageData(
+                    this.gridColorRed, (i * periodW) + ii,
+                    (j * periodW) + jj);
                 } else {
-                  this.zomerCtx.putImageData(this.gridColor, i * periodW + ii, j * periodW + jj);
+                  this.zomerCtx.putImageData(
+                    this.gridColor, (i * periodW) + ii,
+                    (j * periodW) + jj);
                 }
               } else {
-                this.zomerCtx.putImageData(d, i * periodW + ii, j * periodW + jj);
+                this.zomerCtx.putImageData(d, (i * periodW) + ii, (j * periodW) + jj);
               }
             }
           }
@@ -72,16 +76,14 @@ export class ZoomHelper {
       }
       this.zomer.style.left = `${e.clientX - this.wrapper.documentOffsetLeft - this.halfFullW}px`;
       this.zomer.style.top = `${e.clientY - this.wrapper.documentOffsetTop - this.halfFullW}px`;
-    } else {
-      if (this.shown) {
-        this.zomer.style.display = "none";
-        this.wrapper.style.cursor = this.cursor;
-        this.shown = false;
-      }
+    } else if (this.shown) {
+      this.zomer.style.display = 'none';
+      this.wrapper.style.cursor = this.cursor;
+      this.shown = false;
     }
   }
 
   static html() {
-    return '<canvas class="ptro-zoomer" width="" height="0"></canvas>'
+    return '<canvas class="ptro-zoomer" width="" height="0"></canvas>';
   }
 }

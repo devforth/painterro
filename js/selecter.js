@@ -1,7 +1,6 @@
-import {clearSelection} from './utils';
+import { clearSelection } from './utils';
 
-export class PainterroSelecter {
-
+export default class PainterroSelecter {
   constructor(main, selectionCallback) {
     this.main = main;
     this.canvas = main.canvas;
@@ -28,7 +27,7 @@ export class PainterroSelecter {
   }
 
   doCrop() {
-    const img = new Image;
+    const img = new Image();
     img.onload = () => {
       this.main.resize(
         this.area.bottoml[0] - this.area.topl[0],
@@ -45,48 +44,47 @@ export class PainterroSelecter {
     const c = this.area.topl;
     const size = [
       this.area.bottoml[0] - this.area.topl[0],
-      this.area.bottoml[1] - this.area.topl[1]
+      this.area.bottoml[1] - this.area.topl[1],
     ];
 
     this.pixelSize = (Math.min(size[0], size[1]) / 5);
-    let pxData = [];
+    const pxData = [];
     const pxSize = [size[0] / this.pixelSize, size[1] / this.pixelSize];
-    for (let i = 0; i < pxSize[0]; i++) {
-      let row = [];
-      for (let j = 0; j < pxSize[1]; j++) {
-        row.push([0, 0, 0, 0, 0])
+    for (let i = 0; i < pxSize[0]; i += 1) {
+      const row = [];
+      for (let j = 0; j < pxSize[1]; j += 1) {
+        row.push([0, 0, 0, 0, 0]);
       }
       pxData.push(row);
     }
     const data = this.ctx.getImageData(c[0], c[1], size[0], size[1]);
-    for (let i = 0; i < size[0]; i++) {
-      for (let j = 0; j < size[1]; j++) {
+    for (let i = 0; i < size[0]; i += 1) {
+      for (let j = 0; j < size[1]; j += 1) {
         const ii = Math.floor(i / this.pixelSize);
         const jj = Math.floor(j / this.pixelSize);
-        pxData[ii][jj][0] += data.data[(j * size[0] + i) * 4];
-        pxData[ii][jj][1] += data.data[(j * size[0] + i) * 4 + 1];
-        pxData[ii][jj][2] += data.data[(j * size[0] + i) * 4 + 2];
-        pxData[ii][jj][3] += data.data[(j * size[0] + i) * 4 + 3];
+        const base = ((j * size[0]) + i) * 4;
+        pxData[ii][jj][0] += data.data[base];
+        pxData[ii][jj][1] += data.data[base + 1];
+        pxData[ii][jj][2] += data.data[base + 2];
+        pxData[ii][jj][3] += data.data[base + 3];
         pxData[ii][jj][4] += 1;
       }
     }
-    let d = new ImageData(1, 1);
-    for (let i = 0; i < pxSize[0]; i++) {
-      for (let j = 0; j < pxSize[1]; j++) {
+    const d = new ImageData(1, 1);
+    for (let i = 0; i < pxSize[0]; i += 1) {
+      for (let j = 0; j < pxSize[1]; j += 1) {
         const s = pxData[i][j][4];
         d.data[0] = pxData[i][j][0] / s;
         d.data[1] = pxData[i][j][1] / s;
         d.data[2] = pxData[i][j][2] / s;
         d.data[3] = pxData[i][j][3] / s;
-        for (let k = 0; k < this.pixelSize; k++) {
-          for (let n = 0; n < this.pixelSize; n++) {
-            this.ctx.putImageData(
-              d,
-              c[0] + i * this.pixelSize + k,
-              c[1] + j * this.pixelSize + n);
+        const baseX = c[0] + (i * this.pixelSize);
+        const baseY = c[1] + (j * this.pixelSize);
+        for (let k = 0; k < this.pixelSize; k += 1) {
+          for (let n = 0; n < this.pixelSize; n += 1) {
+            this.ctx.putImageData(d, baseX + k, baseY + n);
           }
         }
-
       }
     }
     this.main.worklog.captureState();
@@ -95,12 +93,14 @@ export class PainterroSelecter {
   reCalcCropperCords() {
     const ratio = this.canvas.clientWidth / this.canvas.getAttribute('width');
     this.area.topl = [
-      Math.round((this.area.rect.documentOffsetLeft - this.area.el.documentOffsetLeft + 1) / ratio),
-      Math.round((this.area.rect.documentOffsetTop - this.area.el.documentOffsetTop + 1) / ratio)];
+      Math.round(((this.area.rect.documentOffsetLeft -
+        this.area.el.documentOffsetLeft) + 1) / ratio),
+      Math.round(((this.area.rect.documentOffsetTop -
+        this.area.el.documentOffsetTop) + 1) / ratio)];
 
     this.area.bottoml = [
-      Math.round(this.area.topl[0] + (this.area.rect.clientWidth) / ratio),
-      Math.round(this.area.topl[1] + (this.area.rect.clientHeight) / ratio)];
+      Math.round(this.area.topl[0] + ((this.area.rect.clientWidth) / ratio)),
+      Math.round(this.area.topl[1] + ((this.area.rect.clientHeight) / ratio))];
 
     // console.log('recalced cords', ratio, this.area.topl, this.area.bottoml);
   }
@@ -110,8 +110,10 @@ export class PainterroSelecter {
     const mousDownCallbacks = {
       'ptro-crp-el': () => {
         if (this.area.activated) {
-          const x = event.clientX - this.area.el.documentOffsetLeft + this.main.wrapper.scrollLeft;
-          const y = event.clientY - this.area.el.documentOffsetTop + this.main.wrapper.scrollTop;
+          const x = (event.clientX - this.area.el.documentOffsetLeft) +
+            this.main.wrapper.scrollLeft;
+          const y = (event.clientY - this.area.el.documentOffsetTop) +
+            this.main.wrapper.scrollTop;
 
           this.setLeft(x);
           this.setTop(y);
@@ -126,8 +128,10 @@ export class PainterroSelecter {
       },
       'ptro-crp-rect': () => {
         this.area.moving = true;
-        this.area.xHandle = event.clientX - this.area.rect.documentOffsetLeft + this.main.wrapper.scrollLeft;
-        this.area.yHandle = event.clientY - this.area.rect.documentOffsetTop + this.main.wrapper.scrollTop;
+        this.area.xHandle = (event.clientX - this.area.rect.documentOffsetLeft) +
+          this.main.wrapper.scrollLeft;
+        this.area.yHandle = (event.clientY - this.area.rect.documentOffsetTop) +
+          this.main.wrapper.scrollTop;
       },
       'ptro-crp-tr': () => {
         this.area.resizingT = true;
@@ -185,7 +189,8 @@ export class PainterroSelecter {
 
   handleMouseMove(event) {
     if (this.area.moving) {
-      let newLeft = event.clientX - this.area.el.documentOffsetLeft - this.area.xHandle + this.main.wrapper.scrollLeft;
+      let newLeft = (event.clientX - this.area.el.documentOffsetLeft - this.area.xHandle)
+        + this.main.wrapper.scrollLeft;
       if (newLeft < -1) {
         newLeft = -1;
       } else if (newLeft + this.area.rect.clientWidth > this.area.el.clientWidth - 1) {
@@ -195,7 +200,8 @@ export class PainterroSelecter {
       this.setLeft(newLeft);
       this.setRight(this.right - hDelta);
 
-      let newTop = event.clientY - this.area.el.documentOffsetTop - this.area.yHandle + this.main.wrapper.scrollTop;
+      let newTop = (event.clientY - this.area.el.documentOffsetTop - this.area.yHandle)
+        + this.main.wrapper.scrollTop;
       if (newTop < -1) {
         newTop = -1;
       } else if (newTop + this.area.rect.clientHeight > this.area.el.clientHeight - 1) {
@@ -214,7 +220,7 @@ export class PainterroSelecter {
       if (this.area.resizingR) {
         const absRight = this.fixCropperRight(event.clientX + this.main.wrapper.scrollLeft);
         this.setRight(
-          this.area.el.clientWidth + this.area.el.documentOffsetLeft - absRight);
+          (this.area.el.clientWidth + this.area.el.documentOffsetLeft) - absRight);
         this.reCalcCropperCords();
       }
       if (this.area.resizingT) {
@@ -225,10 +231,9 @@ export class PainterroSelecter {
       if (this.area.resizingB) {
         const absBottom = this.fixCropperBottom(event.clientY + this.main.wrapper.scrollTop);
         this.setBottom(
-          this.area.el.clientHeight + this.area.el.documentOffsetTop - absBottom);
+          (this.area.el.clientHeight + this.area.el.documentOffsetTop) - absBottom);
         this.reCalcCropperCords();
       }
-
     }
   }
 
@@ -249,13 +254,16 @@ export class PainterroSelecter {
       const ratio = this.canvas.clientWidth / this.canvas.getAttribute('width');
       this.setLeft(this.area.topl[0] * ratio);
       this.setTop(this.area.topl[1] * ratio);
-      this.setRight(this.area.el.clientWidth - (this.area.bottoml[0] - this.area.topl[0]) * ratio);
-      this.setBottom(this.area.el.clientHeight - (this.area.bottoml[1] - this.area.topl[1]) * ratio);
+      this.setRight(this.area.el.clientWidth - (
+        (this.area.bottoml[0] - this.area.topl[0]) * ratio));
+      this.setBottom(this.area.el.clientHeight - (
+        (this.area.bottoml[1] - this.area.topl[1]) * ratio));
     }
   }
 
   /* fixers */
-  fixCropperLeft(newLeft) {
+  fixCropperLeft(left) {
+    let newLeft = left;
     const absLeftMiddle = this.area.rect.documentOffsetLeft + this.area.rect.clientWidth;
     if (newLeft < this.area.el.documentOffsetLeft - 1) {
       return this.area.el.documentOffsetLeft - 1;
@@ -269,7 +277,8 @@ export class PainterroSelecter {
     return newLeft;
   }
 
-  fixCropperRight(newRight) {
+  fixCropperRight(right) {
+    let newRight = right;
     const absRightLimit = this.area.el.documentOffsetLeft + this.area.el.clientWidth + 1;
     if (newRight > absRightLimit) {
       return absRightLimit;
@@ -283,7 +292,8 @@ export class PainterroSelecter {
     return newRight;
   }
 
-  fixCropperTop(newTop) {
+  fixCropperTop(top) {
+    let newTop = top;
     const absTopMiddle = this.area.rect.documentOffsetTop + this.area.rect.clientHeight;
     if (newTop < this.area.el.documentOffsetTop - 1) {
       return this.area.el.documentOffsetTop - 1;
@@ -297,7 +307,8 @@ export class PainterroSelecter {
     return newTop;
   }
 
-  fixCropperBottom(newBottom) {
+  fixCropperBottom(bottom) {
+    let newBottom = bottom;
     const absBottomLimit = this.area.el.documentOffsetTop + this.area.el.clientHeight + 1;
     if (newBottom > absBottomLimit) {
       return absBottomLimit;

@@ -1,6 +1,6 @@
-import { Translation } from './translation';
+import Translation from './translation';
 
-export class Resizer {
+export default class Resizer {
   constructor(main) {
     this.main = main;
 
@@ -27,9 +27,9 @@ export class Resizer {
       this.main.resize(this.newW, this.newH);
 
       this.main.ctx.save();
-      //this.ctx.translate(h / 2, w / 2);
+      // this.ctx.translate(h / 2, w / 2);
       this.main.ctx.scale(this.newW / origW, this.newH / origH);
-      const img = new Image;
+      const img = new Image();
       img.onload = () => {
         this.main.ctx.drawImage(img, 0, 0);
         this.main.adjustSizeFull();
@@ -38,7 +38,6 @@ export class Resizer {
         this.startClose();
       };
       img.src = tmpData;
-
     };
 
     this.linkButton.onclick = () => {
@@ -53,7 +52,7 @@ export class Resizer {
     this.inputW.oninput = () => {
       this.newW = this.inputW.value;
       if (this.linked) {
-        const ratio = this.main.size.ratio;;
+        const ratio = this.main.size.ratio;
         this.newH = Math.round(this.newW / ratio);
         this.inputH.value = this.newH;
       }
@@ -68,7 +67,7 @@ export class Resizer {
     };
   }
 
-  open () {
+  open() {
     this.wrapper.removeAttribute('hidden');
     this.opened = true;
     this.newW = this.main.size.w;
@@ -77,12 +76,12 @@ export class Resizer {
     this.inputH.value = this.newH;
   }
 
-  close () {
+  close() {
     this.wrapper.setAttribute('hidden', 'true');
     this.opened = false;
   }
 
-  startClose () {
+  startClose() {
     this.main.closeActiveTool();
   }
 
@@ -91,14 +90,14 @@ export class Resizer {
       '<div class="ptro-resize-widget ptro-color-main">' +
         '<div style="display: inline-block">' +
           '<table>' +
-            '<tr>'+
-              `<td class="ptro-label ptro-resize-table-left">${Translation.get().tr("width")}</td>` +
+            '<tr>' +
+              `<td class="ptro-label ptro-resize-table-left">${Translation.get().tr('width')}</td>` +
               '<td>' +
                 '<input class="ptro-input ptro-resize-width-input" type="number" min="0" max="3000" step="1"/>' +
               '</td>' +
             '</tr>' +
-            '<tr>'+
-              `<td class="ptro-label ptro-resize-table-left">${Translation.get().tr("height")}</td>` +
+            '<tr>' +
+              `<td class="ptro-label ptro-resize-table-left">${Translation.get().tr('height')}</td>` +
               '<td>' +
                 '<input class="ptro-input ptro-resize-heigth-input" type="number" min="0" max="3000" step="1"/>' +
               '</td>' +
@@ -113,10 +112,10 @@ export class Resizer {
         '<div>' +
           '<button class="ptro-named-btn ptro-apply ptro-color-control" ' +
                 'style="margin-top: 8px;position: absolute; top: 95px; right: 75px;">' +
-                `${Translation.get().tr("apply")}</button></div>` +
+                `${Translation.get().tr('apply')}</button></div>` +
           '<button class="ptro-named-btn ptro-close ptro-color-control" ' +
-                'style="margin-top: 8px;position: absolute; top: 95px; right: 10px;">'+
-                `${Translation.get().tr("cancel")}</button></div>` +
+                'style="margin-top: 8px;position: absolute; top: 95px; right: 10px;">' +
+                `${Translation.get().tr('cancel')}</button></div>` +
         '</div>' +
       '</div>';
   }

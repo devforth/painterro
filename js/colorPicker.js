@@ -1,4 +1,4 @@
-import { Translation } from './translation';
+import Translation from './translation';
 
 function HexToRGB(hex) {
   let parse = /^#?([a-fA-F\d]{2})([a-fA-F\d]{2})([a-fA-F\d]{2})$/i.exec(hex);
@@ -6,16 +6,16 @@ function HexToRGB(hex) {
     return {
       r: parseInt(parse[1], 16),
       g: parseInt(parse[2], 16),
-      b: parseInt(parse[3], 16)
-    }
+      b: parseInt(parse[3], 16),
+    };
   }
   parse = /^#?([a-fA-F\d])([a-fA-F\d])([a-fA-F\d])$/i.exec(hex);
   if (parse) {
     return {
       r: parseInt(parse[1].repeat(2), 16),
       g: parseInt(parse[2].repeat(2), 16),
-      b: parseInt(parse[3].repeat(2), 16)
-    }
+      b: parseInt(parse[3].repeat(2), 16),
+    };
   }
 }
 
@@ -26,7 +26,7 @@ export function HexToRGBA(hex, alpha) {
 
 function format2Hex(val) {
   const hex = val.toString(16);
-  return hex.length == 1 && ("0" + hex) || hex;
+  return (hex.length === 1 && (`0${hex}`)) || hex;
 }
 
 function rgbToHex(r, g, b) {
@@ -35,11 +35,11 @@ function rgbToHex(r, g, b) {
 
 function reversedColor(color) {
   const rgb = HexToRGB(color);
-  const index = ((rgb.r * 299) + (rgb.g * 587) + (rgb.b * 114))/1000;
-  return index >= 128 && 'black' || 'white';
+  const index = ((rgb.r * 299) + (rgb.g * 587) + (rgb.b * 114)) / 1000;
+  return (index >= 128 && 'black') || 'white';
 }
 
-export class ColorPicker {
+export default class ColorPicker {
   constructor(main, callback) {
     this.callback = callback;
     this.main = main;
@@ -58,11 +58,11 @@ export class ColorPicker {
     this.canvas = document.querySelector(`#${main.id} .ptro-color-widget-wrapper canvas`);
     this.ctx = this.canvas.getContext('2d');
     this.canvasLight = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-canvas-light`);
-    this.ctxLight  = this.canvasLight.getContext('2d');
-    this.canvas.setAttribute('width', w);
-    this.canvas.setAttribute('height', h);
-    this.canvasLight.setAttribute('width', w);
-    this.canvasLight.setAttribute('height', 20);
+    this.ctxLight = this.canvasLight.getContext('2d');
+    this.canvas.setAttribute('width', `${w}`);
+    this.canvas.setAttribute('height', `${h}`);
+    this.canvasLight.setAttribute('width', `${w}`);
+    this.canvasLight.setAttribute('height', `${20}`);
 
     const palette = this.ctx.createLinearGradient(0, 0, w, 0);
     palette.addColorStop(1 / 15, '#ff0000');
@@ -83,7 +83,7 @@ export class ColorPicker {
 
     this.canvas.onmousedown = (e) => {
       this.selecting = true;
-      this.getPaletteColorAtPoint(e)
+      this.getPaletteColorAtPoint(e);
     };
 
     const startLightSelecting = (e) => {
@@ -108,7 +108,7 @@ export class ColorPicker {
     this.input.onkeyup = () => {
       this.setActiveColor(this.input.value, true);
     };
-    this.inputAlpha.value  = this.alpha;
+    this.inputAlpha.value = this.alpha;
     this.inputAlpha.oninput = () => {
       this.alpha = this.inputAlpha.value;
       this.setActiveColor(this.color, true);
@@ -134,10 +134,10 @@ export class ColorPicker {
   getPaletteColorAtPoint(e) {
     let x = e.clientX - this.canvas.documentOffsetLeft;
     let y = e.clientY - this.canvas.documentOffsetTop;
-    x = x < 1 && 1 || x;
-    y = y < 1 && 1 || y;
-    x = x > this.w && this.w - 1 || x;
-    y = y > this.h && this.h - 1 || y;
+    x = (x < 1 && 1) || x;
+    y = (y < 1 && 1) || y;
+    x = (x > this.w && this.w - 1) || x;
+    y = (y > this.h && this.h - 1) || y;
     const p = this.ctx.getImageData(x, y, 1, 1).data;
     this.palleteColor = rgbToHex(p[0], p[1], p[2]);
     this.drawLighter();
@@ -151,39 +151,39 @@ export class ColorPicker {
 
   getColorLightAtClick(e) {
     let x = e.clientX - this.canvasLight.documentOffsetLeft;
-    x = x < 1 && 1 || x;
-    x = x > this.w - 1 && this.w - 1 || x;
+    x = (x < 1 && 1) || x;
+    x = (x > this.w - 1 && this.w - 1) || x;
     this.lightPosition = x;
     this.colorRegulator.style.left = x;
     this.regetColor();
   }
 
   handleMouseDown(e) {
-    if (this.choosing && e.button === 0) { //0 - m1, 1 middle, 2-m2
+    if (this.choosing && e.button === 0) { // 0 - m1, 1 middle, 2-m2
       this.choosingActive = true;
       this.handleMouseMove(e);
       return true;
-    } else {
-      this.choosing = false;
     }
+    this.choosing = false;
+    return false;
   }
 
   handleMouseMove(e) {
     if (this.opened) {
       if (this.selecting) {
-        this.getPaletteColorAtPoint(e)
+        this.getPaletteColorAtPoint(e);
       }
       if (this.lightSelecting) {
-        this.getColorLightAtClick(e)
+        this.getColorLightAtClick(e);
       }
     } else if (this.choosingActive) {
       const scale = this.main.getScale();
-      let x = (e.clientX - this.main.canvas.documentOffsetLeft)*scale;
-      x = x < 1 && 1 || x;
-      x = x > this.main.size.w - 1 && this.main.size.w - 1 || x;
-      let y = (e.clientY - this.main.canvas.documentOffsetTop)*scale;
-      y = y < 1 && 1 || y;
-      y = y > this.main.size.h - 1 && this.main.size.h - 1 || y;
+      let x = (e.clientX - this.main.canvas.documentOffsetLeft) * scale;
+      x = (x < 1 && 1) || x;
+      x = (x > this.main.size.w - 1 && this.main.size.w - 1) || x;
+      let y = (e.clientY - this.main.canvas.documentOffsetTop) * scale;
+      y = (y < 1 && 1) || y;
+      y = (y > this.main.size.h - 1 && this.main.size.h - 1) || y;
       const p = this.main.ctx.getImageData(x, y, 1, 1).data;
       const color = rgbToHex(p[0], p[1], p[2]);
       this.callback({
@@ -191,21 +191,21 @@ export class ColorPicker {
         lightPosition: this.w - 1,
         alpha: 1,
         palleteColor: color,
-        target: this.target
+        target: this.target,
       });
       if (this.addCallback !== undefined) {
         this.addCallback({
-          alphaColor:HexToRGBA(color, 1),
+          alphaColor: HexToRGBA(color, 1),
           lightPosition: this.w - 1,
           alpha: 1,
           palleteColor: color,
-          target: this.target
+          target: this.target,
         });
       }
     }
   }
 
-  handleMouseUp(e) {
+  handleMouseUp() {
     this.selecting = false;
     this.lightSelecting = false;
     this.choosing = false;
@@ -216,10 +216,10 @@ export class ColorPicker {
     try {
       this.input.style.color = reversedColor(color);
     } catch (e) {
-      return
+      return;
     }
     this.input.style['background-color'] = color;
-    if (ignoreUpdateText == undefined) {
+    if (ignoreUpdateText === undefined) {
       this.input.value = color;
     }
     this.color = color;
@@ -230,7 +230,7 @@ export class ColorPicker {
         lightPosition: this.lightPosition,
         alpha: this.alpha,
         palleteColor: this.palleteColor,
-        target: this.target
+        target: this.target,
       });
     }
     if (this.addCallback !== undefined && this.opened) {
@@ -239,7 +239,7 @@ export class ColorPicker {
         lightPosition: this.lightPosition,
         alpha: this.alpha,
         palleteColor: this.palleteColor,
-        target: this.target
+        target: this.target,
       });
     }
   }
@@ -257,11 +257,11 @@ export class ColorPicker {
                 '<i class="ptro-icon ptro-icon-pipette"></i>' +
               '</button>' +
               '<input class="ptro-color" type="text" size="7"/>' +
-              `<span style="float:right"><span class="ptro-color-alpha-label" ` +
+              '<span style="float:right"><span class="ptro-color-alpha-label" ' +
                 `title="${Translation.get().tr('alphaFull')}">${Translation.get().tr('alpha')}</span>` +
               '<input class="ptro-color-alpha ptro-input" type="number" min="0" max="1" step="0.1"/></span>' +
               '<div><button class="ptro-named-btn ptro-close ptro-color-control" ' +
-                'style="margin-top: 8px;position: absolute; top: 225px; right: 10px;width: 50px;">'+
+                'style="margin-top: 8px;position: absolute; top: 225px; right: 10px;width: 50px;">' +
                 `${Translation.get().tr('close')}</button></div>` +
             '</div>' +
           '</div>' +

@@ -1,5 +1,4 @@
-export class WorkLog {
-
+export default class WorkLog {
   constructor(main) {
     this.main = main;
     this.current = null;
@@ -9,7 +8,7 @@ export class WorkLog {
     const state = {
       sizew: this.main.size.w,
       sizeh: this.main.size.h,
-      data: this.main.canvas.toDataURL()
+      data: this.main.canvas.toDataURL(),
     };
     if (this.current === null) {
       state.prev = null;
@@ -25,7 +24,7 @@ export class WorkLog {
   }
 
   applyState(state) {
-    const img = new Image;
+    const img = new Image();
     img.onload = () => {
       this.main.resize(state.sizew, state.sizeh);
       this.main.ctx.drawImage(img, 0, 0);

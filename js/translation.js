@@ -1,7 +1,7 @@
 
 let instance = null;
 
-export class Translation {
+export default class Translation {
   constructor() {
     this.translations = {
       en: {
@@ -40,22 +40,21 @@ export class Translation {
           brush: 'Brush',
           resize: 'Resize image',
           open: 'Open image',
-          select: 'Select area'
+          select: 'Select area',
         },
 
-      }
+      },
     };
     this.activate('en');
-    this.defaultTranslator = this.translations['en']
+    this.defaultTranslator = this.translations.en;
   }
 
   static get() {
     if (instance) {
-      return instance
-    } else {
-      instance = new Translation();
       return instance;
     }
+    instance = new Translation();
+    return instance;
   }
 
   addTranslation(name, dict) {
@@ -75,13 +74,12 @@ export class Translation {
     const levels = sentense.split('.');
     let res = this.translator;
     let fallbackRes = this.defaultTranslator;
-    for (let l of levels) {
+    levels.forEach((l) => {
       fallbackRes = fallbackRes[l];
       if (res !== undefined) {
         res = res[l];
       }
-    }
+    });
     return res || fallbackRes;
   }
-
 }
