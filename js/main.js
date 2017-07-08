@@ -419,7 +419,7 @@ class PainterroProc {
 
     this.tools.filter(t => !this.params.hiddenTools.includes(t.name)).forEach((b) => {
       getBtnEl(b).onclick = () => {
-        if (b === this.toolByName.select) {
+        if (b === this.toolByName.select && this.activeTool === b) {
           return;
         }
         const currentActive = this.activeTool;
