@@ -241,7 +241,6 @@ class PainterroProc {
       activate: () => {
         this.textTool.setFontColor(this.colorWidgetState.line.alphaColor);
         this.toolContainer.style.cursor = 'crosshair';
-        this.textTool.activate();
       },
       close: () => {
         this.textTool.cancel();
@@ -796,9 +795,7 @@ class PainterroProc {
         document.getElementById(ctl.id).onclick = ctl.action;
       }
     });
-    if (b.activate) {
-      b.activate();
-    }
+    b.activate();
   }
 }
 

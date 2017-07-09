@@ -51,19 +51,25 @@ export default class ColorPicker {
 
     this.wrapper = document.querySelector(`#${main.id} .ptro-color-widget-wrapper`);
     this.input = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-color`);
-    this.inputAlpha = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-color-alpha`);
     this.pipetteButton = document.querySelector(`#${main.id} .ptro-color-widget-wrapper button.ptro-pipette`);
-    this.closeButton = document.querySelector(`#${main.id} .ptro-color-widget-wrapper button.ptro-close`);
-    this.colorRegulator = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-color-light-regulator`);
+    this.closeButton = document.querySelector(`#${main.id} .ptro-color-widget-wrapper button.ptro-close-color-picker`);
     this.canvas = document.querySelector(`#${main.id} .ptro-color-widget-wrapper canvas`);
     this.ctx = this.canvas.getContext('2d');
+
     this.canvasLight = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-canvas-light`);
+    this.colorRegulator = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-color-light-regulator`);
+
+    this.canvasAlpha = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-canvas-alpha`);
+    this.alphaRegulator = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-color-alpha-regulator`);
+
     this.ctxLight = this.canvasLight.getContext('2d');
+    this.ctxAlpha = this.canvasAlpha.getContext('2d');
     this.canvas.setAttribute('width', `${w}`);
     this.canvas.setAttribute('height', `${h}`);
     this.canvasLight.setAttribute('width', `${w}`);
     this.canvasLight.setAttribute('height', `${20}`);
-
+    this.canvasAlpha.setAttribute('width', `${w}`);
+    this.canvasAlpha.setAttribute('height', `${20}`);
     const palette = this.ctx.createLinearGradient(0, 0, w, 0);
     palette.addColorStop(1 / 15, '#ff0000');
     palette.addColorStop(4 / 15, '#ffff00');
@@ -93,12 +99,16 @@ export default class ColorPicker {
 
     this.canvasLight.onmousedown = startLightSelecting;
     this.colorRegulator.onmousedown = startLightSelecting;
-
+    const startAlphaSelecting = (e) => {
+      this.alphaSelecting = true;
+      this.getAlphaAtClick(e);
+    };
+    this.canvasAlpha.onmousedown = startAlphaSelecting;
+    this.alphaRegulator.onmousedown = startAlphaSelecting;
     this.closeButton.onclick = () => {
       this.wrapper.setAttribute('hidden', 'true');
       this.opened = false;
     };
-
     this.pipetteButton.onclick = () => {
       this.wrapper.setAttribute('hidden', 'true');
       this.opened = false;
@@ -107,11 +117,6 @@ export default class ColorPicker {
 
     this.input.onkeyup = () => {
       this.setActiveColor(this.input.value, true);
-    };
-    this.inputAlpha.value = this.alpha;
-    this.inputAlpha.oninput = () => {
-      this.alpha = this.inputAlpha.value;
-      this.setActiveColor(this.color, true);
     };
   }
 
@@ -123,8 +128,8 @@ export default class ColorPicker {
 
     this.drawLighter();
     this.colorRegulator.style.left = `${this.lightPosition}px`;
+    this.alphaRegulator.style.left = `${Math.round(this.alpha * this.w)}px`;
     this.regetColor();
-    this.inputAlpha.value = this.alpha;
 
     this.wrapper.removeAttribute('hidden');
     this.opened = true;
@@ -147,6 +152,13 @@ export default class ColorPicker {
   regetColor() {
     const p = this.ctxLight.getImageData(this.lightPosition, 5, 1, 1).data;
     this.setActiveColor(rgbToHex(p[0], p[1], p[2]));
+    this.drawAlpher();
+  }
+
+  regetAlpha() {
+    const p = this.ctxAlpha.getImageData(this.alphaPosition, 5, 1, 1).data;
+    this.alpha = p[3] / 255;
+    this.setActiveColor(this.color, true);
   }
 
   getColorLightAtClick(e) {
@@ -156,6 +168,15 @@ export default class ColorPicker {
     this.lightPosition = x;
     this.colorRegulator.style.left = x;
     this.regetColor();
+  }
+
+  getAlphaAtClick(e) {
+    let x = e.clientX - this.canvasAlpha.documentOffsetLeft;
+    x = (x < 1 && 1) || x;
+    x = (x > this.w - 1 && this.w - 1) || x;
+    this.alphaPosition = x;
+    this.alphaRegulator.style.left = x;
+    this.regetAlpha();
   }
 
   handleMouseDown(e) {
@@ -175,6 +196,9 @@ export default class ColorPicker {
       }
       if (this.lightSelecting) {
         this.getColorLightAtClick(e);
+      }
+      if (this.alphaSelecting) {
+        this.getAlphaAtClick(e);
       }
     } else if (this.choosingActive) {
       const scale = this.main.getScale();
@@ -210,6 +234,7 @@ export default class ColorPicker {
     this.lightSelecting = false;
     this.choosing = false;
     this.choosingActive = false;
+    this.alphaSelecting = false;
   }
 
   setActiveColor(color, ignoreUpdateText) {
@@ -251,18 +276,17 @@ export default class ColorPicker {
           '<canvas></canvas>' +
           '<canvas class="ptro-canvas-light"></canvas>' +
           '<span class="ptro-color-light-regulator ptro-bordered-control"></span>' +
+          '<canvas class="ptro-canvas-alpha"></canvas>' +
+          '<span class="alpha-checkers"></span>' +
+          '<span class="ptro-color-alpha-regulator ptro-bordered-control"></span>' +
           '<div class="ptro-colors"></div>' +
             '<div class="ptro-color-edit">' +
               '<button class="ptro-icon-btn ptro-pipette ptro-color-control" style="float: left; margin-right: 5px">' +
                 '<i class="ptro-icon ptro-icon-pipette"></i>' +
               '</button>' +
               '<input class="ptro-color" type="text" size="7"/>' +
-              '<span style="float:right"><span class="ptro-color-alpha-label" ' +
-                `title="${Translation.get().tr('alphaFull')}">${Translation.get().tr('alpha')}</span>` +
-              '<input class="ptro-color-alpha ptro-input" type="number" min="0" max="1" step="0.1"/></span>' +
-              '<div><button class="ptro-named-btn ptro-close ptro-color-control" ' +
-                'style="margin-top: 8px;position: absolute; top: 225px; right: 10px;width: 50px;">' +
-                `${Translation.get().tr('close')}</button></div>` +
+              '<button class="ptro-named-btn ptro-close-color-picker ptro-color-control" >' +
+              `${Translation.get().tr('close')}</button>` +
             '</div>' +
           '</div>' +
         '</div>' +
@@ -277,5 +301,16 @@ export default class ColorPicker {
     lightGradient.addColorStop(1, this.palleteColor);
     this.ctxLight.fillStyle = lightGradient;
     this.ctxLight.fillRect(0, 0, this.w, 15);
+  }
+
+  drawAlpher() {
+    this.ctxAlpha.clearRect(0, 0, this.w, 15);
+    const lightGradient = this.ctxAlpha.createLinearGradient(0, 0, this.w, 0);
+    lightGradient.addColorStop(0, 'rgba(255,255,255,0)');
+    lightGradient.addColorStop(0.05, 'rgba(255,255,255,0)');
+    lightGradient.addColorStop(0.95, this.color);
+    lightGradient.addColorStop(1, this.color);
+    this.ctxAlpha.fillStyle = lightGradient;
+    this.ctxAlpha.fillRect(0, 0, this.w, 15);
   }
 }

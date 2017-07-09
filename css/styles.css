@@ -85,7 +85,12 @@
 
 .ptro-wrapper .ptro-crp-el {
     position: absolute;
+}
 
+.ptro-wrapper .ptro-close-color-picker {
+    height: 24px;
+    float: right;
+    margin-top: 5px;
 }
 
 .ptro-wrapper .ptro-crp-rect {
@@ -238,7 +243,7 @@
 }
 
 .ptro-wrapper .ptro-color-edit {
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .ptro-wrapper .ptro-color-edit input {
@@ -274,27 +279,28 @@
     font-family: "Open Sans", sans-serif;
 }
 
-.ptro-wrapper .ptro-color-edit button {
+.ptro-wrapper .ptro-pipette {
     float: right;
     height: 24px;
     width: 24px;
     margin: 0;
 }
 
-.ptro-wrapper .ptro-color-edit button i {
+.ptro-wrapper .ptro-pipette i {
     line-height: 16px;
 }
 
-.ptro-wrapper .ptro-color-edit button:active {
+.ptro-wrapper .ptro-pipette:active {
     outline: none;
 }
 
 .ptro-wrapper .ptro-color-widget-wrapper .ptro-canvas-light,
-.ptro-wrapper .ptro-resize-widget-wrapper .ptro-canvas-light {
+.ptro-wrapper .ptro-color-widget-wrapper .ptro-canvas-alpha {
     margin-top: 10px;
 }
 
-.ptro-color-light-regulator {
+.ptro-color-light-regulator,
+.ptro-color-alpha-regulator {
     display: block;
     margin-top: -5px;
     margin-left: 5px;
@@ -307,12 +313,24 @@
     cursor: crosshair;
 }
 
+.ptro-color-alpha-regulator {
+    margin-top: 0;
+}
+
+.alpha-checkers {
+    background-image: url("checkers.svg");
+    display: block;
+    width: 100%;
+    height: 15px;
+    background-size: 10px 10px;
+    margin-top: -20px;
+}
 
 .ptro-input:focus{
     outline: none;
 }
 
-.ptro-wrapper .ptro-zoomer{
+.ptro-wrapper .ptro-zoomer {
     border-top:1px solid white;
     border-left:1px solid white;
     position: absolute;
