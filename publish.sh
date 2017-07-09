@@ -8,9 +8,9 @@ GH_PATH=`cat ~/.ghpass`
 GH_REPO=painterro
 GH_TARGET=master
 ASSETS_PATH=build
-npm run build
 npm --no-git-tag-version version patch
 VERSION=`grep '"version":' package.json | cut -d\" -f4`
+npm run build
 git add -u
 git commit -m "$VERSION"
 git push
