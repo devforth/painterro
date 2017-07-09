@@ -8,14 +8,14 @@ export function genId() {
 }
 
 export function addDocumentObjectHelpers() {
-  if (!Object.prototype.hasOwnProperty.call(Element, 'documentOffsetTop')) {
+  if (!('documentOffsetTop' in Element.prototype)) {
     Object.defineProperty(Element.prototype, 'documentOffsetTop', {
       get() {
         return this.offsetTop + (this.offsetParent ? this.offsetParent.documentOffsetTop : 0);
       },
     });
   }
-  if (!Object.prototype.hasOwnProperty.call(Element, 'documentOffsetLeft')) {
+  if (!('documentOffsetLeft' in Element.prototype)) {
     Object.defineProperty(Element.prototype, 'documentOffsetLeft', {
       get() {
         return this.offsetLeft + (this.offsetParent ? this.offsetParent.documentOffsetLeft : 0);
@@ -23,7 +23,7 @@ export function addDocumentObjectHelpers() {
     });
   }
 
-  if (!Object.prototype.hasOwnProperty.call(Element, 'documentClientWidth')) {
+  if (!('documentClientWidth' in Element.prototype)) {
     Object.defineProperty(Element.prototype, 'documentClientWidth', {
       get() {
         return this.getBoundingClientRect().width;
@@ -31,7 +31,7 @@ export function addDocumentObjectHelpers() {
     });
   }
 
-  if (!Object.prototype.hasOwnProperty.call(Element, 'documentClientHeight')) {
+  if (!('documentClientHeight' in Element.prototype)) {
     Object.defineProperty(Element.prototype, 'documentClientHeight', {
       get() {
         return this.getBoundingClientRect().height;

@@ -175,7 +175,7 @@ export default class ColorPicker {
     x = (x < 1 && 1) || x;
     x = (x > this.w - 1 && this.w - 1) || x;
     this.alphaPosition = x;
-    this.alphaRegulator.style.left = x;
+    this.alphaRegulator.style.left = `${x}px`;
     this.regetAlpha();
   }
 

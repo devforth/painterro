@@ -10,6 +10,7 @@ With Painterro you can:
 - Paint primitives (alpha color can be used)
 - Add text
 - Rotate / Resize image
+- Pixelize some area to hide sensitive data
 
 ![Painterro preview](https://raw.githubusercontent.com/ivictbor/painterro/master/docs/preview.png)
 
@@ -317,7 +318,7 @@ ToDo list
 - Edit button on images (provide selector)
 - Add recent colors pallete
 - Add recent image sizes in resize tool
-- Blur region
 - Ability to save loacaly
 - Save settings in loaclstorage
 - line arrows
+- Process ESC and ENTER keys in tools
