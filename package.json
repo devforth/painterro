@@ -1,6 +1,6 @@
 {
   "name": "painterro",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Embуedded html image editor",
   "main": "build/painterro.commonjs2.js",
   "scripts": {
