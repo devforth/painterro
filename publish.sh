@@ -28,7 +28,6 @@ res=`curl --user "$GH_USER:$GH_PATH" -X POST https://api.github.com/repos/${GH_U
 }"`
 echo Create release result: ${res}
 rel_id=`echo ${res}|  grep -oP '"id": +\d+' | grep -oP '\d+'`
-rel_id=1838656
 file_name=painterro-${VERSION}.min.js
 
 curl --user "$GH_USER:$GH_PATH" -X POST https://uploads.github.com/repos/${GH_USER}/${GH_REPO}/releases/${rel_id}/assets?name=${file_name}\
