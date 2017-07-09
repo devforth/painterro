@@ -1,7 +1,7 @@
 {
   "name": "painterro",
   "version": "0.2.14",
-  "description": "Embуedded html image editor",
+  "description": "HTML5 image editor widget",
   "main": "build/painterro.commonjs2.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

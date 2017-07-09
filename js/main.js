@@ -458,7 +458,7 @@ class PainterroProc {
         for (let i = 0; i < byteString.length; i += 1) {
           ia[i] = byteString.charCodeAt(i);
         }
-        return new Blob([ab], { realType });
+        return new Blob([ab], { type: realType });
       },
     };
 
