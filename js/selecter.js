@@ -268,7 +268,6 @@ export default class PainterroSelecter {
   }
 
   hide() {
-    console.log('hiding');
     this.area.rect.setAttribute('hidden', 'true');
     this.shown = false;
   }

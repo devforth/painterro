@@ -323,7 +323,7 @@ class PainterroProc {
     }
     let bar = '';
     let rightBar = '';
-    this.tools.filter(t => !this.params.hiddenTools.includes(t.name)).forEach((b) => {
+    this.tools.filter(t => this.params.hiddenTools.indexOf(t.name) === -1).forEach((b) => {
       const id = genId();
       b.buttonId = id;
       const btn = `<button class="ptro-icon-btn ptro-color-control" title="${tr(`tools.${b.name}`)}" ` +
@@ -410,7 +410,7 @@ class PainterroProc {
     };
 
 
-    this.tools.filter(t => !this.params.hiddenTools.includes(t.name)).forEach((b) => {
+    this.tools.filter(t => this.params.hiddenTools.indexOf(t.name) === -1).forEach((b) => {
       getBtnEl(b).onclick = () => {
         if (b === this.toolByName.select && this.activeTool === b) {
           return;

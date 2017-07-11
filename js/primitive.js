@@ -64,10 +64,10 @@ export default class PrimitiveTool {
       this.ctx.beginPath();
       this.ctx.lineWidth = 0;
       this.ctx.fillStyle = this.main.colorWidgetState.line.alphaColor;
-      this.ctx.ellipse(
+      this.ctx.arc(
         this.points[0].x, this.points[0].y,
         this.lineWidth / 2, this.lineWidth / 2,
-        0, 2 * Math.PI, false);
+        0, 2 * Math.PI);
       this.ctx.fill();
       this.ctx.closePath();
     } else {
@@ -162,19 +162,34 @@ export default class PrimitiveTool {
           h = min * Math.sign(h);
         }
 
-        const rX = Math.abs(w / 2);
-        const rY = Math.abs(h / 2);
+        const rX = Math.abs(w);
+        const rY = Math.abs(h);
 
         const tlX = Math.min(x1, x1 + w);
         const tlY = Math.min(y1, y1 + h);
 
-        this.ctx.ellipse(
-          tlX + rX,
-          tlY + rY,
-          rX, rY,
-          0, 2 * Math.PI, false);
+        this.ctx.save();
+        let xScale = 1;
+        let yScale = 1;
+        let radius;
+        const hR = rX / 2;
+        const vR = rY / 2;
+        if (rX > rY) {
+          yScale = rX / rY;
+          radius = hR;
+        } else {
+          xScale = rY / rX;
+          radius = vR;
+        }
+        this.ctx.scale(1 / xScale, 1 / yScale);
+        this.ctx.arc(
+          (tlX + hR) * xScale,
+          (tlY + vR) * yScale,
+          radius, 0, 2 * Math.PI);
+        this.ctx.restore();
         this.ctx.fill();
         this.ctx.stroke();
+
         this.ctx.beginPath();
       }
     }
