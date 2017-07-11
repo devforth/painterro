@@ -1,22 +1,26 @@
  
 [GitHub](https://github.com/ivictbor/painterro) | [npm](https://www.npmjs.com/package/painterro) | [DEMO](https://maketips.net/paste)
 
-Painterro is singlefile JavaScript paint component which allows to edit images directly in browser.
+Painterro is singlefile JavaScript paint widget which allows editing images directly in a browser.
 It can be easily integrated into your website or blog by including only one js file and calling init code.
 
 With Painterro you can:
-- Paste image from clipboard (for example screenshot)
+- Paste image from clipboard (e.g. screenshot), drag and drop it into widget, or load with open dialog
 - Crop image by defined area
 - Paint primitives (alpha color can be used)
 - Add text
-- Rotate / Resize image
+- Rotate / Resize (Scale) image
 - Pixelize some area to hide sensitive data
+
+If you want to see some feature in Painterro, please leave (or vote for) an issue with your proposal [here](https://github.com/ivictbor/painterro/issues). 
+There is no promise that it will be implemented soon or ever, but it is interesting to know what features users want to have.
 
 ![Painterro preview](https://raw.githubusercontent.com/ivictbor/painterro/master/docs/preview.png)
 
-Example usecase: You make screenshot by pressing `PrtSc` button, then open Painterro on your website, paste image, 
-crop it to interested area then highlight something with line/rectangle tool and/or add some text 
-to the image. See [DEMO](https://maketips.net/paste)
+Originally Painterro was designed for quick screenshots processing: You make screenshot by pressing `PrtSc` button, 
+then open Painterro on your website, paste an image, 
+crop it to interested area, highlight something with line/rectangle tool and/or add some text 
+to the image. In addition, you can use it for processing any kind of raster images. Please try a [demo](https://maketips.net/paste)
 
 Painterro is written with vanilla JS, without any additional frameworks to stay lightweight and minimalistic. Code 
 written on ES6 which transplited by Babel and packed using webpack.
@@ -322,3 +326,4 @@ ToDo list
 - Save settings in loaclstorage
 - line arrows
 - Process ESC and ENTER keys in tools
+- Use arc instead of ellipse (better compatibility)

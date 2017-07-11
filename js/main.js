@@ -32,28 +32,22 @@ class PainterroProc {
         this.select.draw();
       },
       close: () => {
-        this.select.area.activated = false;
-        this.select.area.rect.setAttribute('hidden', 'true');
+        this.select.close();
         this.toolContainer.style.cursor = 'auto';
       },
-      controls: [{
-        type: 'btn',
-        icon: 'crop',
-        hint: 'crop',
-        action: () => {
-          this.select.doCrop();
-          this.closeActiveTool();
-        },
-      }, {
-        type: 'btn',
-        icon: 'pixelize',
-        hint: 'pixelize',
-        action: () => {
-          this.select.doPixelize();
-          this.closeActiveTool();
-        },
-      }],
       eventListner: () => this.select,
+    }, {
+      name: 'crop',
+      activate: () => {
+        this.select.doCrop();
+        this.closeActiveTool();
+      },
+    }, {
+      name: 'pixelize',
+      activate: () => {
+        this.select.doPixelize();
+        this.closeActiveTool();
+      },
     }, {
       name: 'line',
       controls: [{
@@ -380,11 +374,11 @@ class PainterroProc {
     this.toolContainer = document.querySelector(`#${this.id} .ptro-crp-el`);
     this.zoomHelper = new ZoomHelper(this);
     this.select = new PainterroSelecter(this, (notEmpty) => {
-      this.toolByName.select.controls.forEach((c) => {
+      [this.toolByName.crop, this.toolByName.pixelize].forEach((c) => {
         if (notEmpty) {
-          document.getElementById(c.id).removeAttribute('disabled');
+          document.getElementById(c.buttonId).removeAttribute('disabled');
         } else {
-          document.getElementById(c.id).setAttribute('disabled', 'true');
+          document.getElementById(c.buttonId).setAttribute('disabled', 'true');
         }
       });
     });

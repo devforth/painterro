@@ -6,6 +6,7 @@ export default class PainterroSelecter {
     this.canvas = main.canvas;
     this.ctx = main.ctx;
     this.areaionCallback = selectionCallback;
+    this.shown = false;
     this.area = {
       el: main.toolContainer,
       rect: document.querySelector(`#${main.id} .ptro-crp-rect`),
@@ -121,9 +122,9 @@ export default class PainterroSelecter {
           this.setBottom(this.area.el.clientHeight - y);
 
           this.reCalcCropperCords();
-          this.area.rect.removeAttribute('hidden');
           this.area.resizingB = true;
           this.area.resizingR = true;
+          this.hide();
         }
       },
       'ptro-crp-rect': () => {
@@ -188,6 +189,9 @@ export default class PainterroSelecter {
   }
 
   handleMouseMove(event) {
+    if (!this.area.activated) {
+      return;
+    }
     if (this.area.moving) {
       let newLeft = (event.clientX - this.area.el.documentOffsetLeft - this.area.xHandle)
         + this.main.wrapper.scrollLeft;
@@ -212,27 +216,36 @@ export default class PainterroSelecter {
       this.setBottom(this.bottom - vDelta);
       this.reCalcCropperCords();
     } else {
+      let resizing = false;
       if (this.area.resizingL) {
+        resizing = true;
         const absLeft = this.fixCropperLeft(event.clientX + this.main.wrapper.scrollLeft);
         this.setLeft(absLeft - this.area.el.documentOffsetLeft);
         this.reCalcCropperCords();
       }
       if (this.area.resizingR) {
+        resizing = true;
         const absRight = this.fixCropperRight(event.clientX + this.main.wrapper.scrollLeft);
         this.setRight(
           (this.area.el.clientWidth + this.area.el.documentOffsetLeft) - absRight);
         this.reCalcCropperCords();
       }
       if (this.area.resizingT) {
+        resizing = true;
         const absTop = this.fixCropperTop(event.clientY + this.main.wrapper.scrollTop);
         this.setTop(absTop - this.area.el.documentOffsetTop);
         this.reCalcCropperCords();
       }
       if (this.area.resizingB) {
+        resizing = true;
         const absBottom = this.fixCropperBottom(event.clientY + this.main.wrapper.scrollTop);
         this.setBottom(
           (this.area.el.clientHeight + this.area.el.documentOffsetTop) - absBottom);
         this.reCalcCropperCords();
+      }
+      if (resizing && !this.shown) {
+        this.shown = true;
+        this.area.rect.removeAttribute('hidden');
       }
     }
   }
@@ -247,6 +260,17 @@ export default class PainterroSelecter {
     this.area.resizingB = false;
     this.area.resizingL = false;
     clearSelection();
+  }
+
+  close() {
+    this.area.activated = false;
+    this.hide();
+  }
+
+  hide() {
+    console.log('hiding');
+    this.area.rect.setAttribute('hidden', 'true');
+    this.shown = false;
   }
 
   draw() {
