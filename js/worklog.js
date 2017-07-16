@@ -1,7 +1,14 @@
 export default class WorkLog {
-  constructor(main) {
+  constructor(main, { changedHandler } = {}) {
     this.main = main;
     this.current = null;
+    this.changedHandler = changedHandler;
+    this.empty = true;
+  }
+
+  changed() {
+    this.changedHandler();
+    this.empty = false;
   }
 
   captureState(initial) {
@@ -19,7 +26,7 @@ export default class WorkLog {
     state.next = null;
     this.current = state;
     if (initial !== true) {
-      this.main.changedHandler();
+      this.changed();
     }
   }
 
@@ -37,7 +44,7 @@ export default class WorkLog {
     if (this.current.prev !== null) {
       this.current = this.current.prev;
       this.applyState(this.current);
-      this.main.changedHandler();
+      this.changed();
     }
   }
 
@@ -45,7 +52,7 @@ export default class WorkLog {
     if (this.current.next !== null) {
       this.current = this.current.next;
       this.applyState(this.current);
-      this.main.changedHandler();
+      this.changed();
     }
   }
 }

@@ -1,7 +1,7 @@
 
 let instance = null;
 
-export default class Translation {
+export class Translation {
   constructor() {
     this.translations = {
       en: {
@@ -42,7 +42,12 @@ export default class Translation {
           open: 'Open image',
           select: 'Select area',
         },
-
+        pasteOptions: {
+          fit: 'Replace all',
+          extend_down: 'Extend down',
+          extend_right: 'Extend right',
+          over: 'Paste over',
+        },
       },
     };
     this.activate('en');
@@ -82,4 +87,8 @@ export default class Translation {
     });
     return res || fallbackRes;
   }
+}
+
+export function tr(n) {
+  return Translation.get().tr(n);
 }

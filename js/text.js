@@ -127,6 +127,6 @@ export default class TextTool {
   }
 
   static code() {
-    return '<span contenteditable="true" class="ptro-text-tool-input" style="display:none"/>';
+    return '<span contenteditable="true" class="ptro-text-tool-input" style="display:none"></span>';
   }
 }

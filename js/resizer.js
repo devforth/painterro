@@ -1,4 +1,4 @@
-import Translation from './translation';
+import { tr } from './translation';
 
 export default class Resizer {
   constructor(main) {
@@ -91,13 +91,13 @@ export default class Resizer {
         '<div style="display: inline-block">' +
           '<table>' +
             '<tr>' +
-              `<td class="ptro-label ptro-resize-table-left">${Translation.get().tr('width')}</td>` +
+              `<td class="ptro-label ptro-resize-table-left">${tr('width')}</td>` +
               '<td>' +
                 '<input class="ptro-input ptro-resize-width-input" type="number" min="0" max="3000" step="1"/>' +
               '</td>' +
             '</tr>' +
             '<tr>' +
-              `<td class="ptro-label ptro-resize-table-left">${Translation.get().tr('height')}</td>` +
+              `<td class="ptro-label ptro-resize-table-left">${tr('height')}</td>` +
               '<td>' +
                 '<input class="ptro-input ptro-resize-heigth-input" type="number" min="0" max="3000" step="1"/>' +
               '</td>' +
@@ -105,17 +105,17 @@ export default class Resizer {
           '</table>' +
         '</div>' +
         '<div class="ptro-resize-link-wrapper">' +
-          `<button class="ptro-icon-btn ptro-link ptro-color-control" title="${Translation.get().tr('keepRatio')}">` +
+          `<button class="ptro-icon-btn ptro-link ptro-color-control" title="${tr('keepRatio')}">` +
             '<i class="ptro-icon ptro-icon-linked"></i>' +
           '</button>' +
         '</div>' +
         '<div>' +
           '<button class="ptro-named-btn ptro-apply ptro-color-control" ' +
                 'style="margin-top: 8px;position: absolute; top: 95px; right: 75px;">' +
-                `${Translation.get().tr('apply')}</button></div>` +
+                `${tr('apply')}</button></div>` +
           '<button class="ptro-named-btn ptro-close ptro-color-control" ' +
                 'style="margin-top: 8px;position: absolute; top: 95px; right: 10px;">' +
-                `${Translation.get().tr('cancel')}</button></div>` +
+                `${tr('cancel')}</button></div>` +
         '</div>' +
       '</div>';
   }

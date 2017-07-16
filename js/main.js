@@ -8,12 +8,11 @@ import { genId, addDocumentObjectHelpers } from './utils';
 import PrimitiveTool from './primitive';
 import ColorPicker from './colorPicker';
 import setDefaults from './params';
-import Translation from './translation';
+import { tr } from './translation';
 import ZoomHelper from './zoomHelper';
 import TextTool from './text';
 import Resizer from './resizer';
-
-const tr = n => Translation.get().tr(n);
+import Inserter from './inserter';
 
 function getBtnEl(b) {
   return document.getElementById(b.buttonId);
@@ -336,7 +335,10 @@ class PainterroProc {
       }
     });
 
-    const cropper = `<div class="ptro-crp-el">${PainterroSelecter.code()}${TextTool.code()}</div>`;
+    this.inserter = new Inserter();
+
+    const cropper = '<div class="ptro-crp-el">' +
+      `${PainterroSelecter.code()}${TextTool.code()}${this.inserter.code()}</div>`;
 
     this.baseEl.innerHTML =
       `${`<div class="ptro-wrapper" id="ptro-wrapper-${this.id}">` +
@@ -359,11 +361,6 @@ class PainterroProc {
     if (this.saveBtn) {
       this.saveBtn.setAttribute('disabled', 'true');
     }
-    this.changedHandler = () => {
-      if (this.saveBtn) {
-        this.saveBtn.removeAttribute('disabled');
-      }
-    };
     this.body = document.body;
     this.wrapper = document.querySelector(`#${this.id} .ptro-wrapper`);
     this.bar = document.querySelector(`#${this.id} .ptro-bar`);
@@ -386,7 +383,14 @@ class PainterroProc {
     this.primitiveTool = new PrimitiveTool(this);
     this.primitiveTool.setLineWidth(this.params.defaultLineWidth);
     this.primitiveTool.setPixelSize(this.params.defaultPixelSize);
-    this.worklog = new WorkLog(this);
+    this.worklog = new WorkLog(this, {
+      changedHandler() {
+        if (this.saveBtn) {
+          this.saveBtn.removeAttribute('disabled');
+        }
+      },
+    });
+    this.inserter.init(this);
     this.textTool = new TextTool(this);
     this.colorPicker = new ColorPicker(this, (widgetState) => {
       this.colorWidgetState[widgetState.target] = widgetState;
@@ -629,15 +633,15 @@ class PainterroProc {
     });
   }
 
+  fitImage(img) {
+    this.resize(img.naturalWidth, img.naturalHeight);
+    this.ctx.drawImage(img, 0, 0);
+    this.adjustSizeFull();
+    this.worklog.captureState();
+  }
+
   loadImage(source) {
-    const img = new Image();
-    img.onload = () => {
-      this.resize(img.naturalWidth, img.naturalHeight);
-      this.ctx.drawImage(img, 0, 0);
-      this.adjustSizeFull();
-      this.worklog.captureState();
-    };
-    img.src = source;
+    this.inserter.handleOpen(source);
   }
 
   show(openImage) {

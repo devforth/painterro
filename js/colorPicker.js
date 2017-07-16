@@ -1,4 +1,4 @@
-import Translation from './translation';
+import { tr } from './translation';
 
 function HexToRGB(hex) {
   let parse = /^#?([a-fA-F\d]{2})([a-fA-F\d]{2})([a-fA-F\d]{2})$/i.exec(hex);
@@ -166,7 +166,7 @@ export default class ColorPicker {
     x = (x < 1 && 1) || x;
     x = (x > this.w - 1 && this.w - 1) || x;
     this.lightPosition = x;
-    this.colorRegulator.style.left = x;
+    this.colorRegulator.style.left = `${x}px`;
     this.regetColor();
   }
 
@@ -286,7 +286,7 @@ export default class ColorPicker {
               '</button>' +
               '<input class="ptro-color" type="text" size="7"/>' +
               '<button class="ptro-named-btn ptro-close-color-picker ptro-color-control" >' +
-              `${Translation.get().tr('close')}</button>` +
+              `${tr('close')}</button>` +
             '</div>' +
           '</div>' +
         '</div>' +
