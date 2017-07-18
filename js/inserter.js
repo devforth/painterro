@@ -21,17 +21,56 @@ export default class Inserter {
           this.main.clearBackground();
           this.ctx.putImageData(tmpData, 0, 0);
           this.main.adjustSizeFull();
-          this.worklog.captureState();
           if (img.naturalWidth < oldW) {
             const offset = Math.round((oldW - img.naturalWidth) / 2);
             this.main.select.placeAt(offset, oldH, offset, 0, img);
           } else {
             this.main.select.placeAt(0, oldH, 0, 0, img);
           }
+          this.worklog.captureState();
         },
       },
-      extend_right: {},
-      over: {},
+      extend_right: {
+        handle: (img) => {
+          this.tmpImg = img;
+          const oldH = this.main.size.h;
+          const oldW = this.main.size.w;
+          const newW = oldW + img.naturalWidth;
+          const newH = Math.max(oldH, img.naturalHeight);
+          const tmpData = this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h);
+          this.main.resize(newW, newH);
+          this.main.clearBackground();
+          this.ctx.putImageData(tmpData, 0, 0);
+          this.main.adjustSizeFull();
+          if (img.naturalHeight < oldH) {
+            const offset = Math.round((oldH - img.naturalHeight) / 2);
+            this.main.select.placeAt(oldW, offset, 0, offset, img);
+          } else {
+            this.main.select.placeAt(oldW, 0, 0, 0, img);
+          }
+          this.worklog.captureState();
+        },
+      },
+      over: {
+        handle: (img) => {
+          this.tmpImg = img;
+          const oldH = this.main.size.h;
+          const oldW = this.main.size.w;
+          if (img.naturalHeight <= oldH && img.naturalWidth <= oldW) {
+            this.main.select.placeAt(
+              0, 0,
+              oldW - img.naturalWidth,
+              oldH - img.naturalHeight, img);
+          } else if (img.naturalWidth / img.naturalHeight > oldW / oldH) {
+            const newH = oldW * (img.naturalHeight / img.naturalWidth);
+            this.main.select.placeAt(0, 0, 0, oldH - newH, img);
+          } else {
+            const newW = oldH * (img.naturalWidth / img.naturalHeight);
+            this.main.select.placeAt(0, 0, oldW - newW, 0, img);
+          }
+          this.worklog.captureState();
+        },
+      },
     };
   }
 
@@ -58,8 +97,8 @@ export default class Inserter {
   }
 
   insert(x, y, w, h) {
-    console.log("inserting ", this.tmpImg, x, y, w, h);
     this.main.ctx.drawImage(this.tmpImg, x, y, w, h);
+    this.main.worklog.reCaptureState();
   }
 
   loaded(img) {

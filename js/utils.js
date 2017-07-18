@@ -76,3 +76,12 @@ export function distance(p1, p2) {
 export function trim() {
   return String(this).replace(/^\s+|\s+$/g, '');
 }
+
+export const KEYS = {
+  y: 89,
+  z: 90,
+  s: 83,
+  enter: 13,
+  esc: 27,
+};
+

@@ -1,5 +1,5 @@
 export default class WorkLog {
-  constructor(main, { changedHandler } = {}) {
+  constructor(main, changedHandler) {
     this.main = main;
     this.current = null;
     this.changedHandler = changedHandler;
@@ -30,12 +30,20 @@ export default class WorkLog {
     }
   }
 
+  reCaptureState() {
+    if (this.current.prev !== null) {
+      this.current = this.current.prev;
+    }
+    this.captureState();
+  }
+
   applyState(state) {
     const img = new Image();
     img.onload = () => {
       this.main.resize(state.sizew, state.sizeh);
       this.main.ctx.drawImage(img, 0, 0);
       this.main.adjustSizeFull();
+      this.main.select.hide();
     };
     img.src = state.data;
   }

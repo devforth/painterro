@@ -4,7 +4,7 @@ import '../css/icons/iconfont.css';
 
 import PainterroSelecter from './selecter';
 import WorkLog from './worklog';
-import { genId, addDocumentObjectHelpers } from './utils';
+import { genId, addDocumentObjectHelpers, KEYS } from './utils';
 import PrimitiveTool from './primitive';
 import ColorPicker from './colorPicker';
 import setDefaults from './params';
@@ -280,13 +280,15 @@ class PainterroProc {
       right: true,
       activate: () => {
         this.closeActiveTool();
-        document.getElementById('ptro-file-input').click();
-        document.getElementById('ptro-file-input').onchange = (event) => {
+        const input = document.getElementById('ptro-file-input');
+        input.click();
+        input.onchange = (event) => {
           const files = event.target.files || event.dataTransfer.files;
           if (!files.length) {
             return;
           }
           this.openFile(files[0]);
+          input.value = ''; // to allow reopen
         };
       },
     }, {
@@ -382,12 +384,10 @@ class PainterroProc {
     this.primitiveTool = new PrimitiveTool(this);
     this.primitiveTool.setLineWidth(this.params.defaultLineWidth);
     this.primitiveTool.setPixelSize(this.params.defaultPixelSize);
-    this.worklog = new WorkLog(this, {
-      changedHandler() {
-        if (this.saveBtn) {
-          this.saveBtn.removeAttribute('disabled');
-        }
-      },
+    this.worklog = new WorkLog(this, () => {
+      if (this.saveBtn) {
+        this.saveBtn.removeAttribute('disabled');
+      }
     });
     this.inserter.init(this);
     this.textTool = new TextTool(this);
@@ -564,16 +564,17 @@ class PainterroProc {
       keydown: (e) => {
         if (this.shown) {
           const evt = window.event ? event : e;
+          this.handleToolEvent('handleKeyDown', evt);
           if (
-            (evt.keyCode === 89 && evt.ctrlKey) || // 89 is 'y' key
-            (evt.keyCode === 90 && evt.ctrlKey && evt.shiftKey)) { // 90 is 'z' key
+            (evt.keyCode === KEYS.y && evt.ctrlKey) ||
+            (evt.keyCode === KEYS.z && evt.ctrlKey && evt.shiftKey)) {
             this.worklog.redoState();
-          } else if (evt.keyCode === 90 && evt.ctrlKey) {
+          } else if (evt.keyCode === KEYS.z && evt.ctrlKey) {
             this.worklog.undoState();
           }
 
           if (this.saveBtn) {
-            if (evt.keyCode === 83 && evt.ctrlKey) { // 's' key pressed
+            if (evt.keyCode === KEYS.s && evt.ctrlKey) {
               this.save();
               evt.preventDefault();
             }

@@ -1,4 +1,4 @@
-import { clearSelection } from './utils';
+import { clearSelection, KEYS } from './utils';
 
 export default class PainterroSelecter {
   constructor(main, selectionCallback) {
@@ -146,6 +146,23 @@ export default class PainterroSelecter {
       this.area.topl[1],
       this.area.bottoml[0] - this.area.topl[0],
       this.area.bottoml[1] - this.area.topl[1]);
+  }
+
+  cancelPlacing() {
+    this.imagePlaced = false;
+    this.main.select.area.rect.style['background-image'] = 'none';
+    this.hide();
+    this.main.worklog.undoState();
+  }
+
+  handleKeyDown(evt) {
+    if (this.shown && this.imagePlaced) {
+      if (evt.keyCode === KEYS.enter) {
+        this.finishPlacing();
+      } else if (evt.keyCode === KEYS.esc) {
+        this.cancelPlacing();
+      }
+    }
   }
 
   handleMouseDown(event) {
@@ -386,6 +403,9 @@ export default class PainterroSelecter {
   }
 
   close() {
+    if (this.imagePlaced) {
+      this.finishPlacing();
+    }
     this.area.activated = false;
     this.hide();
   }
