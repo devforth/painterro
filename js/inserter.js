@@ -9,7 +9,27 @@ export default class Inserter {
           this.main.fitImage(img);
         },
       },
-      extend_down: {},
+      extend_down: {
+        handle: (img) => {
+          this.tmpImg = img;
+          const oldH = this.main.size.h;
+          const oldW = this.main.size.w;
+          const newH = oldH + img.naturalHeight;
+          const newW = Math.max(oldW, img.naturalWidth);
+          const tmpData = this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h);
+          this.main.resize(newW, newH);
+          this.main.clearBackground();
+          this.ctx.putImageData(tmpData, 0, 0);
+          this.main.adjustSizeFull();
+          this.worklog.captureState();
+          if (img.naturalWidth < oldW) {
+            const offset = Math.round((oldW - img.naturalWidth) / 2);
+            this.main.select.placeAt(offset, oldH, offset, 0, img);
+          } else {
+            this.main.select.placeAt(0, oldH, 0, 0, img);
+          }
+        },
+      },
       extend_right: {},
       over: {},
     };
@@ -18,8 +38,9 @@ export default class Inserter {
   init(main) {
     this.ctx = main.ctx;
     this.main = main;
-    this.el = main.toolContainer;
-    this.selector = this.el.querySelector('.ptro-paster-select');
+    this.worklog = main.worklog;
+    this.selector = main.wrapper.querySelector('.ptro-paster-select-wrapper');
+    this.selector.setAttribute('hidden', '');
     this.img = null;
     Object.keys(this.pasteOptions).forEach((k) => {
       const o = this.pasteOptions[k];
@@ -29,11 +50,16 @@ export default class Inserter {
         } else {
           o.handle(this.img);
         }
-        this.selector.style.display = 'none';
+        this.selector.setAttribute('hidden', '');
       };
     });
     this.loading = false;
     this.doLater = null;
+  }
+
+  insert(x, y, w, h) {
+    console.log("inserting ", this.tmpImg, x, y, w, h);
+    this.main.ctx.drawImage(this.tmpImg, x, y, w, h);
   }
 
   loaded(img) {
@@ -59,7 +85,7 @@ export default class Inserter {
     this.startLoading();
     img.src = source;
     if (!empty) {
-      this.selector.style.display = 'inline-block';
+      this.selector.removeAttribute('hidden');
     }
   }
 
@@ -86,7 +112,7 @@ export default class Inserter {
     }
   }
 
-  code() {
+  html() {
     let buttons = '';
     Object.keys(this.pasteOptions).forEach((k) => {
       const o = this.pasteOptions[k];
@@ -96,8 +122,8 @@ export default class Inserter {
         `<div>${tr(`pasteOptions.${k}`)}</div>` +
       '</button>';
     });
-    return `<div class="ptro-paster-select" style="display: none"><div class="ptro-in">${
+    return `<div class="ptro-paster-select-wrapper" hidden><div class="ptro-paster-select"><div class="ptro-in">${
       buttons
-    }</div></div>`;
+    }</div></div></div>`;
   }
 }

@@ -270,16 +270,17 @@ export default class ColorPicker {
   }
 
   static html() {
-    return '<div class="ptro-color-widget-wrapper" hidden>' +
-      '<div class="ptro-color-widget">' +
-        '<div class="ptro-pallet ptro-color-main">' +
-          '<canvas></canvas>' +
-          '<canvas class="ptro-canvas-light"></canvas>' +
-          '<span class="ptro-color-light-regulator ptro-bordered-control"></span>' +
-          '<canvas class="ptro-canvas-alpha"></canvas>' +
-          '<span class="alpha-checkers"></span>' +
-          '<span class="ptro-color-alpha-regulator ptro-bordered-control"></span>' +
-          '<div class="ptro-colors"></div>' +
+    return '' +
+      '<div class="ptro-color-widget-wrapper" hidden>' +
+        '<div class="ptro-color-widget">' +
+          '<div class="ptro-pallet ptro-color-main">' +
+            '<canvas></canvas>' +
+            '<canvas class="ptro-canvas-light"></canvas>' +
+            '<span class="ptro-color-light-regulator ptro-bordered-control"></span>' +
+            '<canvas class="ptro-canvas-alpha"></canvas>' +
+            '<span class="alpha-checkers"></span>' +
+            '<span class="ptro-color-alpha-regulator ptro-bordered-control"></span>' +
+            '<div class="ptro-colors"></div>' +
             '<div class="ptro-color-edit">' +
               '<button class="ptro-icon-btn ptro-pipette ptro-color-control" style="float: left; margin-right: 5px">' +
                 '<i class="ptro-icon ptro-icon-pipette"></i>' +

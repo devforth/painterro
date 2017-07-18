@@ -306,7 +306,6 @@ class PainterroProc {
     this.zoom = false;
     this.ratioRelation = undefined;
     this.id = this.params.id;
-    this.bgColor = this.params.backgroundFillColor;
     this.saving = false;
 
     if (this.id === undefined) {
@@ -338,16 +337,16 @@ class PainterroProc {
     this.inserter = new Inserter();
 
     const cropper = '<div class="ptro-crp-el">' +
-      `${PainterroSelecter.code()}${TextTool.code()}${this.inserter.code()}</div>`;
+      `${PainterroSelecter.code()}${TextTool.code()}</div>`;
 
     this.baseEl.innerHTML =
       `${`<div class="ptro-wrapper" id="ptro-wrapper-${this.id}">` +
       `<canvas id="ptro-canvas-${this.id}"></canvas>`}${
-        cropper
-      }${ColorPicker.html()
-      }${ZoomHelper.html()
-      }${Resizer.html()
-      }</div>` +
+        cropper +
+        ColorPicker.html() +
+        ZoomHelper.html() +
+        Resizer.html() +
+        this.inserter.html()}</div>` +
       '<div class="ptro-bar ptro-color-main">' +
       `<span>${bar}</span>` +
       '<span class="tool-controls"></span>' +
@@ -724,9 +723,9 @@ class PainterroProc {
   }
 
   syncToolElement() {
-    const w = this.canvas.clientWidth;
+    const w = Math.round(this.canvas.documentClientWidth);
     const l = this.canvas.offsetLeft;
-    const h = this.canvas.clientHeight;
+    const h = Math.round(this.canvas.documentClientHeight);
     const t = this.canvas.offsetTop;
     this.toolContainer.style.left = `${l}px`;
     this.toolContainer.style.width = `${w}px`;
@@ -738,13 +737,17 @@ class PainterroProc {
     const w = this.params.defaultSize.width === 'fill' ? this.wrapper.clientWidth : this.params.defaultSize.width;
     const h = this.params.defaultSize.height === 'fill' ? this.wrapper.clientHeight : this.params.defaultSize.height;
     this.resize(w, h);
-    this.ctx.beginPath();
-    this.ctx.rect(0, 0, this.size.w, this.size.h);
-    this.ctx.fillStyle = this.bgColor;
-    this.ctx.fill();
+    this.clearBackground();
     this.worklog.captureState(true);
     this.syncToolElement();
     this.adjustSizeFull();
+  }
+
+  clearBackground() {
+    this.ctx.beginPath();
+    this.ctx.rect(0, 0, this.size.w, this.size.h);
+    this.ctx.fillStyle = this.params.backgroundFillColor;
+    this.ctx.fill();
   }
 
   setActiveTool(b) {

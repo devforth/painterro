@@ -86,36 +86,38 @@ export default class Resizer {
   }
 
   static html() {
-    return '<div class="ptro-resize-widget-wrapper" hidden>' +
-      '<div class="ptro-resize-widget ptro-color-main">' +
-        '<div style="display: inline-block">' +
-          '<table>' +
-            '<tr>' +
-              `<td class="ptro-label ptro-resize-table-left">${tr('width')}</td>` +
-              '<td>' +
-                '<input class="ptro-input ptro-resize-width-input" type="number" min="0" max="3000" step="1"/>' +
-              '</td>' +
-            '</tr>' +
-            '<tr>' +
-              `<td class="ptro-label ptro-resize-table-left">${tr('height')}</td>` +
-              '<td>' +
-                '<input class="ptro-input ptro-resize-heigth-input" type="number" min="0" max="3000" step="1"/>' +
-              '</td>' +
-            '</tr>' +
-          '</table>' +
-        '</div>' +
-        '<div class="ptro-resize-link-wrapper">' +
-          `<button class="ptro-icon-btn ptro-link ptro-color-control" title="${tr('keepRatio')}">` +
-            '<i class="ptro-icon ptro-icon-linked"></i>' +
-          '</button>' +
-        '</div>' +
-        '<div>' +
-          '<button class="ptro-named-btn ptro-apply ptro-color-control" ' +
-                'style="margin-top: 8px;position: absolute; top: 95px; right: 75px;">' +
-                `${tr('apply')}</button></div>` +
-          '<button class="ptro-named-btn ptro-close ptro-color-control" ' +
-                'style="margin-top: 8px;position: absolute; top: 95px; right: 10px;">' +
-                `${tr('cancel')}</button></div>` +
+    return '' +
+      '<div class="ptro-resize-widget-wrapper" hidden>' +
+        '<div class="ptro-resize-widget ptro-color-main">' +
+          '<div style="display: inline-block">' +
+            '<table>' +
+              '<tr>' +
+                `<td class="ptro-label ptro-resize-table-left">${tr('width')}</td>` +
+                '<td>' +
+                  '<input class="ptro-input ptro-resize-width-input" type="number" min="0" max="3000" step="1"/>' +
+                '</td>' +
+              '</tr>' +
+              '<tr>' +
+                `<td class="ptro-label ptro-resize-table-left">${tr('height')}</td>` +
+                '<td>' +
+                  '<input class="ptro-input ptro-resize-heigth-input" type="number" min="0" max="3000" step="1"/>' +
+                '</td>' +
+              '</tr>' +
+            '</table>' +
+          '</div>' +
+          '<div class="ptro-resize-link-wrapper">' +
+            `<button class="ptro-icon-btn ptro-link ptro-color-control" title="${tr('keepRatio')}">` +
+              '<i class="ptro-icon ptro-icon-linked"></i>' +
+            '</button>' +
+          '</div>' +
+          '<div>' +
+            '<button class="ptro-named-btn ptro-apply ptro-color-control" ' +
+                  'style="margin-top: 8px;position: absolute; top: 95px; right: 75px;">' +
+                  `${tr('apply')}</button>` +
+            '<button class="ptro-named-btn ptro-close ptro-color-control" ' +
+                  'style="margin-top: 8px;position: absolute; top: 95px; right: 10px;">' +
+                  `${tr('cancel')}</button>` +
+          '</div>' +
         '</div>' +
       '</div>';
   }

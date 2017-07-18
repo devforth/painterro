@@ -11,14 +11,15 @@ export default class PainterroSelecter {
       el: main.toolContainer,
       rect: document.querySelector(`#${main.id} .ptro-crp-rect`),
     };
+    this.imagePlaced = false;
   }
 
   static code() {
     return '<div class="ptro-crp-rect" hidden>' +
-      '<div class="ptro-crp-l select-handler" ></div><div class="ptro-crp-r select-handler" ></div>' +
-      '<div class="ptro-crp-t select-handler" ></div><div class="ptro-crp-b select-handler" ></div>' +
-      '<div class="ptro-crp-tl select-handler" ></div><div class="ptro-crp-tr select-handler" ></div>' +
-      '<div class="ptro-crp-bl select-handler" ></div><div class="ptro-crp-br select-handler" ></div>' +
+      '<div class="ptro-crp-l select-handler"></div><div class="ptro-crp-r select-handler"></div>' +
+      '<div class="ptro-crp-t select-handler"></div><div class="ptro-crp-b select-handler"></div>' +
+      '<div class="ptro-crp-tl select-handler"></div><div class="ptro-crp-tr select-handler"></div>' +
+      '<div class="ptro-crp-bl select-handler"></div><div class="ptro-crp-br select-handler"></div>' +
       '</div>';
   }
 
@@ -33,8 +34,7 @@ export default class PainterroSelecter {
       this.main.resize(
         this.area.bottoml[0] - this.area.topl[0],
         this.area.bottoml[1] - this.area.topl[1]);
-      this.main.ctx.drawImage(img,
-        -this.area.topl[0], -this.area.topl[1]);
+      this.main.ctx.drawImage(img, -this.area.topl[0], -this.area.topl[1]);
       this.main.adjustSizeFull();
       this.main.worklog.captureState();
     };
@@ -91,19 +91,61 @@ export default class PainterroSelecter {
     this.main.worklog.captureState();
   }
 
+  getScale() {
+    return this.canvas.clientWidth / this.canvas.getAttribute('width');
+  }
+
   reCalcCropperCords() {
-    const ratio = this.canvas.clientWidth / this.canvas.getAttribute('width');
+    const ratio = this.getScale();
     this.area.topl = [
-      Math.round(((this.area.rect.documentOffsetLeft -
-        this.area.el.documentOffsetLeft) + 1) / ratio),
-      Math.round(((this.area.rect.documentOffsetTop -
-        this.area.el.documentOffsetTop) + 1) / ratio)];
+      Math.round(((this.area.rect.documentOffsetLeft - this.area.el.documentOffsetLeft)) / ratio),
+      Math.round(((this.area.rect.documentOffsetTop - this.area.el.documentOffsetTop)) / ratio)];
 
     this.area.bottoml = [
-      Math.round(this.area.topl[0] + ((this.area.rect.clientWidth) / ratio)),
-      Math.round(this.area.topl[1] + ((this.area.rect.clientHeight) / ratio))];
-
+      Math.round(this.area.topl[0] + ((this.area.rect.clientWidth + 2) / ratio)),
+      Math.round(this.area.topl[1] + ((this.area.rect.clientHeight + 2) / ratio))];
     // console.log('recalced cords', ratio, this.area.topl, this.area.bottoml);
+  }
+
+  placeAt(l, t, r, b, img) {
+    this.main.closeActiveTool(true);
+    this.main.setActiveTool(this.main.toolByName.select);
+    const scale = this.getScale();
+    this.setLeft(l * scale);
+    this.setTop(t * scale);
+    this.setRight(r * scale);
+    this.setBottom(b * scale);
+    const tmpCan = document.createElement('canvas');
+    tmpCan.width = img.naturalWidth;
+    tmpCan.height = img.naturalHeight;
+    const tmpCtx = tmpCan.getContext('2d');
+    tmpCtx.drawImage(img, 0, 0);
+    this.placedData = tmpCan.toDataURL('image/png');
+    const lowScale = 1000 / Math.max(img.naturalWidth, img.naturalHeight);
+    if (lowScale >= 1) {
+      this.placedDataLow = this.placedData;
+    } else {
+      tmpCan.width = img.naturalWidth * lowScale;
+      tmpCan.height = img.naturalHeight * lowScale;
+      tmpCtx.scale(lowScale, lowScale);
+      tmpCtx.drawImage(img, 0, 0);
+      this.placedDataLow = tmpCan.toDataURL('image/png');
+    }
+    this.main.select.area.rect.style['background-image'] = `url(${this.placedData})`;
+    this.show();
+    this.reCalcCropperCords();
+    this.imagePlaced = true;
+    this.placedRatio = img.naturalWidth / img.naturalHeight;
+  }
+
+  finishPlacing() {
+    this.imagePlaced = false;
+    this.main.select.area.rect.style['background-image'] = 'none';
+    this.main.inserter.insert(
+      this.area.topl[0],
+      this.area.topl[1],
+      this.area.bottoml[0] - this.area.topl[0],
+      this.area.bottoml[1] - this.area.topl[1]);
   }
 
   handleMouseDown(event) {
@@ -111,6 +153,9 @@ export default class PainterroSelecter {
     const mousDownCallbacks = {
       'ptro-crp-el': () => {
         if (this.area.activated) {
+          if (this.imagePlaced) {
+            this.finishPlacing();
+          }
           const x = (event.clientX - this.area.el.documentOffsetLeft) +
             this.main.wrapper.scrollLeft;
           const y = (event.clientY - this.area.el.documentOffsetTop) +
@@ -165,6 +210,9 @@ export default class PainterroSelecter {
     };
     if (mainClass in mousDownCallbacks) {
       mousDownCallbacks[mainClass]();
+      if (this.imagePlaced) {
+        this.main.select.area.rect.style['background-image'] = `url(${this.placedDataLow})`;
+      }
     }
   }
 
@@ -195,10 +243,10 @@ export default class PainterroSelecter {
     if (this.area.moving) {
       let newLeft = (event.clientX - this.area.el.documentOffsetLeft - this.area.xHandle)
         + this.main.wrapper.scrollLeft;
-      if (newLeft < -1) {
-        newLeft = -1;
-      } else if (newLeft + this.area.rect.clientWidth > this.area.el.clientWidth - 1) {
-        newLeft = this.area.el.clientWidth - this.area.rect.clientWidth - 1;
+      if (newLeft < 0) {
+        newLeft = 0;
+      } else if (newLeft + this.area.rect.clientWidth > this.area.el.clientWidth - 2) {
+        newLeft = this.area.el.clientWidth - this.area.rect.clientWidth - 2;
       }
       const hDelta = newLeft - this.left;
       this.setLeft(newLeft);
@@ -206,10 +254,10 @@ export default class PainterroSelecter {
 
       let newTop = (event.clientY - this.area.el.documentOffsetTop - this.area.yHandle)
         + this.main.wrapper.scrollTop;
-      if (newTop < -1) {
-        newTop = -1;
-      } else if (newTop + this.area.rect.clientHeight > this.area.el.clientHeight - 1) {
-        newTop = this.area.el.clientHeight - this.area.rect.clientHeight - 1;
+      if (newTop < 0) {
+        newTop = 0;
+      } else if (newTop + this.area.rect.clientHeight > this.area.el.clientHeight - 2) {
+        newTop = this.area.el.clientHeight - this.area.rect.clientHeight - 2;
       }
       const vDelta = newTop - this.top;
       this.setTop(newTop);
@@ -243,11 +291,83 @@ export default class PainterroSelecter {
           (this.area.el.clientHeight + this.area.el.documentOffsetTop) - absBottom);
         this.reCalcCropperCords();
       }
+      if (this.imagePlaced && !(event.ctrlKey || event.shiftKey)) {
+        if (this.area.resizingT) {
+          if (this.area.resizingL) {
+            this.leftKeepRatio();
+          } else {
+            this.rightKeepRatio();
+          }
+          this.topKeepRatio();
+          this.reCalcCropperCords();
+        }
+        if (this.area.resizingB) {
+          if (this.area.resizingL) {
+            this.leftKeepRatio();
+          } else {
+            this.rightKeepRatio();
+          }
+          this.bottomKeepRatio();
+          this.reCalcCropperCords();
+        } if (this.area.resizingL) {
+          if (this.area.resizingT) {
+            this.topKeepRatio();
+          } else {
+            this.bottomKeepRatio();
+          }
+          this.leftKeepRatio();
+          this.reCalcCropperCords();
+        } if (this.area.resizingR) {
+          if (this.area.resizingT) {
+            this.topKeepRatio();
+          } else {
+            this.bottomKeepRatio();
+          }
+          this.rightKeepRatio();
+          this.reCalcCropperCords();
+        }
+      }
       if (resizing && !this.shown) {
-        this.shown = true;
-        this.area.rect.removeAttribute('hidden');
+        this.show();
       }
     }
+  }
+
+  leftKeepRatio() {
+    const newW = this.area.rect.clientHeight * this.placedRatio;
+    const suggLeft = this.area.el.documentOffsetLeft +
+      (this.area.el.clientWidth - this.right - newW - 2);
+    const absLeft = this.fixCropperLeft(suggLeft);
+    this.setLeft(absLeft - this.area.el.documentOffsetLeft);
+  }
+
+  topKeepRatio() {
+    const newH = this.area.rect.clientWidth / this.placedRatio;
+    const absTop = this.fixCropperTop(
+      this.area.el.documentOffsetTop +
+      (this.area.el.clientHeight - this.bottom - newH - 2));
+    this.setTop(absTop - this.area.el.documentOffsetTop);
+  }
+
+  bottomKeepRatio() {
+    const newH = this.area.rect.clientWidth / this.placedRatio;
+    const absBottom = this.fixCropperBottom(
+      this.area.el.documentOffsetTop +
+      this.top + newH + 2);
+    this.setBottom((this.area.el.clientHeight + this.area.el.documentOffsetTop) - absBottom);
+  }
+
+  rightKeepRatio() {
+    const newW = this.area.rect.clientHeight * this.placedRatio;
+    const absRight = this.fixCropperRight(
+      this.area.el.documentOffsetLeft +
+      this.left + newW + 2);
+    this.setRight((this.area.el.clientWidth + this.area.el.documentOffsetLeft) - absRight);
+  }
+
+  show() {
+    this.shown = true;
+    this.area.rect.removeAttribute('hidden');
   }
 
   handleMouseUp() {
@@ -260,6 +380,9 @@ export default class PainterroSelecter {
     this.area.resizingB = false;
     this.area.resizingL = false;
     clearSelection();
+    if (this.imagePlaced) {
+      this.main.select.area.rect.style['background-image'] = `url(${this.placedData})`;
+    }
   }
 
   close() {
@@ -288,8 +411,8 @@ export default class PainterroSelecter {
   fixCropperLeft(left) {
     let newLeft = left;
     const absLeftMiddle = this.area.rect.documentOffsetLeft + this.area.rect.clientWidth;
-    if (newLeft < this.area.el.documentOffsetLeft - 1) {
-      return this.area.el.documentOffsetLeft - 1;
+    if (newLeft < this.area.el.documentOffsetLeft) {
+      return this.area.el.documentOffsetLeft;
     } else if (newLeft > absLeftMiddle) {
       newLeft = absLeftMiddle;
       if (this.area.resizingL) {
@@ -302,7 +425,7 @@ export default class PainterroSelecter {
 
   fixCropperRight(right) {
     let newRight = right;
-    const absRightLimit = this.area.el.documentOffsetLeft + this.area.el.clientWidth + 1;
+    const absRightLimit = this.area.el.documentOffsetLeft + this.area.el.clientWidth;
     if (newRight > absRightLimit) {
       return absRightLimit;
     } else if (newRight < this.area.rect.documentOffsetLeft) {
@@ -318,8 +441,8 @@ export default class PainterroSelecter {
   fixCropperTop(top) {
     let newTop = top;
     const absTopMiddle = this.area.rect.documentOffsetTop + this.area.rect.clientHeight;
-    if (newTop < this.area.el.documentOffsetTop - 1) {
-      return this.area.el.documentOffsetTop - 1;
+    if (newTop < this.area.el.documentOffsetTop) {
+      return this.area.el.documentOffsetTop;
     } else if (newTop > absTopMiddle) {
       newTop = absTopMiddle;
       if (this.area.resizingT) {
@@ -332,7 +455,7 @@ export default class PainterroSelecter {
 
   fixCropperBottom(bottom) {
     let newBottom = bottom;
-    const absBottomLimit = this.area.el.documentOffsetTop + this.area.el.clientHeight + 1;
+    const absBottomLimit = this.area.el.documentOffsetTop + this.area.el.clientHeight;
     if (newBottom > absBottomLimit) {
       return absBottomLimit;
     } else if (newBottom < this.area.rect.documentOffsetTop) {

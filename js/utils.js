@@ -26,7 +26,13 @@ export function addDocumentObjectHelpers() {
   if (!('documentClientWidth' in Element.prototype)) {
     Object.defineProperty(Element.prototype, 'documentClientWidth', {
       get() {
-        return this.getBoundingClientRect().width;
+        const rect = this.getBoundingClientRect();
+        if (rect.width) {
+          // `width` is available for IE9+
+          return rect.width;
+        }
+        // Calculate width for IE8 and below
+        return rect.right - rect.left;
       },
     });
   }
@@ -34,7 +40,11 @@ export function addDocumentObjectHelpers() {
   if (!('documentClientHeight' in Element.prototype)) {
     Object.defineProperty(Element.prototype, 'documentClientHeight', {
       get() {
-        return this.getBoundingClientRect().height;
+        const rect = this.getBoundingClientRect();
+        if (rect.height) {
+          return rect.height;
+        }
+        return rect.bottom - rect.top;
       },
     });
   }
