@@ -1,5 +1,5 @@
 import { tr } from './translation';
-import { genId } from './utils';
+import { genId, KEYS } from './utils';
 
 export default class Inserter {
   constructor() {
@@ -79,7 +79,7 @@ export default class Inserter {
     this.main = main;
     this.worklog = main.worklog;
     this.selector = main.wrapper.querySelector('.ptro-paster-select-wrapper');
-    this.selector.setAttribute('hidden', '');
+    this.cancelChoosing();
     this.img = null;
     Object.keys(this.pasteOptions).forEach((k) => {
       const o = this.pasteOptions[k];
@@ -89,7 +89,7 @@ export default class Inserter {
         } else {
           o.handle(this.img);
         }
-        this.selector.setAttribute('hidden', '');
+        this.cancelChoosing();
       };
     });
     this.loading = false;
@@ -99,6 +99,11 @@ export default class Inserter {
   insert(x, y, w, h) {
     this.main.ctx.drawImage(this.tmpImg, x, y, w, h);
     this.main.worklog.reCaptureState();
+  }
+
+  cancelChoosing() {
+    this.selector.setAttribute('hidden', '');
+    this.waitChoice = false;
   }
 
   loaded(img) {
@@ -125,6 +130,13 @@ export default class Inserter {
     img.src = source;
     if (!empty) {
       this.selector.removeAttribute('hidden');
+      this.waitChoice = true;
+    }
+  }
+
+  handleKeyDown(evt) {
+    if (this.waitChoice && evt.keyCode === KEYS.esc) {
+      this.cancelChoosing();
     }
   }
 
@@ -161,8 +173,8 @@ export default class Inserter {
         `<div>${tr(`pasteOptions.${k}`)}</div>` +
       '</button>';
     });
-    return `<div class="ptro-paster-select-wrapper" hidden><div class="ptro-paster-select"><div class="ptro-in">${
-      buttons
-    }</div></div></div>`;
+    return '<div class="ptro-paster-select-wrapper" hidden><div class="ptro-paster-select"><div class="ptro-in">' +
+      `<div class="ptro-paste-label">${tr('pasteOptions.how_to_paste')}</div>${
+        buttons}</div></div></div>`;
   }
 }

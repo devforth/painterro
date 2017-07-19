@@ -47,6 +47,7 @@ export class Translation {
           extend_down: 'Extend down',
           extend_right: 'Extend right',
           over: 'Paste over',
+          how_to_paste: 'How to paste?',
         },
       },
     };

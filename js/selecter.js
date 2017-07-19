@@ -156,6 +156,7 @@ export default class PainterroSelecter {
   }
 
   handleKeyDown(evt) {
+    this.main.inserter.handleKeyDown(evt);
     if (this.shown && this.imagePlaced) {
       if (evt.keyCode === KEYS.enter) {
         this.finishPlacing();

@@ -403,8 +403,9 @@
     margin: 5px 0;
 }
 
-.ptro-selector-btn div {
+.ptro-paster-select .ptro-in div {
     font-family: "Open Sans", sans-serif;
+    font-size: 14px;
 }
 
 .ptro-selector-btn:hover {
@@ -426,7 +427,7 @@
 
 .ptro-paster-select .ptro-in {
     display: inline-block;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.7);
     padding: 10px;
 }
 .ptro-paster-select-wrapper {
@@ -435,4 +436,9 @@
     left: 0;
     right: 0;
     bottom: 0;
+}
+
+.ptro-paste-label {
+    color: white;
+    margin-bottom: 10px;
 }
