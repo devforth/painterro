@@ -1,5 +1,5 @@
 import { tr } from './translation';
-import { genId, KEYS } from './utils';
+import { genId, KEYS, copyToClipboard } from './utils';
 
 export default class Inserter {
   constructor() {
@@ -75,6 +75,7 @@ export default class Inserter {
   }
 
   init(main) {
+    this.CLIP_DATA_MARKER = 'painterro-data:';
     this.ctx = main.ctx;
     this.main = main;
     this.worklog = main.worklog;
@@ -137,6 +138,18 @@ export default class Inserter {
   handleKeyDown(evt) {
     if (this.waitChoice && evt.keyCode === KEYS.esc) {
       this.cancelChoosing();
+    }
+    if (!this.waitChoice && !this.main.select.imagePlaced &&
+        evt.keyCode === KEYS.c && (evt.ctrlKey || evt.metaKey)) {
+      const a = this.main.select.area;
+      const w = a.bottoml[0] - a.topl[0];
+      const h = a.bottoml[1] - a.topl[1];
+      const tmpCan = document.createElement('canvas');
+      tmpCan.width = w;
+      tmpCan.height = h;
+      const tmpCtx = tmpCan.getContext('2d');
+      tmpCtx.drawImage(this.main.canvas, -a.topl[0], -a.topl[1]);
+      copyToClipboard(`${this.CLIP_DATA_MARKER}${tmpCan.toDataURL()}`);
     }
   }
 

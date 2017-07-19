@@ -588,6 +588,16 @@ class PainterroProc {
             const item = items[k];
             if (item.kind === 'file' && item.type.split('/')[0] === 'image') {
               this.openFile(item.getAsFile());
+            } else if (item.kind === 'string') {
+              let txt = '';
+              if (window.clipboardData && window.clipboardData.getData) { // IE
+                txt = window.clipboardData.getData('Text');
+              } else if (event.clipboardData && event.clipboardData.getData) {
+                txt = event.clipboardData.getData('text/plain');
+              }
+              if (txt.startsWith(this.inserter.CLIP_DATA_MARKER)) {
+                this.loadImage(txt.slice(this.inserter.CLIP_DATA_MARKER.length));
+              }
             }
           });
         }

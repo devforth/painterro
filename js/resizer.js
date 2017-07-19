@@ -11,14 +11,14 @@ export default class Resizer {
     this.linkButton = document.querySelector(`#${main.id} .ptro-resize-widget-wrapper button.ptro-link`);
     this.linkButtonIcon = document.querySelector(`#${main.id} .ptro-resize-widget-wrapper button.ptro-link i`);
     this.closeButton = document.querySelector(`#${main.id} .ptro-resize-widget-wrapper button.ptro-close`);
-    this.applyButton = document.querySelector(`#${main.id} .ptro-resize-widget-wrapper button.ptro-apply`);
-
+    this.scaleButton = document.querySelector(`#${main.id} .ptro-resize-widget-wrapper button.ptro-scale`);
+    this.resizeButton = document.querySelector(`#${main.id} .ptro-resize-widget-wrapper button.ptro-resize`);
     this.linked = true;
     this.closeButton.onclick = () => {
       this.startClose();
     };
 
-    this.applyButton.onclick = () => {
+    this.scaleButton.onclick = () => {
       const origW = this.main.size.w;
       const origH = this.main.size.h;
 
@@ -34,6 +34,20 @@ export default class Resizer {
         this.main.ctx.drawImage(img, 0, 0);
         this.main.adjustSizeFull();
         this.main.ctx.restore();
+        this.main.worklog.captureState();
+        this.startClose();
+      };
+      img.src = tmpData;
+    };
+
+    this.resizeButton.onclick = () => {
+      const tmpData = this.main.canvas.toDataURL();
+      this.main.resize(this.newW, this.newH);
+      this.main.clearBackground();
+      const img = new Image();
+      img.onload = () => {
+        this.main.ctx.drawImage(img, 0, 0);
+        this.main.adjustSizeFull();
         this.main.worklog.captureState();
         this.startClose();
       };
@@ -107,15 +121,16 @@ export default class Resizer {
           '</div>' +
           '<div class="ptro-resize-link-wrapper">' +
             `<button class="ptro-icon-btn ptro-link ptro-color-control" title="${tr('keepRatio')}">` +
-              '<i class="ptro-icon ptro-icon-linked"></i>' +
+              '<i class="ptro-icon ptro-icon-linked" style="font-size: 18px;"></i>' +
             '</button>' +
           '</div>' +
-          '<div>' +
-            '<button class="ptro-named-btn ptro-apply ptro-color-control" ' +
-                  'style="margin-top: 8px;position: absolute; top: 95px; right: 75px;">' +
-                  `${tr('apply')}</button>` +
-            '<button class="ptro-named-btn ptro-close ptro-color-control" ' +
-                  'style="margin-top: 8px;position: absolute; top: 95px; right: 10px;">' +
+          '<div></div>' +
+          '<div style="margin-top: 40px;">' +
+            '<button class="ptro-named-btn ptro-resize ptro-color-control">' +
+                  `${tr('resizeResize')}</button>` +
+            '<button class="ptro-named-btn ptro-scale ptro-color-control">' +
+                  `${tr('resizeScale')}</button>` +
+            '<button class="ptro-named-btn ptro-close ptro-color-control">' +
                   `${tr('cancel')}</button>` +
           '</div>' +
         '</div>' +

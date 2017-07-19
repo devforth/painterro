@@ -1,4 +1,3 @@
-/* should be first rule here for detecting stylesheet */
 .ptro-wrapper {
     position: absolute;
     top: 0;
@@ -7,6 +6,7 @@
     right: 0;
     text-align: center;
     z-index: 10;
+    font-family: "Open Sans", sans-serif;
 }
 
 .ptro-holder {
@@ -368,13 +368,12 @@
 .ptro-link {
     float: left;
     margin-right: -12px;
-    margin-top: -20px;
+    margin-top: -23px;
 }
 
 .ptro-resize-link-wrapper {
     display: inline-block;
     height: 20px;
-    padding-left: 10px;
 }
 
 

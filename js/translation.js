@@ -27,6 +27,8 @@ export class Translation {
         keepRatio: 'Keep width/height ratio',
         pixelSize: 'P:',
         pixelSizeFull: 'Pixel Size',
+        resizeScale: 'Scale',
+        resizeResize: 'Resize',
         tools: {
           crop: 'Crop image to selected area',
           pixelize: 'Pixelize selected area',
@@ -38,7 +40,7 @@ export class Translation {
           load: 'Load image',
           text: 'Put text',
           brush: 'Brush',
-          resize: 'Resize image',
+          resize: 'Resize or scale',
           open: 'Open image',
           select: 'Select area',
         },
