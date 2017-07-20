@@ -7,7 +7,7 @@ import WorkLog from './worklog';
 import { genId, addDocumentObjectHelpers, KEYS } from './utils';
 import PrimitiveTool from './primitive';
 import ColorPicker from './colorPicker';
-import setDefaults from './params';
+import { setDefaults, setParam } from './params';
 import { tr } from './translation';
 import ZoomHelper from './zoomHelper';
 import TextTool from './text';
@@ -67,6 +67,7 @@ class PainterroProc {
         action: () => {
           const width = document.getElementById(this.activeTool.controls[1].id);
           this.primitiveTool.setLineWidth(width.value);
+          setParam('defaultLineWidth', width.value);
         },
         getValue: () => this.primitiveTool.lineWidth,
       }],
@@ -103,6 +104,7 @@ class PainterroProc {
         action: () => {
           const width = document.getElementById(this.activeTool.controls[2].id).value;
           this.primitiveTool.setLineWidth(width);
+          setParam('defaultLineWidth', width.value);
         },
         getValue: () => this.primitiveTool.lineWidth,
       },
@@ -140,6 +142,7 @@ class PainterroProc {
         action: () => {
           const width = document.getElementById(this.activeTool.controls[2].id).value;
           this.primitiveTool.setLineWidth(width);
+          setParam('defaultLineWidth', width.value);
         },
         getValue: () => this.primitiveTool.lineWidth,
       },
@@ -169,6 +172,7 @@ class PainterroProc {
         action: () => {
           const width = document.getElementById(this.activeTool.controls[1].id);
           this.primitiveTool.setLineWidth(width.value);
+          setParam('defaultLineWidth', width.value);
         },
         getValue: () => this.primitiveTool.lineWidth,
       },
@@ -201,6 +205,7 @@ class PainterroProc {
           action: () => {
             const width = document.getElementById(this.activeTool.controls[1].id).value;
             this.textTool.setFontSize(width);
+            setParam('defaultFontSize', width.value);
           },
           getValue: () => this.textTool.fontSize,
         }, {
@@ -396,6 +401,13 @@ class PainterroProc {
       document.querySelector(
         `#${this.id} .color-diwget-btn[data-id='${widgetState.target}']`).style['background-color'] =
         widgetState.alphaColor;
+      if (widgetState.target === 'line') {
+        setParam('activeColor', widgetState.palleteColor);
+        setParam('activeColorAlpha', widgetState.alpha);
+      } else if (widgetState.target === 'fill') {
+        setParam('activeFillColor', widgetState.palleteColor);
+        setParam('activeFillColorAlpha', widgetState.alpha);
+      }
     });
     this.colorWidgetState = {
       line: {

@@ -2,19 +2,44 @@ import { HexToRGBA } from './colorPicker';
 import Translation from './translation';
 import { trim } from './utils';
 
-export default function setDefaults(parameters) {
+const STORAGE_KEY = 'painterro-data';
+
+let settings = {};
+
+function loadSettings() {
+  try {
+    settings = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  } catch (e) {
+    console.error(`Unable get from localstorage: ${e}`);
+  }
+  if (!settings) {
+    settings = {};
+  }
+}
+
+export function setParam(name, val) {
+  settings[name] = val;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+  } catch (e) {
+    console.error(`Unable save to localstorage: ${e}`);
+  }
+}
+
+export function setDefaults(parameters) {
+  loadSettings();
   const params = parameters || {};
-  params.activeColor = params.activeColor || '#ff0000';
-  params.activeColorAlpha = params.activeColorAlpha || 1.0;
+  params.activeColor = settings.activeColor || params.activeColor || '#ff0000';
+  params.activeColorAlpha = settings.activeColorAlpha || params.activeColorAlpha || 1.0;
   params.activeAlphaColor = HexToRGBA(params.activeColor, params.activeColorAlpha);
 
-  params.activeFillColor = params.activeFillColor || '#000000';
-  params.activeFillColorAlpha = params.activeFillColorAlpha || 0.0;
+  params.activeFillColor = settings.activeFillColor || params.activeFillColor || '#000000';
+  params.activeFillColorAlpha = settings.activeFillColorAlpha || params.activeFillColorAlpha || 0.0;
   params.activeFillAlphaColor = HexToRGBA(params.activeFillColor, params.activeFillColorAlpha);
 
-  params.defaultLineWidth = params.defaultLineWidth || 5;
-  params.defaultFontSize = params.defaultFontSize || 24;
-  params.backgroundFillColor = params.backgroundFillColor || '#ffffff';
+  params.defaultLineWidth = settings.defaultLineWidth || params.defaultLineWidth || 5;
+  params.defaultFontSize = settings.defaultFontSize || params.defaultFontSize || 24;
+  params.backgroundFillColor = settings.backgroundFillColor || params.backgroundFillColor || '#ffffff';
   params.hiddenTools = params.hiddenTools || [];
 
   params.colorScheme = params.colorScheme || {};

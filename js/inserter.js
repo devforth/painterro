@@ -139,7 +139,7 @@ export default class Inserter {
     if (this.waitChoice && evt.keyCode === KEYS.esc) {
       this.cancelChoosing();
     }
-    if (!this.waitChoice && !this.main.select.imagePlaced &&
+    if (!this.waitChoice && !this.main.select.imagePlaced && this.main.select.shown &&
         evt.keyCode === KEYS.c && (evt.ctrlKey || evt.metaKey)) {
       const a = this.main.select.area;
       const w = a.bottoml[0] - a.topl[0];

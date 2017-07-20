@@ -348,6 +348,9 @@ export default class PainterroSelecter {
       if (resizing && !this.shown) {
         this.show();
       }
+      if (resizing) {
+        clearSelection();
+      }
     }
   }
 
@@ -397,7 +400,6 @@ export default class PainterroSelecter {
     this.area.resizingR = false;
     this.area.resizingB = false;
     this.area.resizingL = false;
-    clearSelection();
     if (this.imagePlaced) {
       this.main.select.area.rect.style['background-image'] = `url(${this.placedData})`;
     }
