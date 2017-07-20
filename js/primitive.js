@@ -137,17 +137,25 @@ export default class PrimitiveTool {
       } else if (this.type === 'rect') {
         this.ctx.beginPath();
 
-        let w = this.curCord[0] - this.centerCord[0];
-        let h = this.curCord[1] - this.centerCord[1];
+        const tl = [
+          Math.min(this.curCord[0], this.centerCord[0]),
+          Math.min(this.curCord[1], this.centerCord[1])];
+
+        let w = Math.abs(this.curCord[0] - this.centerCord[0]);
+        let h = Math.abs(this.curCord[1] - this.centerCord[1]);
 
         if (event.ctrlKey || event.shiftKey) {
           const min = Math.min(Math.abs(w), Math.abs(h));
           w = min * Math.sign(w);
           h = min * Math.sign(h);
         }
-        this.ctx.rect(this.centerCord[0], this.centerCord[1], w, h);
+        const halfLW = Math.floor(this.lineWidth / 2);
+        const oddCorrecter = this.lineWidth % 2;
+        this.ctx.rect(
+          tl[0] + halfLW, tl[1] + halfLW,
+          (w - this.lineWidth) + oddCorrecter, (h - this.lineWidth) + oddCorrecter);
         this.ctx.fill();
-        this.ctx.stroke();
+        this.ctx.strokeRect(tl[0], tl[1], w, h);
         this.ctx.closePath();
       } else if (this.type === 'ellipse') {
         this.ctx.beginPath();

@@ -254,7 +254,7 @@ export default class ColorPicker {
         alphaColor: this.alphaColor,
         lightPosition: this.lightPosition,
         alpha: this.alpha,
-        palleteColor: this.palleteColor,
+        palleteColor: this.color,
         target: this.target,
       });
     }
@@ -263,7 +263,7 @@ export default class ColorPicker {
         alphaColor: this.alphaColor,
         lightPosition: this.lightPosition,
         alpha: this.alpha,
-        palleteColor: this.palleteColor,
+        palleteColor: this.color,
         target: this.target,
       });
     }
