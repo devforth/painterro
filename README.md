@@ -12,8 +12,6 @@ With Painterro you can:
 - Rotate / Resize (Scale) image
 - Pixelize some area to hide sensitive data
 
-If you want to see some feature in Painterro, please leave (or vote for) an issue with your proposal [here](https://github.com/ivictbor/painterro/issues). 
-There is no promise that it will be implemented soon or ever, but it is interesting to know what features users want to have.
 
 ![Painterro preview](https://raw.githubusercontent.com/ivictbor/painterro/master/docs/preview.png)
 
@@ -21,6 +19,9 @@ Originally Painterro was designed for quick screenshots processing: You make scr
 then open Painterro on your website, paste an image, 
 crop it to interested area, highlight something with line/rectangle tool and/or add some text 
 to the image. In addition, you can use it for processing any kind of raster images. Please try a [demo](https://maketips.net/paste)
+
+If you want to see some feature in Painterro, please leave (or vote for) an issue with your proposal [here](https://github.com/ivictbor/painterro/issues). 
+There is no promise that it will be implemented soon or ever, but it is interesting to know what features users want to have.
 
 Painterro is written with vanilla JS, without any additional frameworks to stay lightweight and minimalistic. Code 
 written on ES6 which transplited by Babel and packed using webpack.
@@ -85,6 +86,8 @@ Then in your code:
   Painterro().show()
 </script>
 ```
+See [fiddle example](https://jsfiddle.net/vanbrosh/Levaqoeh/9/)
+
 
 Read after installation
 -----------------------

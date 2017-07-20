@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Auto-release script for https://github.com/ivictbor/painterro
-# Creates new release, builds assets and performs publish to github and npm
+# Creates new release, builds assets and performs publishing to github and npm
 
 GH_USER=ivictbor
 GH_PATH=`cat ~/.ghpass`
