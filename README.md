@@ -1,6 +1,8 @@
  
 [GitHub](https://github.com/ivictbor/painterro) | [npm](https://www.npmjs.com/package/painterro) | [DEMO](https://maketips.net/paste)
 
+[![npm][npm]][npm-url]
+
 Painterro is singlefile JavaScript paint widget which allows editing images directly in a browser.
 It can be easily integrated into your website or blog by including only one js file and calling init code.
 
@@ -122,6 +124,10 @@ Configuration
 |`defaultFontSize` | Default font size in pixels | 24 |
 |`defaultSize` | default image size, should be string in format `<width>x<height>` in pixel, e.g. `'200x100'`. If value is `'fill'`(default) than all container size will be used | `'fill'` |
 |`hiddenTools` | List of tools that you wish to exclude from toolbar e.g. something from this list `['crop', 'line', 'rect', 'ellipse', 'brush', 'text', 'rotate', 'resize',  'save', 'open', 'close']` | [] |
+|`initText` | Display some centered text before painting. If null, no text will be shown | null |
+|`initTextColor` | Color of init text | '#808080' |
+|`initTextStyle` | Style of init text | "26px 'Open Sans', sans-serif" |
+
 
 UI color scheme
 ---------------
@@ -149,7 +155,8 @@ Painterro({
 |`inputText` | Color of text in input | `activeControl` |
 |`backgroundColor`| Background color of component area which left outside of image due to it size/ratio | '#999999' |
 |`dragOverBarColor`| Color of bar when dropping file to painterro | '#899dff' |
-
+|`hoverControl`| Controls color when mouse hovered | `control` |
+|`hoverControlContent`| Controls background color when mouse hovered | '#1a3d67' |
 
 Methods
 -------
@@ -238,7 +245,9 @@ The same image took `301949` bytes with `multipart/form-data`.
 var ptro = Painterro({
   saveHandler: function (image, done) {
     var formData = new FormData()
-    formData.append('image', image.asBlob())
+    formData.append('image', image.asBlob());
+    // you can also pass suggested filename 
+    // formData.append('image', image.asBlob(), image.suggestedFileName());
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://127.0.0.1:5000/save-as-binary/', true);
     xhr.onload = xhr.onerror = function () {
@@ -326,7 +335,12 @@ ToDo list
 - Add recent colors pallete
 - Add recent image sizes in resize tool
 - Ability to save loacaly
-- Save settings in loaclstorage
 - line arrows
 - Process ESC and ENTER keys in tools
-- Use arc instead of ellipse (better compatibility)
+- add checkers to transparent background (mb change bg option)
+
+[npm]: https://img.shields.io/npm/v/painterro.svg
+[npm-url]: https://npmjs.com/package/painterro
+
+[deps]: https://david-dm.org/webpack/painterro.svg
+[deps-url]: https://david-dm.org/webpack/painterro

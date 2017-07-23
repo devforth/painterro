@@ -84,7 +84,7 @@ export default class Inserter {
     this.img = null;
     Object.keys(this.pasteOptions).forEach((k) => {
       const o = this.pasteOptions[k];
-      document.getElementById(o.id).onclick = () => {
+      this.main.doc.getElementById(o.id).onclick = () => {
         if (this.loading) {
           this.doLater = o.handle;
         } else {
@@ -144,7 +144,7 @@ export default class Inserter {
       const a = this.main.select.area;
       const w = a.bottoml[0] - a.topl[0];
       const h = a.bottoml[1] - a.topl[1];
-      const tmpCan = document.createElement('canvas');
+      const tmpCan = this.main.doc.createElement('canvas');
       tmpCan.width = w;
       tmpCan.height = h;
       const tmpCtx = tmpCan.getContext('2d');
@@ -155,8 +155,8 @@ export default class Inserter {
 
   startLoading() {
     this.loading = true;
-    const btn = document.getElementById(this.main.toolByName.open.buttonId);
-    const icon = document.querySelector(`#${this.main.toolByName.open.buttonId} > i`);
+    const btn = this.main.doc.getElementById(this.main.toolByName.open.buttonId);
+    const icon = this.main.doc.querySelector(`#${this.main.toolByName.open.buttonId} > i`);
     if (btn) {
       btn.setAttribute('disabled', 'true');
     }
@@ -166,8 +166,8 @@ export default class Inserter {
   }
 
   finishLoading() {
-    const btn = document.getElementById(this.main.toolByName.open.buttonId);
-    const icon = document.querySelector(`#${this.main.toolByName.open.buttonId} > i`);
+    const btn = this.main.doc.getElementById(this.main.toolByName.open.buttonId);
+    const icon = this.main.doc.querySelector(`#${this.main.toolByName.open.buttonId} > i`);
     if (btn) {
       btn.removeAttribute('disabled');
     }

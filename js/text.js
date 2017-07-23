@@ -113,6 +113,7 @@ export default class TextTool {
 
   apply() {
     this.ctx.fillStyle = this.color;
+    this.ctx.textAlign = 'left';
     this.ctx.font = `${this.fontSize * this.main.getScale()}px ${this.font}`;
     this.ctx.fillText(this.input.innerText, this.scaledCord[0] + 2,
       this.scaledCord[1] + (this.input.clientHeight * 0.8 * this.main.getScale()));

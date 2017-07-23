@@ -3,9 +3,22 @@
   <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
   <script>
     tinymce.init({
-      selector:'textarea',
+      selector: 'textarea',
       plugins: [ 'fullscreen' ],
-      height : "700"
+      toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table | fontsizeselect | painterro',
+      height : "700",
+      setup: function(editor) {
+        editor.addButton("painterro", {
+          title: "Open Painterro",
+          cmd: "painterro_cmd",
+          'icon': "painterro ptro-icon ptro-icon-painterro",
+        });
+
+        //button functionality.
+        editor.addCommand("painterro_cmd", function () {
+          ptro.show();
+        });
+      }
     });
   </script>
 <body>

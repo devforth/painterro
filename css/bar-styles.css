@@ -86,13 +86,12 @@
     position: relative;
     top: -4px;
     padding-left: 2px;
+    padding-right: 0;
 }
 
 .ptro-bar .ptro-input[type="number"] {
     width: 42px;
 }
-
-
 
 .ptro-bar .ptro-named-btn p {
     margin: 0;
@@ -103,6 +102,8 @@
     bottom: 0;
     position: absolute;
     width: 100%;
+    font-size: 16px;
+    line-height: normal;
 }
 
 .ptro-bar .ptro-icon {

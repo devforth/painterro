@@ -4,15 +4,15 @@ export default class Resizer {
   constructor(main) {
     this.main = main;
 
-    this.wrapper = document.querySelector(`#${main.id} .ptro-resize-widget-wrapper`);
-    this.inputW = document.querySelector(`#${main.id} .ptro-resize-widget-wrapper .ptro-resize-width-input`);
-    this.inputH = document.querySelector(`#${main.id} .ptro-resize-widget-wrapper .ptro-resize-heigth-input`);
+    this.wrapper = main.wrapper.querySelector('.ptro-resize-widget-wrapper');
+    this.inputW = main.wrapper.querySelector('.ptro-resize-widget-wrapper .ptro-resize-width-input');
+    this.inputH = main.wrapper.querySelector('.ptro-resize-widget-wrapper .ptro-resize-heigth-input');
 
-    this.linkButton = document.querySelector(`#${main.id} .ptro-resize-widget-wrapper button.ptro-link`);
-    this.linkButtonIcon = document.querySelector(`#${main.id} .ptro-resize-widget-wrapper button.ptro-link i`);
-    this.closeButton = document.querySelector(`#${main.id} .ptro-resize-widget-wrapper button.ptro-close`);
-    this.scaleButton = document.querySelector(`#${main.id} .ptro-resize-widget-wrapper button.ptro-scale`);
-    this.resizeButton = document.querySelector(`#${main.id} .ptro-resize-widget-wrapper button.ptro-resize`);
+    this.linkButton = main.wrapper.querySelector('.ptro-resize-widget-wrapper button.ptro-link');
+    this.linkButtonIcon = main.wrapper.querySelector('.ptro-resize-widget-wrapper button.ptro-link i');
+    this.closeButton = main.wrapper.querySelector('.ptro-resize-widget-wrapper button.ptro-close');
+    this.scaleButton = main.wrapper.querySelector('.ptro-resize-widget-wrapper button.ptro-scale');
+    this.resizeButton = main.wrapper.querySelector('.ptro-resize-widget-wrapper button.ptro-resize');
     this.linked = true;
     this.closeButton.onclick = () => {
       this.startClose();

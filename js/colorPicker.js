@@ -49,18 +49,18 @@ export default class ColorPicker {
     const h = this.h;
     this.lightPosition = this.w - 1;
 
-    this.wrapper = document.querySelector(`#${main.id} .ptro-color-widget-wrapper`);
-    this.input = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-color`);
-    this.pipetteButton = document.querySelector(`#${main.id} .ptro-color-widget-wrapper button.ptro-pipette`);
-    this.closeButton = document.querySelector(`#${main.id} .ptro-color-widget-wrapper button.ptro-close-color-picker`);
-    this.canvas = document.querySelector(`#${main.id} .ptro-color-widget-wrapper canvas`);
+    this.wrapper = main.wrapper.querySelector('.ptro-color-widget-wrapper');
+    this.input = main.wrapper.querySelector('.ptro-color-widget-wrapper .ptro-color');
+    this.pipetteButton = main.wrapper.querySelector('.ptro-color-widget-wrapper button.ptro-pipette');
+    this.closeButton = main.wrapper.querySelector('.ptro-color-widget-wrapper button.ptro-close-color-picker');
+    this.canvas = main.wrapper.querySelector('.ptro-color-widget-wrapper canvas');
     this.ctx = this.canvas.getContext('2d');
 
-    this.canvasLight = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-canvas-light`);
-    this.colorRegulator = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-color-light-regulator`);
+    this.canvasLight = main.wrapper.querySelector('.ptro-color-widget-wrapper .ptro-canvas-light');
+    this.colorRegulator = main.wrapper.querySelector('.ptro-color-widget-wrapper .ptro-color-light-regulator');
 
-    this.canvasAlpha = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-canvas-alpha`);
-    this.alphaRegulator = document.querySelector(`#${main.id} .ptro-color-widget-wrapper .ptro-color-alpha-regulator`);
+    this.canvasAlpha = main.wrapper.querySelector('.ptro-color-widget-wrapper .ptro-canvas-alpha');
+    this.alphaRegulator = main.wrapper.querySelector('.ptro-color-widget-wrapper .ptro-color-alpha-regulator');
 
     this.ctxLight = this.canvasLight.getContext('2d');
     this.ctxAlpha = this.canvasAlpha.getContext('2d');
@@ -285,7 +285,7 @@ export default class ColorPicker {
               '<button class="ptro-icon-btn ptro-pipette ptro-color-control" style="float: left; margin-right: 5px">' +
                 '<i class="ptro-icon ptro-icon-pipette"></i>' +
               '</button>' +
-              '<input class="ptro-color" type="text" size="7"/>' +
+              '<input class="ptro-input ptro-color" type="text" size="7"/>' +
               '<button class="ptro-named-btn ptro-close-color-picker ptro-color-control" >' +
               `${tr('close')}</button>` +
             '</div>' +

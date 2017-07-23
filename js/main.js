@@ -4,7 +4,7 @@ import '../css/icons/iconfont.css';
 
 import PainterroSelecter from './selecter';
 import WorkLog from './worklog';
-import { genId, addDocumentObjectHelpers, KEYS } from './utils';
+import { genId, addDocumentObjectHelpers, KEYS, trim } from './utils';
 import PrimitiveTool from './primitive';
 import ColorPicker from './colorPicker';
 import { setDefaults, setParam } from './params';
@@ -14,9 +14,6 @@ import TextTool from './text';
 import Resizer from './resizer';
 import Inserter from './inserter';
 
-function getBtnEl(b) {
-  return document.getElementById(b.buttonId);
-}
 
 class PainterroProc {
   constructor(params) {
@@ -318,10 +315,12 @@ class PainterroProc {
     if (this.id === undefined) {
       this.id = genId();
       this.holderId = genId();
-      document.body.innerHTML += `<div id='${this.holderId}' class="ptro-holder-wrapper">` +
-        `<div id='${this.id}' class="ptro-holder"></div></div>`;
+      this.holderEl = document.createElement('div');
+      this.holderEl.id = this.holderId;
+      this.holderEl.className = 'ptro-holder-wrapper';
+      document.body.appendChild(this.holderEl);
+      this.holderEl.innerHTML = `<div id='${this.id}' class="ptro-holder"></div>`;
       this.baseEl = document.getElementById(this.id);
-      this.holderEl = document.getElementById(this.holderId);
     } else {
       this.baseEl = document.getElementById(this.id);
       this.holderEl = null;
@@ -346,42 +345,58 @@ class PainterroProc {
     const cropper = '<div class="ptro-crp-el">' +
       `${PainterroSelecter.code()}${TextTool.code()}</div>`;
 
-    this.baseEl.innerHTML =
-      `${`<div class="ptro-wrapper" id="ptro-wrapper-${this.id}">` +
-      `<canvas id="ptro-canvas-${this.id}"></canvas>`}${
+    this.loadedName = '';
+    this.doc = document;
+    this.wrapper = this.doc.createElement('div');
+    this.wrapper.id = `${this.id}-wrapper`;
+    this.wrapper.className = 'ptro-wrapper';
+    this.wrapper.innerHTML =
+      `<canvas id="${this.id}-canvas"></canvas>${
         cropper +
         ColorPicker.html() +
         ZoomHelper.html() +
         Resizer.html() +
-        this.inserter.html()}</div>` +
-      '<div class="ptro-bar ptro-color-main">' +
+        this.inserter.html()}`;
+    this.baseEl.appendChild(this.wrapper);
+
+    this.bar = this.doc.createElement('div');
+    this.bar.id = `${this.id}-bar`;
+    this.bar.className = 'ptro-bar ptro-color-main';
+    this.bar.innerHTML =
       `<span>${bar}</span>` +
       '<span class="tool-controls"></span>' +
       `<span class="ptro-bar-right">${rightBar}</span>` +
       '<span class="ptro-info"></span>' +
-      '<input id="ptro-file-input" type="file" style="display: none;" accept="image/x-png,image/gif,image/jpeg" />' +
-      '</div>' +
-      `<style>${this.params.styles}</style>`;
+      '<input id="ptro-file-input" type="file" style="display: none;" accept="image/x-png,image/gif,image/jpeg" />';
 
-    this.saveBtn = document.getElementById(this.toolByName.save.buttonId);
+    this.baseEl.appendChild(this.bar);
+    const style = this.doc.createElement('style');
+    style.type = 'text/css';
+    style.innerHTML = this.params.styles;
+    this.baseEl.appendChild(style);
+
+    // this.baseEl.innerHTML = '<iframe class="ptro-iframe"></iframe>';
+    // this.iframe = this.baseEl.getElementsByTagName('iframe')[0];
+    // this.doc = this.iframe.contentDocument || this.iframe.contentWindow.document;
+    // this.doc.body.innerHTML = html;
+
+    this.saveBtn = this.doc.getElementById(this.toolByName.save.buttonId);
     if (this.saveBtn) {
       this.saveBtn.setAttribute('disabled', 'true');
     }
-    this.body = document.body;
-    this.wrapper = document.querySelector(`#${this.id} .ptro-wrapper`);
-    this.bar = document.querySelector(`#${this.id} .ptro-bar`);
-    this.info = document.querySelector(`#${this.id} .ptro-info`);
-    this.canvas = document.querySelector(`#${this.id} canvas`);
+    this.body = this.doc.body;
+    this.info = this.doc.querySelector(`#${this.id}-bar .ptro-info`);
+    this.canvas = this.doc.querySelector(`#${this.id}-canvas`);
     this.ctx = this.canvas.getContext('2d');
-    this.toolControls = document.querySelector(`#${this.id} .tool-controls`);
-    this.toolContainer = document.querySelector(`#${this.id} .ptro-crp-el`);
+    this.toolControls = this.doc.querySelector(`#${this.id}-bar .tool-controls`);
+    this.toolContainer = this.doc.querySelector(`#${this.id}-wrapper .ptro-crp-el`);
     this.zoomHelper = new ZoomHelper(this);
     this.select = new PainterroSelecter(this, (notEmpty) => {
       [this.toolByName.crop, this.toolByName.pixelize].forEach((c) => {
         if (notEmpty) {
-          document.getElementById(c.buttonId).removeAttribute('disabled');
+          this.doc.getElementById(c.buttonId).removeAttribute('disabled');
         } else {
-          document.getElementById(c.buttonId).setAttribute('disabled', 'true');
+          this.doc.getElementById(c.buttonId).setAttribute('disabled', 'true');
         }
       });
     });
@@ -398,7 +413,7 @@ class PainterroProc {
     this.textTool = new TextTool(this);
     this.colorPicker = new ColorPicker(this, (widgetState) => {
       this.colorWidgetState[widgetState.target] = widgetState;
-      document.querySelector(
+      this.doc.querySelector(
         `#${this.id} .color-diwget-btn[data-id='${widgetState.target}']`).style['background-color'] =
         widgetState.alphaColor;
       if (widgetState.target === 'line') {
@@ -426,7 +441,7 @@ class PainterroProc {
 
 
     this.tools.filter(t => this.params.hiddenTools.indexOf(t.name) === -1).forEach((b) => {
-      getBtnEl(b).onclick = () => {
+      this.getBtnEl(b).onclick = () => {
         if (b === this.toolByName.select && this.activeTool === b) {
           return;
         }
@@ -467,7 +482,16 @@ class PainterroProc {
         for (let i = 0; i < byteString.length; i += 1) {
           ia[i] = byteString.charCodeAt(i);
         }
-        return new Blob([ab], { type: realType });
+        return new Blob([ab], {
+          type: realType,
+        });
+      },
+      suggestedFileName: (type) => {
+        let realType = type;
+        if (realType === undefined) {
+          realType = 'png';
+        }
+        return `${(this.loadedName || `image-${genId()}`)}.${realType}`;
       },
     };
 
@@ -484,13 +508,17 @@ class PainterroProc {
     return this.canvas.toDataURL(type, realQuality);
   }
 
+  getBtnEl(b) {
+    return this.doc.getElementById(b.buttonId);
+  }
+
   save() {
     if (this.saving) {
       return this;
     }
     this.saving = true;
-    const btn = document.getElementById(this.toolByName.save.buttonId);
-    const icon = document.querySelector(`#${this.toolByName.save.buttonId} > i`);
+    const btn = this.doc.getElementById(this.toolByName.save.buttonId);
+    const icon = this.doc.querySelector(`#${this.toolByName.save.buttonId} > i`);
     if (btn) {
       btn.setAttribute('disabled', 'true');
     }
@@ -524,8 +552,8 @@ class PainterroProc {
         this.activeTool.close();
       }
       this.toolControls.innerHTML = '';
-      getBtnEl(this.activeTool).className =
-        getBtnEl(this.activeTool).className.replace(' ptro-color-active-control', '');
+      this.getBtnEl(this.activeTool).className =
+        this.getBtnEl(this.activeTool).className.replace(' ptro-color-active-control', '');
       this.activeTool = undefined;
     }
     if (doNotSelect !== true) {
@@ -546,6 +574,9 @@ class PainterroProc {
     this.documentHandlers = {
       mousedown: (e) => {
         if (this.shown) {
+          if (this.worklog.empty) {
+            this.clearBackground(); // clear initText
+          }
           if (this.colorPicker.handleMouseDown(e) !== true) {
             this.handleToolEvent('handleMouseDown', e);
           }
@@ -647,7 +678,7 @@ class PainterroProc {
     };
 
     Object.keys(this.documentHandlers).forEach((key) => {
-      document.addEventListener(key, this.documentHandlers[key]);
+      this.doc.addEventListener(key, this.documentHandlers[key]);
     });
 
     Object.keys(this.windowHandlers).forEach((key) => {
@@ -673,6 +704,9 @@ class PainterroProc {
       this.holderEl.removeAttribute('hidden');
     }
     if (typeof openImage === 'string') {
+      this.loadedName = trim(
+        (openImage.substring(openImage.lastIndexOf('/') + 1) || '').replace(/\..+$/, ''));
+
       this.loadImage(openImage);
     } else if (openImage !== false) {
       this.clear();
@@ -682,14 +716,15 @@ class PainterroProc {
 
   hide() {
     this.shown = false;
-    this.baseEl.setAttribute('hidden', true);
+    this.baseEl.setAttribute('hidden', '');
     if (this.holderEl) {
-      this.holderEl.setAttribute('hidden', true);
+      this.holderEl.setAttribute('hidden', '');
     }
     return this;
   }
 
   openFile(f) {
+    this.loadedName = trim((f.name || '').replace(/\..+$/, ''));
     this.loadImage(URL.createObjectURL(f));
   }
 
@@ -764,6 +799,13 @@ class PainterroProc {
     this.worklog.captureState(true);
     this.syncToolElement();
     this.adjustSizeFull();
+
+    if (this.params.initText && this.worklog.empty) {
+      this.ctx.fillStyle = this.params.initTextColor;
+      this.ctx.textAlign = 'center';
+      this.ctx.font = this.params.initTextStyle;
+      this.ctx.fillText(this.params.initText, this.size.w / 2, this.size.h / 2);
+    }
   }
 
   clearBackground() {
@@ -775,7 +817,7 @@ class PainterroProc {
 
   setActiveTool(b) {
     this.activeTool = b;
-    getBtnEl(b).className += ' ptro-color-active-control';
+    this.getBtnEl(b).className += ' ptro-color-active-control';
     let ctrls = '';
     (b.controls || []).forEach((ctl) => {
       ctl.id = genId();
@@ -811,12 +853,12 @@ class PainterroProc {
     this.toolControls.innerHTML = ctrls;
     (b.controls || []).forEach((ctl) => {
       if (ctl.type === 'int') {
-        document.getElementById(ctl.id).value = ctl.getValue();
-        document.getElementById(ctl.id).oninput = ctl.action;
+        this.doc.getElementById(ctl.id).value = ctl.getValue();
+        this.doc.getElementById(ctl.id).oninput = ctl.action;
       } else if (ctl.type === 'dropdown') {
-        document.getElementById(ctl.id).onchange = ctl.action;
+        this.doc.getElementById(ctl.id).onchange = ctl.action;
       } else {
-        document.getElementById(ctl.id).onclick = ctl.action;
+        this.doc.getElementById(ctl.id).onclick = ctl.action;
       }
     });
     b.activate();

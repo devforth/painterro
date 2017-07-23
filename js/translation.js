@@ -43,6 +43,7 @@ export class Translation {
           resize: 'Resize or scale',
           open: 'Open image',
           select: 'Select area',
+          close: 'Close Painterro',
         },
         pasteOptions: {
           fit: 'Replace all',

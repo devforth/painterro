@@ -73,8 +73,8 @@ export function distance(p1, p2) {
   return Math.sqrt((a * a) + (b * b));
 }
 
-export function trim() {
-  return String(this).replace(/^\s+|\s+$/g, '');
+export function trim(s) {
+  return String(s).replace(/^\s+|\s+$/g, '');
 }
 
 export const KEYS = {

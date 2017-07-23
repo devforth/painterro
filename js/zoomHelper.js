@@ -1,7 +1,7 @@
 export default class ZoomHelper {
   constructor(main) {
     this.main = main;
-    this.zomer = document.querySelector(`#${this.main.id} .ptro-zoomer`);
+    this.zomer = main.wrapper.querySelector('.ptro-zoomer');
     this.zomerCtx = this.zomer.getContext('2d');
     this.canvas = this.main.canvas;
     this.ctx = this.main.ctx;

@@ -27,6 +27,7 @@
     "eslint-loader": "^1.9.0",
     "eslint-plugin-import": "^2.7.0",
     "icon-font-generator": "^1.1.1",
+    "raw-loader": "^0.5.1",
     "style-loader": "^0.18.1",
     "url-loader": "^0.5.8",
     "webfonts-generator": "^0.4.0",

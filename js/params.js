@@ -37,6 +37,9 @@ export function setDefaults(parameters) {
   params.activeFillColorAlpha = settings.activeFillColorAlpha || params.activeFillColorAlpha || 0.0;
   params.activeFillAlphaColor = HexToRGBA(params.activeFillColor, params.activeFillColorAlpha);
 
+  params.initText = params.initText || null;
+  params.initTextColor = params.initTextColor || '#808080';
+  params.initTextStyle = params.initTextStyle || '26px \'Open Sans\', sans-serif';
   params.defaultLineWidth = settings.defaultLineWidth || params.defaultLineWidth || 5;
   params.defaultFontSize = settings.defaultFontSize || params.defaultFontSize || 24;
   params.backgroundFillColor = settings.backgroundFillColor || params.backgroundFillColor || '#ffffff';
@@ -46,6 +49,9 @@ export function setDefaults(parameters) {
   params.colorScheme.main = params.colorScheme.main || '#dbebff';
   params.colorScheme.control = params.colorScheme.control || '#abc6ff';
   params.colorScheme.controlContent = params.colorScheme.controlContent || '#000000';
+  params.colorScheme.hoverControl = params.colorScheme.hoverControl || params.colorScheme.control;
+  params.colorScheme.hoverControlContent = params.colorScheme.hoverControlContent || '#1a3d67';
+
   params.colorScheme.activeControl = params.colorScheme.activeControl || '#7485B1';
   params.colorScheme.activeControlContent = params.colorScheme.activeControlContent ||
     params.colorScheme.main;
@@ -79,12 +85,17 @@ export function setDefaults(parameters) {
   }
 
   params.styles =
-    `.ptro-color-main{background-color: ${params.colorScheme.main}}
+    `.ptro-color-main{
+        background-color: ${params.colorScheme.main};
+        color: ${params.colorScheme.controlContent}}
     .ptro-color-control{
         background-color: ${params.colorScheme.control};
         color:${params.colorScheme.controlContent}}
+    button.ptro-color-control:hover:not(.ptro-color-active-control):not([disabled]){
+        background-color: ${params.colorScheme.hoverControl};
+        color:${params.colorScheme.hoverControlContent}}    
     .ptro-bordered-control{border-color: ${params.colorScheme.activeControl}}
-    .ptro-input {
+    .ptro-input, .ptro-input:focus {
       border: 1px solid ${params.colorScheme.inputBorderColor};
       background-color: ${params.colorScheme.inputBackground};
       color: ${params.colorScheme.inputText}
