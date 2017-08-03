@@ -393,10 +393,13 @@ class PainterroProc {
     this.zoomHelper = new ZoomHelper(this);
     this.select = new PainterroSelecter(this, (notEmpty) => {
       [this.toolByName.crop, this.toolByName.pixelize].forEach((c) => {
-        if (notEmpty) {
-          this.doc.getElementById(c.buttonId).removeAttribute('disabled');
-        } else {
-          this.doc.getElementById(c.buttonId).setAttribute('disabled', 'true');
+        const btn = this.doc.getElementById(c.buttonId);
+        if (btn) {
+          if (notEmpty) {
+            btn.removeAttribute('disabled');
+          } else {
+            btn.setAttribute('disabled', 'true');
+          }
         }
       });
     });
