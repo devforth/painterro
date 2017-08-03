@@ -4,11 +4,13 @@ export default class WorkLog {
     this.current = null;
     this.changedHandler = changedHandler;
     this.empty = true;
+    this.clean = true;
   }
 
   changed() {
     this.changedHandler();
     this.empty = false;
+    this.clean = false;
   }
 
   captureState(initial) {

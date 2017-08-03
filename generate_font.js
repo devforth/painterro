@@ -11,6 +11,7 @@ fs.readdir('res', function(err, items) {
   webfontsGenerator({
     files: files,
     dest: 'css/icons',
+    fontName: 'ptroiconfont',
     cssTemplate: 'res/font-css.hbs',
     templateOptions: {
       classPrefix: 'ptro-icon-',

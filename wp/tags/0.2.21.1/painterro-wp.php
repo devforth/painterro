@@ -1,27 +1,29 @@
 <?php
 
 /*
-Plugin Name: Painterro visual paint widget
+Plugin Name: Painterro
 Plugin URI: https://github.com/ivictbor/painterro
-Description: Adds Painterro button to visual editor for images editing.
+Description: Paste screenshots and edit images directly in browser. Adds Painterro button to visual editor for images editing. Absolutely free and open source.
+Version: 0.2.21
 Author: Ivan Borshchov
+License: MIT
 */
 
 function include_painterro_script()
 {
-    // Register the script for a plugin:
 	// For unminified version please see https://github.com/ivictbor/painterro, source map file included in plugin dir (.map)
-    wp_register_script('painterro-script', plugin_dir_url(__FILE__) . "painterro-0.2.20.min.js");
+    wp_register_script('painterro-script', plugin_dir_url(__FILE__) . "painterro-0.2.21.min.js");
 	wp_enqueue_script('painterro-script');
 }
-// add_action('wp_enqueue_scripts', 'include_painterro_script');
+
+// add_action('wp_enqueue_scripts', 'include_painterro_script'); //uncomment to include in whole site
 add_action('admin_enqueue_scripts', 'include_painterro_script');
 
 function painterro_add_stylesheet() {
     wp_register_style('painterro_style', plugins_url('style.css', __FILE__) );
     wp_enqueue_style('painterro_style');
 }
-// add_action( 'wp_enqueue_scripts', 'painterro_add_stylesheet' );
+// add_action( 'wp_enqueue_scripts', 'painterro_add_stylesheet' ); //uncomment to include in whole site
 add_action( 'admin_enqueue_scripts', 'painterro_add_stylesheet' );
 
 function enqueue_painterro_plugin_scripts($plugin_array)
@@ -41,7 +43,6 @@ function register_painterro_buttons_editor($buttons)
 }
 
 add_filter("mce_buttons", "register_painterro_buttons_editor");
-
 
 function painterro_admin_head() {
 	global $post;

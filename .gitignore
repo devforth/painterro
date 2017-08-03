@@ -61,3 +61,5 @@ typings/
 
 # custom 
 build/painterro*
+
+wp/.svn/

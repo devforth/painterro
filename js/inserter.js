@@ -118,7 +118,7 @@ export default class Inserter {
 
   handleOpen(source) {
     const img = new Image();
-    const empty = this.main.worklog.empty;
+    const empty = this.main.worklog.clean;
     img.onload = () => {
       if (empty) {
         this.main.fitImage(img);

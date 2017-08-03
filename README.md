@@ -1,4 +1,4 @@
-<img src="https://rawgit.com/ivictbor/painterro/master/res/painterro.svg" align="right" style="padding:5px; width:100px" />
+<img src="https://rawgit.com/ivictbor/painterro/master/res/painterro.svg" align="right" style="padding:5px; width:70px" />
  
 [GitHub](https://github.com/ivictbor/painterro) | [npm](https://www.npmjs.com/package/painterro) | [DEMO](https://maketips.net/paste)
 
@@ -81,7 +81,7 @@ or [build it by yourself](#building-painterro).
 
 Then insert `<script>` e.g:
 ```html
-<script src="/static/painterro-x.x.x.min.js"></script>
+<script src="/xxx/painterro-x.x.x.min.js"></script>
 ```
 Then in your code:
 ```html
@@ -89,7 +89,7 @@ Then in your code:
   Painterro().show()
 </script>
 ```
-See [fiddle example](https://jsfiddle.net/vanbrosh/Levaqoeh/9/)
+See [fiddle example](https://jsfiddle.net/vanbrosh/Levaqoeh/10/)
 
 
 Read after installation
@@ -103,7 +103,8 @@ Supported hotkeys
 |||
 |-|-|
 | `Ctrl + Z` | Cancel last operation |
-| `Ctrl + V` | Paste image from clipboard (replace all that drawn) |
+| `Ctrl + V` | Paste image from clipboard |
+| `Ctrl + C` | Copy selected aria to clipboard (*internal keyboard) |
 | `Shift` when drawing **rect**/**ellipse** | Draw **square**/**circle** |
 | `Shift` when drawing **line** | draw at angles of `0`, `45`, `90`, `135` etc degrees | 
 | `Alt` when using pipette | Open zoom helper |

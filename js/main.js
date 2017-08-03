@@ -1,6 +1,6 @@
 import '../css/styles.css';
 import '../css/bar-styles.css';
-import '../css/icons/iconfont.css';
+import '../css/icons/ptroiconfont.css';
 
 import PainterroSelecter from './selecter';
 import WorkLog from './worklog';
@@ -574,7 +574,10 @@ class PainterroProc {
     this.documentHandlers = {
       mousedown: (e) => {
         if (this.shown) {
-          if (this.worklog.empty) {
+          if (this.worklog.empty &&
+             (e.target.className.includes('ptro-crp-el') ||
+              e.target.className.includes('ptro-icon') ||
+              e.target.className.includes('ptro-named-btn'))) {
             this.clearBackground(); // clear initText
           }
           if (this.colorPicker.handleMouseDown(e) !== true) {
@@ -797,6 +800,7 @@ class PainterroProc {
     this.resize(w, h);
     this.clearBackground();
     this.worklog.captureState(true);
+    this.worklog.clean = true;
     this.syncToolElement();
     this.adjustSizeFull();
 

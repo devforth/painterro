@@ -1,9 +1,9 @@
 @font-face {
-	font-family: "iconfont";
-	src: url("iconfont.eot?2af79c243bf055366da5a67ede7afcc3?#iefix") format("embedded-opentype"),
-url("iconfont.woff?2af79c243bf055366da5a67ede7afcc3") format("woff"),
-url("iconfont.ttf?2af79c243bf055366da5a67ede7afcc3") format("truetype"),
-url("iconfont.svg?2af79c243bf055366da5a67ede7afcc3#iconfont") format("svg");
+	font-family: "ptroiconfont";
+	src: url("ptroiconfont.eot?c546b342cf01952e8c68745ca51f23c0?#iefix") format("embedded-opentype"),
+url("ptroiconfont.woff?c546b342cf01952e8c68745ca51f23c0") format("woff"),
+url("ptroiconfont.ttf?c546b342cf01952e8c68745ca51f23c0") format("truetype"),
+url("ptroiconfont.svg?c546b342cf01952e8c68745ca51f23c0#ptroiconfont") format("svg");
 	font-weight: normal;
     font-style: normal;
 }
@@ -12,7 +12,7 @@ url("iconfont.svg?2af79c243bf055366da5a67ede7afcc3#iconfont") format("svg");
 }
 
 .ptro-icon:before {
-	font-family: iconfont !important;
+	font-family: ptroiconfont !important;
 	font-style: normal !important;
 	font-weight: normal !important;
 	font-variant: normal !important;
@@ -22,37 +22,37 @@ url("iconfont.svg?2af79c243bf055366da5a67ede7afcc3#iconfont") format("svg");
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.ptro-icon-blur:before {
+.ptro-icon-0painterro:before {
 	content: "\f101";
 }
-.ptro-icon-brush:before {
+.ptro-icon-blur:before {
 	content: "\f102";
 }
-.ptro-icon-close:before {
+.ptro-icon-brush:before {
 	content: "\f103";
 }
-.ptro-icon-crop:before {
+.ptro-icon-close:before {
 	content: "\f104";
 }
-.ptro-icon-ellipse:before {
+.ptro-icon-crop:before {
 	content: "\f105";
 }
-.ptro-icon-line:before {
+.ptro-icon-ellipse:before {
 	content: "\f106";
 }
-.ptro-icon-linked:before {
+.ptro-icon-line:before {
 	content: "\f107";
 }
-.ptro-icon-loading:before {
+.ptro-icon-linked:before {
 	content: "\f108";
 }
-.ptro-icon-mirror:before {
+.ptro-icon-loading:before {
 	content: "\f109";
 }
-.ptro-icon-open:before {
+.ptro-icon-mirror:before {
 	content: "\f10a";
 }
-.ptro-icon-painterro:before {
+.ptro-icon-open:before {
 	content: "\f10b";
 }
 .ptro-icon-paste_extend_down:before {
