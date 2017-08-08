@@ -467,3 +467,16 @@ input.ptro-resize-heigth-input {
     height: 100%;
     border: 0;
 }
+
+i.mce-i-painterro:before, span.mce_painterro:before {
+	font-size: 20px !important;
+	font-family: ptroiconfont !important;
+	font-style: normal !important;
+	font-weight: normal !important;
+	font-variant: normal !important;
+	text-transform: none !important;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	content: "\f101";
+}

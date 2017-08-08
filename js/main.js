@@ -618,8 +618,10 @@ class PainterroProc {
             (evt.keyCode === KEYS.y && evt.ctrlKey) ||
             (evt.keyCode === KEYS.z && evt.ctrlKey && evt.shiftKey)) {
             this.worklog.redoState();
+            e.preventDefault();
           } else if (evt.keyCode === KEYS.z && evt.ctrlKey) {
             this.worklog.undoState();
+            e.preventDefault();
           }
 
           if (this.saveBtn) {

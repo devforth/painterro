@@ -16,7 +16,7 @@ With Painterro you can:
 - Pixelize some area to hide sensitive data
 
 
-![Painterro preview](https://raw.githubusercontent.com/ivictbor/painterro/master/docs/preview.png)
+![Painterro preview](https://cdn.rawgit.com/ivictbor/painterro/4651325f/res/0painterro.svg)
 
 Originally Painterro was designed for quick screenshots processing: You make screenshot by pressing `PrtSc` button, 
 then open Painterro on your website, paste an image, 
