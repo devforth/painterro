@@ -451,7 +451,7 @@ class PainterroProc {
     this.colorPicker = new ColorPicker(this, (widgetState) => {
       this.colorWidgetState[widgetState.target] = widgetState;
       this.doc.querySelector(
-        `#${this.id} .color-diwget-btn[data-id='${widgetState.target}']`).style['background-color'] =
+        `#${this.id} .ptro-color-btn[data-id='${widgetState.target}']`).style['background-color'] =
         widgetState.alphaColor;
       if (widgetState.target === 'line') {
         setParam('activeColor', widgetState.palleteColor);
@@ -891,7 +891,7 @@ class PainterroProc {
       } else if (ctl.type === 'color') {
         ctrls += `<button id=${ctl.id} data-id='${ctl.target}' ` +
           `style="background-color: ${this.colorWidgetState[ctl.target].alphaColor}" ` +
-          'class="color-diwget-btn ptro-bordered-btn"></button>' +
+          'class="color-diwget-btn ptro-color-btn ptro-bordered-btn"></button>' +
           '<span class="ptro-btn-color-checkers-bar"></span>';
       } else if (ctl.type === 'int') {
         ctrls += `<input id=${ctl.id} class="ptro-input" type="number" min="${ctl.min}" max="${ctl.max}" ` +

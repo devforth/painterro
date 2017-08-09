@@ -72,8 +72,15 @@
 .ptro-icon-btn:focus,
 .ptro-named-btn:focus,
 .color-diwget-btn:focus,
+.ptro-color-btn:focus,
 .ptro-selector-btn:focus {
     outline: none;
+}
+
+.ptro-color-btn {
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
 }
 
 
@@ -415,7 +422,7 @@ span.ptro-btn-color-checkers {
     width: 32px;
     height: 32px;
     background-size: 16px 16px;
-    margin-top: -28px;
+    margin-top: -32px;
 }
 
 span.ptro-btn-color-checkers-bar {

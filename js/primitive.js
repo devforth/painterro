@@ -85,7 +85,7 @@ export default class PrimitiveTool {
       } else {
         this.ctx.beginPath();
         if (this.type === 'eraser') {
-          this.ctx.lineWidth = this.eraserWidth;
+          this.ctx.lineWidth = this.eraserWidth - (i === 1 ? 1 : 0);
         } else {
           this.ctx.lineWidth = this.lineWidth;
         }

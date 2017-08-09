@@ -12,7 +12,7 @@ export default class Settings {
     this.applyButton = main.wrapper.querySelector('.ptro-settings-widget-wrapper button.ptro-apply');
     this.closeButton = main.wrapper.querySelector('.ptro-settings-widget-wrapper button.ptro-close');
     this.clearButton = main.wrapper.querySelector('.ptro-settings-widget-wrapper button.ptro-clear');
-    this.bgSelBtn = main.wrapper.querySelector('.ptro-settings-widget-wrapper .color-diwget-btn');
+    this.bgSelBtn = main.wrapper.querySelector('.ptro-settings-widget-wrapper .ptro-color-btn');
     this.errorHolder = main.wrapper.querySelector('.ptro-settings-widget-wrapper .ptro-error');
 
     this.clearButton.onclick = () => {
@@ -77,13 +77,13 @@ export default class Settings {
             '<table style="margin-top: 5px">' +
               '<tr>' +
                 `<td class="ptro-label ptro-resize-table-left" style="height:30px;">${tr('backgroundColor')}</td>` +
-                '<td>' +
-                  '<button data-id="bg" class="color-diwget-btn ptro-bordered-btn" ' +
-                    'style="position: relative; margin-top: -12px;"></button>' +
+                '<td style="font-size: 8px;">' + // ugly fix
+                  '<button data-id="bg" class="ptro-color-btn ptro-bordered-btn" ' +
+                    'style="margin-top: -12px;"></button>' +
                   '<span class="ptro-btn-color-checkers"></span>' +
                 '</td>' +
                 '<td>' +
-                  `<button style="margin-top: 2px;" class="ptro-named-btn ptro-clear ptro-color-control" title="${tr('fillPageWith')}">${tr('clear')}</button>` +
+                  `<button style="margin-top: -2px;" class="ptro-named-btn ptro-clear ptro-color-control" title="${tr('fillPageWith')}">${tr('clear')}</button>` +
                 '</td>' +
               '</tr>' +
               '<tr>' +
