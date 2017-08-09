@@ -26,15 +26,25 @@ export function setParam(name, val) {
   }
 }
 
+function getAlternative(...vals) {
+  for (let i = 0; i < vals.length; i += 1) {
+    if (vals[i] !== undefined) {
+      return vals[i];
+    }
+  }
+  return undefined;
+}
+
 export function setDefaults(parameters) {
   loadSettings();
   const params = parameters || {};
   params.activeColor = settings.activeColor || params.activeColor || '#ff0000';
-  params.activeColorAlpha = settings.activeColorAlpha || params.activeColorAlpha || 1.0;
+  params.activeColorAlpha = getAlternative(settings.activeColorAlpha, params.activeColorAlpha, 1.0);
   params.activeAlphaColor = HexToRGBA(params.activeColor, params.activeColorAlpha);
 
   params.activeFillColor = settings.activeFillColor || params.activeFillColor || '#000000';
-  params.activeFillColorAlpha = settings.activeFillColorAlpha || params.activeFillColorAlpha || 0.0;
+  params.activeFillColorAlpha = getAlternative(settings.activeFillColorAlpha,
+    params.activeFillColorAlpha, 0.0);
   params.activeFillAlphaColor = HexToRGBA(params.activeFillColor, params.activeFillColorAlpha);
 
   params.initText = params.initText || null;
@@ -43,8 +53,8 @@ export function setDefaults(parameters) {
   params.defaultLineWidth = settings.defaultLineWidth || params.defaultLineWidth || 5;
   params.defaultFontSize = settings.defaultFontSize || params.defaultFontSize || 24;
   params.backgroundFillColor = settings.backgroundFillColor || params.backgroundFillColor || '#ffffff';
-  params.backgroundFillColorAlpha = settings.backgroundFillColorAlpha ||
-    params.backgroundFillColorAlpha || 1.0;
+  params.backgroundFillColorAlpha = getAlternative(settings.backgroundFillColorAlpha,
+    params.backgroundFillColorAlpha, 1.0);
   params.backgroundFillAlphaColor = HexToRGBA(params.backgroundFillColor,
     params.backgroundFillColorAlpha);
 
