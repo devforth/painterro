@@ -101,6 +101,17 @@ export default class PainterroSelecter {
     this.main.worklog.captureState();
   }
 
+  doClearArea() {
+    this.ctx.beginPath();
+    this.ctx.clearRect(
+      this.area.topl[0], this.area.topl[1],
+      this.area.bottoml[0] - this.area.topl[0], this.area.bottoml[1] - this.area.topl[1]);
+    this.ctx.rect(this.area.topl[0], this.area.topl[1],
+      this.area.bottoml[0] - this.area.topl[0], this.area.bottoml[1] - this.area.topl[1]);
+    this.ctx.fillStyle = this.main.currentBackground;
+    this.ctx.fill();
+  }
+
   getScale() {
     return this.canvas.clientWidth / this.canvas.getAttribute('width');
   }
@@ -172,6 +183,10 @@ export default class PainterroSelecter {
         this.finishPlacing();
       } else if (evt.keyCode === KEYS.esc) {
         this.cancelPlacing();
+      }
+    } else if (this.shown) {
+      if (evt.keyCode === KEYS.del) {
+        this.doClearArea();
       }
     }
   }

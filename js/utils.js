@@ -85,6 +85,7 @@ export const KEYS = {
   x: 88,
   enter: 13,
   esc: 27,
+  del: 46,
 };
 
 // Copies a string to the clipboard. Must be called from within an
