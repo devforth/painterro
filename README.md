@@ -129,7 +129,7 @@ Configuration
 |`initText` | Display some centered text before painting. If null, no text will be shown | null |
 |`initTextColor` | Color of init text | '#808080' |
 |`initTextStyle` | Style of init text | "26px 'Open Sans', sans-serif" |
-
+|`pixelizePixelSize` | Default pixel size of pixelize tool. Can accept values - `x` - x pixels, `x%` - means percents of minimal area rectangle side | `20%` |
 
 UI color scheme
 ---------------

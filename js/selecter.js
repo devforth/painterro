@@ -12,6 +12,7 @@ export default class PainterroSelecter {
       rect: document.querySelector(`#${main.id} .ptro-crp-rect`),
     };
     this.imagePlaced = false;
+    this.pixelizePixelSize = main.params.pixelizePixelSize;
   }
 
   static code() {
@@ -48,7 +49,16 @@ export default class PainterroSelecter {
       this.area.bottoml[1] - this.area.topl[1],
     ];
 
-    this.pixelSize = (Math.min(size[0], size[1]) / 5);
+    if (this.pixelizePixelSize.slice(-1) === '%') {
+      this.pixelSize = (Math.min(size[0], size[1]) / (100 / this.pixelizePixelSize.slice(0, -1)));
+    } else if (this.pixelizePixelSize.slice(-2).toLowerCase() === 'px') {
+      this.pixelSize = this.pixelizePixelSize.slice(0, -2);
+    } else {
+      this.pixelSize = this.pixelizePixelSize;
+    }
+    if (this.pixelSize < 2) {
+      this.pixelSize = 2; // prevent errors
+    }
     const pxData = [];
     const pxSize = [size[0] / this.pixelSize, size[1] / this.pixelSize];
     for (let i = 0; i < pxSize[0]; i += 1) {

@@ -43,7 +43,13 @@ export function setDefaults(parameters) {
   params.defaultLineWidth = settings.defaultLineWidth || params.defaultLineWidth || 5;
   params.defaultFontSize = settings.defaultFontSize || params.defaultFontSize || 24;
   params.backgroundFillColor = settings.backgroundFillColor || params.backgroundFillColor || '#ffffff';
+  params.backgroundFillColorAlpha = settings.backgroundFillColorAlpha ||
+    params.backgroundFillColorAlpha || 1.0;
+  params.backgroundFillAlphaColor = HexToRGBA(params.backgroundFillColor,
+    params.backgroundFillColorAlpha);
+
   params.hiddenTools = params.hiddenTools || [];
+  params.pixelizePixelSize = settings.pixelizePixelSize || params.pixelizePixelSize || '20%';
 
   params.colorScheme = params.colorScheme || {};
   params.colorScheme.main = params.colorScheme.main || '#dbebff';

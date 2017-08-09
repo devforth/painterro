@@ -45,7 +45,7 @@
 
 .ptro-icon-btn {
     border: 0;
-    padding: 4px 5px 5px;
+    padding: 4px 0 5px 0;
     margin: 4px 0 0 4px;
     height: 32px;
     width: 32px;
@@ -94,6 +94,7 @@
     height: 24px;
     float: right;
     margin-top: 5px;
+    margin-bottom: -5px;
 }
 
 .ptro-wrapper .ptro-crp-rect {
@@ -201,8 +202,7 @@
     padding: 22px  4px 4px 0;
 }
 
-.ptro-wrapper .ptro-color-widget-wrapper,
-.ptro-wrapper .ptro-resize-widget-wrapper{
+.ptro-wrapper .ptro-common-widget-wrapper {
     position: absolute;
     background-color: rgba(0, 0, 0, 0.6);
     top: 0;
@@ -217,12 +217,6 @@
 
 .ptro-wrapper .ptro-pallet {
     width: 200px;
-    height: 265px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -115px;
-    margin-left: -90px;
     padding: 10px;
     z-index: 100;
     box-sizing: border-box;
@@ -230,11 +224,34 @@
 
 .ptro-wrapper .ptro-resize-widget {
     width: 200px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -65px;
-    margin-left: -100px;
+    padding: 10px;
+    z-index: 100;
+    box-sizing: border-box;
+}
+
+
+.ptro-error {
+    background-color: rgba(200, 0, 0, 0.5);
+    padding: 5px;
+    margin: 5px;
+    color: white;
+}
+
+.ptro-v-middle:before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+}
+
+.ptro-v-middle-in {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+}
+
+.ptro-wrapper .ptro-settings-widget {
+    width: 300px;
     padding: 10px;
     z-index: 100;
     box-sizing: border-box;
@@ -280,15 +297,21 @@ td.ptro-resize-table-left {
     float: left;
     padding: 0 2px 0 0;
     margin-left: 5px;
-    line-height: 25px;
     font-family: "Open Sans", sans-serif;
 }
 
+.ptro-pixel-size-input {
+    width: 60px;
+}
+
 .ptro-wrapper .ptro-pipette {
-    float: right;
     height: 24px;
     width: 24px;
     margin: 0;
+}
+
+div.ptro-color-widget-wrapper {
+	z-index: 1000;
 }
 
 .ptro-wrapper .ptro-pipette i {
@@ -378,6 +401,32 @@ select.ptro-input {
     outline: none;
 }
 
+span.ptro-btn-color-checkers {
+    background-image: url("checkers.svg");
+    display: block;
+    width: 32px;
+    height: 32px;
+    background-size: 16px 16px;
+    margin-top: -28px;
+}
+
+span.ptro-btn-color-checkers-bar {
+    background-image: url("checkers.svg");
+    display: inline-block;
+    width: 32px;
+    line-height: 12px;
+    height: 32px;
+    background-size: 16px 16px;
+    z-index: 200;
+    position: relative;
+    top: 6px;
+    left: 0;
+    margin-top: -2px;
+}
+
+
+
+
 .ptro-bar-right {
     float:right;
     margin-right: 4px;
@@ -396,7 +445,8 @@ select.ptro-input {
 
 
 input.ptro-resize-width-input,
-input.ptro-resize-heigth-input {
+input.ptro-resize-heigth-input,
+input.ptro-pixel-size-input {
     line-height: 22px;
     padding: 0 0 0 4px;
     height: 22px;
@@ -437,15 +487,7 @@ input.ptro-resize-heigth-input {
     height: 100%;
 }
 
-.ptro-paster-select:before {
-    content: "";
-    display: inline-block;
-    vertical-align: middle;
-    height: 100%;
-}
-
 .ptro-paster-select .ptro-in {
-    display: inline-block;
     background-color: rgba(0,0,0,0.7);
     padding: 10px;
 }

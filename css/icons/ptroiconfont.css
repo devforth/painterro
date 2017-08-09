@@ -1,9 +1,9 @@
 @font-face {
 	font-family: "ptroiconfont";
-	src: url("ptroiconfont.eot?c546b342cf01952e8c68745ca51f23c0?#iefix") format("embedded-opentype"),
-url("ptroiconfont.woff?c546b342cf01952e8c68745ca51f23c0") format("woff"),
-url("ptroiconfont.ttf?c546b342cf01952e8c68745ca51f23c0") format("truetype"),
-url("ptroiconfont.svg?c546b342cf01952e8c68745ca51f23c0#ptroiconfont") format("svg");
+	src: url("ptroiconfont.eot?c8cec0ef105ef0bed73a7dd3474ab9ea?#iefix") format("embedded-opentype"),
+url("ptroiconfont.woff?c8cec0ef105ef0bed73a7dd3474ab9ea") format("woff"),
+url("ptroiconfont.ttf?c8cec0ef105ef0bed73a7dd3474ab9ea") format("truetype"),
+url("ptroiconfont.svg?c8cec0ef105ef0bed73a7dd3474ab9ea#ptroiconfont") format("svg");
 	font-weight: normal;
     font-style: normal;
 }
@@ -40,57 +40,63 @@ url("ptroiconfont.svg?c546b342cf01952e8c68745ca51f23c0#ptroiconfont") format("sv
 .ptro-icon-ellipse:before {
 	content: "\f106";
 }
-.ptro-icon-line:before {
+.ptro-icon-eraser:before {
 	content: "\f107";
 }
-.ptro-icon-linked:before {
+.ptro-icon-line:before {
 	content: "\f108";
 }
-.ptro-icon-loading:before {
+.ptro-icon-linked:before {
 	content: "\f109";
 }
-.ptro-icon-mirror:before {
+.ptro-icon-loading:before {
 	content: "\f10a";
 }
-.ptro-icon-open:before {
+.ptro-icon-mirror:before {
 	content: "\f10b";
 }
-.ptro-icon-paste_extend_down:before {
+.ptro-icon-open:before {
 	content: "\f10c";
 }
-.ptro-icon-paste_extend_right:before {
+.ptro-icon-paste_extend_down:before {
 	content: "\f10d";
 }
-.ptro-icon-paste_fit:before {
+.ptro-icon-paste_extend_right:before {
 	content: "\f10e";
 }
-.ptro-icon-paste_over:before {
+.ptro-icon-paste_fit:before {
 	content: "\f10f";
 }
-.ptro-icon-pipette:before {
+.ptro-icon-paste_over:before {
 	content: "\f110";
 }
-.ptro-icon-pixelize:before {
+.ptro-icon-pipette:before {
 	content: "\f111";
 }
-.ptro-icon-rect:before {
+.ptro-icon-pixelize:before {
 	content: "\f112";
 }
-.ptro-icon-resize:before {
+.ptro-icon-rect:before {
 	content: "\f113";
 }
-.ptro-icon-rotate:before {
+.ptro-icon-resize:before {
 	content: "\f114";
 }
-.ptro-icon-save:before {
+.ptro-icon-rotate:before {
 	content: "\f115";
 }
-.ptro-icon-select:before {
+.ptro-icon-save:before {
 	content: "\f116";
 }
-.ptro-icon-text:before {
+.ptro-icon-select:before {
 	content: "\f117";
 }
-.ptro-icon-unlinked:before {
+.ptro-icon-settings:before {
 	content: "\f118";
+}
+.ptro-icon-text:before {
+	content: "\f119";
+}
+.ptro-icon-unlinked:before {
+	content: "\f11a";
 }

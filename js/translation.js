@@ -22,13 +22,19 @@ export class Translation {
         apply: 'Apply',
         cancel: 'Cancel',
         close: 'Close',
+        clear: 'Clear',
         width: 'Width',
         height: 'Height',
         keepRatio: 'Keep width/height ratio',
+        fillPageWith: 'Fill page with current backgroud color',
         pixelSize: 'P:',
         pixelSizeFull: 'Pixel Size',
         resizeScale: 'Scale',
         resizeResize: 'Resize',
+        backgroundColor: 'Page background color',
+        pixelizePixelSize: 'Pixelize pixel size',
+        wrongPixelSizeValue: 'Wrong pixel size. You can enter e.g. "20%" which mean pixel size will be 1/5 of ' +
+            'the selected area side, or "4" means 4 px',
         tools: {
           crop: 'Crop image to selected area',
           pixelize: 'Pixelize selected area',
@@ -44,6 +50,8 @@ export class Translation {
           open: 'Open image',
           select: 'Select area',
           close: 'Close Painterro',
+          eraser: 'Eraser',
+          settings: 'Settings',
         },
         pasteOptions: {
           fit: 'Replace all',

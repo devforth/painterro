@@ -186,7 +186,8 @@ export default class Inserter {
         `<div>${tr(`pasteOptions.${k}`)}</div>` +
       '</button>';
     });
-    return '<div class="ptro-paster-select-wrapper" hidden><div class="ptro-paster-select"><div class="ptro-in">' +
+    return '<div class="ptro-paster-select-wrapper" hidden><div class="ptro-paster-select ptro-v-middle">' +
+      '<div class="ptro-in ptro-v-middle-in">' +
       `<div class="ptro-paste-label">${tr('pasteOptions.how_to_paste')}</div>${
         buttons}</div></div></div>`;
   }

@@ -101,8 +101,8 @@ export default class Resizer {
 
   static html() {
     return '' +
-      '<div class="ptro-resize-widget-wrapper" hidden>' +
-        '<div class="ptro-resize-widget ptro-color-main">' +
+      '<div class="ptro-resize-widget-wrapper ptro-common-widget-wrapper ptro-v-middle" hidden>' +
+        '<div class="ptro-resize-widget ptro-color-main ptro-v-middle-in">' +
           '<div style="display: inline-block">' +
             '<table>' +
               '<tr>' +

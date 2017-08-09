@@ -13,7 +13,7 @@ import ZoomHelper from './zoomHelper';
 import TextTool from './text';
 import Resizer from './resizer';
 import Inserter from './inserter';
-
+import Settings from './settings';
 
 class PainterroProc {
   constructor(params) {
@@ -271,6 +271,14 @@ class PainterroProc {
         this.resizer.close();
       },
     }, {
+      name: 'settings',
+      activate: () => {
+        this.settings.open();
+      },
+      close: () => {
+        this.settings.close();
+      },
+    }, {
       name: 'save',
       right: true,
       activate: () => {
@@ -356,6 +364,7 @@ class PainterroProc {
         ColorPicker.html() +
         ZoomHelper.html() +
         Resizer.html() +
+        Settings.html(this) +
         this.inserter.html()}`;
     this.baseEl.appendChild(this.wrapper);
 
@@ -404,6 +413,7 @@ class PainterroProc {
       });
     });
     this.resizer = new Resizer(this);
+    this.settings = new Settings(this);
     this.primitiveTool = new PrimitiveTool(this);
     this.primitiveTool.setLineWidth(this.params.defaultLineWidth);
     this.primitiveTool.setPixelSize(this.params.defaultPixelSize);
@@ -425,6 +435,9 @@ class PainterroProc {
       } else if (widgetState.target === 'fill') {
         setParam('activeFillColor', widgetState.palleteColor);
         setParam('activeFillColorAlpha', widgetState.alpha);
+      } else if (widgetState.target === 'bg') {
+        setParam('backgroundFillColor', widgetState.palleteColor);
+        setParam('backgroundFillColorAlpha', widgetState.alpha);
       }
     });
     this.colorWidgetState = {
@@ -440,8 +453,14 @@ class PainterroProc {
         alpha: this.params.activeFillColorAlpha,
         alphaColor: this.params.activeFillAlphaColor,
       },
+      bg: {
+        target: 'bg',
+        palleteColor: this.params.backgroundFillColor,
+        alpha: this.params.backgroundFillColorAlpha,
+        alphaColor: this.params.backgroundFillAlphaColor,
+      },
     };
-
+    this.currentBackground = this.colorWidgetState.bg.alphaColor;
 
     this.tools.filter(t => this.params.hiddenTools.indexOf(t.name) === -1).forEach((b) => {
       this.getBtnEl(b).onclick = () => {
@@ -813,14 +832,18 @@ class PainterroProc {
       this.ctx.fillStyle = this.params.initTextColor;
       this.ctx.textAlign = 'center';
       this.ctx.font = this.params.initTextStyle;
+      this.ctx.lineWidth = 3;
+      this.ctx.strokeStyle = '#fff';
+      this.ctx.strokeText(this.params.initText, this.size.w / 2, this.size.h / 2);
       this.ctx.fillText(this.params.initText, this.size.w / 2, this.size.h / 2);
     }
   }
 
   clearBackground() {
     this.ctx.beginPath();
+    this.ctx.clearRect(0, 0, this.size.w, this.size.h);
     this.ctx.rect(0, 0, this.size.w, this.size.h);
-    this.ctx.fillStyle = this.params.backgroundFillColor;
+    this.ctx.fillStyle = this.currentBackground;
     this.ctx.fill();
   }
 
@@ -841,11 +864,7 @@ class PainterroProc {
         ctrls += `<button id=${ctl.id} data-id='${ctl.target}' ` +
           `style="background-color: ${this.colorWidgetState[ctl.target].alphaColor}" ` +
           'class="color-diwget-btn ptro-bordered-btn"></button>' +
-          '<span class="ptro-btn-color-bg">' +
-          '<span></span><span></span><span></span><span></span>' +
-          '<span></span><span></span><span></span><span></span>' +
-          '</span>' +
-          '<span class="color-diwget-btn-substrate"></span>';
+          '<span class="ptro-btn-color-checkers-bar"></span>';
       } else if (ctl.type === 'int') {
         ctrls += `<input id=${ctl.id} class="ptro-input" type="number" min="${ctl.min}" max="${ctl.max}" ` +
           `data-id='${ctl.target}'/>`;
