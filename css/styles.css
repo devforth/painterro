@@ -90,6 +90,14 @@
     position: absolute;
 }
 
+.ptro-wrapper .ptro-substrate {
+    opacity: 0.3;
+    background-image: url("checkers.svg");
+    background-size: 32px 32px;
+    z-index: -1;
+    position: absolute;
+}
+
 .ptro-wrapper .ptro-close-color-picker {
     height: 24px;
     float: right;
@@ -423,9 +431,6 @@ span.ptro-btn-color-checkers-bar {
     left: 0;
     margin-top: -2px;
 }
-
-
-
 
 .ptro-bar-right {
     float:right;

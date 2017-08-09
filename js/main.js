@@ -359,7 +359,7 @@ class PainterroProc {
     this.wrapper.id = `${this.id}-wrapper`;
     this.wrapper.className = 'ptro-wrapper';
     this.wrapper.innerHTML =
-      `<canvas id="${this.id}-canvas"></canvas>${
+      `<canvas id="${this.id}-canvas"></canvas><div class="ptro-substrate"></div>${
         cropper +
         ColorPicker.html() +
         ZoomHelper.html() +
@@ -399,6 +399,7 @@ class PainterroProc {
     this.ctx = this.canvas.getContext('2d');
     this.toolControls = this.doc.querySelector(`#${this.id}-bar .tool-controls`);
     this.toolContainer = this.doc.querySelector(`#${this.id}-wrapper .ptro-crp-el`);
+    this.substrate = this.doc.querySelector(`#${this.id}-wrapper .ptro-substrate`);
     this.zoomHelper = new ZoomHelper(this);
     this.select = new PainterroSelecter(this, (notEmpty) => {
       [this.toolByName.crop, this.toolByName.pixelize].forEach((c) => {
@@ -816,6 +817,10 @@ class PainterroProc {
     this.toolContainer.style.width = `${w}px`;
     this.toolContainer.style.top = `${t}px`;
     this.toolContainer.style.height = `${h}px`;
+    this.substrate.style.left = `${l}px`;
+    this.substrate.style.width = `${w}px`;
+    this.substrate.style.top = `${t}px`;
+    this.substrate.style.height = `${h}px`;
   }
 
   clear() {
