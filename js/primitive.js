@@ -12,7 +12,7 @@ export default class PrimitiveTool {
   activate(type) {
     this.type = type;
     this.state = {};
-    if (type === 'line' || type === 'brush') {
+    if (type === 'line' || type === 'brush' || type === 'eraser') {
       this.ctx.lineJoin = 'round';
     } else {
       this.ctx.lineJoin = 'miter';
@@ -21,6 +21,10 @@ export default class PrimitiveTool {
 
   setLineWidth(width) {
     this.lineWidth = width;
+  }
+
+  setEraserWidth(width) {
+    this.eraserWidth = width;
   }
 
   handleMouseDown(event) {
@@ -33,7 +37,7 @@ export default class PrimitiveTool {
     this.ctx.lineCap = 'round';
     if (mainClass === 'ptro-crp-el' || mainClass === 'ptro-zoomer') {
       this.tmpData = this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h);
-      if (this.type === 'brush') {
+      if (this.type === 'brush' || this.type === 'eraser') {
         this.state.cornerMarked = true;
         const cord = [
           (event.clientX - this.el.documentOffsetLeft) + this.main.wrapper.scrollLeft,
@@ -59,35 +63,49 @@ export default class PrimitiveTool {
 
   drawBrushPath() {
     const smPoints = this.points;
-
-    if (smPoints.length === 1) {
-      this.ctx.beginPath();
-      this.ctx.lineWidth = 0;
-      this.ctx.fillStyle = this.main.colorWidgetState.line.alphaColor;
-      this.ctx.arc(
-        this.points[0].x, this.points[0].y,
-        this.lineWidth / 2, this.lineWidth / 2,
-        0, 2 * Math.PI);
-      this.ctx.fill();
-      this.ctx.closePath();
-    } else {
-      this.ctx.beginPath();
-      this.ctx.lineWidth = this.lineWidth;
-      this.ctx.strokeStyle = this.main.colorWidgetState.line.alphaColor;
-      this.ctx.fillStyle = this.main.colorWidgetState.fill.alphaColor;
-
-      this.ctx.moveTo(this.points[0].x, this.points[0].y);
-      let last;
-      smPoints.slice(1).forEach((p) => {
-        this.ctx.lineTo(p.x, p.y);
-        last = p;
-      });
-      if (last) {
-        this.ctx.moveTo(last.x, last.y);
+    let lineFill;
+    const origComposition = this.ctx.globalCompositeOperation;
+    const isEraser = this.type === 'eraser';
+    lineFill = this.main.colorWidgetState.line.alphaColor;
+    for (let i = 1; i < (isEraser ? 3 : 2); i += 1) {
+      if (isEraser) {
+        this.ctx.globalCompositeOperation = i === 1 ? 'destination-out' : origComposition;
+        lineFill = i === 1 ? 'rgba(0,0,0,1)' : this.main.currentBackground;
       }
-      this.ctx.stroke();
-      this.ctx.closePath();
+      if (smPoints.length === 1) {
+        this.ctx.beginPath();
+        this.ctx.lineWidth = 0;
+        this.ctx.fillStyle = lineFill;
+        this.ctx.arc(
+          this.points[0].x, this.points[0].y,
+          this.lineWidth / 2, this.lineWidth / 2,
+          0, 2 * Math.PI);
+        this.ctx.fill();
+        this.ctx.closePath();
+      } else {
+        this.ctx.beginPath();
+        if (this.type === 'eraser') {
+          this.ctx.lineWidth = this.eraserWidth;
+        } else {
+          this.ctx.lineWidth = this.lineWidth;
+        }
+        this.ctx.strokeStyle = lineFill;
+        this.ctx.fillStyle = this.main.colorWidgetState.fill.alphaColor;
+
+        this.ctx.moveTo(this.points[0].x, this.points[0].y);
+        let last;
+        smPoints.slice(1).forEach((p) => {
+          this.ctx.lineTo(p.x, p.y);
+          last = p;
+        });
+        if (last) {
+          this.ctx.moveTo(last.x, last.y);
+        }
+        this.ctx.stroke();
+        this.ctx.closePath();
+      }
     }
+    this.ctx.globalCompositeOperation = origComposition;
   }
 
   handleMouseMove(event) {
@@ -101,7 +119,7 @@ export default class PrimitiveTool {
       const scale = this.main.getScale();
       this.curCord = [this.curCord[0] * scale, this.curCord[1] * scale];
 
-      if (this.type === 'brush') {
+      if (this.type === 'brush' || this.type === 'eraser') {
         const prevLast = this.points.slice(-1)[0];
         const cur = {
           x: this.curCord[0],

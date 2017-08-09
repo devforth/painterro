@@ -110,6 +110,7 @@ export default class PainterroSelecter {
       this.area.bottoml[0] - this.area.topl[0], this.area.bottoml[1] - this.area.topl[1]);
     this.ctx.fillStyle = this.main.currentBackground;
     this.ctx.fill();
+    this.main.worklog.captureState();
   }
 
   getScale() {

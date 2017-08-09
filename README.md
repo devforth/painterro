@@ -122,6 +122,7 @@ Configuration
 |`activeFillColor` | Fill color that selected by default | '#000000' |
 |`activeFillColorAlpha` | Transparancy of `activeColor` from 0.0 to 1.0 | 0 |
 |`defaultLineWidth` | Line width in `px` that selected by default | 5 |
+|`defaultEraserWidth` | Eraser width in `px` that selected by default | 5 |
 |`backgroundFillColor` | Default background color when image created/erased | "#ffffff" |
 |`backgroundFillColorAlpha`| Transparancy of `backgroundFillColor` from 0.0 to 1.0 | 1.0 |
 |`defaultFontSize` | Default font size in pixels | 24 |
@@ -177,7 +178,12 @@ Methods
 Translation
 -----------
 
-If you want to translate or change strings you can do this by passing 
+Want to translate Painterro into your language? Just open file [js/translation.js](https://github.com/ivictbor/painterro/blob/master/js/translation.js#L6), copy `this.translations` dict to text editor and
+ translate all `'Strings'` from. Then create [issue](https://github.com/ivictbor/painterro/issues) 
+ with translated strings and specify what language is it. Also you can submit a pull request.
+Your translation will be added and your username will be submitted to contributors list.
+
+If you want to translate or change strings without contributing you can do this by passing 
 `translation` parameter, for example:
 
 ```js

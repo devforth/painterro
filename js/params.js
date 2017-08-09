@@ -26,7 +26,7 @@ export function setParam(name, val) {
   }
 }
 
-function getAlternative(...vals) {
+function firstDefined(...vals) {
   for (let i = 0; i < vals.length; i += 1) {
     if (vals[i] !== undefined) {
       return vals[i];
@@ -39,11 +39,11 @@ export function setDefaults(parameters) {
   loadSettings();
   const params = parameters || {};
   params.activeColor = settings.activeColor || params.activeColor || '#ff0000';
-  params.activeColorAlpha = getAlternative(settings.activeColorAlpha, params.activeColorAlpha, 1.0);
+  params.activeColorAlpha = firstDefined(settings.activeColorAlpha, params.activeColorAlpha, 1.0);
   params.activeAlphaColor = HexToRGBA(params.activeColor, params.activeColorAlpha);
 
   params.activeFillColor = settings.activeFillColor || params.activeFillColor || '#000000';
-  params.activeFillColorAlpha = getAlternative(settings.activeFillColorAlpha,
+  params.activeFillColorAlpha = firstDefined(settings.activeFillColorAlpha,
     params.activeFillColorAlpha, 0.0);
   params.activeFillAlphaColor = HexToRGBA(params.activeFillColor, params.activeFillColorAlpha);
 
@@ -51,9 +51,11 @@ export function setDefaults(parameters) {
   params.initTextColor = params.initTextColor || '#808080';
   params.initTextStyle = params.initTextStyle || '26px \'Open Sans\', sans-serif';
   params.defaultLineWidth = settings.defaultLineWidth || params.defaultLineWidth || 5;
+  params.defaultEraserWidth = firstDefined(settings.defaultEraserWidth,
+    params.defaultEraserWidth, 5);
   params.defaultFontSize = settings.defaultFontSize || params.defaultFontSize || 24;
   params.backgroundFillColor = settings.backgroundFillColor || params.backgroundFillColor || '#ffffff';
-  params.backgroundFillColorAlpha = getAlternative(settings.backgroundFillColorAlpha,
+  params.backgroundFillColorAlpha = firstDefined(settings.backgroundFillColorAlpha,
     params.backgroundFillColorAlpha, 1.0);
   params.backgroundFillAlphaColor = HexToRGBA(params.backgroundFillColor,
     params.backgroundFillColorAlpha);

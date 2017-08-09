@@ -13,6 +13,8 @@ export class Translation {
         alphaFull: 'Alpha',
         lineWidth: 'W:',
         lineWidthFull: 'Line width',
+        eraserWidth: 'E:',
+        eraserWidthFull: 'Eraser width',
         textColor: 'C:',
         textColorFull: 'Text color',
         fontSize: 'S:',

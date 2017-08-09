@@ -180,6 +180,28 @@ class PainterroProc {
       },
       eventListner: () => this.primitiveTool,
     }, {
+      name: 'eraser',
+      controls: [{
+        type: 'int',
+        title: 'eraserWidth',
+        titleFull: 'eraserWidthFull',
+        target: 'eraserWidth',
+        min: 1,
+        max: 99,
+        action: () => {
+          const width = document.getElementById(this.activeTool.controls[0].id);
+          this.primitiveTool.setEraserWidth(width.value);
+          setParam('defaultEraserWidth', width.value);
+        },
+        getValue: () => this.primitiveTool.eraserWidth,
+      },
+      ],
+      activate: () => {
+        this.toolContainer.style.cursor = 'crosshair';
+        this.primitiveTool.activate('eraser');
+      },
+      eventListner: () => this.primitiveTool,
+    }, {
       name: 'text',
       controls: [
         {
@@ -417,6 +439,7 @@ class PainterroProc {
     this.settings = new Settings(this);
     this.primitiveTool = new PrimitiveTool(this);
     this.primitiveTool.setLineWidth(this.params.defaultLineWidth);
+    this.primitiveTool.setEraserWidth(this.params.defaultEraserWidth);
     this.primitiveTool.setPixelSize(this.params.defaultPixelSize);
     this.worklog = new WorkLog(this, () => {
       if (this.saveBtn) {
