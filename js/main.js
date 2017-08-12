@@ -809,6 +809,9 @@ class PainterroProc {
   }
 
   openFile(f) {
+    if (!f) {
+      return;
+    }
     this.loadedName = trim((f.name || '').replace(/\..+$/, ''));
     this.loadImage(URL.createObjectURL(f));
   }
