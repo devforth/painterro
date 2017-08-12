@@ -88,9 +88,9 @@
 
     getInfo : function() {
         return {
-            longname : "Painterro",
-            author : "Ivan Borshchov",
-            version : "0.2.21.5"
+            longname: "Painterro",
+            author: "Ivan Borshchov",
+            version: "0.2.23",
         };
     }
   });

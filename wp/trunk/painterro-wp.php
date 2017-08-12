@@ -4,15 +4,17 @@
 Plugin Name: Painterro
 Plugin URI: https://github.com/ivictbor/painterro
 Description: Paste screenshots and edit images directly in browser. Adds Painterro button to visual editor for images editing. Absolutely free and open source.
-Version: 0.2.21.5
+Version: 0.2.23
 Author: Ivan Borshchov
 License: MIT
 */
 
+define("PAINTERRO_FILE", "painterro-0.2.23.min.js");
+
 function include_painterro_script()
 {
 	// For unminified version please see https://github.com/ivictbor/painterro, source map file included in plugin dir (.map)
-    wp_register_script('painterro-script', plugin_dir_url(__FILE__) . "painterro-0.2.21.min.js");
+    wp_register_script('painterro-script', plugin_dir_url(__FILE__) . PAINTERRO_FILE);
 	wp_enqueue_script('painterro-script');
 }
 
