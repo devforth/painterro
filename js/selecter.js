@@ -119,6 +119,10 @@ export default class PainterroSelecter {
     this.setBottom(0);
     this.setTop(0);
     this.show();
+    this.reCalcCropperCords();
+    if (this.area.activated) {
+      this.areaionCallback(this.area.rect.clientWidth > 0 && this.area.rect.clientHeight > 0);
+    }
   }
 
   getScale() {
