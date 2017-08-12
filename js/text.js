@@ -87,8 +87,8 @@ export default class TextTool {
       }
       this.active = true;
       this.crd = [
-        (event.clientX - this.el.documentOffsetLeft) + this.main.wrapper.scrollLeft,
-        (event.clientY - this.el.documentOffsetTop) + this.main.wrapper.scrollTop,
+        (event.clientX - this.el.documentOffsetLeft) + this.main.scroller.scrollLeft,
+        (event.clientY - this.el.documentOffsetTop) + this.main.scroller.scrollTop,
       ];
       const scale = this.main.getScale();
       this.scaledCord = [this.crd[0] * scale, this.crd[1] * scale];

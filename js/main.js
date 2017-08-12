@@ -381,15 +381,15 @@ class PainterroProc {
     this.wrapper.id = `${this.id}-wrapper`;
     this.wrapper.className = 'ptro-wrapper';
     this.wrapper.innerHTML =
-      `<canvas id="${this.id}-canvas"></canvas><div class="ptro-substrate"></div>${
-        cropper +
+      '<div class="ptro-scroller ptro-v-middle">' +
+      `<canvas id="${this.id}-canvas"></canvas><div class="ptro-substrate"></div>${cropper}</div>${
         ColorPicker.html() +
         ZoomHelper.html() +
         Resizer.html() +
         Settings.html(this) +
         this.inserter.html()}`;
     this.baseEl.appendChild(this.wrapper);
-
+    this.scroller = this.doc.querySelector(`#${this.id}-wrapper .ptro-scroller`);
     this.bar = this.doc.createElement('div');
     this.bar.id = `${this.id}-bar`;
     this.bar.className = 'ptro-bar ptro-color-main';
@@ -544,6 +544,7 @@ class PainterroProc {
     this.initEventHandlers();
     this.clear();
     this.hide();
+    this.zoomFactor = 1;
   }
 
   getAsUri(type, quality) {
@@ -636,6 +637,12 @@ class PainterroProc {
           this.handleToolEvent('handleMouseMove', e);
           this.colorPicker.handleMouseMove(e);
           this.zoomHelper.handleMouseMove(e);
+          this.curCord = [
+            (e.clientX - this.toolContainer.documentOffsetLeft) + this.scroller.scrollLeft,
+            (e.clientY - this.toolContainer.documentOffsetTop) + this.scroller.scrollTop,
+          ];
+          const scale = this.getScale();
+          this.curCord = [this.curCord[0] * scale, this.curCord[1] * scale];
         }
       },
       mouseup: (e) => {
@@ -647,8 +654,32 @@ class PainterroProc {
       mousewheel: (e) => {
         if (this.shown) {
           if (e.ctrlKey) {
-            this.zoom = e.wheelDelta > 0;
+            // console.log(e.wheelDelta);
+            let minFactor = 1;
+            if (this.size.w > this.wrapper.documentClientWidth) {
+              minFactor = Math.min(minFactor, this.wrapper.documentClientWidth / this.size.w);
+            }
+            if (this.size.h > this.wrapper.documentClientHeight) {
+              minFactor = Math.min(minFactor, this.wrapper.documentClientHeight / this.size.h);
+            }
+            if (!this.zoom && this.zoomFactor > minFactor) {
+              this.zoomFactor = minFactor;
+            }
+            this.zoomFactor += Math.sign(e.wheelDelta) * 0.2;
+            if (this.zoomFactor < minFactor) {
+              this.zoom = false;
+              this.zoomFactor = minFactor;
+            } else {
+              this.zoom = true;
+            }
             this.adjustSizeFull();
+            this.select.adjustPosition();
+            if (this.zoom) {
+              this.scroller.scrollLeft = (this.curCord[0] / this.getScale()) -
+                (e.clientX - this.toolContainer.documentOffsetLeft);
+              this.scroller.scrollTop = (this.curCord[1] / this.getScale()) -
+                (e.clientY - this.toolContainer.documentOffsetTop);
+            }
             e.preventDefault();
           }
         }
@@ -784,11 +815,11 @@ class PainterroProc {
   }
 
   adjustSizeFull() {
-    if (this.size.w > this.wrapper.documentClientWidth ||
-        this.size.h > this.wrapper.documentClientHeight) {
-      const ratio = this.wrapper.documentClientWidth / this.wrapper.documentClientHeight;
+    const ratio = this.wrapper.documentClientWidth / this.wrapper.documentClientHeight;
 
-      if (this.zoom === false) {
+    if (this.zoom === false) {
+      if (this.size.w > this.wrapper.documentClientWidth ||
+        this.size.h > this.wrapper.documentClientHeight) {
         const newRelation = ratio < this.size.ratio;
         if (newRelation !== this.ratioRelation) {
           this.ratioRelation = newRelation;
@@ -800,21 +831,23 @@ class PainterroProc {
             this.canvas.style.height = '100%';
           }
         }
-        this.wrapper.style.overflow = 'hidden';
-        this.wrapper.className = 'ptro-wrapper ptro-v-aligned';
+        this.scroller.style.overflow = 'hidden';
       } else {
-        this.wrapper.style.overflow = 'scroll';
+        this.scroller.style.overflow = 'hidden';
         this.canvas.style.width = 'auto';
         this.canvas.style.height = 'auto';
         this.ratioRelation = 0;
-        this.wrapper.className = 'ptro-wrapper';
       }
     } else {
-      this.wrapper.style.overflow = 'hidden';
-      this.canvas.style.width = 'auto';
-      this.canvas.style.height = 'auto';
-      this.wrapper.className = 'ptro-wrapper ptro-v-aligned';
+      this.scroller.style.overflow = 'scroll';
+      this.canvas.style.width = `${this.size.w * this.zoomFactor}px`;
+      this.canvas.style.height = `${this.size.h * this.zoomFactor}px`;
       this.ratioRelation = 0;
+    }
+    if (this.size.h * this.zoomFactor > this.wrapper.documentClientHeight) {
+      this.scroller.className = 'ptro-scroller'; // prevent empty part of scroll area
+    } else {
+      this.scroller.className = 'ptro-scroller ptro-v-middle';
     }
     this.syncToolElement();
     this.select.draw();

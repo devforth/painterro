@@ -40,8 +40,8 @@ export default class PrimitiveTool {
       if (this.type === 'brush' || this.type === 'eraser') {
         this.state.cornerMarked = true;
         const cord = [
-          (event.clientX - this.el.documentOffsetLeft) + this.main.wrapper.scrollLeft,
-          (event.clientY - this.el.documentOffsetTop) + this.main.wrapper.scrollTop,
+          (event.clientX - this.el.documentOffsetLeft) + this.main.scroller.scrollLeft,
+          (event.clientY - this.el.documentOffsetTop) + this.main.scroller.scrollTop,
         ];
         const cur = {
           x: cord[0] * scale,
@@ -53,8 +53,8 @@ export default class PrimitiveTool {
       } else {
         this.state.cornerMarked = true;
         this.centerCord = [
-          (event.clientX - this.el.documentOffsetLeft) + this.main.wrapper.scrollLeft,
-          (event.clientY - this.el.documentOffsetTop) + this.main.wrapper.scrollTop,
+          (event.clientX - this.el.documentOffsetLeft) + this.main.scroller.scrollLeft,
+          (event.clientY - this.el.documentOffsetTop) + this.main.scroller.scrollTop,
         ];
         this.centerCord = [this.centerCord[0] * scale, this.centerCord[1] * scale];
       }
@@ -113,8 +113,8 @@ export default class PrimitiveTool {
       this.ctx.putImageData(this.tmpData, 0, 0);
 
       this.curCord = [
-        (event.clientX - this.el.documentOffsetLeft) + this.main.wrapper.scrollLeft,
-        (event.clientY - this.el.documentOffsetTop) + this.main.wrapper.scrollTop,
+        (event.clientX - this.el.documentOffsetLeft) + this.main.scroller.scrollLeft,
+        (event.clientY - this.el.documentOffsetTop) + this.main.scroller.scrollTop,
       ];
       const scale = this.main.getScale();
       this.curCord = [this.curCord[0] * scale, this.curCord[1] * scale];

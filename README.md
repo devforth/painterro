@@ -1,14 +1,14 @@
-<img src="https://rawgit.com/ivictbor/painterro/master/res/painterro.svg" align="right" style="padding:5px; width:70px" />
+<img src="https://rawgit.com/ivictbor/painterro/master/res/0painterro.svg" align="right" style="padding:5px; width:70px" />
  
 [GitHub](https://github.com/ivictbor/painterro) | [npm](https://www.npmjs.com/package/painterro) | [DEMO](https://maketips.net/paste)
 
 [![npm][npm]][npm-url] 
 
-Painterro is singlefile JavaScript paint widget which allows editing images directly in a browser.
-It can be easily integrated into your website or blog by including only one js file and calling init code.
+Painterro is JavaScript paint widget which allows editing images directly in a browser.
+It can be easily integrated into your website or blog by including only one js file and calling initialization code.
 
 With Painterro you can:
-- Paste image from clipboard (e.g. screenshot), drag and drop it into widget, or load with open dialog
+- Paste image from clipboard with Ctrl+V (e.g. PtnScr screenshot), drag and drop it into widget, or load with open dialog
 - Crop image by defined area
 - Paint primitives (alpha color can be used)
 - Add text
@@ -16,18 +16,18 @@ With Painterro you can:
 - Pixelize some area to hide sensitive data
 
 
-![Painterro preview](https://cdn.rawgit.com/ivictbor/painterro/4651325f/res/0painterro.svg)
+![Painterro preview](https://rawgit.com/ivictbor/painterro/master/docs/preview.png)
 
 Originally Painterro was designed for quick screenshots processing: You make screenshot by pressing `PrtSc` button, 
-then open Painterro on your website, paste an image, 
+then open Painterro on your website, paste an image with Ctrl+V, 
 crop it to interested area, highlight something with line/rectangle tool and/or add some text 
-to the image. In addition, you can use it for processing any kind of raster images. Please try a [demo](https://maketips.net/paste)
+to the image and save on server with custom save handler (plain XHR request to your backend). In addition, you can use it for processing any kind of raster images. Please try a [demo](https://maketips.net/paste)
 
 If you want to see some feature in Painterro, please leave (or vote for) an issue with your proposal [here](https://github.com/ivictbor/painterro/issues). 
 There is no promise that it will be implemented soon or ever, but it is interesting to know what features users want to have.
 
 Painterro is written with vanilla JS, without any additional frameworks to stay lightweight and minimalistic. Code 
-written on ES6 which transplited by Babel and packed using webpack.
+written on ES6 which transplited by Babel and packed to single file using webpack.
 
 
 Table of contents
@@ -114,9 +114,17 @@ Supported hotkeys
 Configuration
 =============
 
+You can pass parameters dict to Painterro constructor:
+```js
+Painterro({
+  activeColor: '#00ff00', // default brush color is green
+  // ... other params here
+})
+```
+
 | Param | Description | Default |
 |-|-|-|
-| `id` | If provided, then Painterro will be placed to some holder on page with this `id`, instead of autoholder | undefined |
+| `id` | If provided, then Painterro will be placed to some holder on page with this `id`, in other case holder-element will be created (fullscreen with margins) | undefined |
 |`activeColor`| Line/Text color that selected by default | '#ff0000' |
 |`activeColorAlpha` | Transparancy of `activeColor` from 0.0 to 1.0, 0.0 = transparent | 1 |
 |`activeFillColor` | Fill color that selected by default | '#000000' |
@@ -173,7 +181,7 @@ Methods
 
 **.hide()** - hide instance
 
-**.save()** - call save. Can be used if save button is hidden (`hiddenTools: ['save']`)
+**.save()** - call save (same save as on buttons bar). Can be used if save button is hidden (`hiddenTools: ['save']`)
 
 Translation
 -----------
@@ -203,12 +211,13 @@ For all strings that can be translated see `js/translation.js`
 Saving image
 ============
 
-You should provide your save handler, which will post/update image on server.
+You should provide your save handler, which will post/update image on server or will pass image to another
+frontend components.
 
 Base64 saving
 -------------
 
-Next example shows how to save base64 via POST json call. Example use raw `XMLHttpRequest`. Of course, 
+Next example shows how to save `base64` via POST json call. Example use raw `XMLHttpRequest`. Of course, 
 instead you can use `fetch`, `jQuery`, etc insead. 
 
 ```js
@@ -230,7 +239,7 @@ var ptro = Painterro({
 });
 ptro.show();
 ```
-Backend should convert base64 to binary and save file, here is python flask example (of course same can be implemented using any technology):
+Backend should convert `base64` to binary and save file, here is python flask example (of course same can be implemented using any technology):
 ```python
 @app.route("/save-as-base64/", methods=['POST'])
 def base64_saver():
@@ -239,7 +248,6 @@ def base64_saver():
     with open(filepath, "wb") as fh:
         base64_data = request.json['image'].replace('data:image/png;base64,', '')
         fh.write(base64.b64decode(base64_data))
-
     return jsonify({})
 ```
 See full example in `example` directory. You can run it with python3 with installed `Flask`.
@@ -247,23 +255,22 @@ See full example in `example` directory. You can run it with python3 with instal
 Binary saving
 -------------
 
-You can also post data with binary `multipart/form-data` request which is more efficient. For example some `1920 x 1080` image took `402398` bytes for base64 upload. 
+You can also post data with binary `multipart/form-data` request which is more efficient. For example some `1920 x 1080` image took `402398` bytes for `base64` upload. 
 The same image took `301949` bytes with `multipart/form-data`.
 
 ```js
 var ptro = Painterro({
   saveHandler: function (image, done) {
-    var formData = new FormData()
+    var formData = new FormData();
     formData.append('image', image.asBlob());
     // you can also pass suggested filename 
     // formData.append('image', image.asBlob(), image.suggestedFileName());
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://127.0.0.1:5000/save-as-binary/', true);
     xhr.onload = xhr.onerror = function () {
-      done(true)
-      window.location.reload()
+      done(true);
     };
-    xhr.send(formData)
+    xhr.send(formData);
   }
 })
 ptro.show();
@@ -275,14 +282,13 @@ def binary_saver():
     filename = '{:10d}.png'.format(int(time()))  # generate some filename
     filepath = os.path.join(get_tmp_dir(), filename)
     request.files['image'].save(filepath)
-
     return jsonify({})
 ```
 
 Saving to WYSIWYG
 -----------------
 
-You can just insert image as data urlto any WYSIWYG editor, e.g. TinyMCE. Image that for example can be saved
+You can just insert image as data url to any WYSIWYG editor, e.g. TinyMCE. Image that for example can be saved
 ```js
     tinymce.init({ selector:'textarea', });
     var ptro = Painterro({

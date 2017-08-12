@@ -202,10 +202,12 @@ export default class ColorPicker {
       }
     } else if (this.choosingActive) {
       const scale = this.main.getScale();
-      let x = (e.clientX - this.main.canvas.documentOffsetLeft) * scale;
+      let x = ((e.clientX - this.main.canvas.documentOffsetLeft) +
+        this.main.scroller.scrollLeft) * scale;
       x = (x < 1 && 1) || x;
       x = (x > this.main.size.w - 1 && this.main.size.w - 1) || x;
-      let y = (e.clientY - this.main.canvas.documentOffsetTop) * scale;
+      let y = ((e.clientY - this.main.canvas.documentOffsetTop) +
+        this.main.scroller.scrollTop) * scale;
       y = (y < 1 && 1) || y;
       y = (y > this.main.size.h - 1 && this.main.size.h - 1) || y;
       const p = this.main.ctx.getImageData(x, y, 1, 1).data;

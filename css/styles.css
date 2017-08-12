@@ -534,3 +534,11 @@ i.mce-i-painterro:before, span.mce_painterro:before {
 	-moz-osx-font-smoothing: grayscale;
 	content: "\f101";
 }
+
+.ptro-scroller {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}

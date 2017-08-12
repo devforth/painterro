@@ -39,11 +39,15 @@ export default class ZoomHelper {
         this.wrapper.style.cursor = 'none';
       }
       const scale = this.main.getScale();
+      const cord = [
+        (e.clientX - this.canvas.documentOffsetLeft) + this.main.scroller.scrollLeft,
+        (e.clientY - this.canvas.documentOffsetTop) + this.main.scroller.scrollTop,
+      ];
 
-      let x = (e.clientX - this.canvas.documentOffsetLeft) * scale;
+      let x = cord[0] * scale;
       x = x < 1 ? 1 : x;
       x = x > this.main.size.w - 1 ? this.main.size.w - 1 : x;
-      let y = (e.clientY - this.canvas.documentOffsetTop) * scale;
+      let y = cord[1] * scale;
       y = y < 1 ? 1 : y;
       y = y > this.main.size.h - 1 ? this.main.size.h - 1 : y;
 
