@@ -1,3 +1,5 @@
+import { KEYS } from './utils';
+
 export default class TextTool {
   constructor(main) {
     this.ctx = main.ctx;
@@ -98,7 +100,14 @@ export default class TextTool {
       this.input.focus();
       this.reLimit();
       this.input.onkeydown = (e) => {
-        if (e.keyCode === 13) {
+        if (e.keyCode === KEYS.enter) {
+          this.apply();
+          this.main.closeActiveTool();
+          e.preventDefault();
+        }
+        if (e.keyCode === KEYS.esc) {
+          this.cancel();
+          this.main.closeActiveTool();
           e.preventDefault();
         }
         this.reLimit();

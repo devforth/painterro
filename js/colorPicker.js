@@ -1,4 +1,5 @@
 import { tr } from './translation';
+import { KEYS } from './utils';
 
 function HexToRGB(hex) {
   let parse = /^#?([a-fA-F\d]{2})([a-fA-F\d]{2})([a-fA-F\d]{2})$/i.exec(hex);
@@ -106,8 +107,7 @@ export default class ColorPicker {
     this.canvasAlpha.onmousedown = startAlphaSelecting;
     this.alphaRegulator.onmousedown = startAlphaSelecting;
     this.closeButton.onclick = () => {
-      this.wrapper.setAttribute('hidden', 'true');
-      this.opened = false;
+      this.close();
     };
     this.pipetteButton.onclick = () => {
       this.wrapper.setAttribute('hidden', 'true');
@@ -134,6 +134,11 @@ export default class ColorPicker {
     this.wrapper.removeAttribute('hidden');
     this.opened = true;
     this.addCallback = addCallback;
+  }
+
+  close() {
+    this.wrapper.setAttribute('hidden', 'true');
+    this.opened = false;
   }
 
   getPaletteColorAtPoint(e) {
@@ -177,6 +182,12 @@ export default class ColorPicker {
     this.alphaPosition = x;
     this.alphaRegulator.style.left = `${x}px`;
     this.regetAlpha();
+  }
+
+  handleKeyDown(event) {
+    if (event.keyCode === KEYS.esc) {
+      this.close();
+    }
   }
 
   handleMouseDown(e) {

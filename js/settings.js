@@ -1,5 +1,5 @@
 import { tr } from './translation';
-import { trim } from './utils';
+import { trim, KEYS } from './utils';
 import { setParam } from './params';
 
 export default class Settings {
@@ -26,7 +26,6 @@ export default class Settings {
     };
 
     this.closeButton.onclick = () => {
-      this.errorHolder.setAttribute('hidden', '');
       this.startClose();
     };
 
@@ -54,6 +53,12 @@ export default class Settings {
     };
   }
 
+  handleKeyDown(event) {
+    if (event.keyCode === KEYS.esc) {
+      this.startClose();
+    }
+  }
+
   open() {
     this.wrapper.removeAttribute('hidden');
     this.opened = true;
@@ -67,6 +72,7 @@ export default class Settings {
   }
 
   startClose() {
+    this.errorHolder.setAttribute('hidden', '');
     this.main.closeActiveTool();
   }
 

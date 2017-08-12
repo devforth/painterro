@@ -113,6 +113,14 @@ export default class PainterroSelecter {
     this.main.worklog.captureState();
   }
 
+  selectAll() {
+    this.setLeft(0);
+    this.setRight(0);
+    this.setBottom(0);
+    this.setTop(0);
+    this.show();
+  }
+
   getScale() {
     return this.canvas.clientWidth / this.canvas.getAttribute('width');
   }
@@ -197,10 +205,13 @@ export default class PainterroSelecter {
       } else if (evt.keyCode === KEYS.esc) {
         this.cancelPlacing();
       }
-    } else if (this.shown) {
-      if (evt.keyCode === KEYS.del) {
-        this.doClearArea();
-      }
+    } else if (this.shown && evt.keyCode === KEYS.del) {
+      this.doClearArea();
+    } else if (evt.keyCode === KEYS.a && evt.ctrlKey) {
+      this.selectAll();
+      event.preventDefault();
+    } else if (evt.keyCode === KEYS.esc && this.shown) {
+      this.hide();
     }
   }
 
@@ -454,6 +465,7 @@ export default class PainterroSelecter {
   hide() {
     this.area.rect.setAttribute('hidden', 'true');
     this.shown = false;
+    this.areaionCallback(false);
   }
 
   draw() {

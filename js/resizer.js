@@ -1,4 +1,5 @@
 import { tr } from './translation';
+import { KEYS } from './utils';
 
 export default class Resizer {
   constructor(main) {
@@ -97,6 +98,12 @@ export default class Resizer {
 
   startClose() {
     this.main.closeActiveTool();
+  }
+
+  handleKeyDown(event) {
+    if (event.keyCode === KEYS.esc) {
+      this.startClose();
+    }
   }
 
   static html() {

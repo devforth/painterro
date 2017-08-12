@@ -292,6 +292,7 @@ class PainterroProc {
       close: () => {
         this.resizer.close();
       },
+      eventListner: () => this.resizer,
     }, {
       name: 'settings',
       activate: () => {
@@ -300,6 +301,7 @@ class PainterroProc {
       close: () => {
         this.settings.close();
       },
+      eventListner: () => this.settings,
     }, {
       name: 'save',
       right: true,
@@ -686,6 +688,7 @@ class PainterroProc {
       },
       keydown: (e) => {
         if (this.shown) {
+          this.colorPicker.handleKeyDown(e);
           const evt = window.event ? event : e;
           this.handleToolEvent('handleKeyDown', evt);
           if (

@@ -83,6 +83,7 @@ export const KEYS = {
   s: 83,
   c: 67,
   x: 88,
+  a: 65,
   enter: 13,
   esc: 27,
   del: 46,
