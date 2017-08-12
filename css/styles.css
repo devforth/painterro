@@ -542,3 +542,8 @@ i.mce-i-painterro:before, span.mce_painterro:before {
     right: 0;
     bottom: 0;
 }
+
+td.ptro-strict-cell {
+    font-size: 8px;
+    line-height: normal;
+}

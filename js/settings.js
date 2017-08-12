@@ -77,7 +77,7 @@ export default class Settings {
             '<table style="margin-top: 5px">' +
               '<tr>' +
                 `<td class="ptro-label ptro-resize-table-left" style="height:30px;">${tr('backgroundColor')}</td>` +
-                '<td style="font-size: 8px;">' + // ugly fix
+                '<td class="ptro-strict-cell">' +
                   '<button data-id="bg" class="ptro-color-btn ptro-bordered-btn" ' +
                     'style="margin-top: -12px;"></button>' +
                   '<span class="ptro-btn-color-checkers"></span>' +
