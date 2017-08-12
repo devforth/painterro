@@ -22,6 +22,7 @@ sed -i -E "s/(define\\(\"PAINTERRO_FILE\", \"painterro-)[0-9\\.]+(\\.min\\.js\"\
 cd wp
 svn add trunk/*
 svn ci -m "${VERSION}"
+cd ..
 
 git add -u
 git commit -m "$VERSION"
