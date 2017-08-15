@@ -4,7 +4,7 @@ import '../css/icons/ptroiconfont.css';
 
 import PainterroSelecter from './selecter';
 import WorkLog from './worklog';
-import { genId, addDocumentObjectHelpers, KEYS, trim } from './utils';
+import { genId, addDocumentObjectHelpers, KEYS, trim, isMobileOrTablet } from './utils';
 import PrimitiveTool from './primitive';
 import ColorPicker from './colorPicker';
 import { setDefaults, setParam } from './params';
@@ -246,13 +246,6 @@ class PainterroProc {
             this.textTool.apply();
             this.closeActiveTool();
           },
-        }, {
-          name: tr('cancel'),
-          type: 'btn',
-          action: () => {
-            this.textTool.cancel();
-            this.closeActiveTool();
-          },
         },
       ],
       activate: () => {
@@ -333,7 +326,7 @@ class PainterroProc {
         this.hide();
       },
     }];
-
+    this.isMobile = isMobileOrTablet();
     this.toolByName = {};
     this.tools.forEach((t) => {
       this.toolByName[t.name] = t;
@@ -501,6 +494,7 @@ class PainterroProc {
           this.setActiveTool(this.toolByName.select);
         }
       };
+      this.getBtnEl(b).ontouch = this.getBtnEl(b).onclick;
     });
 
     this.setActiveTool(this.toolByName.select);
@@ -633,6 +627,21 @@ class PainterroProc {
             this.handleToolEvent('handleMouseDown', e);
           }
         }
+      },
+      touchstart: (e) => {
+        e.clientX = e.changedTouches[0].clientX;
+        e.clientY = e.changedTouches[0].clientY;
+        this.documentHandlers.mousedown(e);
+      },
+      touchend: (e) => {
+        e.clientX = e.changedTouches[0].clientX;
+        e.clientY = e.changedTouches[0].clientY;
+        this.documentHandlers.mouseup(e);
+      },
+      touchmove: (e) => {
+        e.clientX = e.changedTouches[0].clientX;
+        e.clientY = e.changedTouches[0].clientY;
+        this.documentHandlers.mousemove(e);
       },
       mousemove: (e) => {
         if (this.shown) {
@@ -784,6 +793,10 @@ class PainterroProc {
 
   show(openImage) {
     this.shown = true;
+    if (this.isMobile) {
+      this.origOverflowY = this.body.style['overflow-y'];
+      this.body.style['overflow-y'] = 'hidden';
+    }
     this.baseEl.removeAttribute('hidden');
     if (this.holderEl) {
       this.holderEl.removeAttribute('hidden');
@@ -800,6 +813,9 @@ class PainterroProc {
   }
 
   hide() {
+    if (this.isMobile) {
+      this.body.style['overflow-y'] = this.origOverflowY;
+    }
     this.shown = false;
     this.baseEl.setAttribute('hidden', '');
     if (this.holderEl) {

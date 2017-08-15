@@ -33,7 +33,7 @@ export default class TextTool {
     fonts.forEach((f) => {
       res.push({
         value: f,
-        name: f.split(',')[0].replace(/"/g, ''),
+        name: 'Aa', // f.split(',')[0].replace(/"/g, ''),
       });
     });
     return res;
@@ -100,7 +100,7 @@ export default class TextTool {
       this.input.focus();
       this.reLimit();
       this.input.onkeydown = (e) => {
-        if (e.keyCode === KEYS.enter) {
+        if (e.keyCode === KEYS.enter && !this.main.isMobile) {
           this.apply();
           this.main.closeActiveTool();
           e.preventDefault();

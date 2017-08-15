@@ -109,7 +109,7 @@ Supported hotkeys
 | `Ctrl + C` | Copy selected aria to clipboard (*internal keyboard) |
 | `Shift` when drawing **rect**/**ellipse** | Draw **square**/**circle** |
 | `Shift` when drawing **line** | draw at angles of `0`, `45`, `90`, `135` etc degrees | 
-| `Alt` when using pipette | Open zoom helper |
+| `Alt` when using pipette | Hide zoom helper (colored grid) |
 | `Ctrl` + `Wheel mouse up/down` | Zoom image to 100% and back. Works only if image doesn't fit in the draw area (e.g. area `800x600` and you draw `1920x1080` image) |
 | `Ctrl + S` | Save image |
 

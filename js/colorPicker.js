@@ -88,24 +88,6 @@ export default class ColorPicker {
     this.ctx.fillStyle = darkOverlay;
     this.ctx.fillRect(0, 0, w, h);
 
-    this.canvas.onmousedown = (e) => {
-      this.selecting = true;
-      this.getPaletteColorAtPoint(e);
-    };
-
-    const startLightSelecting = (e) => {
-      this.lightSelecting = true;
-      this.getColorLightAtClick(e);
-    };
-
-    this.canvasLight.onmousedown = startLightSelecting;
-    this.colorRegulator.onmousedown = startLightSelecting;
-    const startAlphaSelecting = (e) => {
-      this.alphaSelecting = true;
-      this.getAlphaAtClick(e);
-    };
-    this.canvasAlpha.onmousedown = startAlphaSelecting;
-    this.alphaRegulator.onmousedown = startAlphaSelecting;
     this.closeButton.onclick = () => {
       this.close();
     };
@@ -197,6 +179,18 @@ export default class ColorPicker {
       return true;
     }
     this.choosing = false;
+    if (e.target === this.canvas) {
+      this.selecting = true;
+      this.getPaletteColorAtPoint(e);
+    }
+    if (e.target === this.canvasLight || e.target === this.colorRegulator) {
+      this.lightSelecting = true;
+      this.getColorLightAtClick(e);
+    }
+    if (e.target === this.canvasAlpha || e.target === this.alphaRegulator) {
+      this.alphaSelecting = true;
+      this.getAlphaAtClick(e);
+    }
     return false;
   }
 

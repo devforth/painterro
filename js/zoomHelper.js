@@ -31,7 +31,7 @@ export default class ZoomHelper {
   }
 
   handleMouseMove(e) {
-    if (this.main.colorPicker.choosing && e.altKey) {
+    if (this.main.colorPicker.choosing && !e.altKey) {
       if (!this.shown) {
         this.shown = true;
         this.zomer.style.display = 'block';

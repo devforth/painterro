@@ -9,13 +9,26 @@
     font-family: "Open Sans", sans-serif;
 }
 
-.ptro-holder {
-    position: fixed;
-    box-shadow: 3px 3px 15px #787878;
-    left: 35px;
-    right: 35px;
-    top: 35px;
-    bottom: 35px;
+@media screen and (min-width: 769px) {
+    .ptro-holder {
+        position: fixed;
+        box-shadow: 3px 3px 15px #787878;
+        left: 35px;
+        right: 35px;
+        top: 35px;
+        bottom: 35px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .ptro-holder {
+        position: fixed;
+        box-shadow: 3px 3px 15px #787878;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
 }
 
 .ptro-holder-wrapper {
@@ -41,6 +54,7 @@
 .ptro-wrapper canvas {
     vertical-align: middle;
     display: inline-block;
+    touch-action: none;
 }
 
 .ptro-icon-btn {
