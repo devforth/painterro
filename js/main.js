@@ -389,11 +389,14 @@ class PainterroProc {
     this.bar.id = `${this.id}-bar`;
     this.bar.className = 'ptro-bar ptro-color-main';
     this.bar.innerHTML =
-      `<span>${bar}</span>` +
+      `<div><span>${bar}</span>` +
       '<span class="tool-controls"></span>' +
       `<span class="ptro-bar-right">${rightBar}</span>` +
       '<span class="ptro-info"></span>' +
-      '<input id="ptro-file-input" type="file" style="display: none;" accept="image/x-png,image/gif,image/jpeg" />';
+      '<input id="ptro-file-input" type="file" style="display: none;" accept="image/x-png,image/gif,image/jpeg" /></div>';
+    if (this.isMobile) {
+      this.bar.style['overflow-x'] = 'auto';
+    }
 
     this.baseEl.appendChild(this.bar);
     const style = this.doc.createElement('style');

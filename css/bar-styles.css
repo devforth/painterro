@@ -24,6 +24,17 @@
     margin-left: 5px;
 }
 
+@media screen and (max-width: 768px) {
+    .ptro-bar > div {
+        white-space: nowrap;
+    }
+    span.ptro-bar-right {
+        float: none;
+    }
+    span.ptro-info {
+        display: none;
+    }
+}
 
 .ptro-bar .ptro-input {
     height: 32px;
