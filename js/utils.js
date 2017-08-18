@@ -11,14 +11,14 @@ export function addDocumentObjectHelpers() {
   if (!('documentOffsetTop' in Element.prototype)) {
     Object.defineProperty(Element.prototype, 'documentOffsetTop', {
       get() {
-        return this.offsetTop + (this.offsetParent ? this.offsetParent.documentOffsetTop : 0);
+        return this.getBoundingClientRect().top;
       },
     });
   }
   if (!('documentOffsetLeft' in Element.prototype)) {
     Object.defineProperty(Element.prototype, 'documentOffsetLeft', {
       get() {
-        return this.offsetLeft + (this.offsetParent ? this.offsetParent.documentOffsetLeft : 0);
+        return this.getBoundingClientRect().left;
       },
     });
   }
