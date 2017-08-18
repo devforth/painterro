@@ -652,8 +652,8 @@ class PainterroProc {
           this.colorPicker.handleMouseMove(e);
           this.zoomHelper.handleMouseMove(e);
           this.curCord = [
-            (e.clientX - this.toolContainer.documentOffsetLeft) + this.scroller.scrollLeft,
-            (e.clientY - this.toolContainer.documentOffsetTop) + this.scroller.scrollTop,
+            (e.clientX - this.wrapper.documentOffsetLeft) + this.scroller.scrollLeft,
+            (e.clientY - this.wrapper.documentOffsetTop) + this.scroller.scrollTop,
           ];
           const scale = this.getScale();
           this.curCord = [this.curCord[0] * scale, this.curCord[1] * scale];
@@ -690,9 +690,9 @@ class PainterroProc {
             this.select.adjustPosition();
             if (this.zoom) {
               this.scroller.scrollLeft = (this.curCord[0] / this.getScale()) -
-                (e.clientX - this.toolContainer.documentOffsetLeft);
+                (e.clientX - this.wrapper.documentOffsetLeft);
               this.scroller.scrollTop = (this.curCord[1] / this.getScale()) -
-                (e.clientY - this.toolContainer.documentOffsetTop);
+                (e.clientY - this.wrapper.documentOffsetTop);
             }
             e.preventDefault();
           }
