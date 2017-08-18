@@ -5,6 +5,7 @@ export default class TextTool {
     this.ctx = main.ctx;
     this.el = main.toolContainer;
     this.main = main;
+    this.wrapper = main.wrapper;
     this.input = this.el.querySelector('.ptro-text-tool-input');
 
     this.setFontSize(main.params.defaultFontSize);
@@ -65,7 +66,7 @@ export default class TextTool {
   reLimit() {
     this.input.style.right = 'auto';
     if (this.input.documentOffsetLeft + this.input.clientWidth >
-        this.el.documentOffsetLeft + this.el.clientWidth) {
+        this.wrapper.documentOffsetLeft + this.el.clientWidth) {
       this.input.style.right = '0';
     } else {
       this.input.style.right = 'auto';
@@ -73,7 +74,7 @@ export default class TextTool {
 
     this.input.style.bottom = 'auto';
     if (this.input.documentOffsetTop + this.input.clientHeight >
-        this.el.documentOffsetTop + this.el.clientHeight) {
+        this.wrapper.documentOffsetTop + this.el.clientHeight) {
       this.input.style.bottom = '0';
     } else {
       this.input.style.bottom = 'auto';
@@ -89,8 +90,8 @@ export default class TextTool {
       }
       this.active = true;
       this.crd = [
-        (event.clientX - this.el.documentOffsetLeft) + this.main.scroller.scrollLeft,
-        (event.clientY - this.el.documentOffsetTop) + this.main.scroller.scrollTop,
+        (event.clientX - this.wrapper.documentOffsetLeft) + this.main.scroller.scrollLeft,
+        (event.clientY - this.wrapper.documentOffsetTop) + this.main.scroller.scrollTop,
       ];
       const scale = this.main.getScale();
       this.scaledCord = [this.crd[0] * scale, this.crd[1] * scale];

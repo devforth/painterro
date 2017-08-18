@@ -133,8 +133,8 @@ export default class PainterroSelecter {
   reCalcCropperCords() {
     const ratio = this.getScale();
     this.area.topl = [
-      Math.round(((this.area.rect.documentOffsetLeft - this.wrapper.documentOffsetLeft)) / ratio),
-      Math.round(((this.area.rect.documentOffsetTop - this.wrapper.documentOffsetTop)) / ratio)];
+      Math.round(((this.area.rect.documentOffsetLeft - this.area.el.documentOffsetLeft)) / ratio),
+      Math.round(((this.area.rect.documentOffsetTop - this.area.el.documentOffsetTop)) / ratio)];
 
     this.area.bottoml = [
       Math.round(this.area.topl[0] + ((this.area.rect.clientWidth + 2) / ratio)),
@@ -228,9 +228,9 @@ export default class PainterroSelecter {
           if (this.imagePlaced) {
             this.finishPlacing();
           }
-          const x = (event.clientX - this.wrapper.documentOffsetLeft) +
+          const x = (event.clientX - this.area.el.documentOffsetLeft) +
             this.main.scroller.scrollLeft;
-          const y = (event.clientY - this.wrapper.documentOffsetTop) +
+          const y = (event.clientY - this.area.el.documentOffsetTop) +
             this.main.scroller.scrollTop;
 
           this.setLeft(x);
@@ -313,7 +313,7 @@ export default class PainterroSelecter {
       return;
     }
     if (this.area.moving) {
-      let newLeft = (event.clientX - this.wrapper.documentOffsetLeft - this.area.xHandle)
+      let newLeft = (event.clientX - this.area.el.documentOffsetLeft - this.area.xHandle)
         + this.main.scroller.scrollLeft;
       if (newLeft < 0) {
         newLeft = 0;
@@ -324,7 +324,7 @@ export default class PainterroSelecter {
       this.setLeft(newLeft);
       this.setRight(this.right - hDelta);
 
-      let newTop = (event.clientY - this.wrapper.documentOffsetTop - this.area.yHandle)
+      let newTop = (event.clientY - this.area.el.documentOffsetTop - this.area.yHandle)
         + this.main.scroller.scrollTop;
       if (newTop < 0) {
         newTop = 0;
@@ -340,27 +340,27 @@ export default class PainterroSelecter {
       if (this.area.resizingL) {
         resizing = true;
         const absLeft = this.fixCropperLeft(event.clientX + this.main.scroller.scrollLeft);
-        this.setLeft(absLeft - this.wrapper.documentOffsetLeft);
+        this.setLeft(absLeft - this.area.el.documentOffsetLeft);
         this.reCalcCropperCords();
       }
       if (this.area.resizingR) {
         resizing = true;
         const absRight = this.fixCropperRight(event.clientX + this.main.scroller.scrollLeft);
         this.setRight(
-          (this.area.el.clientWidth + this.wrapper.documentOffsetLeft) - absRight);
+          (this.area.el.clientWidth + this.area.el.documentOffsetLeft) - absRight);
         this.reCalcCropperCords();
       }
       if (this.area.resizingT) {
         resizing = true;
         const absTop = this.fixCropperTop(event.clientY + this.main.scroller.scrollTop);
-        this.setTop(absTop - this.wrapper.documentOffsetTop);
+        this.setTop(absTop - this.area.el.documentOffsetTop);
         this.reCalcCropperCords();
       }
       if (this.area.resizingB) {
         resizing = true;
         const absBottom = this.fixCropperBottom(event.clientY + this.main.scroller.scrollTop);
         this.setBottom(
-          (this.area.el.clientHeight + this.wrapper.documentOffsetTop) - absBottom);
+          (this.area.el.clientHeight + this.area.el.documentOffsetTop) - absBottom);
         this.reCalcCropperCords();
       }
       if (this.imagePlaced && !(event.ctrlKey || event.shiftKey)) {
