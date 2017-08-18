@@ -483,6 +483,7 @@ class PainterroProc {
       },
     };
     this.currentBackground = this.colorWidgetState.bg.alphaColor;
+    this.currentBackgroundAlpha = this.colorWidgetState.bg.alpha;
 
     this.tools.filter(t => this.params.hiddenTools.indexOf(t.name) === -1).forEach((b) => {
       this.getBtnEl(b).onclick = () => {

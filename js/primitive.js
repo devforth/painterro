@@ -1,4 +1,3 @@
-import { distance } from './utils';
 
 export default class PrimitiveTool {
   constructor(main) {
@@ -7,6 +6,7 @@ export default class PrimitiveTool {
     this.main = main;
     this.helperCanvas = document.createElement('canvas');
     this.canvas = main.canvas;
+    this.wrapper = this.main.wrapper;
   }
 
   activate(type) {
@@ -40,8 +40,8 @@ export default class PrimitiveTool {
       if (this.type === 'brush' || this.type === 'eraser') {
         this.state.cornerMarked = true;
         const cord = [
-          (event.clientX - this.el.documentOffsetLeft) + this.main.scroller.scrollLeft,
-          (event.clientY - this.el.documentOffsetTop) + this.main.scroller.scrollTop,
+          (event.clientX - this.wrapper.documentOffsetLeft) + this.main.scroller.scrollLeft,
+          (event.clientY - this.wrapper.documentOffsetTop) + this.main.scroller.scrollTop,
         ];
         const cur = {
           x: cord[0] * scale,
@@ -53,8 +53,8 @@ export default class PrimitiveTool {
       } else {
         this.state.cornerMarked = true;
         this.centerCord = [
-          (event.clientX - this.el.documentOffsetLeft) + this.main.scroller.scrollLeft,
-          (event.clientY - this.el.documentOffsetTop) + this.main.scroller.scrollTop,
+          (event.clientX - this.wrapper.documentOffsetLeft) + this.main.scroller.scrollLeft,
+          (event.clientY - this.wrapper.documentOffsetTop) + this.main.scroller.scrollTop,
         ];
         this.centerCord = [this.centerCord[0] * scale, this.centerCord[1] * scale];
       }
@@ -67,10 +67,11 @@ export default class PrimitiveTool {
     const origComposition = this.ctx.globalCompositeOperation;
     const isEraser = this.type === 'eraser';
     lineFill = this.main.colorWidgetState.line.alphaColor;
-    for (let i = 1; i < (isEraser ? 3 : 2); i += 1) {
+    const bgIsTransparent = this.main.currentBackgroundAlpha !== 1.0;
+    for (let i = 1; i <= (isEraser && bgIsTransparent ? 2 : 1); i += 1) {
       if (isEraser) {
-        this.ctx.globalCompositeOperation = i === 1 ? 'destination-out' : origComposition;
-        lineFill = i === 1 ? 'rgba(0,0,0,1)' : this.main.currentBackground;
+        this.ctx.globalCompositeOperation = i === 1 && bgIsTransparent ? 'destination-out' : origComposition;
+        lineFill = i === 1 && bgIsTransparent ? 'rgba(0,0,0,1)' : this.main.currentBackground;
       }
       if (smPoints.length === 1) {
         this.ctx.beginPath();
@@ -85,7 +86,7 @@ export default class PrimitiveTool {
       } else {
         this.ctx.beginPath();
         if (this.type === 'eraser') {
-          this.ctx.lineWidth = this.eraserWidth - (i === 1 ? 1 : 0);
+          this.ctx.lineWidth = this.eraserWidth;
         } else {
           this.ctx.lineWidth = this.lineWidth;
         }
@@ -113,22 +114,19 @@ export default class PrimitiveTool {
       this.ctx.putImageData(this.tmpData, 0, 0);
 
       this.curCord = [
-        (event.clientX - this.el.documentOffsetLeft) + this.main.scroller.scrollLeft,
-        (event.clientY - this.el.documentOffsetTop) + this.main.scroller.scrollTop,
+        (event.clientX - this.wrapper.documentOffsetLeft) + this.main.scroller.scrollLeft,
+        (event.clientY - this.wrapper.documentOffsetTop) + this.main.scroller.scrollTop,
       ];
       const scale = this.main.getScale();
       this.curCord = [this.curCord[0] * scale, this.curCord[1] * scale];
 
       if (this.type === 'brush' || this.type === 'eraser') {
-        const prevLast = this.points.slice(-1)[0];
+        // const prevLast = this.points.slice(-1)[0];
         const cur = {
           x: this.curCord[0],
           y: this.curCord[1],
         };
-
-        if (distance(prevLast, cur) > 5) {
-          this.points.push(cur);
-        }
+        this.points.push(cur);
         this.drawBrushPath();
       } else if (this.type === 'line') {
         if (event.ctrlKey || event.shiftKey) {

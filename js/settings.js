@@ -17,6 +17,7 @@ export default class Settings {
 
     this.clearButton.onclick = () => {
       this.main.currentBackground = this.main.colorWidgetState.bg.alphaColor;
+      this.main.currentBackgroundAlpha = this.main.colorWidgetState.bg.alpha;
       this.main.clearBackground();
       this.startClose();
     };
