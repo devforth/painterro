@@ -786,6 +786,7 @@ class PainterroProc {
   fitImage(img) {
     this.resize(img.naturalWidth, img.naturalHeight);
     this.ctx.drawImage(img, 0, 0);
+    this.zoomFactor = this.wrapper.documentClientHeight / this.size.h;
     this.adjustSizeFull();
     this.worklog.captureState();
   }
