@@ -46,7 +46,9 @@ export default class TextTool {
     if (this.active) {
       this.input.focus();
     }
-    this.reLimit();
+    if (this.active) {
+      this.reLimit();
+    }
   }
 
   setFontSize(size) {
@@ -55,7 +57,9 @@ export default class TextTool {
     // if (this.active) {
     //   this.input.focus();
     // }
-    this.reLimit();
+    if (this.active) {
+      this.reLimit();
+    }
   }
 
   setFontColor(color) {
@@ -63,18 +67,26 @@ export default class TextTool {
     this.input.style.color = color;
   }
 
+  inputLeft() {
+    return this.input.documentOffsetLeft + this.main.scroller.scrollLeft;
+  }
+
+  inputTop() {
+    return this.input.documentOffsetTop + this.main.scroller.scrollTop;
+  }
+
   reLimit() {
     this.input.style.right = 'auto';
-    if (this.input.documentOffsetLeft + this.input.clientWidth >
-        this.wrapper.documentOffsetLeft + this.el.clientWidth) {
+    if (this.inputLeft() + this.input.clientWidth >
+        this.main.elLeft() + this.el.clientWidth) {
       this.input.style.right = '0';
     } else {
       this.input.style.right = 'auto';
     }
 
     this.input.style.bottom = 'auto';
-    if (this.input.documentOffsetTop + this.input.clientHeight >
-        this.wrapper.documentOffsetTop + this.el.clientHeight) {
+    if (this.inputTop() + this.input.clientHeight >
+        this.main.elTop() + this.el.clientHeight) {
       this.input.style.bottom = '0';
     } else {
       this.input.style.bottom = 'auto';
@@ -90,8 +102,8 @@ export default class TextTool {
       }
       this.active = true;
       this.crd = [
-        (event.clientX - this.wrapper.documentOffsetLeft) + this.main.scroller.scrollLeft,
-        (event.clientY - this.wrapper.documentOffsetTop) + this.main.scroller.scrollTop,
+        (event.clientX - this.main.elLeft()) + this.main.scroller.scrollLeft,
+        (event.clientY - this.main.elTop()) + this.main.scroller.scrollTop,
       ];
       const scale = this.main.getScale();
       this.scaledCord = [this.crd[0] * scale, this.crd[1] * scale];

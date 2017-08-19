@@ -133,8 +133,8 @@ export default class PainterroSelecter {
   reCalcCropperCords() {
     const ratio = this.getScale();
     this.area.topl = [
-      Math.round(((this.area.rect.documentOffsetLeft - this.area.el.documentOffsetLeft)) / ratio),
-      Math.round(((this.area.rect.documentOffsetTop - this.area.el.documentOffsetTop)) / ratio)];
+      Math.round(((this.rectLeft() - this.main.elLeft())) / ratio),
+      Math.round(((this.rectTop() - this.main.elTop())) / ratio)];
 
     this.area.bottoml = [
       Math.round(this.area.topl[0] + ((this.area.rect.clientWidth + 2) / ratio)),
@@ -228,9 +228,9 @@ export default class PainterroSelecter {
           if (this.imagePlaced) {
             this.finishPlacing();
           }
-          const x = (event.clientX - this.area.el.documentOffsetLeft) +
+          const x = (event.clientX - this.main.elLeft()) +
             this.main.scroller.scrollLeft;
-          const y = (event.clientY - this.area.el.documentOffsetTop) +
+          const y = (event.clientY - this.main.elTop()) +
             this.main.scroller.scrollTop;
 
           this.setLeft(x);
@@ -246,9 +246,9 @@ export default class PainterroSelecter {
       },
       'ptro-crp-rect': () => {
         this.area.moving = true;
-        this.area.xHandle = (event.clientX - this.area.rect.documentOffsetLeft) +
+        this.area.xHandle = (event.clientX - this.rectLeft()) +
           this.main.scroller.scrollLeft;
-        this.area.yHandle = (event.clientY - this.area.rect.documentOffsetTop) +
+        this.area.yHandle = (event.clientY - this.rectTop()) +
           this.main.scroller.scrollTop;
       },
       'ptro-crp-tr': () => {
@@ -313,7 +313,7 @@ export default class PainterroSelecter {
       return;
     }
     if (this.area.moving) {
-      let newLeft = (event.clientX - this.area.el.documentOffsetLeft - this.area.xHandle)
+      let newLeft = (event.clientX - this.main.elLeft() - this.area.xHandle)
         + this.main.scroller.scrollLeft;
       if (newLeft < 0) {
         newLeft = 0;
@@ -324,7 +324,7 @@ export default class PainterroSelecter {
       this.setLeft(newLeft);
       this.setRight(this.right - hDelta);
 
-      let newTop = (event.clientY - this.area.el.documentOffsetTop - this.area.yHandle)
+      let newTop = (event.clientY - this.main.elTop() - this.area.yHandle)
         + this.main.scroller.scrollTop;
       if (newTop < 0) {
         newTop = 0;
@@ -340,27 +340,27 @@ export default class PainterroSelecter {
       if (this.area.resizingL) {
         resizing = true;
         const absLeft = this.fixCropperLeft(event.clientX + this.main.scroller.scrollLeft);
-        this.setLeft(absLeft - this.area.el.documentOffsetLeft);
+        this.setLeft(absLeft - this.main.elLeft());
         this.reCalcCropperCords();
       }
       if (this.area.resizingR) {
         resizing = true;
         const absRight = this.fixCropperRight(event.clientX + this.main.scroller.scrollLeft);
         this.setRight(
-          (this.area.el.clientWidth + this.area.el.documentOffsetLeft) - absRight);
+          (this.area.el.clientWidth + this.main.elLeft()) - absRight);
         this.reCalcCropperCords();
       }
       if (this.area.resizingT) {
         resizing = true;
         const absTop = this.fixCropperTop(event.clientY + this.main.scroller.scrollTop);
-        this.setTop(absTop - this.area.el.documentOffsetTop);
+        this.setTop(absTop - this.main.elTop());
         this.reCalcCropperCords();
       }
       if (this.area.resizingB) {
         resizing = true;
         const absBottom = this.fixCropperBottom(event.clientY + this.main.scroller.scrollTop);
         this.setBottom(
-          (this.area.el.clientHeight + this.area.el.documentOffsetTop) - absBottom);
+          (this.area.el.clientHeight + this.main.elTop()) - absBottom);
         this.reCalcCropperCords();
       }
       if (this.imagePlaced && !(event.ctrlKey || event.shiftKey)) {
@@ -410,34 +410,33 @@ export default class PainterroSelecter {
 
   leftKeepRatio() {
     const newW = this.area.rect.clientHeight * this.placedRatio;
-    const suggLeft = this.wrapper.documentOffsetLeft +
+    const suggLeft = this.main.elLeft() +
       (this.area.el.clientWidth - this.right - newW - 2);
     const absLeft = this.fixCropperLeft(suggLeft);
-    this.setLeft(absLeft - this.wrapper.documentOffsetLeft);
+    this.setLeft(absLeft - this.main.elLeft());
   }
 
   topKeepRatio() {
     const newH = this.area.rect.clientWidth / this.placedRatio;
     const absTop = this.fixCropperTop(
-      this.wrapper.documentOffsetTop +
-      (this.area.el.clientHeight - this.bottom - newH - 2));
-    this.setTop(absTop - this.wrapper.documentOffsetTop);
+      this.main.elTop() + (this.area.el.clientHeight - this.bottom - newH - 2));
+    this.setTop(absTop - this.main.elTop());
   }
 
   bottomKeepRatio() {
     const newH = this.area.rect.clientWidth / this.placedRatio;
     const absBottom = this.fixCropperBottom(
-      this.wrapper.documentOffsetTop +
+      this.main.elTop() +
       this.top + newH + 2);
-    this.setBottom((this.area.el.clientHeight + this.wrapper.documentOffsetTop) - absBottom);
+    this.setBottom((this.area.el.clientHeight + this.main.elTop()) - absBottom);
   }
 
   rightKeepRatio() {
     const newW = this.area.rect.clientHeight * this.placedRatio;
     const absRight = this.fixCropperRight(
-      this.wrapper.documentOffsetLeft +
+      this.main.elLeft() +
       this.left + newW + 2);
-    this.setRight((this.area.el.clientWidth + this.wrapper.documentOffsetLeft) - absRight);
+    this.setRight((this.area.el.clientWidth + this.main.elLeft()) - absRight);
   }
 
   show() {
@@ -485,12 +484,20 @@ export default class PainterroSelecter {
     }
   }
 
+  rectLeft() {
+    return this.area.rect.documentOffsetLeft + this.main.scroller.scrollLeft;
+  }
+
+  rectTop() {
+    return this.area.rect.documentOffsetTop + this.main.scroller.scrollTop;
+  }
+
   /* fixers */
   fixCropperLeft(left) {
     let newLeft = left;
-    const absLeftMiddle = this.area.rect.documentOffsetLeft + this.area.rect.clientWidth;
-    if (newLeft < this.wrapper.documentOffsetLeft) {
-      return this.wrapper.documentOffsetLeft;
+    const absLeftMiddle = this.rectLeft() + this.area.rect.clientWidth;
+    if (newLeft < this.main.elLeft()) {
+      return this.main.elLeft();
     } else if (newLeft > absLeftMiddle) {
       newLeft = absLeftMiddle;
       if (this.area.resizingL) {
@@ -503,11 +510,12 @@ export default class PainterroSelecter {
 
   fixCropperRight(right) {
     let newRight = right;
-    const absRightLimit = this.wrapper.documentOffsetLeft + this.area.el.clientWidth;
+    const absRightLimit = this.main.elLeft() + this.area.el.clientWidth;
     if (newRight > absRightLimit) {
       return absRightLimit;
-    } else if (newRight < this.area.rect.documentOffsetLeft) {
-      newRight = this.area.rect.documentOffsetLeft + this.area.rect.clientWidth;
+    } else if (newRight < this.rectLeft()) {
+      newRight = this.rectLeft() +
+        this.area.rect.clientWidth;
       if (this.area.resizingR) {
         this.area.resizingR = false;
         this.area.resizingL = true;
@@ -518,9 +526,9 @@ export default class PainterroSelecter {
 
   fixCropperTop(top) {
     let newTop = top;
-    const absTopMiddle = this.area.rect.documentOffsetTop + this.area.rect.clientHeight;
-    if (newTop < this.wrapper.documentOffsetTop) {
-      return this.wrapper.documentOffsetTop;
+    const absTopMiddle = this.rectTop() + this.area.rect.clientHeight;
+    if (newTop < this.main.elTop()) {
+      return this.main.elTop();
     } else if (newTop > absTopMiddle) {
       newTop = absTopMiddle;
       if (this.area.resizingT) {
@@ -533,11 +541,11 @@ export default class PainterroSelecter {
 
   fixCropperBottom(bottom) {
     let newBottom = bottom;
-    const absBottomLimit = this.wrapper.documentOffsetTop + this.area.el.clientHeight;
+    const absBottomLimit = this.main.elTop() + this.area.el.clientHeight;
     if (newBottom > absBottomLimit) {
       return absBottomLimit;
-    } else if (newBottom < this.area.rect.documentOffsetTop) {
-      newBottom = this.area.rect.documentOffsetTop + this.area.rect.clientHeight;
+    } else if (newBottom < this.rectTop()) {
+      newBottom = this.rectTop() + this.area.rect.clientHeight;
       if (this.area.resizingB) {
         this.area.resizingB = false;
         this.area.resizingT = true;

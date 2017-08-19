@@ -40,8 +40,8 @@ export default class ZoomHelper {
       }
       const scale = this.main.getScale();
       const cord = [
-        (e.clientX - this.wrapper.documentOffsetLeft) + this.main.scroller.scrollLeft,
-        (e.clientY - this.wrapper.documentOffsetTop) + this.main.scroller.scrollTop,
+        (e.clientX - this.main.elLeft()) + this.main.scroller.scrollLeft,
+        (e.clientY - this.main.elTop()) + this.main.scroller.scrollTop,
       ];
 
       let x = cord[0] * scale;

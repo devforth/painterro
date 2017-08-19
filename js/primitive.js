@@ -6,7 +6,6 @@ export default class PrimitiveTool {
     this.main = main;
     this.helperCanvas = document.createElement('canvas');
     this.canvas = main.canvas;
-    this.wrapper = this.main.wrapper;
   }
 
   activate(type) {
@@ -40,8 +39,8 @@ export default class PrimitiveTool {
       if (this.type === 'brush' || this.type === 'eraser') {
         this.state.cornerMarked = true;
         const cord = [
-          (event.clientX - this.wrapper.documentOffsetLeft) + this.main.scroller.scrollLeft,
-          (event.clientY - this.wrapper.documentOffsetTop) + this.main.scroller.scrollTop,
+          (event.clientX - this.main.elLeft()) + this.main.scroller.scrollLeft,
+          (event.clientY - this.main.elTop()) + this.main.scroller.scrollTop,
         ];
         const cur = {
           x: cord[0] * scale,
@@ -53,8 +52,8 @@ export default class PrimitiveTool {
       } else {
         this.state.cornerMarked = true;
         this.centerCord = [
-          (event.clientX - this.wrapper.documentOffsetLeft) + this.main.scroller.scrollLeft,
-          (event.clientY - this.wrapper.documentOffsetTop) + this.main.scroller.scrollTop,
+          (event.clientX - this.main.elLeft()) + this.main.scroller.scrollLeft,
+          (event.clientY - this.main.elTop()) + this.main.scroller.scrollTop,
         ];
         this.centerCord = [this.centerCord[0] * scale, this.centerCord[1] * scale];
       }
@@ -114,8 +113,8 @@ export default class PrimitiveTool {
       this.ctx.putImageData(this.tmpData, 0, 0);
 
       this.curCord = [
-        (event.clientX - this.wrapper.documentOffsetLeft) + this.main.scroller.scrollLeft,
-        (event.clientY - this.wrapper.documentOffsetTop) + this.main.scroller.scrollTop,
+        (event.clientX - this.main.elLeft()) + this.main.scroller.scrollLeft,
+        (event.clientY - this.main.elTop()) + this.main.scroller.scrollTop,
       ];
       const scale = this.main.getScale();
       this.curCord = [this.curCord[0] * scale, this.curCord[1] * scale];
@@ -154,11 +153,11 @@ export default class PrimitiveTool {
         this.ctx.beginPath();
 
         const tl = [
-          Math.min(this.curCord[0], this.centerCord[0]),
-          Math.min(this.curCord[1], this.centerCord[1])];
+          this.centerCord[0],
+          this.centerCord[1]];
 
-        let w = Math.abs(this.curCord[0] - this.centerCord[0]);
-        let h = Math.abs(this.curCord[1] - this.centerCord[1]);
+        let w = this.curCord[0] - this.centerCord[0];
+        let h = this.curCord[1] - this.centerCord[1];
 
         if (event.ctrlKey || event.shiftKey) {
           const min = Math.min(Math.abs(w), Math.abs(h));

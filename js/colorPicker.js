@@ -49,7 +49,6 @@ export default class ColorPicker {
     const w = this.w;
     const h = this.h;
     this.lightPosition = this.w - 1;
-    this.mainWrapper = main.wrapper;
     this.wrapper = main.wrapper.querySelector('.ptro-color-widget-wrapper');
     this.input = main.wrapper.querySelector('.ptro-color-widget-wrapper .ptro-color');
     this.pipetteButton = main.wrapper.querySelector('.ptro-color-widget-wrapper button.ptro-pipette');
@@ -124,8 +123,8 @@ export default class ColorPicker {
   }
 
   getPaletteColorAtPoint(e) {
-    let x = e.clientX - this.mainWrapper.documentOffsetLeft;
-    let y = e.clientY - this.mainWrapper.documentOffsetTop;
+    let x = e.clientX - this.canvas.documentOffsetLeft;
+    let y = e.clientY - this.canvas.documentOffsetTop;
     x = (x < 1 && 1) || x;
     y = (y < 1 && 1) || y;
     x = (x > this.w && this.w - 1) || x;
@@ -207,11 +206,11 @@ export default class ColorPicker {
       }
     } else if (this.choosingActive) {
       const scale = this.main.getScale();
-      let x = ((e.clientX - this.mainWrapper.documentOffsetLeft) +
+      let x = ((e.clientX - this.main.elLeft()) +
         this.main.scroller.scrollLeft) * scale;
       x = (x < 1 && 1) || x;
       x = (x > this.main.size.w - 1 && this.main.size.w - 1) || x;
-      let y = ((e.clientY - this.mainWrapper.documentOffsetTop) +
+      let y = ((e.clientY - this.main.elTop()) +
         this.main.scroller.scrollTop) * scale;
       y = (y < 1 && 1) || y;
       y = (y > this.main.size.h - 1 && this.main.size.h - 1) || y;

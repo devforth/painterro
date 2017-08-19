@@ -4,7 +4,7 @@ import '../css/icons/ptroiconfont.css';
 
 import PainterroSelecter from './selecter';
 import WorkLog from './worklog';
-import { genId, addDocumentObjectHelpers, KEYS, trim, isMobileOrTablet } from './utils';
+import { genId, addDocumentObjectHelpers, KEYS, trim, isMobileOrTablet, getScrollbarWidth } from './utils';
 import PrimitiveTool from './primitive';
 import ColorPicker from './colorPicker';
 import { setDefaults, setParam } from './params';
@@ -653,8 +653,8 @@ class PainterroProc {
           this.colorPicker.handleMouseMove(e);
           this.zoomHelper.handleMouseMove(e);
           this.curCord = [
-            (e.clientX - this.wrapper.documentOffsetLeft) + this.scroller.scrollLeft,
-            (e.clientY - this.wrapper.documentOffsetTop) + this.scroller.scrollTop,
+            (e.clientX - this.elLeft()) + this.scroller.scrollLeft,
+            (e.clientY - this.elTop()) + this.scroller.scrollTop,
           ];
           const scale = this.getScale();
           this.curCord = [this.curCord[0] * scale, this.curCord[1] * scale];
@@ -784,6 +784,14 @@ class PainterroProc {
     });
   }
 
+  elLeft() {
+    return this.toolContainer.documentOffsetLeft + this.scroller.scrollLeft;
+  }
+
+  elTop() {
+    return this.toolContainer.documentOffsetTop + this.scroller.scrollTop;
+  }
+
   fitImage(img) {
     this.resize(img.naturalWidth, img.naturalHeight);
     this.ctx.drawImage(img, 0, 0);
@@ -798,6 +806,7 @@ class PainterroProc {
 
   show(openImage) {
     this.shown = true;
+    this.scrollWidth = getScrollbarWidth();
     if (this.isMobile) {
       this.origOverflowY = this.body.style['overflow-y'];
       this.body.style['overflow-y'] = 'hidden';
@@ -871,10 +880,14 @@ class PainterroProc {
       this.canvas.style.height = `${this.size.h * this.zoomFactor}px`;
       this.ratioRelation = 0;
     }
-    if (this.size.h * this.zoomFactor > this.wrapper.documentClientHeight) {
+    if ((this.size.h * this.zoomFactor) >=
+        this.wrapper.documentClientHeight -
+        (this.prevWithScroll === true ? this.scrollWidth : 0)) {
       this.scroller.className = 'ptro-scroller'; // prevent empty part of scroll area
+      this.prevWithScroll = true;
     } else {
       this.scroller.className = 'ptro-scroller ptro-v-middle';
+      this.prevWithScroll = false;
     }
     this.syncToolElement();
     this.select.draw();
