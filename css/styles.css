@@ -257,20 +257,14 @@
     cursor: crosshair;
 }
 
-.ptro-wrapper .ptro-pallet {
+.ptro-wrapper .ptro-pallet,
+.ptro-wrapper .ptro-resize-widget{
     width: 200px;
     padding: 10px;
     z-index: 100;
     box-sizing: border-box;
+    font-size: 1px;
 }
-
-.ptro-wrapper .ptro-resize-widget {
-    width: 200px;
-    padding: 10px;
-    z-index: 100;
-    box-sizing: border-box;
-}
-
 
 .ptro-error {
     background-color: rgba(200, 0, 0, 0.5);
