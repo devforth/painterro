@@ -783,7 +783,6 @@ class PainterroProc {
     this.windowHandlers = {
       resize: () => {
         if (this.shown) {
-          console.log('rsz');
           this.adjustSizeFull();
           this.syncToolElement();
         }
