@@ -353,7 +353,7 @@ ToDo list
 - Ability to save loacaly
 - line arrows
 - Edit button on page <img> tags (provide selector)
-
+- Software clipbord for Ctrl+C not work on large areas
 
 [npm]: https://img.shields.io/npm/v/painterro.svg
 [npm-url]: https://npmjs.com/package/painterro

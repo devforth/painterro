@@ -1,5 +1,5 @@
 import { tr } from './translation';
-import { genId, KEYS, copyToClipboard } from './utils';
+import { genId, KEYS, copyToClipboard, imgToDataURL } from './utils';
 
 export default class Inserter {
   constructor() {
@@ -116,22 +116,32 @@ export default class Inserter {
     }
   }
 
-  handleOpen(source) {
-    const img = new Image();
-    const empty = this.main.worklog.clean;
-    img.onload = () => {
-      if (empty) {
-        this.main.fitImage(img);
-      } else {
-        this.loaded(img);
-      }
-      this.finishLoading();
-    };
+  handleOpen(src) {
     this.startLoading();
-    img.src = source;
-    if (!empty) {
-      this.selector.removeAttribute('hidden');
-      this.waitChoice = true;
+    const handleIt = (source) => {
+      const img = new Image();
+      const empty = this.main.worklog.clean;
+      img.onload = () => {
+        if (empty) {
+          this.main.fitImage(img);
+        } else {
+          this.loaded(img);
+        }
+        this.finishLoading();
+      };
+      img.src = source;
+      if (!empty) {
+        this.selector.removeAttribute('hidden');
+        this.waitChoice = true;
+      }
+    };
+
+    if (src.indexOf('data') !== 0) {
+      imgToDataURL(src, (dataUrl) => {
+        handleIt(dataUrl);
+      });
+    } else {
+      handleIt(src);
     }
   }
 
