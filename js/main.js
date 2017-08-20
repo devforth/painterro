@@ -783,6 +783,7 @@ class PainterroProc {
     this.windowHandlers = {
       resize: () => {
         if (this.shown) {
+          console.log('rsz');
           this.adjustSizeFull();
           this.syncToolElement();
         }
@@ -871,15 +872,13 @@ class PainterroProc {
       if (this.size.w > this.wrapper.documentClientWidth ||
         this.size.h > this.wrapper.documentClientHeight) {
         const newRelation = ratio < this.size.ratio;
-        if (newRelation !== this.ratioRelation) {
-          this.ratioRelation = newRelation;
-          if (newRelation) {
-            this.canvas.style.width = '100%';
-            this.canvas.style.height = 'auto';
-          } else {
-            this.canvas.style.width = 'auto';
-            this.canvas.style.height = '100%';
-          }
+        this.ratioRelation = newRelation;
+        if (newRelation) {
+          this.canvas.style.width = `${this.wrapper.clientWidth}px`;
+          this.canvas.style.height = 'auto';
+        } else {
+          this.canvas.style.width = 'auto';
+          this.canvas.style.height = `${this.wrapper.clientHeight}px`;
         }
         this.scroller.style.overflow = 'hidden';
       } else {
