@@ -121,7 +121,7 @@ export function setDefaults(parameters) {
         background-color: ${params.colorScheme.hoverControl};
         color:${params.colorScheme.hoverControlContent}}    
     .ptro-bordered-control{border-color: ${params.colorScheme.activeControl}}
-    .ptro-input, .ptro-input:focus {
+    input.ptro-input, input.ptro-input:focus {
       border: 1px solid ${params.colorScheme.inputBorderColor};
       background-color: ${params.colorScheme.inputBackground};
       color: ${params.colorScheme.inputText}

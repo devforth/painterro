@@ -146,7 +146,7 @@
     cursor: move;
 
     -moz-user-select: none;
-    -webkit-user-select: none;
+    /* -webkit-user-select: none; */
     -ms-user-select: none;
     user-select: none;
     -webkit-user-drag: none;
@@ -229,7 +229,7 @@
 .ptro-bar input,
 .ptro-bar .ptro-named-btn p {
     -moz-user-select: none;
-    -webkit-user-select: none;
+   /* -webkit-user-select: none; */
     -ms-user-select: none;
     user-select: none;
     -webkit-user-drag: none;
@@ -255,6 +255,10 @@
 
 .ptro-wrapper .ptro-pallet canvas {
     cursor: crosshair;
+}
+
+div.ptro-pallet {
+    line-height: 0;
 }
 
 .ptro-wrapper .ptro-pallet,

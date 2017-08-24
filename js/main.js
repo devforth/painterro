@@ -641,19 +641,26 @@ class PainterroProc {
         }
       },
       touchstart: (e) => {
-        e.clientX = e.changedTouches[0].clientX;
-        e.clientY = e.changedTouches[0].clientY;
-        this.documentHandlers.mousedown(e);
+        if (e.changedTouches.length === 1) {
+          e.clientX = e.changedTouches[0].clientX;
+          e.clientY = e.changedTouches[0].clientY;
+          this.documentHandlers.mousedown(e);
+        }
       },
       touchend: (e) => {
-        e.clientX = e.changedTouches[0].clientX;
-        e.clientY = e.changedTouches[0].clientY;
-        this.documentHandlers.mouseup(e);
+        if (e.changedTouches.length === 1) {
+          e.clientX = e.changedTouches[0].clientX;
+          e.clientY = e.changedTouches[0].clientY;
+          this.documentHandlers.mouseup(e);
+        }
       },
       touchmove: (e) => {
-        e.clientX = e.changedTouches[0].clientX;
-        e.clientY = e.changedTouches[0].clientY;
-        this.documentHandlers.mousemove(e);
+        if (e.changedTouches.length === 1) {
+          e.clientX = e.changedTouches[0].clientX;
+          e.clientY = e.changedTouches[0].clientY;
+          this.documentHandlers.mousemove(e);
+        }
+
       },
       mousemove: (e) => {
         if (this.shown) {
@@ -666,6 +673,7 @@ class PainterroProc {
           ];
           const scale = this.getScale();
           this.curCord = [this.curCord[0] * scale, this.curCord[1] * scale];
+          e.preventDefault();
         }
       },
       mouseup: (e) => {

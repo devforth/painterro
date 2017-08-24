@@ -111,7 +111,6 @@ export default class PrimitiveTool {
   handleMouseMove(event) {
     if (this.state.cornerMarked) {
       this.ctx.putImageData(this.tmpData, 0, 0);
-
       this.curCord = [
         (event.clientX - this.main.elLeft()) + this.main.scroller.scrollLeft,
         (event.clientY - this.main.elTop()) + this.main.scroller.scrollTop,
