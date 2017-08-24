@@ -31,9 +31,9 @@
     span.ptro-bar-right {
         float: none;
     }
-    /*todo span.ptro-info {*/
-        /*display: none;*/
-    /*}*/
+    span.ptro-info {
+        display: none;
+    }
 }
 
 .ptro-bar .ptro-input {

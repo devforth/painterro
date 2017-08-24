@@ -660,7 +660,6 @@ class PainterroProc {
           e.clientY = e.changedTouches[0].clientY;
           this.documentHandlers.mousemove(e);
         }
-
       },
       mousemove: (e) => {
         if (this.shown) {
