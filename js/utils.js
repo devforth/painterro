@@ -156,3 +156,7 @@ export function imgToDataURL(url, callback) {
   xhr.responseType = 'blob';
   xhr.send();
 }
+
+export function logError(error) {
+  console.error(`[Painterro] ${error}`);
+}

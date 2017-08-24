@@ -7,7 +7,7 @@ import WorkLog from './worklog';
 import { genId, addDocumentObjectHelpers, KEYS, trim, isMobileOrTablet, getScrollbarWidth } from './utils';
 import PrimitiveTool from './primitive';
 import ColorPicker from './colorPicker';
-import { setDefaults, setParam } from './params';
+import { setDefaults, setParam, logError } from './params';
 import { tr } from './translation';
 import ZoomHelper from './zoomHelper';
 import TextTool from './text';
@@ -491,15 +491,11 @@ class PainterroProc {
     this.currentBackground = this.colorWidgetState.bg.alphaColor;
     this.currentBackgroundAlpha = this.colorWidgetState.bg.alpha;
 
-    if (this.params.defaultTool) {
-      this.defaultTool = this.toolByName[this.params.defaultTool];
-    }
-    this.defaultTool = this.defaultTool || this.toolByName.select;
-
+    this.defaultTool = this.toolByName[this.params.defaultTool] || this.toolByName.select;
 
     this.tools.filter(t => this.params.hiddenTools.indexOf(t.name) === -1).forEach((b) => {
       this.getBtnEl(b).onclick = () => {
-        if (b === this.toolByName.select && this.activeTool === b) {
+        if (b === this.defaultTool && this.activeTool === b) {
           return;
         }
         const currentActive = this.activeTool;
@@ -596,7 +592,7 @@ class PainterroProc {
         this.saving = false;
       });
     } else {
-      console.error('No saveHandler defined, please check documentation');
+      logError('No saveHandler defined, please check documentation');
       if (icon) {
         icon.className = 'ptro-icon ptro-icon-save';
       }

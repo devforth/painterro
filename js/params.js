@@ -1,6 +1,6 @@
 import { HexToRGBA } from './colorPicker';
 import Translation from './translation';
-import { trim } from './utils';
+import { trim, logError } from './utils';
 
 const STORAGE_KEY = 'painterro-data';
 
@@ -60,7 +60,15 @@ export function setDefaults(parameters) {
   params.backgroundFillAlphaColor = HexToRGBA(params.backgroundFillColor,
     params.backgroundFillColorAlpha);
 
+
+  params.defaultTool = params.defaultTool || 'select';
   params.hiddenTools = params.hiddenTools || [];
+  const defaultInHiddenIndex = params.hiddenTools.indexOf(params.defaultTool);
+  if (defaultInHiddenIndex > -1) {
+    logError(`Can't hide default tool '${params.defaultTool}', please change default tool to another to hide it`);
+    params.hiddenTools.splice(defaultInHiddenIndex, 1);
+  }
+
   params.pixelizePixelSize = settings.pixelizePixelSize || params.pixelizePixelSize || '20%';
 
   params.colorScheme = params.colorScheme || {};

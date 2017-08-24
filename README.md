@@ -137,7 +137,8 @@ Painterro({
 |`backgroundFillColorAlpha`| Transparancy of `backgroundFillColor` from 0.0 to 1.0 | 1.0 |
 |`defaultFontSize` | Default font size in pixels | 24 |
 |`defaultSize` | default image size, should be string in format `<width>x<height>` in pixel, e.g. `'200x100'`. If value is `'fill'`(default) than all container size will be used | `'fill'` |
-|`hiddenTools` | List of tools that you wish to exclude from toolbar e.g. something from this list `['crop', 'line', 'rect', 'ellipse', 'brush', 'text', 'rotate', 'resize',  'save', 'open', 'close']` | [] |
+|`defaultTool` | Tool selected by default | 'select' | 
+|`hiddenTools` | List of tools that you wish to exclude from toolbar e.g. something from this list `['crop', 'line', 'rect', 'ellipse', 'brush', 'text', 'rotate', 'resize',  'save', 'open', 'close']`, You can't hide default tool | [] |
 |`initText` | Display some centered text before painting. If null, no text will be shown | null |
 |`initTextColor` | Color of init text | '#808080' |
 |`initTextStyle` | Style of init text | "26px 'Open Sans', sans-serif" |
@@ -344,6 +345,11 @@ Add/edit icons in `res` folder. Then run
 ```bash
 npm run buildfont
 ```
+
+Contributing
+------------
+Pull-requests are welcome. Please add yourself to CONTRIBUTORS.md
+
 
 ToDo list
 ---------
