@@ -491,6 +491,12 @@ class PainterroProc {
     this.currentBackground = this.colorWidgetState.bg.alphaColor;
     this.currentBackgroundAlpha = this.colorWidgetState.bg.alpha;
 
+    if (this.params.defaultTool) {
+      this.defaultTool = this.toolByName[this.params.defaultTool];
+    }
+    this.defaultTool = this.defaultTool || this.toolByName.select;
+
+
     this.tools.filter(t => this.params.hiddenTools.indexOf(t.name) === -1).forEach((b) => {
       this.getBtnEl(b).onclick = () => {
         if (b === this.toolByName.select && this.activeTool === b) {
@@ -501,13 +507,13 @@ class PainterroProc {
         if (currentActive !== b) {
           this.setActiveTool(b);
         } else {
-          this.setActiveTool(this.toolByName.select);
+          this.setActiveTool(this.defaultTool);
         }
       };
       this.getBtnEl(b).ontouch = this.getBtnEl(b).onclick;
     });
 
-    this.setActiveTool(this.toolByName.select);
+    this.setActiveTool(this.defaultTool);
 
     this.imageSaver = {
       /**
@@ -610,7 +616,7 @@ class PainterroProc {
       this.activeTool = undefined;
     }
     if (doNotSelect !== true) {
-      this.setActiveTool(this.toolByName.select);
+      this.setActiveTool(this.defaultTool);
     }
   }
 
