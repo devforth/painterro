@@ -81,10 +81,14 @@ export default class ZoomHelper {
       this.zomer.style.left = `${e.clientX - this.wrapper.documentOffsetLeft - this.halfFullW}px`;
       this.zomer.style.top = `${e.clientY - this.wrapper.documentOffsetTop - this.halfFullW}px`;
     } else if (this.shown) {
-      this.zomer.style.display = 'none';
-      this.wrapper.style.cursor = this.cursor;
-      this.shown = false;
+      this.hideZoomHelper();
     }
+  }
+
+  hideZoomHelper() {
+    this.zomer.style.display = 'none';
+    this.wrapper.style.cursor = this.cursor;
+    this.shown = false;
   }
 
   static html() {

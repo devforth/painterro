@@ -172,7 +172,7 @@ export default class ColorPicker {
   }
 
   handleMouseDown(e) {
-    if (this.choosing && e.button === 0) { // 0 - m1, 1 middle, 2-m2
+    if (this.choosing && e.button !== 2) { // 0 - m1, 1 middle, 2-m2
       this.choosingActive = true;
       this.handleMouseMove(e);
       return true;
@@ -241,6 +241,7 @@ export default class ColorPicker {
     this.choosing = false;
     this.choosingActive = false;
     this.alphaSelecting = false;
+    this.main.zoomHelper.hideZoomHelper();
   }
 
   setActiveColor(color, ignoreUpdateText) {
