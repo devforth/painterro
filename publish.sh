@@ -12,6 +12,12 @@ npm --no-git-tag-version version patch
 VERSION=`grep '"version":' package.json | cut -d\" -f4`
 npm run build
 
+if [ $? -eq 0 ]; then
+    echo OK
+else
+    echo FAIL
+fi
+
 rm wp/trunk/painterro-*.min.js
 rm wp/trunk/painterro-*.min.js.map
 cp build/painterro-${VERSION}.min.js wp/trunk/
