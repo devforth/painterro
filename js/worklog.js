@@ -5,10 +5,15 @@ export default class WorkLog {
     this.changedHandler = changedHandler;
     this.empty = true;
     this.clean = true;
+    this.ctx = main.ctx;
   }
 
   changed(initial) {
-    console.log(new Error().stack);
+    if (this.current.prevCount - this.clearedCount > this.main.params.worklogLimit) {
+      this.first = this.first.next;
+      this.first.prev = null;
+      this.clearedCount += 1;
+    }
     this.changedHandler({
       first: this.current.prev === null,
       last: this.current.last === null,
@@ -22,12 +27,16 @@ export default class WorkLog {
     const state = {
       sizew: this.main.size.w,
       sizeh: this.main.size.h,
-      data: this.main.canvas.toDataURL(),
+      data: this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h),
     };
     if (this.current === null) {
       state.prev = null;
+      state.prevCount = 0;
+      this.first = state;
+      this.clearedCount = 0;
     } else {
       state.prev = this.current;
+      state.prevCount = this.current.prevCount + 1;
       this.current.next = state;
     }
     state.next = null;
@@ -43,14 +52,10 @@ export default class WorkLog {
   }
 
   applyState(state) {
-    const img = new Image();
-    img.onload = () => {
-      this.main.resize(state.sizew, state.sizeh);
-      this.main.ctx.drawImage(img, 0, 0);
-      this.main.adjustSizeFull();
-      this.main.select.hide();
-    };
-    img.src = state.data;
+    this.main.resize(state.sizew, state.sizeh);
+    this.main.ctx.putImageData(state.data, 0, 0);
+    this.main.adjustSizeFull();
+    this.main.select.hide();
   }
 
   undoState() {

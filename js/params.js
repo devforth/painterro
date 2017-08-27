@@ -59,7 +59,7 @@ export function setDefaults(parameters) {
     params.backgroundFillColorAlpha, 1.0);
   params.backgroundFillAlphaColor = HexToRGBA(params.backgroundFillColor,
     params.backgroundFillColorAlpha);
-
+  params.worklogLimit = firstDefined(params.worklogLimit, 100);
 
   params.defaultTool = params.defaultTool || 'select';
   params.hiddenTools = params.hiddenTools || [];

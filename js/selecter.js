@@ -31,16 +31,13 @@ export default class PainterroSelecter {
   }
 
   doCrop() {
-    const img = new Image();
-    img.onload = () => {
-      this.main.resize(
-        this.area.bottoml[0] - this.area.topl[0],
-        this.area.bottoml[1] - this.area.topl[1]);
-      this.main.ctx.drawImage(img, -this.area.topl[0], -this.area.topl[1]);
-      this.main.adjustSizeFull();
-      this.main.worklog.captureState();
-    };
-    img.src = this.canvas.toDataURL();
+    const imgData = this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h);
+    this.main.resize(
+      this.area.bottoml[0] - this.area.topl[0],
+      this.area.bottoml[1] - this.area.topl[1]);
+    this.main.ctx.putImageData(imgData, -this.area.topl[0], -this.area.topl[1]);
+    this.main.adjustSizeFull();
+    this.main.worklog.captureState();
   }
 
   doPixelize() {
@@ -60,6 +57,7 @@ export default class PainterroSelecter {
     if (this.pixelSize < 2) {
       this.pixelSize = 2; // prevent errors
     }
+    console.log('create arr');
     const pxData = [];
     const pxSize = [size[0] / this.pixelSize, size[1] / this.pixelSize];
     for (let i = 0; i < pxSize[0]; i += 1) {
@@ -69,6 +67,7 @@ export default class PainterroSelecter {
       }
       pxData.push(row);
     }
+    console.log('calc avg');
     const data = this.ctx.getImageData(c[0], c[1], size[0], size[1]);
     for (let i = 0; i < size[0]; i += 1) {
       for (let j = 0; j < size[1]; j += 1) {
@@ -82,21 +81,17 @@ export default class PainterroSelecter {
         pxData[ii][jj][4] += 1;
       }
     }
-    const d = new ImageData(1, 1);
     for (let i = 0; i < pxSize[0]; i += 1) {
       for (let j = 0; j < pxSize[1]; j += 1) {
         const s = pxData[i][j][4];
-        d.data[0] = pxData[i][j][0] / s;
-        d.data[1] = pxData[i][j][1] / s;
-        d.data[2] = pxData[i][j][2] / s;
-        d.data[3] = pxData[i][j][3] / s;
+        this.ctx.fillStyle = `rgba(
+${Math.round(pxData[i][j][0] / s)}, 
+${Math.round(pxData[i][j][1] / s)}, 
+${Math.round(pxData[i][j][2] / s)}, 
+${Math.round(pxData[i][j][3] / s)})`;
         const baseX = c[0] + (i * this.pixelSize);
         const baseY = c[1] + (j * this.pixelSize);
-        for (let k = 0; k < this.pixelSize; k += 1) {
-          for (let n = 0; n < this.pixelSize; n += 1) {
-            this.ctx.putImageData(d, baseX + k, baseY + n);
-          }
-        }
+        this.ctx.fillRect(baseX, baseY, this.pixelSize, this.pixelSize);
       }
     }
     this.main.worklog.captureState();

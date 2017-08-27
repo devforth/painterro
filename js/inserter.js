@@ -137,7 +137,8 @@ export default class Inserter {
     };
 
     if (src.indexOf('data') !== 0) {
-      imgToDataURL(src, (dataUrl) => {
+      imgToDataURL(src, (dataUrl) => {  // if CORS will not allow,
+        // better see error in console than have different canvas mode
         handleIt(dataUrl);
       });
     } else {
@@ -160,7 +161,6 @@ export default class Inserter {
       const tmpCtx = tmpCan.getContext('2d');
       tmpCtx.drawImage(this.main.canvas, -a.topl[0], -a.topl[1]);
       copyToClipboard(this.CLIP_DATA_MARKER);
-      localStorage.setItem(this.CLIP_DATA_MARKER, tmpCan.toDataURL());
     }
   }
 

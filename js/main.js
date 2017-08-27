@@ -259,23 +259,22 @@ class PainterroProc {
     }, {
       name: 'rotate',
       activate: () => {
-        const tmpData = this.canvas.toDataURL();
         const w = this.size.w;
         const h = this.size.h;
+        const tmpData = this.ctx.getImageData(0, 0, this.size.w, this.size.h);
+        const tmpCan = this.doc.createElement('canvas');
+        tmpCan.width = w;
+        tmpCan.height = h;
+        tmpCan.getContext('2d').putImageData(tmpData, 0, 0);
         this.resize(h, w);
-
         this.ctx.save();
         this.ctx.translate(h / 2, w / 2);
         this.ctx.rotate((90 * Math.PI) / 180);
-        const img = new Image();
-        img.onload = () => {
-          this.ctx.drawImage(img, -w / 2, -h / 2);
-          this.adjustSizeFull();
-          this.ctx.restore();
-          this.worklog.captureState();
-          this.closeActiveTool();
-        };
-        img.src = tmpData;
+        this.ctx.drawImage(tmpCan, -w / 2, -h / 2);
+        this.adjustSizeFull();
+        this.ctx.restore();
+        this.worklog.captureState();
+        this.closeActiveTool();
       },
     }, {
       name: 'resize',
@@ -449,7 +448,6 @@ class PainterroProc {
       if (this.saveBtn && !state.initial) {
         this.saveBtn.removeAttribute('disabled');
       }
-      console.log(state);
       this.setToolEnabled(this.toolByName.undo, !state.first);
     });
     this.inserter.init(this);
@@ -878,7 +876,8 @@ class PainterroProc {
       return;
     }
     this.loadedName = trim((f.name || '').replace(/\..+$/, ''));
-    this.loadImage(URL.createObjectURL(f));
+    const dataUrl = URL.createObjectURL(f);
+    this.loadImage(dataUrl);
   }
 
   getScale() {
