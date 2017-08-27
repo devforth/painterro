@@ -764,7 +764,7 @@ class PainterroProc {
                 txt = event.clipboardData.getData('text/plain');
               }
               if (txt.startsWith(this.inserter.CLIP_DATA_MARKER)) {
-                this.loadImage(txt.slice(this.inserter.CLIP_DATA_MARKER.length));
+                this.loadImage(localStorage.getItem(this.inserter.CLIP_DATA_MARKER));
               }
             }
           });

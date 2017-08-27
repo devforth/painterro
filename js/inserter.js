@@ -159,7 +159,8 @@ export default class Inserter {
       tmpCan.height = h;
       const tmpCtx = tmpCan.getContext('2d');
       tmpCtx.drawImage(this.main.canvas, -a.topl[0], -a.topl[1]);
-      copyToClipboard(`${this.CLIP_DATA_MARKER}${tmpCan.toDataURL()}`);
+      copyToClipboard(this.CLIP_DATA_MARKER);
+      localStorage.setItem(this.CLIP_DATA_MARKER, tmpCan.toDataURL());
     }
   }
 
