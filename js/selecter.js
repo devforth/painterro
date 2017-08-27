@@ -57,7 +57,6 @@ export default class PainterroSelecter {
     if (this.pixelSize < 2) {
       this.pixelSize = 2; // prevent errors
     }
-    console.log('create arr');
     const pxData = [];
     const pxSize = [size[0] / this.pixelSize, size[1] / this.pixelSize];
     for (let i = 0; i < pxSize[0]; i += 1) {
@@ -67,7 +66,6 @@ export default class PainterroSelecter {
       }
       pxData.push(row);
     }
-    console.log('calc avg');
     const data = this.ctx.getImageData(c[0], c[1], size[0], size[1]);
     for (let i = 0; i < size[0]; i += 1) {
       for (let j = 0; j < size[1]; j += 1) {

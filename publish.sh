@@ -13,9 +13,10 @@ VERSION=`grep '"version":' package.json | cut -d\" -f4`
 npm run build
 
 if [ $? -eq 0 ]; then
-    echo OK
+    echo BUILD OK
 else
     echo FAIL
+    exit 0
 fi
 
 rm wp/trunk/painterro-*.min.js

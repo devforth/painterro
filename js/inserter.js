@@ -137,7 +137,7 @@ export default class Inserter {
     };
 
     if (src.indexOf('data') !== 0) {
-      imgToDataURL(src, (dataUrl) => {  // if CORS will not allow,
+      imgToDataURL(src, (dataUrl) => { // if CORS will not allow,
         // better see error in console than have different canvas mode
         handleIt(dataUrl);
       });
