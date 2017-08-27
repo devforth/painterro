@@ -287,6 +287,13 @@ class PainterroProc {
       },
       eventListner: () => this.resizer,
     }, {
+      name: 'undo',
+      activate: () => {
+        this.worklog.undoState();
+        this.closeActiveTool();
+      },
+      eventListner: () => this.resizer,
+    }, {
       name: 'settings',
       activate: () => {
         this.settings.open();
@@ -429,14 +436,7 @@ class PainterroProc {
     this.zoomHelper = new ZoomHelper(this);
     this.select = new PainterroSelecter(this, (notEmpty) => {
       [this.toolByName.crop, this.toolByName.pixelize].forEach((c) => {
-        const btn = this.doc.getElementById(c.buttonId);
-        if (btn) {
-          if (notEmpty) {
-            btn.removeAttribute('disabled');
-          } else {
-            btn.setAttribute('disabled', 'true');
-          }
-        }
+        this.setToolEnabled(c, notEmpty);
       });
     });
     this.resizer = new Resizer(this);
@@ -445,10 +445,12 @@ class PainterroProc {
     this.primitiveTool.setLineWidth(this.params.defaultLineWidth);
     this.primitiveTool.setEraserWidth(this.params.defaultEraserWidth);
     this.primitiveTool.setPixelSize(this.params.defaultPixelSize);
-    this.worklog = new WorkLog(this, () => {
-      if (this.saveBtn) {
+    this.worklog = new WorkLog(this, (state) => {
+      if (this.saveBtn && !state.initial) {
         this.saveBtn.removeAttribute('disabled');
       }
+      console.log(state);
+      this.setToolEnabled(this.toolByName.undo, !state.first);
     });
     this.inserter.init(this);
     this.textTool = new TextTool(this);
@@ -550,11 +552,21 @@ class PainterroProc {
     };
 
     this.initEventHandlers();
-    this.clear();
+    // this.clear();
     this.hide();
     this.zoomFactor = 1;
   }
 
+  setToolEnabled(tool, state) {
+    const btn = this.doc.getElementById(tool.buttonId);
+    if (btn) {
+      if (state) {
+        btn.removeAttribute('disabled');
+      } else {
+        btn.setAttribute('disabled', 'true');
+      }
+    }
+  }
   getAsUri(type, quality) {
     let realQuality = quality;
     if (realQuality === undefined) {

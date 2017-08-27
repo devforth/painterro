@@ -7,8 +7,13 @@ export default class WorkLog {
     this.clean = true;
   }
 
-  changed() {
-    this.changedHandler();
+  changed(initial) {
+    console.log(new Error().stack);
+    this.changedHandler({
+      first: this.current.prev === null,
+      last: this.current.last === null,
+      initial,
+    });
     this.empty = false;
     this.clean = false;
   }
@@ -27,9 +32,7 @@ export default class WorkLog {
     }
     state.next = null;
     this.current = state;
-    if (initial !== true) {
-      this.changed();
-    }
+    this.changed(initial);
   }
 
   reCaptureState() {
@@ -54,7 +57,7 @@ export default class WorkLog {
     if (this.current.prev !== null) {
       this.current = this.current.prev;
       this.applyState(this.current);
-      this.changed();
+      this.changed(false);
     }
   }
 
@@ -62,7 +65,7 @@ export default class WorkLog {
     if (this.current.next !== null) {
       this.current = this.current.next;
       this.applyState(this.current);
-      this.changed();
+      this.changed(false);
     }
   }
 }
