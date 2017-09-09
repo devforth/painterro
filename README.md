@@ -143,6 +143,8 @@ Painterro({
 |`initTextColor` | Color of init text | '#808080' |
 |`initTextStyle` | Style of init text | "26px 'Open Sans', sans-serif" |
 |`pixelizePixelSize` | Default pixel size of pixelize tool. Can accept values - `x` - x pixels, `x%` - means percents of minimal area rectangle side | `20%` |
+|`changeHandler` | Function that will be called if something will be changed (painted, erased, resized, etc) | undefined |
+
 
 UI color scheme
 ---------------

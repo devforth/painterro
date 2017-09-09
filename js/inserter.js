@@ -75,7 +75,7 @@ export default class Inserter {
   }
 
   init(main) {
-    this.CLIP_DATA_MARKER = 'painterro-data:';
+    this.CLIP_DATA_MARKER = 'painterro-image-data';
     this.ctx = main.ctx;
     this.main = main;
     this.worklog = main.worklog;
@@ -161,6 +161,11 @@ export default class Inserter {
       const tmpCtx = tmpCan.getContext('2d');
       tmpCtx.drawImage(this.main.canvas, -a.topl[0], -a.topl[1]);
       copyToClipboard(this.CLIP_DATA_MARKER);
+      try {
+        localStorage.setItem(this.CLIP_DATA_MARKER, tmpCan.toDataURL());
+      } catch (e) {
+        console.error(`Unable save image to localstorage: ${e}`);
+      }
     }
   }
 

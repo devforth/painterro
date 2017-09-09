@@ -4,7 +4,8 @@ import '../css/icons/ptroiconfont.css';
 
 import PainterroSelecter from './selecter';
 import WorkLog from './worklog';
-import { genId, addDocumentObjectHelpers, KEYS, trim, isMobileOrTablet, getScrollbarWidth } from './utils';
+import { genId, addDocumentObjectHelpers, KEYS, trim, isMobileOrTablet,
+  getScrollbarWidth, distance } from './utils';
 import PrimitiveTool from './primitive';
 import ColorPicker from './colorPicker';
 import { setDefaults, setParam, logError } from './params';
@@ -449,6 +450,12 @@ class PainterroProc {
         this.saveBtn.removeAttribute('disabled');
       }
       this.setToolEnabled(this.toolByName.undo, !state.first);
+      if (this.params.changeHandler) {
+        this.params.changeHandler({
+          operationsDone: this.worklog.current.prevCount,
+          realesedMemoryOperations: this.worklog.clearedCount,
+        });
+      }
     });
     this.inserter.init(this);
     this.textTool = new TextTool(this);
@@ -651,24 +658,54 @@ class PainterroProc {
         }
       },
       touchstart: (e) => {
-        if (e.changedTouches.length === 1) {
+        if (e.touches.length === 1) {
           e.clientX = e.changedTouches[0].clientX;
           e.clientY = e.changedTouches[0].clientY;
           this.documentHandlers.mousedown(e);
+        } else if (e.touches.length === 2) {
+          const fingersDist = distance({
+            x: e.changedTouches[0].clientX,
+            y: e.changedTouches[0].clientY,
+          }, {
+            x: e.changedTouches[1].clientX,
+            y: e.changedTouches[1].clientY,
+          });
+          this.lastFingerDist = fingersDist;
         }
       },
       touchend: (e) => {
-        if (e.changedTouches.length === 1) {
+        if (e.touches.length === 1) {
           e.clientX = e.changedTouches[0].clientX;
           e.clientY = e.changedTouches[0].clientY;
           this.documentHandlers.mouseup(e);
         }
       },
       touchmove: (e) => {
-        if (e.changedTouches.length === 1) {
+        if (e.touches.length === 1) {
           e.clientX = e.changedTouches[0].clientX;
           e.clientY = e.changedTouches[0].clientY;
           this.documentHandlers.mousemove(e);
+        } else if (e.touches.length === 2) {
+          const fingersDist = distance({
+            x: e.changedTouches[0].clientX,
+            y: e.changedTouches[0].clientY,
+          }, {
+            x: e.changedTouches[1].clientX,
+            y: e.changedTouches[1].clientY,
+          });
+
+          if (fingersDist > this.lastFingerDist) {
+            e.wheelDelta = 1;
+            e.ctrlKey = true;
+            this.documentHandlers.mousewheel(e);
+          } else if (fingersDist > this.lastFingerDist) {
+            e.wheelDelta = -1;
+            e.ctrlKey = true;
+            this.documentHandlers.mousewheel(e);
+          }
+          this.lastFingerDist = fingersDist;
+          e.stopPropagation();
+          e.preventDefault();
         }
       },
       mousemove: (e) => {
