@@ -557,7 +557,6 @@ class PainterroProc {
     };
 
     this.initEventHandlers();
-    // this.clear();
     this.hide();
     this.zoomFactor = 1;
   }

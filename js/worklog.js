@@ -52,7 +52,7 @@ export default class WorkLog {
       last: this.current.last === null,
       initial,
     });
-    this.empty = false;
+    this.empty = initial;
     this.clean = false;
   }
 
