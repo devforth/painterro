@@ -46,9 +46,13 @@
 
   Painterro({
     initText: 'Press Prn Scr, Ctrl+V to paste a screenshot',
+    changeHandler: function (state) {
+      console.log('Something drawed: ', state);
+      localStorage.setItem('painterroImage', this.imageSaver.asDataURL())
+    }
     // defaultTool: 'line',
     //hiddenTools: ['line']
-  }).show();
+  }).show(localStorage.getItem('painterroImage'));
 </script>
 </body>
 </html>

@@ -8,6 +8,39 @@ export default class WorkLog {
     this.ctx = main.ctx;
   }
 
+  getWorklogAsString(params) {
+    const saveState = Object.assign({}, this.current);
+    let curCleared = this.clearedCount;
+
+    if (params.limit !== undefined) {
+      const limit = params.limit;
+      curCleared = 0;
+      let active = saveState;
+      let i;
+      for (i = 0; i < limit; i += 1) {
+        active.prevCount = limit - i;
+        if (i < limit - 1 && active.prev) {
+          active = active.prev;
+        }
+      }
+      active.prev = null;
+    }
+    return JSON.stringify({
+      clearedCount: curCleared,
+      current: saveState,
+    });
+  }
+
+  loadWorklogFromString(str) {
+    const obj = JSON.parse(str);
+    if (obj) {
+      this.clearedCount = obj.clearedCount;
+      this.current = obj.current;
+      this.applyState(this.current);
+    }
+    return this.main;
+  }
+
   changed(initial) {
     if (this.current.prevCount - this.clearedCount > this.main.params.worklogLimit) {
       this.first = this.first.next;
