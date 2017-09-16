@@ -718,7 +718,9 @@ class PainterroProc {
           ];
           const scale = this.getScale();
           this.curCord = [this.curCord[0] * scale, this.curCord[1] * scale];
-          e.preventDefault();
+          if (e.target.tagName.toLowerCase() !== 'input') {
+            e.preventDefault();
+          }
         }
       },
       mouseup: (e) => {

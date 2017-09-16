@@ -144,7 +144,6 @@
     background-color: rgba(225, 225, 225, .5);
     border: 1px dashed black;
     cursor: move;
-
     -moz-user-select: none;
     /* -webkit-user-select: none; */
     -ms-user-select: none;
@@ -152,7 +151,6 @@
     -webkit-user-drag: none;
     user-drag: none;
     -webkit-touch-callout: none;
-
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
@@ -267,7 +265,6 @@ div.ptro-pallet {
     padding: 10px;
     z-index: 100;
     box-sizing: border-box;
-    font-size: 1px;
 }
 
 .ptro-error {
