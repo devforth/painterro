@@ -21,6 +21,29 @@ class PainterroProc {
     addDocumentObjectHelpers();
     this.params = setDefaults(params);
 
+    this.colorWidgetState = {
+      line: {
+        target: 'line',
+        palleteColor: this.params.activeColor,
+        alpha: this.params.activeColorAlpha,
+        alphaColor: this.params.activeAlphaColor,
+      },
+      fill: {
+        target: 'fill',
+        palleteColor: this.params.activeFillColor,
+        alpha: this.params.activeFillColorAlpha,
+        alphaColor: this.params.activeFillAlphaColor,
+      },
+      bg: {
+        target: 'bg',
+        palleteColor: this.params.backgroundFillColor,
+        alpha: this.params.backgroundFillColorAlpha,
+        alphaColor: this.params.backgroundFillAlphaColor,
+      },
+    };
+    this.currentBackground = this.colorWidgetState.bg.alphaColor;
+    this.currentBackgroundAlpha = this.colorWidgetState.bg.alpha;
+
     this.tools = [{
       name: 'select',
       activate: () => {
@@ -225,7 +248,7 @@ class PainterroProc {
           action: () => {
             const width = document.getElementById(this.activeTool.controls[1].id).value;
             this.textTool.setFontSize(width);
-            setParam('defaultFontSize', width.value);
+            setParam('defaultFontSize', width);
           },
           getValue: () => this.textTool.fontSize,
         }, {
@@ -240,6 +263,31 @@ class PainterroProc {
           },
           getValue: () => this.textTool.getFont(),
           getAvilableValues: () => TextTool.getFonts(),
+        }, {
+          type: 'dropdown',
+          title: 'fontStyle',
+          titleFull: 'fontStyleFull',
+          target: 'fontStyle',
+          action: () => {
+            const dropdown = document.getElementById(this.activeTool.controls[3].id);
+            const style = dropdown.value;
+            this.textTool.setFontStyle(style);
+          },
+          getValue: () => this.textTool.getFontStyle(),
+          getAvilableValues: () => TextTool.getFontStyles(),
+        }, {
+          type: 'int',
+          title: 'fontStrokeSize',
+          titleFull: 'fontStrokeSizeFull',
+          target: 'fontStrokeSize',
+          min: 0,
+          max: 200,
+          action: () => {
+            const inp = document.getElementById(this.activeTool.controls[4].id).value;
+            this.textTool.setFontStrokeSize(inp);
+            setParam('fontStrokeSize', inp);
+          },
+          getValue: () => this.textTool.fontStrokeSize,
         }, {
           name: tr('apply'),
           type: 'btn',
@@ -475,28 +523,7 @@ class PainterroProc {
         setParam('backgroundFillColorAlpha', widgetState.alpha);
       }
     });
-    this.colorWidgetState = {
-      line: {
-        target: 'line',
-        palleteColor: this.params.activeColor,
-        alpha: this.params.activeColorAlpha,
-        alphaColor: this.params.activeAlphaColor,
-      },
-      fill: {
-        target: 'fill',
-        palleteColor: this.params.activeFillColor,
-        alpha: this.params.activeFillColorAlpha,
-        alphaColor: this.params.activeFillAlphaColor,
-      },
-      bg: {
-        target: 'bg',
-        palleteColor: this.params.backgroundFillColor,
-        alpha: this.params.backgroundFillColorAlpha,
-        alphaColor: this.params.backgroundFillAlphaColor,
-      },
-    };
-    this.currentBackground = this.colorWidgetState.bg.alphaColor;
-    this.currentBackgroundAlpha = this.colorWidgetState.bg.alpha;
+
 
     this.defaultTool = this.toolByName[this.params.defaultTool] || this.toolByName.select;
 
@@ -1033,8 +1060,8 @@ class PainterroProc {
       } else if (ctl.type === 'dropdown') {
         let options = '';
         ctl.getAvilableValues().forEach((o) => {
-          options += `<option ${ctl.target === 'fontName' ? `style='font-family:${o.value}'` : ''}` +
-            ` value='${o.value}'>${o.name}</option>`;
+          options += `<option ${o.extraStyle ? `style='${o.extraStyle}'` : ''}` +
+            ` value='${o.value}' ${o.title ? `title='${o.title}'` : ''}>${o.name}</option>`;
         });
         ctrls += `<select id=${ctl.id} class="ptro-input" ` +
           `data-id='${ctl.target}'>${options}</select>`;

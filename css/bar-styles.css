@@ -22,6 +22,13 @@
 
 .ptro-bar .ptro-tool-ctl-name {
     margin-left: 5px;
+
+    background-color: rgba(255,255,255,0.5);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding-left: 3px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 @media screen and (max-width: 768px) {

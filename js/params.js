@@ -53,7 +53,8 @@ export function setDefaults(parameters) {
   params.defaultLineWidth = settings.defaultLineWidth || params.defaultLineWidth || 5;
   params.defaultEraserWidth = firstDefined(settings.defaultEraserWidth,
     params.defaultEraserWidth, 5);
-  params.defaultFontSize = settings.defaultFontSize || params.defaultFontSize || 24;
+  params.defaultFontSize = firstDefined(settings.defaultFontSize, params.defaultFontSize, 24);
+  params.fontStrokeSize = firstDefined(settings.fontStrokeSize, params.fontStrokeSize, 0);
   params.backgroundFillColor = settings.backgroundFillColor || params.backgroundFillColor || '#ffffff';
   params.backgroundFillColorAlpha = firstDefined(settings.backgroundFillColorAlpha,
     params.backgroundFillColorAlpha, 1.0);
@@ -121,7 +122,7 @@ export function setDefaults(parameters) {
         background-color: ${params.colorScheme.hoverControl};
         color:${params.colorScheme.hoverControlContent}}    
     .ptro-bordered-control{border-color: ${params.colorScheme.activeControl}}
-    input.ptro-input, input.ptro-input:focus {
+    input.ptro-input, input.ptro-input:focus, select.ptro-input, select.ptro-input:focus {
       border: 1px solid ${params.colorScheme.inputBorderColor};
       background-color: ${params.colorScheme.inputBackground};
       color: ${params.colorScheme.inputText}

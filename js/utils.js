@@ -160,3 +160,7 @@ export function imgToDataURL(url, callback) {
 export function logError(error) {
   console.error(`[Painterro] ${error}`);
 }
+
+export function checkIn(what, where) {
+  return where.indexOf(what) !== -1;
+}

@@ -1,4 +1,4 @@
-import { KEYS } from './utils';
+import { KEYS, checkIn } from './utils';
 
 export default class TextTool {
   constructor(main) {
@@ -9,11 +9,17 @@ export default class TextTool {
     this.input = this.el.querySelector('.ptro-text-tool-input');
 
     this.setFontSize(main.params.defaultFontSize);
+    this.setFontStrokeSize(main.params.fontStrokeSize);
     this.setFont(TextTool.getFonts()[0].value);
+    this.setFontStyle(TextTool.getFontStyles()[0].value);
   }
 
   getFont() {
     return this.font;
+  }
+
+  getFontStyle() {
+    return this.fontStyle;
   }
 
   static getFonts() {
@@ -34,15 +40,66 @@ export default class TextTool {
     fonts.forEach((f) => {
       res.push({
         value: f,
-        name: 'Aa', // f.split(',')[0].replace(/"/g, ''),
+        name: 'Aa',
+        extraStyle: `font-family:${f}`,
+        title: f.split(',')[0].replace(/"/g, ''),
       });
     });
     return res;
   }
 
+  static getFontStyles() {
+    return [
+      {
+        value: 'normal',
+        name: 'N',
+        title: 'Normal',
+      },
+      {
+        value: 'bold',
+        name: 'B',
+        extraStyle: 'font-weight: bold',
+        title: 'Bold',
+      },
+      {
+        value: 'italic',
+        name: 'I',
+        extraStyle: 'font-style: italic',
+        title: 'Italic',
+      },
+      {
+        value: 'italic bold',
+        name: 'BI',
+        extraStyle: 'font-weight: bold; font-style: italic',
+        title: 'Bold + Italic',
+      },
+    ];
+  }
+
   setFont(font) {
     this.font = font;
     this.input.style['font-family'] = font;
+    if (this.active) {
+      this.input.focus();
+    }
+    if (this.active) {
+      this.reLimit();
+    }
+  }
+
+  setFontStyle(style) {
+    this.fontStyle = style;
+    if (checkIn('bold', this.fontStyle)) {
+      this.input.style['font-weight'] = 'bold';
+    } else {
+      this.input.style['font-weight'] = 'normal';
+    }
+    if (checkIn('italic', this.fontStyle)) {
+      this.input.style['font-style'] = 'italic';
+    } else {
+      this.input.style['font-style'] = 'normal';
+    }
+
     if (this.active) {
       this.input.focus();
     }
@@ -57,6 +114,17 @@ export default class TextTool {
     // if (this.active) {
     //   this.input.focus();
     // }
+    if (this.active) {
+      this.reLimit();
+    }
+  }
+
+  setFontStrokeSize(size) {
+    this.fontStrokeSize = size;
+    this.input.style['-webkit-text-stroke'] = `${size}px ${this.main.currentBackground}`;
+    if (this.active) {
+      this.input.focus();
+    }
     if (this.active) {
       this.reLimit();
     }
@@ -136,9 +204,16 @@ export default class TextTool {
   apply() {
     this.ctx.fillStyle = this.color;
     this.ctx.textAlign = 'left';
-    this.ctx.font = `${this.fontSize * this.main.getScale()}px ${this.font}`;
+    this.ctx.font = `${this.fontStyle} ${this.fontSize * this.main.getScale()}px ${this.font}`;
+
     this.ctx.fillText(this.input.innerText, this.scaledCord[0] + 2,
       this.scaledCord[1] + (this.input.clientHeight * 0.8 * this.main.getScale()));
+
+    this.ctx.strokeStyle = this.main.currentBackground;
+    this.ctx.lineWidth = this.fontStrokeSize;
+    this.ctx.strokeText(this.input.innerText, this.scaledCord[0] + 2,
+      this.scaledCord[1] + (this.input.clientHeight * 0.8 * this.main.getScale()));
+
     this.active = false;
     this.input.style.display = 'none';
     this.main.worklog.captureState();
