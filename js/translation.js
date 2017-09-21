@@ -1,7 +1,7 @@
 
 let instance = null;
 
-export class Translation {
+export default class Translation {
   constructor() {
     this.translations = {
       en: {

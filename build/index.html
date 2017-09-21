@@ -49,7 +49,14 @@
     changeHandler: function (state) {
       console.log('Something drawed: ', state);
       localStorage.setItem('painterroImage', this.imageSaver.asDataURL())
-    }
+    },
+//    translation: {
+//      name: 'ua',
+//      strings: {
+//        apply: 'Застосувати'
+//        // other strings
+//      }
+//    }
     // defaultTool: 'line',
     //hiddenTools: ['line']
   }).show(localStorage.getItem('painterroImage'));
