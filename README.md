@@ -177,7 +177,7 @@ Painterro({
 |`dragOverBarColor`| Color of bar when dropping file to painterro | '#899dff' |
 |`hoverControl`| Controls color when mouse hovered | `control` |
 |`hoverControlContent`| Controls background color when mouse hovered | '#1a3d67' |
-
+|`toolControlNameColor`| Color of toolbar labels that prepend controls | rgba(255,255,255,0.7) |
 Methods
 -------
 

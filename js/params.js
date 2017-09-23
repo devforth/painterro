@@ -83,6 +83,7 @@ export function setDefaults(parameters) {
   params.colorScheme.controlContent = params.colorScheme.controlContent || '#000000';
   params.colorScheme.hoverControl = params.colorScheme.hoverControl || params.colorScheme.control;
   params.colorScheme.hoverControlContent = params.colorScheme.hoverControlContent || '#1a3d67';
+  params.colorScheme.toolControlNameColor = params.colorScheme.toolControlNameColor || 'rgba(255,255,255,0.7)';
 
   params.colorScheme.activeControl = params.colorScheme.activeControl || '#7485B1';
   params.colorScheme.activeControlContent = params.colorScheme.activeControlContent ||
@@ -123,6 +124,9 @@ export function setDefaults(parameters) {
     .ptro-color-control{
         background-color: ${params.colorScheme.control};
         color:${params.colorScheme.controlContent}}
+    .ptro-tool-ctl-name{
+        background-color: ${params.colorScheme.toolControlNameColor};
+    }
     button.ptro-color-control:hover:not(.ptro-color-active-control):not([disabled]){
         background-color: ${params.colorScheme.hoverControl};
         color:${params.colorScheme.hoverControlContent}}    
