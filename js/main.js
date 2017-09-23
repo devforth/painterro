@@ -40,6 +40,12 @@ class PainterroProc {
         alpha: this.params.backgroundFillColorAlpha,
         alphaColor: this.params.backgroundFillAlphaColor,
       },
+      stroke: {
+        target: 'stroke',
+        palleteColor: this.params.textStrokeColor,
+        alpha: this.params.textStrokeColorAlpha,
+        alphaColor: this.params.textStrokeAlphaColor,
+      },
     };
     this.currentBackground = this.colorWidgetState.bg.alphaColor;
     this.currentBackgroundAlpha = this.colorWidgetState.bg.alpha;
@@ -289,6 +295,16 @@ class PainterroProc {
           },
           getValue: () => this.textTool.fontStrokeSize,
         }, {
+          type: 'color',
+          title: 'textStrokeColor',
+          titleFull: 'textStrokeColorFull',
+          target: 'stroke',
+          action: () => {
+            this.colorPicker.open(this.colorWidgetState.stroke, (c) => {
+              this.textTool.setStrokeColor(c.alphaColor);
+            });
+          },
+        }, {
           name: tr('apply'),
           type: 'btn',
           action: () => {
@@ -299,6 +315,7 @@ class PainterroProc {
       ],
       activate: () => {
         this.textTool.setFontColor(this.colorWidgetState.line.alphaColor);
+        this.textTool.setStrokeColor(this.colorWidgetState.stroke.alphaColor);
         this.toolContainer.style.cursor = 'crosshair';
       },
       close: () => {
@@ -521,6 +538,9 @@ class PainterroProc {
       } else if (widgetState.target === 'bg') {
         setParam('backgroundFillColor', widgetState.palleteColor);
         setParam('backgroundFillColorAlpha', widgetState.alpha);
+      } else if (widgetState.target === 'stroke') {
+        setParam('textStrokeColor', widgetState.palleteColor);
+        setParam('textStrokeColorAlpha', widgetState.alpha);
       }
     });
 

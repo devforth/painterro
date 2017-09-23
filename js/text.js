@@ -121,7 +121,7 @@ export default class TextTool {
 
   setFontStrokeSize(size) {
     this.fontStrokeSize = size;
-    this.input.style['-webkit-text-stroke'] = `${size}px ${this.main.currentBackground}`;
+    this.input.style['-webkit-text-stroke'] = `${this.fontStrokeSize}px ${this.strokeColor}`;
     if (this.active) {
       this.input.focus();
     }
@@ -133,6 +133,11 @@ export default class TextTool {
   setFontColor(color) {
     this.color = color;
     this.input.style.color = color;
+  }
+
+  setStrokeColor(color) {
+    this.strokeColor = color;
+    this.input.style['-webkit-text-stroke'] = `${this.fontStrokeSize}px ${this.strokeColor}`;
   }
 
   inputLeft() {
@@ -209,11 +214,12 @@ export default class TextTool {
     this.ctx.fillText(this.input.innerText, this.scaledCord[0] + 2,
       this.scaledCord[1] + (this.input.clientHeight * 0.8 * this.main.getScale()));
 
-    this.ctx.strokeStyle = this.main.currentBackground;
+    this.ctx.strokeStyle = this.strokeColor;
     this.ctx.lineWidth = this.fontStrokeSize;
-    this.ctx.strokeText(this.input.innerText, this.scaledCord[0] + 2,
-      this.scaledCord[1] + (this.input.clientHeight * 0.8 * this.main.getScale()));
-
+    if (this.fontStrokeSize > 0) {
+      this.ctx.strokeText(this.input.innerText, this.scaledCord[0] + 2,
+        this.scaledCord[1] + (this.input.clientHeight * 0.8 * this.main.getScale()));
+    }
     this.active = false;
     this.input.style.display = 'none';
     this.main.worklog.captureState();

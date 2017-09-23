@@ -454,7 +454,7 @@ span.ptro-btn-color-checkers-bar {
     line-height: 12px;
     height: 32px;
     background-size: 16px 16px;
-    z-index: 200;
+    z-index: 0;
     position: relative;
     top: 6px;
     left: 0;

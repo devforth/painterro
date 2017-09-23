@@ -2,7 +2,7 @@
     height: 32px;
     width: 32px;
     cursor: pointer;
-    z-index: 201;
+    z-index: 1;
     position: absolute;
     margin-top: 4px;
 }

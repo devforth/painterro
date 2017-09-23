@@ -25,6 +25,8 @@ export default class Translation {
         fontStyleFull: 'Font Style',
         fontName: 'F',
         fontNameFull: 'Font name',
+        textStrokeColor: 'SC',
+        textStrokeColorFull: 'Stroke color',
         apply: 'Apply',
         cancel: 'Cancel',
         close: 'Close',

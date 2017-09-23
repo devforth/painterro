@@ -135,6 +135,8 @@ Painterro({
 |`defaultEraserWidth` | Eraser width in `px` that selected by default | 5 |
 |`backgroundFillColor` | Default background color when image created/erased | "#ffffff" |
 |`backgroundFillColorAlpha`| Transparancy of `backgroundFillColor` from 0.0 to 1.0 | 1.0 |
+|`textStrokeColor`| Stroke color of text tool | "#ffffff" |
+|`textStrokeColorAlpha`| Stroke color of text tool | 1.0 |
 |`defaultFontSize` | Default font size in pixels | 24 |
 |`defaultSize` | default image size, should be string in format `<width>x<height>` in pixel, e.g. `'200x100'`. If value is `'fill'`(default) than all container size will be used | `'fill'` |
 |`fontStrokeSize` | default stroke width of text | 0 |

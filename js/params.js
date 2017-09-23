@@ -60,6 +60,11 @@ export function setDefaults(parameters) {
     params.backgroundFillColorAlpha, 1.0);
   params.backgroundFillAlphaColor = HexToRGBA(params.backgroundFillColor,
     params.backgroundFillColorAlpha);
+
+  params.textStrokeColor = settings.textStrokeColor || params.textStrokeColor || '#ffffff';
+  params.textStrokeColorAlpha = firstDefined(settings.textStrokeColorAlpha, params.textStrokeColorAlpha, 1.0);
+  params.textStrokeAlphaColor = HexToRGBA(params.textStrokeColor, params.textStrokeColorAlpha);
+
   params.worklogLimit = firstDefined(params.worklogLimit, 100);
 
   params.defaultTool = params.defaultTool || 'select';
