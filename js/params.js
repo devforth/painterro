@@ -62,7 +62,8 @@ export function setDefaults(parameters) {
     params.backgroundFillColorAlpha);
 
   params.textStrokeColor = settings.textStrokeColor || params.textStrokeColor || '#ffffff';
-  params.textStrokeColorAlpha = firstDefined(settings.textStrokeColorAlpha, params.textStrokeColorAlpha, 1.0);
+  params.textStrokeColorAlpha = firstDefined(settings.textStrokeColorAlpha,
+    params.textStrokeColorAlpha, 1.0);
   params.textStrokeAlphaColor = HexToRGBA(params.textStrokeColor, params.textStrokeColorAlpha);
 
   params.worklogLimit = firstDefined(params.worklogLimit, 100);
