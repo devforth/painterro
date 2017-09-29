@@ -1,6 +1,6 @@
 {
   "name": "painterro",
-  "version": "0.2.47",
+  "version": "0.2.48",
   "description": "HTML5 image editor widget",
   "main": "build/painterro.commonjs2.js",
   "scripts": {

@@ -48,11 +48,11 @@
     initText: 'Press Prn Scr, Ctrl+V to paste a screenshot',
     changeHandler: function (state) {
       console.log('Something drawed: ', state);
-      localStorage.setItem('painterroImage', this.imageSaver.asDataURL())
+     // localStorage.setItem('painterroImage', this.imageSaver.asDataURL())
     },
     // defaultTool: 'line',
     //hiddenTools: ['line']
-  }).show(localStorage.getItem('painterroImage'));
+  }).show() //;
 </script>
 </body>
 </html>
