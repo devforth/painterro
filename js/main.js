@@ -720,11 +720,9 @@ class PainterroProc {
         }
       },
       touchend: (e) => {
-        if (e.touches.length === 1) {
-          e.clientX = e.changedTouches[0].clientX;
-          e.clientY = e.changedTouches[0].clientY;
-          this.documentHandlers.mouseup(e);
-        }
+        e.clientX = e.changedTouches[0].clientX;
+        e.clientY = e.changedTouches[0].clientY;
+        this.documentHandlers.mouseup(e);
       },
       touchmove: (e) => {
         if (e.touches.length === 1) {
