@@ -1,6 +1,6 @@
 {
   "name": "painterro",
-  "version": "0.2.51",
+  "version": "0.2.53",
   "description": "HTML5 image editor widget",
   "main": "build/painterro.commonjs2.js",
   "scripts": {
@@ -33,7 +33,6 @@
     "webfonts-generator": "^0.4.0",
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.4.5",
-
     "html2canvas": "^1.0.0-alpha.9",
     "ismobilejs": "^0.4.1"
   }
