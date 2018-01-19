@@ -9,7 +9,7 @@
     font-family: "Open Sans", sans-serif;
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 869px) {
     .ptro-holder {
         position: fixed;
         box-shadow: 3px 3px 15px #787878;
@@ -20,7 +20,7 @@
     }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 868px) {
     .ptro-holder {
         position: fixed;
         box-shadow: 3px 3px 15px #787878;
@@ -46,6 +46,12 @@
     vertical-align: middle;
     height: 100%;
 }
+
+
+.ptro-icon {
+    font-size: 20px;
+}
+
 
 .ptro-icon-btn:disabled {
     color: gray;
@@ -73,7 +79,6 @@
 .ptro-icon-btn {
     border: 0;
     padding: 4px 0 5px 0;
-    margin: 4px 0 0 4px;
     height: 32px;
     width: 32px;
     cursor: pointer;
@@ -420,7 +425,6 @@ select.ptro-input {
 }
 
 .ptro-text-tool-input {
-    position: absolute;
     background-color: rgba(0,0,0,0);
     border: 1px dashed;
     width: auto;
@@ -432,6 +436,14 @@ select.ptro-input {
     overflow-y: hidden;
     box-sizing: content-box;
     line-height: normal;
+}
+
+.ptro-text-tool-buttons {
+    display: block;
+}
+
+.ptro-text-tool-input-wrapper {
+    position: absolute;
 }
 
 .ptro-text-tool-input:focus {

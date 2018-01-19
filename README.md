@@ -8,28 +8,28 @@ Painterro is JavaScript paint widget which allows editing images directly in a b
 It can be easily integrated into your website or blog by including only one js file and calling initialization code.
 
 With Painterro you can:
-- Paste image from clipboard with Ctrl+V (e.g. PtnScr screenshot), drag and drop it into widget, or load with open dialog
+- Paste image from clipboard with `Ctrl+V` (e.g. `PtnScr` screenshot), drag and drop it into widget, or load with open dialog
 - Crop image by defined area
 - Paint primitives (alpha color can be used)
 - Add text
-- Rotate / Resize (Scale) image
+- Rotate / resize (scale) image
 - Pixelize some area to hide sensitive data
 
 
 ![Painterro preview](https://rawgit.com/ivictbor/painterro/master/docs/preview.png)
 
-Originally Painterro was designed for quick screenshots processing: You make screenshot by pressing `PrtSc` button, 
-then open Painterro on your website, paste an image with Ctrl+V, 
+Originally Painterro was designed for quick screenshots processing: You make screenshot by pressing `PrtSc` button,
+then open Painterro on your website, paste an image with `Ctrl+V`,
 crop it to interested area, highlight something with line/rectangle tool and/or add some text 
-to the image and save on server with custom save handler (plain XHR request to your backend). 
+to the image and save on server with custom save handler (e.g. simple `XHR` request to your backend).
 In addition, you can use it for processing any kind of raster images. Please try a [demo](https://maketips.net/paste).
 Also painterro has [Wordpress Plugin](https://wordpress.org/plugins/painterro/).
 
-If you want to see some feature in Painterro, please leave (or vote for) an issue with your proposal [here](https://github.com/ivictbor/painterro/issues). 
+If you want to see some feature in Painterro, please leave (or vote for) an issue [here](https://github.com/ivictbor/painterro/issues).
 There is no promise that it will be implemented soon or ever, but it is interesting to know what features users want to have.
 
-Painterro is written with vanilla JS, without any additional frameworks to stay lightweight and minimalistic. Code 
-written on ES6 which transplited by Babel and packed to single file using webpack.
+Painterro is written with vanilla JS to stay lightweight and minimalistic. Code
+written on ES6 which transplited by Babel and packed to a single file using webpack.
 
 
 Table of contents
@@ -63,7 +63,7 @@ Installation
 With npm
 --------
 
-If you are using npm you can run:
+If you have npm-based project you can run:
 ```bash
 npm install painterro --save
 ```
@@ -97,7 +97,7 @@ See [fiddle example](https://jsfiddle.net/vanbrosh/Levaqoeh/10/)
 Read after installation
 -----------------------
 
-To be able save your images on server see [Saving image](#saving-image). For configurations see [Configuration](#configuration)
+To be able to save edited images on server see [Saving image](#saving-image). For configurations see [Configuration](#configuration)
 
 Supported hotkeys
 =================
@@ -116,7 +116,7 @@ Supported hotkeys
 Configuration
 =============
 
-You can pass parameters dict to Painterro constructor:
+You can pass parameters map to Painterro constructor:
 ```js
 Painterro({
   activeColor: '#00ff00', // default brush color is green
@@ -142,7 +142,7 @@ Painterro({
 |`fontStrokeSize` | default stroke width of text | 0 |
 |`defaultTool` | Tool selected by default | 'select' | 
 |`hiddenTools` | List of tools that you wish to exclude from toolbar e.g. something from this list `['crop', 'line', 'rect', 'ellipse', 'brush', 'text', 'rotate', 'resize',  'save', 'open', 'close']`, You can't hide default tool | [] |
-|`initText` | Display some centered text before painting. If null, no text will be shown | null |
+|`initText` | Display some centered text before painting (supports HTML). If null, no text will be shown | null |
 |`initTextColor` | Color of init text | '#808080' |
 |`initTextStyle` | Style of init text | "26px 'Open Sans', sans-serif" |
 |`pixelizePixelSize` | Default pixel size of pixelize tool. Can accept values - `x` - x pixels, `x%` - means percents of minimal area rectangle side | `20%` |
@@ -178,11 +178,13 @@ Painterro({
 |`hoverControl`| Controls color when mouse hovered | `control` |
 |`hoverControlContent`| Controls background color when mouse hovered | '#1a3d67' |
 |`toolControlNameColor`| Color of toolbar labels that prepend controls | rgba(255,255,255,0.7) |
+
+
 Methods
 -------
 
 
-**.show(openImage)** - Show painterro instance. `openImage` can have next values:
+**.show(openImage)** - Shows painterro instance. `openImage` can have next values:
 * `false` - will open image that already was drawn before last close
 * `some string value`, e.g. `'http://placehold.it/120x120&text=image1'` - will try to load image from url
 * all another values - will clear content before open
@@ -195,9 +197,9 @@ Translation
 -----------
 
 Want to translate Painterro into your language? Just open file [js/translation.js](https://github.com/ivictbor/painterro/blob/master/js/translation.js#L6), copy `this.translations` dict to text editor and
- translate all `'Strings'` from. Then create [issue](https://github.com/ivictbor/painterro/issues) 
- with translated strings and specify what language is it. Also you can submit a pull request.
-Your translation will be added and your username will be submitted to contributors list.
+ translate all `'Strings'`. Then fork and create pull-request, or just open [issue](https://github.com/ivictbor/painterro/issues)
+ if you don't know how, and you will be guided in details what you should do.
+Your translation will be added and your username will be shown in repository contributors list.
 
 If you want to translate or change strings without contributing you can do this by passing 
 `translation` parameter, for example:
@@ -222,49 +224,12 @@ Saving image
 You should provide your save handler, which will post/update image on server or will pass image to another
 frontend components.
 
-Base64 saving
--------------
-
-Next example shows how to save `base64` via POST json call. Example use raw `XMLHttpRequest`. Of course, 
-instead you can use `fetch`, `jQuery`, etc insead. 
-
-```js
-var ptro = Painterro({
-    saveHandler: function (image, done) {
-      // of course, instead of raw XHR you can use fetch, jQuery, etc
-      var xhr = new XMLHttpRequest(); 
-      xhr.open("POST", "http://127.0.0.1:5000/save-as-base64/");
-      xhr.setRequestHeader("Content-Type", "application/json");
-      xhr.send(JSON.stringify({
-        image: image.asDataURL()
-      }));
-      xhr.onload = function (e) {
-        // after saving is done, call done callback
-        done(true); //done(true) will hide painterro, done(false) will leave opened
-      }
-    },
-    activeColor: '#00b400'  // change active color to green
-});
-ptro.show();
-```
-Backend should convert `base64` to binary and save file, here is python flask example (of course same can be implemented using any technology):
-```python
-@app.route("/save-as-base64/", methods=['POST'])
-def base64_saver():
-    filename = '{:10d}.png'.format(int(time()))  # generate some filename
-    filepath = os.path.join(get_tmp_dir(), filename)
-    with open(filepath, "wb") as fh:
-        base64_data = request.json['image'].replace('data:image/png;base64,', '')
-        fh.write(base64.b64decode(base64_data))
-    return jsonify({})
-```
-See full example in `example` directory. You can run it with python3 with installed `Flask`.
 
 Binary saving
 -------------
 
-You can also post data with binary `multipart/form-data` request which is more efficient. For example some `1920 x 1080` image took `402398` bytes for `base64` upload. 
-The same image took `301949` bytes with `multipart/form-data`.
+You can post data with binary `multipart/form-data` request which is the most efficient way to pass data to backend. Example uses raw `XMLHttpRequest`. Of course,
+ you can use `fetch`, `jQuery`, etc insead.
 
 ```js
 var ptro = Painterro({
@@ -283,7 +248,7 @@ var ptro = Painterro({
 })
 ptro.show();
 ```
-Backend example:
+Here is python flask backend example (of course same can be implemented using any technology):
 ```python
 @app.route("/save-as-binary/", methods=['POST'])
 def binary_saver():
@@ -293,10 +258,53 @@ def binary_saver():
     return jsonify({})
 ```
 
+See full example in `example` directory. You can run it used python3 with installed `Flask` (`pip install flask`).
+
+Base64 saving
+-------------
+
+
+You can also same image by posting `base64` string via plain POST json call.
+Please note that base64 encoding is less efficient then binary data, for example some `1920 x 1080` image took `402398` bytes for `base64` upload.
+The same image took `301949` bytes with `multipart/form-data`.
+
+
+```js
+var ptro = Painterro({
+    saveHandler: function (image, done) {
+      // of course, instead of raw XHR you can use fetch, jQuery, etc
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "http://127.0.0.1:5000/save-as-base64/");
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.send(JSON.stringify({
+        image: image.asDataURL()
+      }));
+      xhr.onload = function (e) {
+        // after saving is done, call done callback
+        done(true); //done(true) will hide painterro, done(false) will leave opened
+      }
+    },
+    activeColor: '#00b400'  // change active color to green
+});
+ptro.show();
+```
+Backend should convert `base64` to binary and save file:
+```python
+@app.route("/save-as-base64/", methods=['POST'])
+def base64_saver():
+    filename = '{:10d}.png'.format(int(time()))  # generate some filename
+    filepath = os.path.join(get_tmp_dir(), filename)
+    with open(filepath, "wb") as fh:
+        base64_data = request.json['image'].replace('data:image/png;base64,', '')
+        fh.write(base64.b64decode(base64_data))
+    return jsonify({})
+```
+
+
 Saving to WYSIWYG
 -----------------
 
-You can just insert image as data url to any WYSIWYG editor, e.g. TinyMCE. Image that for example can be saved
+You can just insert image as data url to any WYSIWYG editor, e.g. TinyMCE:
 ```js
     tinymce.init({ selector:'textarea', });
     var ptro = Painterro({
@@ -310,9 +318,9 @@ You can just insert image as data url to any WYSIWYG editor, e.g. TinyMCE. Image
 Format and quality
 ------------------
 
-When you call `image.asDataURL()` or `image.asBlob()`, you can also specify image format, e.g.
-`image.asDataURL('image/jpeg')`. Default format is `'image/png'`. 
-If type is `image/jpeg` or `image/webp`, you can also define image quality from `0.0` to `1.0`, default is `0.92`, 
+When you call `image.asDataURL()` or `image.asBlob()`, you can also specify image mime type (format), e.g.
+`image.asDataURL('image/jpeg')`. Default type is `'image/png'`.
+If type is `image/jpeg` or `image/webp`, you can also define image quality from `0.0` to `1.0`, default is `0.92`,
 example: `image.asDataURL('image/jpeg', 0.5)`
 
 
@@ -337,7 +345,7 @@ Result file is `build/painterro.js`
 Dev-server
 ----------
 
-To start hot-reload dev server for reloading code "on the fly":
+To start hot-reload dev server (for reloading code "on the fly"):
 ```bash
 npm run dev
 ```
@@ -353,7 +361,7 @@ npm run buildfont
 
 Contributing
 ------------
-Pull-requests are welcome. Please add yourself to CONTRIBUTORS.md
+Pull-requests are welcome.
 
 
 ToDo list

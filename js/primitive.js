@@ -133,7 +133,7 @@ export default class PrimitiveTool {
           ) * 180) / Math.PI;
           if (Math.abs(deg) < 45.0 / 2) {
             this.curCord[1] = this.centerCord[1];
-          } else if (Math.abs(deg) > (45 + 45.0) / 2) {
+          } else if (Math.abs(deg) > 45.0 + (45.0 / 2)) {
             this.curCord[0] = this.centerCord[0];
           } else {
             const base = (Math.abs(this.curCord[0] - this.centerCord[0])

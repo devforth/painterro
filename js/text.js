@@ -1,4 +1,6 @@
+import html2canvas from 'html2canvas';
 import { KEYS, checkIn } from './utils';
+import { tr } from './translation';
 
 export default class TextTool {
   constructor(main) {
@@ -7,11 +9,20 @@ export default class TextTool {
     this.main = main;
     this.wrapper = main.wrapper;
     this.input = this.el.querySelector('.ptro-text-tool-input');
-
+    this.inputWrapper = this.el.querySelector('.ptro-text-tool-input-wrapper');
+    this.inputWrapper.style.display = 'none';
     this.setFontSize(main.params.defaultFontSize);
     this.setFontStrokeSize(main.params.fontStrokeSize);
     this.setFont(TextTool.getFonts()[0].value);
     this.setFontStyle(TextTool.getFontStyles()[0].value);
+
+    this.el.querySelector('.ptro-text-tool-apply').onclick = () => {
+      this.apply();
+    };
+
+    this.el.querySelector('.ptro-text-tool-cancel').onclick = () => {
+      this.close();
+    };
   }
 
   getFont() {
@@ -40,7 +51,7 @@ export default class TextTool {
     fonts.forEach((f) => {
       res.push({
         value: f,
-        name: 'Aa',
+        name: f.split(',')[0].replace(/"/g, ''),
         extraStyle: `font-family:${f}`,
         title: f.split(',')[0].replace(/"/g, ''),
       });
@@ -149,20 +160,20 @@ export default class TextTool {
   }
 
   reLimit() {
-    this.input.style.right = 'auto';
+    this.inputWrapper.style.right = 'auto';
     if (this.inputLeft() + this.input.clientWidth >
         this.main.elLeft() + this.el.clientWidth) {
-      this.input.style.right = '0';
+      this.inputWrapper.style.right = '0';
     } else {
-      this.input.style.right = 'auto';
+      this.inputWrapper.style.right = 'auto';
     }
 
-    this.input.style.bottom = 'auto';
+    this.inputWrapper.style.bottom = 'auto';
     if (this.inputTop() + this.input.clientHeight >
         this.main.elTop() + this.el.clientHeight) {
-      this.input.style.bottom = '0';
+      this.inputWrapper.style.bottom = '0';
     } else {
-      this.input.style.bottom = 'auto';
+      this.inputWrapper.style.bottom = 'auto';
     }
   }
 
@@ -180,19 +191,19 @@ export default class TextTool {
       ];
       const scale = this.main.getScale();
       this.scaledCord = [this.crd[0] * scale, this.crd[1] * scale];
-      this.input.style.left = `${this.crd[0]}px`;
-      this.input.style.top = `${this.crd[1]}px`;
-      this.input.style.display = 'inline';
+      this.inputWrapper.style.left = `${this.crd[0]}px`;
+      this.inputWrapper.style.top = `${this.crd[1]}px`;
+      this.inputWrapper.style.display = 'inline';
       this.input.focus();
       this.reLimit();
       this.input.onkeydown = (e) => {
-        if (e.keyCode === KEYS.enter && !this.main.isMobile) {
+        if (e.ctrlKey && e.keyCode === KEYS.enter) {
           this.apply();
-          this.main.closeActiveTool();
+
           e.preventDefault();
         }
         if (e.keyCode === KEYS.esc) {
-          this.cancel();
+          this.close();
           this.main.closeActiveTool();
           e.preventDefault();
         }
@@ -202,35 +213,44 @@ export default class TextTool {
           this.pendingClear = false;
         }
       };
-      event.preventDefault();
+      if (!this.main.isMobile) {
+        event.preventDefault();
+      }
     }
   }
 
   apply() {
-    this.ctx.fillStyle = this.color;
-    this.ctx.textAlign = 'left';
-    this.ctx.font = `${this.fontStyle} ${this.fontSize * this.main.getScale()}px ${this.font}`;
-
-    this.ctx.fillText(this.input.innerText, this.scaledCord[0] + 2,
-      this.scaledCord[1] + (this.input.clientHeight * 0.8 * this.main.getScale()));
-
-    this.ctx.strokeStyle = this.strokeColor;
-    this.ctx.lineWidth = this.fontStrokeSize;
-    if (this.fontStrokeSize > 0) {
-      this.ctx.strokeText(this.input.innerText, this.scaledCord[0] + 2,
-        this.scaledCord[1] + (this.input.clientHeight * 0.8 * this.main.getScale()));
-    }
-    this.active = false;
-    this.input.style.display = 'none';
-    this.main.worklog.captureState();
+    const origBorder = this.input.style.border;
+    this.input.style.border = 'none';
+    html2canvas(this.input, {
+      logging: false,
+    }).then((can) => {
+      this.ctx.drawImage(can, this.scaledCord[0], this.scaledCord[1]);
+      this.input.style.border = origBorder;
+      this.close();
+      this.main.worklog.captureState();
+      this.main.closeActiveTool();
+    });
   }
 
-  cancel() {
+  close() {
     this.active = false;
-    this.input.style.display = 'none';
+    this.inputWrapper.style.display = 'none';
   }
 
   static code() {
-    return '<span contenteditable="true" class="ptro-text-tool-input" style="display:none"></span>';
+    return '<span class="ptro-text-tool-input-wrapper">' +
+      '<div contenteditable="true" class="ptro-text-tool-input"></div>' +
+        '<span class="ptro-text-tool-buttons">' +
+          `<button class="ptro-text-tool-apply ptro-icon-btn ptro-color-control" title="${tr('apply')}" 
+                   style="margin: 2px">` +
+            '<i class="ptro-icon ptro-icon-apply "></i>' +
+          '</button>' +
+          `<button class="ptro-text-tool-cancel ptro-icon-btn ptro-color-control" title="${tr('cancel')}"
+                   style="margin: 2px">` +
+            '<i class="ptro-icon ptro-icon-close ptro-icon-btn ptro-color-control"></i>' +
+          '</button>' +
+        '</span>' +
+      '</span>';
   }
 }

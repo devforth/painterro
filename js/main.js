@@ -1,10 +1,12 @@
+import isMobile from 'ismobilejs';
+import html2canvas from 'html2canvas';
 import '../css/styles.css';
 import '../css/bar-styles.css';
 import '../css/icons/ptroiconfont.css';
 
 import PainterroSelecter from './selecter';
 import WorkLog from './worklog';
-import { genId, addDocumentObjectHelpers, KEYS, trim, isMobileOrTablet,
+import { genId, addDocumentObjectHelpers, KEYS, trim,
   getScrollbarWidth, distance } from './utils';
 import PrimitiveTool from './primitive';
 import ColorPicker from './colorPicker';
@@ -304,13 +306,6 @@ class PainterroProc {
               this.textTool.setStrokeColor(c.alphaColor);
             });
           },
-        }, {
-          name: tr('apply'),
-          type: 'btn',
-          action: () => {
-            this.textTool.apply();
-            this.closeActiveTool();
-          },
         },
       ],
       activate: () => {
@@ -319,7 +314,7 @@ class PainterroProc {
         this.toolContainer.style.cursor = 'crosshair';
       },
       close: () => {
-        this.textTool.cancel();
+        this.textTool.close();
       },
       eventListner: () => this.textTool,
     }, {
@@ -398,7 +393,7 @@ class PainterroProc {
         this.hide();
       },
     }];
-    this.isMobile = isMobileOrTablet();
+    this.isMobile = isMobile;
     this.toolByName = {};
     this.tools.forEach((t) => {
       this.toolByName[t.name] = t;
@@ -763,7 +758,7 @@ class PainterroProc {
           ];
           const scale = this.getScale();
           this.curCord = [this.curCord[0] * scale, this.curCord[1] * scale];
-          if (e.target.tagName.toLowerCase() !== 'input') {
+          if (!this.isMobile && e.target.tagName.toLowerCase() !== 'input') {
             e.preventDefault();
           }
         }
@@ -1036,13 +1031,25 @@ class PainterroProc {
     this.adjustSizeFull();
 
     if (this.params.initText && this.worklog.empty) {
-      this.ctx.fillStyle = this.params.initTextColor;
-      this.ctx.textAlign = 'center';
-      this.ctx.font = this.params.initTextStyle;
       this.ctx.lineWidth = 3;
       this.ctx.strokeStyle = '#fff';
-      this.ctx.strokeText(this.params.initText, this.size.w / 2, this.size.h / 2);
-      this.ctx.fillText(this.params.initText, this.size.w / 2, this.size.h / 2);
+      const div = document.createElement('div');
+      this.holderEl.appendChild(div);
+      div.innerHTML = '<div style="position:absolute;top:50%;width:100%;transform: translateY(-50%);">' +
+        `${this.params.initText}</div>`;
+      div.style.height = '100%';
+      div.style['text-align'] = 'center';
+      div.style.position = 'relative';
+      div.style.color = this.params.initTextColor;
+      div.style['font-family'] = this.params.initTextStyle.split(/ (.+)/)[1];
+      div.style['font-size'] = this.params.initTextStyle.split(/ (.+)/)[0];
+
+      html2canvas(div, {
+        logging: false,
+      }).then((can) => {
+        this.holderEl.removeChild(div);
+        this.ctx.drawImage(can, 0, 0);
+      });
     }
   }
 

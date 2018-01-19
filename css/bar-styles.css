@@ -12,6 +12,10 @@
     width: 32px;
 }
 
+select.ptro-input[data-id='fontName'] {
+    width: 45px;
+}
+
 .ptro-bar .ptro-tool-ctl-name {
     padding: 0 2px 0 0;
     line-height: 30px;
@@ -69,8 +73,8 @@
     line-height: normal;
 }
 
-.ptro-bar .ptro-icon {
-    font-size: 20px;
+.ptro-bar .ptro-icon-btn {
+    margin: 4px 0 0 4px;
 }
 
 button.ptro-icon-right:first-of-type {
