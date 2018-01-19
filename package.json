@@ -32,9 +32,8 @@
     "url-loader": "^0.5.8",
     "webfonts-generator": "^0.4.0",
     "webpack": "^2.6.1",
-    "webpack-dev-server": "^2.4.5"
-  },
-  "dependencies": {
+    "webpack-dev-server": "^2.4.5",
+
     "html2canvas": "^1.0.0-alpha.9",
     "ismobilejs": "^0.4.1"
   }
