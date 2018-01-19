@@ -1,5 +1,6 @@
-var path = require('path');
-var webpack = require('webpack');
+'use strict';
+const path = require('path');
+const webpack = require('webpack');
 require('es6-promise').polyfill();
 
 function webpackConfig(target) {
