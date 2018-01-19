@@ -22,6 +22,7 @@ module.exports = {
     'no-param-reassign': ["error", { "props": false }],
     'no-console': ["error", { allow: ["warn", "error"] }],
      // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    'import/no-extraneous-dependencies': ["error", {"devDependencies": true}]
   }
 };
