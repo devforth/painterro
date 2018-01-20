@@ -760,7 +760,7 @@ class PainterroProc {
           ];
           const scale = this.getScale();
           this.curCord = [this.curCord[0] * scale, this.curCord[1] * scale];
-          if (!this.isMobile && e.target.tagName.toLowerCase() !== 'input') {
+          if (e.target.tagName.toLowerCase() !== 'input') {
             e.preventDefault();
           }
         }
@@ -1039,15 +1039,19 @@ class PainterroProc {
       this.scroller.appendChild(div);
       div.innerHTML = '<div style="position:absolute;top:50%;width:100%;transform: translateY(-50%);">' +
         `${this.params.initText}</div>`;
-      div.style.height = '100%';
+      div.style.left = '0';
+      div.style.top = '0';
+      div.style.right = '0';
+      div.style.bottom = '0';
       div.style['text-align'] = 'center';
-      div.style.position = 'relative';
+      div.style.position = 'absolute';
       div.style.color = this.params.initTextColor;
       div.style['font-family'] = this.params.initTextStyle.split(/ (.+)/)[1];
       div.style['font-size'] = this.params.initTextStyle.split(/ (.+)/)[0];
 
       html2canvas(div, {
         logging: false,
+        scale: 1,
       }).then((can) => {
         this.scroller.removeChild(div);
         this.ctx.drawImage(can, 0, 0);

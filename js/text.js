@@ -224,6 +224,7 @@ export default class TextTool {
     this.input.style.border = 'none';
     html2canvas(this.input, {
       logging: false,
+      scale: 1,
     }).then((can) => {
       this.ctx.drawImage(can, this.scaledCord[0], this.scaledCord[1]);
       this.input.style.border = origBorder;
