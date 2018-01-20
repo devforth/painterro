@@ -1050,6 +1050,7 @@ class PainterroProc {
       div.style['font-size'] = this.params.initTextStyle.split(/ (.+)/)[0];
 
       html2canvas(div, {
+        backgroundColor: null,
         logging: false,
         scale: 1,
       }).then((can) => {
