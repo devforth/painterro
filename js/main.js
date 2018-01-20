@@ -42,12 +42,12 @@ class PainterroProc {
         alpha: this.params.backgroundFillColorAlpha,
         alphaColor: this.params.backgroundFillAlphaColor,
       },
-      stroke: {
-        target: 'stroke',
-        palleteColor: this.params.textStrokeColor,
-        alpha: this.params.textStrokeColorAlpha,
-        alphaColor: this.params.textStrokeAlphaColor,
-      },
+      // stroke: {
+      //   target: 'stroke',
+      //   palleteColor: this.params.textStrokeColor,
+      //   alpha: this.params.textStrokeColorAlpha,
+      //   alphaColor: this.params.textStrokeAlphaColor,
+      // },
     };
     this.currentBackground = this.colorWidgetState.bg.alphaColor;
     this.currentBackgroundAlpha = this.colorWidgetState.bg.alpha;
@@ -283,34 +283,36 @@ class PainterroProc {
           },
           getValue: () => this.textTool.getFontStyle(),
           getAvilableValues: () => TextTool.getFontStyles(),
-        }, {
-          type: 'int',
-          title: 'fontStrokeSize',
-          titleFull: 'fontStrokeSizeFull',
-          target: 'fontStrokeSize',
-          min: 0,
-          max: 200,
-          action: () => {
-            const inp = document.getElementById(this.activeTool.controls[4].id).value;
-            this.textTool.setFontStrokeSize(inp);
-            setParam('fontStrokeSize', inp);
-          },
-          getValue: () => this.textTool.fontStrokeSize,
-        }, {
-          type: 'color',
-          title: 'textStrokeColor',
-          titleFull: 'textStrokeColorFull',
-          target: 'stroke',
-          action: () => {
-            this.colorPicker.open(this.colorWidgetState.stroke, (c) => {
-              this.textTool.setStrokeColor(c.alphaColor);
-            });
-          },
         },
+        // {
+        //   type: 'int',
+        //   title: 'fontStrokeSize',
+        //   titleFull: 'fontStrokeSizeFull',
+        //   target: 'fontStrokeSize',
+        //   min: 0,
+        //   max: 200,
+        //   action: () => {
+        //     const inp = document.getElementById(this.activeTool.controls[4].id).value;
+        //     this.textTool.setFontStrokeSize(inp);
+        //     setParam('fontStrokeSize', inp);
+        //   },
+        //   getValue: () => this.textTool.fontStrokeSize,
+        // },
+        // {
+        //   type: 'color',
+        //   title: 'textStrokeColor',
+        //   titleFull: 'textStrokeColorFull',
+        //   target: 'stroke',
+        //   action: () => {
+        //     this.colorPicker.open(this.colorWidgetState.stroke, (c) => {
+        //       this.textTool.setStrokeColor(c.alphaColor);
+        //     });
+        //   },
+        // },
       ],
       activate: () => {
         this.textTool.setFontColor(this.colorWidgetState.line.alphaColor);
-        this.textTool.setStrokeColor(this.colorWidgetState.stroke.alphaColor);
+        // this.textTool.setStrokeColor(this.colorWidgetState.stroke.alphaColor);
         this.toolContainer.style.cursor = 'crosshair';
       },
       close: () => {
@@ -393,7 +395,7 @@ class PainterroProc {
         this.hide();
       },
     }];
-    this.isMobile = isMobile;
+    this.isMobile = isMobile.any;
     this.toolByName = {};
     this.tools.forEach((t) => {
       this.toolByName[t.name] = t;
@@ -1034,7 +1036,7 @@ class PainterroProc {
       this.ctx.lineWidth = 3;
       this.ctx.strokeStyle = '#fff';
       const div = document.createElement('div');
-      this.holderEl.appendChild(div);
+      this.scroller.appendChild(div);
       div.innerHTML = '<div style="position:absolute;top:50%;width:100%;transform: translateY(-50%);">' +
         `${this.params.initText}</div>`;
       div.style.height = '100%';
@@ -1047,7 +1049,7 @@ class PainterroProc {
       html2canvas(div, {
         logging: false,
       }).then((can) => {
-        this.holderEl.removeChild(div);
+        this.scroller.removeChild(div);
         this.ctx.drawImage(can, 0, 0);
       });
     }

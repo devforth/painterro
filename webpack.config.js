@@ -61,10 +61,18 @@ function webpackConfig(target) {
   }
 }
 
-module.exports = [
-  webpackConfig('var'),
-  webpackConfig('var-latest'),
-  webpackConfig('commonjs2'),
-  webpackConfig('amd'),
-  webpackConfig('umd')
-];
+const isDevServer = process.argv.find(v => v.includes('webpack-dev-server'));
+
+if (!isDevServer) {
+  module.exports = [
+    webpackConfig('var'),
+    webpackConfig('var-latest'),
+    webpackConfig('commonjs2'),
+    webpackConfig('amd'),
+    webpackConfig('umd')
+  ];
+} else {
+  module.exports = [
+    webpackConfig('var-latest'),
+  ];
+}
