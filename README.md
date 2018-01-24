@@ -97,7 +97,7 @@ See [fiddle example](https://jsfiddle.net/vanbrosh/Levaqoeh/10/)
 Read after installation
 -----------------------
 
-To be able to save edited images on server see [Saving image](#saving-image). For configurations see [Configuration](#configuration)
+To be able to save edited images on server or client see [Saving image](#saving-image). For configurations see [Configuration](#configuration)
 
 Supported hotkeys
 =================
@@ -110,7 +110,7 @@ Supported hotkeys
 | `Shift` when drawing **rect**/**ellipse** | Draw **square**/**circle** |
 | `Shift` when drawing **line** | draw at angles of `0`, `45`, `90`, `135` etc degrees | 
 | `Alt` when using pipette | Hide zoom helper (colored grid) |
-| `Ctrl` + `Wheel mouse up/down` | Zoom image to 100% and back. Works only if image doesn't fit in the draw area (e.g. area `800x600` and you draw `1920x1080` image) |
+| `Ctrl` + `Wheel mouse up/down` | Zoom image |
 | `Ctrl + S` | Save image |
 
 Configuration
@@ -180,11 +180,11 @@ Painterro({
 |`toolControlNameColor`| Color of toolbar labels that prepend controls | rgba(255,255,255,0.7) |
 
 
-Methods
+API
 -------
 
-
 **.show(openImage)** - Shows painterro instance. `openImage` can have next values:
+
 * `false` - will open image that already was drawn before last close
 * `some string value`, e.g. `'http://placehold.it/120x120&text=image1'` - will try to load image from url
 * all another values - will clear content before open
@@ -193,13 +193,19 @@ Methods
 
 **.save()** - call save (same save as on buttons bar). Can be used if save button is hidden (`hiddenTools: ['save']`)
 
+Example:
+
+```js
+var p = Painterro()
+p.show()
+```
+
 Translation
 -----------
 
 Want to translate Painterro into your language? Just open file [js/translation.js](https://github.com/ivictbor/painterro/blob/master/js/translation.js#L6), copy `this.translations` dict to text editor and
  translate all `'Strings'`. Then fork and create pull-request, or just open [issue](https://github.com/ivictbor/painterro/issues)
- if you don't know how, and you will be guided in details what you should do.
-Your translation will be added and your username will be shown in repository contributors list.
+ if you don't know how to create a PR.
 
 If you want to translate or change strings without contributing you can do this by passing 
 `translation` parameter, for example:
@@ -215,7 +221,7 @@ Painterro({
   }
 }).show()
 ```
-For all strings that can be translated see `js/translation.js`
+For all strings that can be translated, see `js/translation.js`
     
 
 Saving image
