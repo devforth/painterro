@@ -197,7 +197,7 @@ export default class Inserter {
     Object.keys(this.pasteOptions).forEach((k) => {
       const o = this.pasteOptions[k];
       o.id = genId();
-      buttons += `<button id="${o.id}" class="ptro-selector-btn ptro-color-control">` +
+      buttons += `<button type="button" id="${o.id}" class="ptro-selector-btn ptro-color-control">` +
         `<div><i class="ptro-icon ptro-icon-paste_${k}"></i></div>` +
         `<div>${tr(`pasteOptions.${k}`)}</div>` +
       '</button>';

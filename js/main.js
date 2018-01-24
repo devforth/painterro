@@ -424,7 +424,7 @@ class PainterroProc {
     this.tools.filter(t => this.params.hiddenTools.indexOf(t.name) === -1).forEach((b) => {
       const id = genId();
       b.buttonId = id;
-      const btn = `<button class="ptro-icon-btn ptro-color-control" title="${tr(`tools.${b.name}`)}" ` +
+      const btn = `<button type="button" class="ptro-icon-btn ptro-color-control" title="${tr(`tools.${b.name}`)}" ` +
         `id="${id}" >` +
         `<i class="ptro-icon ptro-icon-${b.name}"></i></button>`;
       if (b.right) {
@@ -1078,11 +1078,11 @@ class PainterroProc {
         ctrls += `<span class="ptro-tool-ctl-name" title="${tr(ctl.titleFull)}">${tr(ctl.title)}</span>`;
       }
       if (ctl.type === 'btn') {
-        ctrls += `<button ${ctl.hint ? `title="${tr(ctl.hint)}"` : ''} class="ptro-color-control ${ctl.icon ? 'ptro-icon-btn' : 'ptro-named-btn'}" ` +
+        ctrls += `<button type="button" ${ctl.hint ? `title="${tr(ctl.hint)}"` : ''} class="ptro-color-control ${ctl.icon ? 'ptro-icon-btn' : 'ptro-named-btn'}" ` +
           `id=${ctl.id}>${ctl.icon ? `<i class="ptro-icon ptro-icon-${ctl.icon}"></i>` : ''}` +
           `<p>${ctl.name || ''}</p></button>`;
       } else if (ctl.type === 'color') {
-        ctrls += `<button id=${ctl.id} data-id='${ctl.target}' ` +
+        ctrls += `<button type="button" id=${ctl.id} data-id='${ctl.target}' ` +
           `style="background-color: ${this.colorWidgetState[ctl.target].alphaColor}" ` +
           'class="color-diwget-btn ptro-color-btn ptro-bordered-btn"></button>' +
           '<span class="ptro-btn-color-checkers-bar"></span>';

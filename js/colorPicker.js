@@ -288,11 +288,11 @@ export default class ColorPicker {
           '<span class="ptro-color-alpha-regulator ptro-bordered-control"></span>' +
           '<div class="ptro-colors"></div>' +
           '<div class="ptro-color-edit">' +
-            '<button class="ptro-icon-btn ptro-pipette ptro-color-control" style="float: left; margin-right: 5px">' +
+            '<button type="button" class="ptro-icon-btn ptro-pipette ptro-color-control" style="float: left; margin-right: 5px">' +
               '<i class="ptro-icon ptro-icon-pipette"></i>' +
             '</button>' +
             '<input class="ptro-input ptro-color" type="text" size="7"/>' +
-            '<button class="ptro-named-btn ptro-close-color-picker ptro-color-control" >' +
+            '<button type="button" class="ptro-named-btn ptro-close-color-picker ptro-color-control" >' +
             `${tr('close')}</button>` +
           '</div>' +
         '</div>' +

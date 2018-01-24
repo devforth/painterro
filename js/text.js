@@ -244,11 +244,11 @@ export default class TextTool {
     return '<span class="ptro-text-tool-input-wrapper">' +
       '<div contenteditable="true" class="ptro-text-tool-input"></div>' +
         '<span class="ptro-text-tool-buttons">' +
-          `<button class="ptro-text-tool-apply ptro-icon-btn ptro-color-control" title="${tr('apply')}" 
+          `<button type="button" class="ptro-text-tool-apply ptro-icon-btn ptro-color-control" title="${tr('apply')}" 
                    style="margin: 2px">` +
             '<i class="ptro-icon ptro-icon-apply"></i>' +
           '</button>' +
-          `<button class="ptro-text-tool-cancel ptro-icon-btn ptro-color-control" title="${tr('cancel')}"
+          `<button type="button" class="ptro-text-tool-cancel ptro-icon-btn ptro-color-control" title="${tr('cancel')}"
                    style="margin: 2px">` +
             '<i class="ptro-icon ptro-icon-close"></i>' +
           '</button>' +
