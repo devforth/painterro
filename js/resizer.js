@@ -127,17 +127,17 @@ export default class Resizer {
             '</table>' +
           '</div>' +
           '<div class="ptro-resize-link-wrapper">' +
-            `<button class="ptro-icon-btn ptro-link ptro-color-control" title="${tr('keepRatio')}">` +
+            `<button type="button" class="ptro-icon-btn ptro-link ptro-color-control" title="${tr('keepRatio')}">` +
               '<i class="ptro-icon ptro-icon-linked" style="font-size: 18px;"></i>' +
             '</button>' +
           '</div>' +
           '<div></div>' +
           '<div style="margin-top: 40px;">' +
-            '<button class="ptro-named-btn ptro-resize ptro-color-control">' +
+            '<button type="button" class="ptro-named-btn ptro-resize ptro-color-control">' +
                   `${tr('resizeResize')}</button>` +
-            '<button class="ptro-named-btn ptro-scale ptro-color-control">' +
+            '<button type="button" class="ptro-named-btn ptro-scale ptro-color-control">' +
                   `${tr('resizeScale')}</button>` +
-            '<button class="ptro-named-btn ptro-close ptro-color-control">' +
+            '<button type="button" class="ptro-named-btn ptro-close ptro-color-control">' +
                   `${tr('cancel')}</button>` +
           '</div>' +
         '</div>' +
