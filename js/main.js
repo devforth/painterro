@@ -690,9 +690,9 @@ class PainterroProc {
       mousedown: (e) => {
         if (this.shown) {
           if (this.worklog.empty &&
-             (e.target.className.includes('ptro-crp-el') ||
-              e.target.className.includes('ptro-icon') ||
-              e.target.className.includes('ptro-named-btn'))) {
+             (e.target.className.indexOf('ptro-crp-el') !== -1 ||
+              e.target.className.indexOf('ptro-icon') !== -1 ||
+              e.target.className.indexOf('ptro-named-btn') !== -1)) {
             this.clearBackground(); // clear initText
           }
           if (this.colorPicker.handleMouseDown(e) !== true) {
