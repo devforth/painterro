@@ -112,6 +112,8 @@ export function setDefaults(parameters) {
     };
   }
 
+  params.toolbarPosition = params.toolbarPosition || 'bottom';
+
   if (params.translation) {
     const name = params.translation.name;
     Translation.get().addTranslation(name, params.translation.strings);
@@ -147,7 +149,14 @@ export function setDefaults(parameters) {
     .ptro-color-active-control{
         background-color: ${params.colorScheme.activeControl};
         color:${params.colorScheme.activeControlContent}}
-    .ptro-wrapper{background-color:${params.colorScheme.backgroundColor};}}`;
+    .ptro-wrapper{
+      background-color:${params.colorScheme.backgroundColor};
+      bottom:${params.toolbarPosition === 'top' ? '0' : '40px'};
+      top:${params.toolbarPosition === 'top' ? '40px' : '0'};
+    }
+    .ptro-bar {
+      ${params.toolbarPosition === 'top' ? 'top' : 'bottom'}: 0;
+    }`;
 
   return params;
 }
