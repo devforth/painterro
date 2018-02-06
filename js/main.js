@@ -17,11 +17,13 @@ import TextTool from './text';
 import Resizer from './resizer';
 import Inserter from './inserter';
 import Settings from './settings';
+import ControlBuilder from './controlbuilder';
 
 class PainterroProc {
   constructor(params) {
     addDocumentObjectHelpers();
     this.params = setDefaults(params);
+    this.controlBuilder = new ControlBuilder(this);
 
     this.colorWidgetState = {
       line: {
@@ -86,20 +88,8 @@ class PainterroProc {
         action: () => {
           this.colorPicker.open(this.colorWidgetState.line);
         },
-      }, {
-        type: 'int',
-        title: 'lineWidth',
-        titleFull: 'lineWidthFull',
-        target: 'lineWidth',
-        min: 1,
-        max: 99,
-        action: () => {
-          const width = document.getElementById(this.activeTool.controls[1].id);
-          this.primitiveTool.setLineWidth(width.value);
-          setParam('defaultLineWidth', width.value);
-        },
-        getValue: () => this.primitiveTool.lineWidth,
-      }],
+      }, this.controlBuilder.buildLineWidthControl(1),
+      ],
       activate: () => {
         this.toolContainer.style.cursor = 'crosshair';
         this.primitiveTool.activate('line');
@@ -123,20 +113,7 @@ class PainterroProc {
         action: () => {
           this.colorPicker.open(this.colorWidgetState.fill);
         },
-      }, {
-        type: 'int',
-        title: 'lineWidth',
-        titleFull: 'lineWidthFull',
-        target: 'lineWidth',
-        min: 1,
-        max: 99,
-        action: () => {
-          const width = document.getElementById(this.activeTool.controls[2].id).value;
-          this.primitiveTool.setLineWidth(width);
-          setParam('defaultLineWidth', width.value);
-        },
-        getValue: () => this.primitiveTool.lineWidth,
-      },
+      }, this.controlBuilder.buildLineWidthControl(2),
       ],
       activate: () => {
         this.toolContainer.style.cursor = 'crosshair';
@@ -161,20 +138,7 @@ class PainterroProc {
         action: () => {
           this.colorPicker.open(this.colorWidgetState.fill);
         },
-      }, {
-        type: 'int',
-        title: 'lineWidth',
-        titleFull: 'lineWidthFull',
-        target: 'lineWidth',
-        min: 1,
-        max: 99,
-        action: () => {
-          const width = document.getElementById(this.activeTool.controls[2].id).value;
-          this.primitiveTool.setLineWidth(width);
-          setParam('defaultLineWidth', width.value);
-        },
-        getValue: () => this.primitiveTool.lineWidth,
-      },
+      }, this.controlBuilder.buildLineWidthControl(2),
       ],
       activate: () => {
         this.toolContainer.style.cursor = 'crosshair';
@@ -191,20 +155,7 @@ class PainterroProc {
         action: () => {
           this.colorPicker.open(this.colorWidgetState.line);
         },
-      }, {
-        type: 'int',
-        title: 'lineWidth',
-        titleFull: 'lineWidthFull',
-        target: 'lineWidth',
-        min: 1,
-        max: 99,
-        action: () => {
-          const width = document.getElementById(this.activeTool.controls[1].id);
-          this.primitiveTool.setLineWidth(width.value);
-          setParam('defaultLineWidth', width.value);
-        },
-        getValue: () => this.primitiveTool.lineWidth,
-      },
+      }, this.controlBuilder.buildLineWidthControl(1),
       ],
       activate: () => {
         this.toolContainer.style.cursor = 'crosshair';
@@ -213,20 +164,7 @@ class PainterroProc {
       eventListner: () => this.primitiveTool,
     }, {
       name: 'eraser',
-      controls: [{
-        type: 'int',
-        title: 'eraserWidth',
-        titleFull: 'eraserWidthFull',
-        target: 'eraserWidth',
-        min: 1,
-        max: 99,
-        action: () => {
-          const width = document.getElementById(this.activeTool.controls[0].id);
-          this.primitiveTool.setEraserWidth(width.value);
-          setParam('defaultEraserWidth', width.value);
-        },
-        getValue: () => this.primitiveTool.eraserWidth,
-      },
+      controls: [this.controlBuilder.buildEraserWidthControl(0),
       ],
       activate: () => {
         this.toolContainer.style.cursor = 'crosshair';
@@ -246,20 +184,8 @@ class PainterroProc {
               this.textTool.setFontColor(c.alphaColor);
             });
           },
-        }, {
-          type: 'int',
-          title: 'fontSize',
-          titleFull: 'fontSizeFull',
-          target: 'fontSize',
-          min: 1,
-          max: 200,
-          action: () => {
-            const width = document.getElementById(this.activeTool.controls[1].id).value;
-            this.textTool.setFontSize(width);
-            setParam('defaultFontSize', width);
-          },
-          getValue: () => this.textTool.fontSize,
-        }, {
+        }, this.controlBuilder.buildFontSizeControl(1),
+        {
           type: 'dropdown',
           title: 'fontName',
           titleFull: 'fontNameFull',
@@ -270,7 +196,7 @@ class PainterroProc {
             this.textTool.setFont(font);
           },
           getValue: () => this.textTool.getFont(),
-          getAvilableValues: () => TextTool.getFonts(),
+          getAvailableValues: () => TextTool.getFonts(),
         }, {
           type: 'dropdown',
           title: 'fontStyle',
@@ -282,7 +208,7 @@ class PainterroProc {
             this.textTool.setFontStyle(style);
           },
           getValue: () => this.textTool.getFontStyle(),
-          getAvilableValues: () => TextTool.getFontStyles(),
+          getAvailableValues: () => TextTool.getFontStyles(),
         },
         // {
         //   type: 'int',
@@ -1091,7 +1017,7 @@ class PainterroProc {
           `data-id='${ctl.target}'/>`;
       } else if (ctl.type === 'dropdown') {
         let options = '';
-        ctl.getAvilableValues().forEach((o) => {
+        ctl.getAvailableValues().forEach((o) => {
           options += `<option ${o.extraStyle ? `style='${o.extraStyle}'` : ''}` +
             ` value='${o.value}' ${o.title ? `title='${o.title}'` : ''}>${o.name}</option>`;
         });
@@ -1106,6 +1032,7 @@ class PainterroProc {
         this.doc.getElementById(ctl.id).oninput = ctl.action;
       } else if (ctl.type === 'dropdown') {
         this.doc.getElementById(ctl.id).onchange = ctl.action;
+        this.doc.getElementById(ctl.id).value = ctl.getValue();
       } else {
         this.doc.getElementById(ctl.id).onclick = ctl.action;
       }
