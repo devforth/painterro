@@ -110,3 +110,7 @@ button.ptro-icon-right:first-of-type {
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
 }
+
+#container-bar {
+    display: block;
+}
