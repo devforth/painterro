@@ -147,7 +147,10 @@ Painterro({
 |`initTextStyle` | Style of init text | "26px 'Open Sans', sans-serif" |
 |`pixelizePixelSize` | Default pixel size of pixelize tool. Can accept values - `x` - x pixels, `x%` - means percents of minimal area rectangle side | `20%` |
 |`changeHandler` | Function that will be called if something will be changed (painted, erased, resized, etc) | undefined |
-
+|`availableLineWidths` | A list of the line width values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | undefined |
+|`availableEraserWidths` | A list of the eraser width values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | undefined |
+|`availableFontSizes` | A list of the font size values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | undefined |
+|`toolbarPosition` | Whether to position the toolbar at the top or bottom. | 'bottom' |
 
 UI color scheme
 ---------------
