@@ -1001,7 +1001,7 @@ class PainterroProc {
     (b.controls || []).forEach((ctl) => {
       ctl.id = genId();
       if (ctl.title) {
-        ctrls += `<span class="ptro-tool-ctl-name" title="${tr(ctl.titleFull)}">${tr(ctl.title)}</span>`;
+        ctrls += `<span class="ptro-tool-ctl-name" title="${tr(ctl.titleFull)}">${tr(this.params.useFullNames ? ctl.titleFull : ctl.title)}</span>`;
       }
       if (ctl.type === 'btn') {
         ctrls += `<button type="button" ${ctl.hint ? `title="${tr(ctl.hint)}"` : ''} class="ptro-color-control ${ctl.icon ? 'ptro-icon-btn' : 'ptro-named-btn'}" ` +
