@@ -593,8 +593,11 @@ class PainterroProc {
         this.activeTool.close();
       }
       this.toolControls.innerHTML = '';
-      this.getBtnEl(this.activeTool).className =
+      const btnEl = this.getBtnEl(this.activeTool);
+      if (btnEl) {
+        btnEl.className =
         this.getBtnEl(this.activeTool).className.replace(' ptro-color-active-control', '');
+      }
       this.activeTool = undefined;
     }
     if (doNotSelect !== true) {
@@ -996,7 +999,10 @@ class PainterroProc {
 
   setActiveTool(b) {
     this.activeTool = b;
-    this.getBtnEl(b).className += ' ptro-color-active-control';
+    const btnEl = this.getBtnEl(this.activeTool);
+    if (btnEl) {
+      btnEl.className += ' ptro-color-active-control';
+    }
     let ctrls = '';
     (b.controls || []).forEach((ctl) => {
       ctl.id = genId();
