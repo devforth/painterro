@@ -117,6 +117,18 @@ export function copyToClipboard(text) {
 }
 
 
+export function elementIsDescendantOf(child, parent) {
+  let node = child.parentNode;
+  while (node) {
+    if (node === parent) {
+      return true;
+    }
+    node = node.parentNode;
+  }
+  return false;
+}
+
+
 export function getScrollbarWidth() {
   const outer = document.createElement('div');
   outer.style.visibility = 'hidden';

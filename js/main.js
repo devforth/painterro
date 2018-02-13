@@ -7,7 +7,7 @@ import '../css/icons/ptroiconfont.css';
 import PainterroSelecter from './selecter';
 import WorkLog from './worklog';
 import { genId, addDocumentObjectHelpers, KEYS, trim,
-  getScrollbarWidth, distance } from './utils';
+  getScrollbarWidth, distance, elementIsDescendantOf } from './utils';
 import PrimitiveTool from './primitive';
 import ColorPicker from './colorPicker';
 import { setDefaults, setParam, logError } from './params';
@@ -627,6 +627,10 @@ class PainterroProc {
         }
       },
       touchstart: (e) => {
+        if (elementIsDescendantOf(e.target, this.wrapper)) {
+          this.origOverflowY = this.body.style['overflow-y'];
+          this.body.style['overflow-y'] = 'hidden';
+        }
         if (e.touches.length === 1) {
           e.clientX = e.changedTouches[0].clientX;
           e.clientY = e.changedTouches[0].clientY;
@@ -643,6 +647,10 @@ class PainterroProc {
         }
       },
       touchend: (e) => {
+        if (elementIsDescendantOf(e.target, this.wrapper)) {
+          this.body.style['overflow-y'] = this.origOverflowY;
+        }
+
         e.clientX = e.changedTouches[0].clientX;
         e.clientY = e.changedTouches[0].clientY;
         this.documentHandlers.mouseup(e);
@@ -671,8 +679,8 @@ class PainterroProc {
             this.documentHandlers.mousewheel(e);
           }
           this.lastFingerDist = fingersDist;
-          e.stopPropagation();
-          e.preventDefault();
+          // e.stopPropagation();
+          // e.preventDefault();
         }
       },
       mousemove: (e) => {
@@ -686,8 +694,8 @@ class PainterroProc {
           ];
           const scale = this.getScale();
           this.curCord = [this.curCord[0] * scale, this.curCord[1] * scale];
-          if (e.target.tagName.toLowerCase() !== 'input') {
-            e.preventDefault();
+          if (elementIsDescendantOf(e.target, this.wrapper) && e.target.tagName.toLowerCase() !== 'input') {
+            e.preventDefault(); // prevent only if it is our event (for #14)
           }
         }
       },
@@ -779,8 +787,8 @@ class PainterroProc {
           const mainClass = event.target.classList[0];
           if (mainClass === 'ptro-crp-el' || mainClass === 'ptro-bar') {
             this.bar.className = 'ptro-bar ptro-color-main ptro-bar-dragover';
+            event.preventDefault();
           }
-          event.preventDefault();
         }
       },
       dragleave: () => {
@@ -846,10 +854,6 @@ class PainterroProc {
   show(openImage) {
     this.shown = true;
     this.scrollWidth = getScrollbarWidth();
-    if (this.isMobile) {
-      this.origOverflowY = this.body.style['overflow-y'];
-      this.body.style['overflow-y'] = 'hidden';
-    }
     this.baseEl.removeAttribute('hidden');
     if (this.holderEl) {
       this.holderEl.removeAttribute('hidden');
@@ -866,9 +870,6 @@ class PainterroProc {
   }
 
   hide() {
-    if (this.isMobile) {
-      this.body.style['overflow-y'] = this.origOverflowY;
-    }
     this.shown = false;
     this.baseEl.setAttribute('hidden', '');
     if (this.holderEl) {
