@@ -11,11 +11,11 @@
       }
 
       #conatiner {
-        position: relative;
+        position: absolute;
         top: 50px;
         bottom: 50px;
-        height: 200px;
-        width: 300px;
+        left: 20px;
+        right: 20px;
       }
 
     </style>
@@ -26,8 +26,6 @@
   <div id="conatiner">
 
   </div>
-  test1<br>test2<br>test3<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test10<br>test11<br>test12<br>
-
 </div>
 
 <!--<script src="https://github.com/ivictbor/painterro/releases/download/0.1.7/painterro-0.1.7.min.js"></script>-->
@@ -47,7 +45,6 @@
 //  });
 
   Painterro({
-     id: 'conatiner',
     initText: 'Press <strong>Prn Scr</strong>, Ctrl+V to paste a screenshot',
     changeHandler: function (state) {
       console.log('Something drawed: ', state);
@@ -56,8 +53,7 @@
     availableLineWidths: [1,2,4,8,16,64],
     availableEraserWidths: [1,2,4,8,16,64],
     availableFontSizes: [1,2,4,8,16,64],
-    toolbarPosition: 'top',
-    defaultLineWidth: 2
+    toolbarPosition: 'top'
     // defaultTool: 'line',
     //hiddenTools: ['line']
   }).show() //;

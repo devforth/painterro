@@ -199,6 +199,7 @@ export default class TextTool {
       this.input.onkeydown = (e) => {
         if (e.ctrlKey && e.keyCode === KEYS.enter) {
           this.apply();
+
           e.preventDefault();
         }
         if (e.keyCode === KEYS.esc) {
