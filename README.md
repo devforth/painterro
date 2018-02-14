@@ -151,6 +151,7 @@ Painterro({
 |`availableEraserWidths` | A list of the eraser width values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | undefined |
 |`availableFontSizes` | A list of the font size values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | undefined |
 |`toolbarPosition` | Whether to position the toolbar at the top or bottom. | 'bottom' |
+|`fixMobilePageReloader` | By default painterro adds overflow-y: hidden to page body on mobile devices to prevent "super smart" feature lice Chrom's reload page. Unfortunately we can't prevent it by preventDefault. If your want to scroll page when painterro is open, set this to false | true |
 
 UI color scheme
 ---------------

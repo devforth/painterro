@@ -850,6 +850,7 @@ class PainterroProc {
       this.origOverflowY = this.body.style['overflow-y'];
       if (this.params.fixMobilePageReloader) {
         this.body.style['overflow-y'] = 'hidden';
+        alert(222)
       }
     }
     this.baseEl.removeAttribute('hidden');
