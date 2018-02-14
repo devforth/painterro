@@ -113,7 +113,8 @@ export function setDefaults(parameters) {
   }
 
   params.toolbarPosition = params.toolbarPosition || 'bottom';
-  params.fixMobilePageReloader = params.fixMobilePageReloader !== undefined ? params.fixMobilePageReloader : true;
+  params.fixMobilePageReloader = params.fixMobilePageReloader !== undefined ?
+    params.fixMobilePageReloader : true;
   if (params.translation) {
     const name = params.translation.name;
     Translation.get().addTranslation(name, params.translation.strings);
