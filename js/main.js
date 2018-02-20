@@ -851,7 +851,9 @@ class PainterroProc {
     this.scrollWidth = getScrollbarWidth();
     if (this.isMobile) {
       this.origOverflowY = this.body.style['overflow-y'];
-      this.body.style['overflow-y'] = 'hidden';
+      if (this.params.fixMobilePageReloader) {
+        this.body.style['overflow-y'] = 'hidden';
+      }
     }
     this.baseEl.removeAttribute('hidden');
     if (this.holderEl) {
