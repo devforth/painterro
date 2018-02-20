@@ -208,7 +208,7 @@ class PainterroProc {
             this.textTool.setFontStyle(style);
           },
           getValue: () => this.textTool.getFontStyle(),
-          getAvailableValues: () => TextTool.getFontStyles(this.params.useFullNames),
+          getAvailableValues: () => TextTool.getFontStyles(),
         },
         // {
         //   type: 'int',
