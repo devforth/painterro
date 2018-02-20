@@ -689,7 +689,8 @@ class PainterroProc {
           ];
           const scale = this.getScale();
           this.curCord = [this.curCord[0] * scale, this.curCord[1] * scale];
-          if (e.target.tagName.toLowerCase() !== 'input') {
+          if (e.target.tagName.toLowerCase() !== 'input' && e.target.tagName.toLowerCase() !== 'button'
+        && e.target.tagName.toLowerCase() !== 'i' && e.target.tagName.toLowerCase() !== 'select') {
             e.preventDefault();
           }
         }
