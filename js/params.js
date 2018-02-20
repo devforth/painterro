@@ -113,7 +113,6 @@ export function setDefaults(parameters) {
   }
 
   params.toolbarPosition = params.toolbarPosition || 'bottom';
-  params.useFullNames = params.useFullNames || false;
 
   if (params.translation) {
     const name = params.translation.name;
