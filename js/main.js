@@ -318,6 +318,7 @@ class PainterroProc {
       right: true,
       activate: () => {
         this.closeActiveTool();
+        this.close();
         this.hide();
       },
     }];
@@ -585,6 +586,12 @@ class PainterroProc {
       this.saving = false;
     }
     return this;
+  }
+  
+  close() {
+    if (this.params.closeHandler !== undefined) {
+      this.params.closeHandler();
+    }
   }
 
   closeActiveTool(doNotSelect) {
