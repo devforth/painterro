@@ -587,7 +587,7 @@ class PainterroProc {
     }
     return this;
   }
-  
+
   close() {
     if (this.params.closeHandler !== undefined) {
       this.params.closeHandler();
@@ -824,7 +824,13 @@ class PainterroProc {
         }
       },
     };
+    this.listenersInstalled = false;
+  }
 
+  attachEventHandlers() {
+    if (this.listenersInstalled) {
+      return;
+    }
     Object.keys(this.documentHandlers).forEach((key) => {
       this.doc.addEventListener(key, this.documentHandlers[key]);
     });
@@ -832,6 +838,21 @@ class PainterroProc {
     Object.keys(this.windowHandlers).forEach((key) => {
       window.addEventListener(key, this.windowHandlers[key]);
     });
+    this.listenersInstalled = true;
+  }
+
+  removeEventHandlers() {
+    if (!this.listenersInstalled) {
+      return;
+    }
+    Object.keys(this.documentHandlers).forEach((key) => {
+      this.doc.removeEventListener(key, this.documentHandlers[key]);
+    });
+    Object.keys(this.windowHandlers).forEach((key) => {
+      window.removeEventListener(key, this.windowHandlers[key]);
+    });
+
+    this.listenersInstalled = false;
   }
 
   elLeft() {
@@ -875,6 +896,7 @@ class PainterroProc {
     } else if (openImage !== false) {
       this.clear();
     }
+    this.attachEventHandlers();
     return this;
   }
 
@@ -887,6 +909,7 @@ class PainterroProc {
     if (this.holderEl) {
       this.holderEl.setAttribute('hidden', '');
     }
+    this.removeEventHandlers();
     return this;
   }
 
