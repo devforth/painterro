@@ -99,17 +99,20 @@ export function setDefaults(parameters) {
 
   params.defaultSize = params.defaultSize || 'fill';
   params.defaultPixelSize = params.defaultPixelSize || 4;
-  if (params.defaultSize === 'fill') {
-    params.defaultSize = {
-      width: 'fill',
-      height: 'fill',
-    };
-  } else {
-    const wh = params.defaultSize.split('x');
-    params.defaultSize = {
-      width: trim(wh[0]),
-      height: trim(wh[1]),
-    };
+  if (typeof params.defaultSize !== 'object') {
+    // otherwise its an object from localstorage
+    if (params.defaultSize === 'fill') {
+      params.defaultSize = {
+        width: 'fill',
+        height: 'fill',
+      };
+    } else {
+      const wh = params.defaultSize.split('x');
+      params.defaultSize = {
+        width: trim(wh[0]),
+        height: trim(wh[1]),
+      };
+    }
   }
 
   params.toolbarPosition = params.toolbarPosition || 'bottom';
