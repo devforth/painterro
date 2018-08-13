@@ -350,7 +350,16 @@ Building painterro
 ```bash
 npm run build
 ```
-Result file is `build/painterro.min.js`
+
+Result file for `<script>` import is `build/painterro.min.js`.
+
+Actually, above command produces 4 versions of library:
+
+- `build/painterro-x.y.z.min.js` and the same but vithout version tag `build/painterro.min.js` - this is `var` version which will be loaded as global variable (var painterro) whe you will import it as `<script src=` tag. So this is for `script` tag only.   
+- `build/painterro.commonjs2.js` - this version sutable for import (e.g. when you are using webpack). Thats why it is used as entry point in `package.json` file - if you are using webpack or other tool that can handle `require/import` of `commonjs2` libraries then you can do `npm install painterro`, and do `import painterro` and it will use `commonjs2` version
+- `build/painterro.amd.js` and `build/painterro.umd.js` - these both are same as above but for `AMD` and `UMD` importers.
+
+
 
 Dev-server
 ----------
