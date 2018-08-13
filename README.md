@@ -350,7 +350,7 @@ Building painterro
 ```bash
 npm run build
 ```
-Result file is `build/painterro.js`
+Result file is `build/painterro.min.js`
 
 Dev-server
 ----------
