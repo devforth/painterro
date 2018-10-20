@@ -388,8 +388,8 @@ ToDo list
 
 - Add recent colors pallete
 - Add recent image sizes in resize tool
-- Ability to save loacaly
-- line arrows
+- Ability to save locally
+- Line arrows
 - Edit button on page <img> tags (provide selector)
 
 [npm]: https://img.shields.io/npm/v/painterro.svg
