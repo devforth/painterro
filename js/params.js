@@ -37,12 +37,10 @@ function firstDefined(...vals) {
 }
 
 export function setDefaults(parameters) {
-  
   loadSettings();
-
   const params = parameters || {};
   if (params.language) {
-    activate(params.language)
+    activate(params.language);
   }
   params.activeColor = settings.activeColor || params.activeColor || '#ff0000';
   params.activeColorAlpha = firstDefined(settings.activeColorAlpha, params.activeColorAlpha, 1.0);

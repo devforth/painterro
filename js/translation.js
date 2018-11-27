@@ -11,9 +11,7 @@ export default class Translation {
       es: esl,
       ca: cal,
     };
-   this.defaultTranslator = this.translations.en;
-   //this.activate('ca');
-    
+    this.defaultTranslator = this.translations.en;
   }
 
   static get() {
@@ -29,16 +27,8 @@ export default class Translation {
   }
 
   activate(trans) {
-
-    console.log('-------',trans);
-
-
-
-    console.log('+++++++',this.translations, this.translations[trans]);
     if (this.translations[trans] !== undefined) {
       this.trans = trans;
-      console.log('++++++++',this.translations[trans]);
-     // console.log('------');
       this.translator = this.translations[this.trans];
     } else {
       this.translator = this.defaultTranslator;
@@ -58,11 +48,9 @@ export default class Translation {
     return res || fallbackRes;
   }
 }
-
 export function activate(a) {
   return Translation.get().activate(a);
 }
-
 export function tr(n) {
   return Translation.get().tr(n);
 }
