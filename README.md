@@ -147,11 +147,13 @@ Painterro({
 |`initTextStyle` | Style of init text | "26px 'Open Sans', sans-serif" |
 |`pixelizePixelSize` | Default pixel size of pixelize tool. Can accept values - `x` - x pixels, `x%` - means percents of minimal area rectangle side | `20%` |
 |`changeHandler` | Function that will be called if something will be changed (painted, erased, resized, etc) | undefined |
+|`undoHandler` | Function that will be called if user will undo (Ctrl+Z) | undefined |
 |`availableLineWidths` | A list of the line width values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | undefined |
 |`availableEraserWidths` | A list of the eraser width values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | undefined |
 |`availableFontSizes` | A list of the font size values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | undefined |
 |`toolbarPosition` | Whether to position the toolbar at the top or bottom. | 'bottom' |
 |`fixMobilePageReloader` | By default painterro adds overflow-y: hidden to page body on mobile devices to prevent "super smart" feature lice Chrom's reload page. Unfortunately we can't prevent it by preventDefault. If your want to scroll page when painterro is open, set this to false | true |
+|`language` | Language of the widget. |'en'
 
 UI color scheme
 ---------------
@@ -207,10 +209,23 @@ p.show()
 Translation
 -----------
 
-Want to translate Painterro into your language? Just open file [js/translation.js](https://github.com/ivictbor/painterro/blob/master/js/translation.js#L6), copy `this.translations` dict to text editor and
- translate all `'Strings'`. Then fork and create pull-request, or just open [issue](https://github.com/ivictbor/painterro/issues)
- if you don't know how to create a PR.
+Want to translate Painterro into your language?
+ If you need English, Spanish or Catalan language,
+ you should pass `language` parameter, for example:
+ 
+```js
+Painterro({
+  language: 'es'
+}).show()
+```
+`language` can have next values:
+* `en` - for using English language
+* `es` - for using Spanish language
+* `ca` - for using Catalan language
 
+ If you want to add another language, then fork. Create file in folder langs for your translation and copy [langs/en.lang.js] in it. Then translate all `'Strings'` and add reference in [js/translation.js]. After that create pull-request, or just open [issue](https://github.com/ivictbor/painterro/issues)
+ if you don't know how to create a PR.
+ 
 If you want to translate or change strings without contributing you can do this by passing 
 `translation` parameter, for example:
 
@@ -225,7 +240,7 @@ Painterro({
   }
 }).show()
 ```
-For all strings that can be translated, see `js/translation.js`
+For all strings that can be translated, see [langs/en.lang.js] 
     
 
 Saving image

@@ -24,7 +24,6 @@ class PainterroProc {
     addDocumentObjectHelpers();
     this.params = setDefaults(params);
     this.controlBuilder = new ControlBuilder(this);
-
     this.colorWidgetState = {
       line: {
         target: 'line',
