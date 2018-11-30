@@ -46,6 +46,8 @@
 //    }
 //  });
 
+  
+
   window.p = Painterro({
     id: 'conatiner',
     initText: 'Press <strong>Prn Scr</strong>, Ctrl+V to paste a screenshot',
@@ -57,6 +59,14 @@
    availableLineWidths: [1,2,4,8,16,64],
    availableEraserWidths: [1,2,4,8,16,64],
    availableFontSizes: [1,2,4,8,16,64],
+   userUndo: function () {
+     console.log("+++");
+   },
+   userRedo: function () {
+     console.log("---");
+   },
+
+
 
   
     //toolbarPosition: 'top',
