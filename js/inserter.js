@@ -120,7 +120,6 @@ export default class Inserter {
 
   handleOpen(src) {
     this.startLoading();
-
     const handleIt = (source) => {
       const img = new Image();
       const empty = this.main.worklog.clean;
