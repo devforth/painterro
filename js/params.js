@@ -1,7 +1,6 @@
 import { HexToRGBA } from './colorPicker';
-import Translation from './translation';
 import { trim, logError } from './utils';
-import { activate } from './translation';
+import Translation, { activate } from './translation';
 import { setActivePasteOptions } from './inserter';
 
 const STORAGE_KEY = 'painterro-data';

@@ -65,7 +65,7 @@ export default class Resizer {
     };
 
     this.inputW.oninput = () => {
-      this.newW = this.inputW.value;
+      this.newW = +this.inputW.value;
       if (this.linked) {
         const ratio = this.main.size.ratio;
         this.newH = Math.round(this.newW / ratio);
@@ -73,11 +73,11 @@ export default class Resizer {
       }
     };
     this.inputH.oninput = () => {
-      this.newH = this.inputH.value;
+      this.newH = +this.inputH.value;
       if (this.linked) {
         const ratio = this.main.size.ratio;
         this.newW = Math.round(this.newH * ratio);
-        this.inputW.value = this.newW;
+        this.inputW.value = +this.newW;
       }
     };
   }
@@ -87,8 +87,8 @@ export default class Resizer {
     this.opened = true;
     this.newW = this.main.size.w;
     this.newH = this.main.size.h;
-    this.inputW.value = this.newW;
-    this.inputH.value = this.newH;
+    this.inputW.value = +this.newW;
+    this.inputH.value = +this.newH;
   }
 
   close() {
