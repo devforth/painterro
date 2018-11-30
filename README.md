@@ -153,7 +153,8 @@ Painterro({
 |`availableFontSizes` | A list of the font size values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | undefined |
 |`toolbarPosition` | Whether to position the toolbar at the top or bottom. | 'bottom' |
 |`fixMobilePageReloader` | By default painterro adds overflow-y: hidden to page body on mobile devices to prevent "super smart" feature lice Chrom's reload page. Unfortunately we can't prevent it by preventDefault. If your want to scroll page when painterro is open, set this to false | true |
-|`language` | Language of the widget. |'en'
+|`language` | Language of the widget. |'en'|
+|`how_to_paste_actions`| List of paste options that are available e.g. `['extend_right', 'extend_down'] `| `['replace_all', 'paste_over', 'extend_right', 'extend_down']` |
 
 UI color scheme
 ---------------

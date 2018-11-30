@@ -360,7 +360,7 @@ class PainterroProc {
       }
     });
 
-    this.inserter = new Inserter();
+    this.inserter = Inserter.get();
 
     const cropper = '<div class="ptro-crp-el">' +
       `${PainterroSelecter.code()}${TextTool.code()}</div>`;
