@@ -1,6 +1,7 @@
 import { tr } from './translation';
 import { genId, KEYS, copyToClipboard, imgToDataURL } from './utils';
 
+let instance = null;
 export default class Inserter {
   constructor() {
     this.pasteOptions = {
@@ -72,6 +73,7 @@ export default class Inserter {
         },
       },
     };
+    this.activeOption = this.pasteOptions;
   }
 
   init(main) {
@@ -118,6 +120,7 @@ export default class Inserter {
 
   handleOpen(src) {
     this.startLoading();
+
     const handleIt = (source) => {
       const img = new Image();
       const empty = this.main.worklog.clean;
@@ -131,8 +134,12 @@ export default class Inserter {
       };
       img.src = source;
       if (!empty) {
-        this.selector.removeAttribute('hidden');
-        this.waitChoice = true;
+        if (Object.keys(this.activeOption).length !== 1) {
+          this.selector.removeAttribute('hidden');
+          this.waitChoice = true;
+        } else {
+          this.doLater = this.activeOption[Object.keys(this.activeOption)[0]].handle;
+        }
       }
     };
 
@@ -192,6 +199,30 @@ export default class Inserter {
     }
   }
 
+  static get() {
+    if (instance) {
+      return instance;
+    }
+    instance = new Inserter();
+    return instance;
+  }
+
+  activeOptions(actOpt) {
+    const po = Object.keys(this.pasteOptions);
+    po.forEach((i) => {
+      let b = false;
+      actOpt.forEach((k) => {
+        if (i === k) {
+          b = true;
+        }
+      });
+      if (b === false) {
+        delete this.pasteOptions[i];
+      }
+    });
+    this.activeOption = this.pasteOptions;
+  }
+
   html() {
     let buttons = '';
     Object.keys(this.pasteOptions).forEach((k) => {
@@ -207,4 +238,7 @@ export default class Inserter {
       `<div class="ptro-paste-label">${tr('pasteOptions.how_to_paste')}</div>${
         buttons}</div></div></div>`;
   }
+}
+export function setActivePasteOptions(a) {
+  return Inserter.get().activeOptions(a);
 }
