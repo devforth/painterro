@@ -1,6 +1,8 @@
 import { HexToRGBA } from './colorPicker';
 import Translation from './translation';
 import { trim, logError } from './utils';
+import { activate } from './translation';
+import { setActivePasteOptions } from './inserter';
 
 const STORAGE_KEY = 'painterro-data';
 
@@ -38,6 +40,12 @@ function firstDefined(...vals) {
 export function setDefaults(parameters) {
   loadSettings();
   const params = parameters || {};
+  if (params.language) {
+    activate(params.language);
+  }
+  if (params.how_to_paste_actions) {
+    setActivePasteOptions(params.how_to_paste_actions);
+  }
   params.activeColor = settings.activeColor || params.activeColor || '#ff0000';
   params.activeColorAlpha = firstDefined(settings.activeColorAlpha, params.activeColorAlpha, 1.0);
   params.activeAlphaColor = HexToRGBA(params.activeColor, params.activeColorAlpha);

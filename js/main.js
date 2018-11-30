@@ -24,7 +24,6 @@ class PainterroProc {
     addDocumentObjectHelpers();
     this.params = setDefaults(params);
     this.controlBuilder = new ControlBuilder(this);
-
     this.colorWidgetState = {
       line: {
         target: 'line',
@@ -361,7 +360,7 @@ class PainterroProc {
       }
     });
 
-    this.inserter = new Inserter();
+    this.inserter = Inserter.get();
 
     const cropper = '<div class="ptro-crp-el">' +
       `${PainterroSelecter.code()}${TextTool.code()}</div>`;
@@ -395,7 +394,7 @@ class PainterroProc {
       '<span class="tool-controls"></span>' +
       `<span class="ptro-bar-right">${rightBar}</span>` +
       '<span class="ptro-info"></span>' +
-      '<input id="ptro-file-input" type="file" style="display: none;" accept="image/x-png,image/gif,image/jpeg" /></div>';
+      '<input id="ptro-file-input" type="file" style="display: none;" accept="image/x-png,image/png,image/gif,image/jpeg" /></div>';
     if (this.isMobile) {
       this.bar.style['overflow-x'] = 'auto';
     }
