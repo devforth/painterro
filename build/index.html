@@ -57,13 +57,25 @@
    availableLineWidths: [1,2,4,8,16,64],
    availableEraserWidths: [1,2,4,8,16,64],
    availableFontSizes: [1,2,4,8,16,64],
-   how_to_paste_actions: ['extend_right'],
+  // how_to_paste_actions: ['replace_all'],
   
     //toolbarPosition: 'top',
     // fixMobilePageReloader: false,
     // defaultTool: 'line',
     //hiddenTools: ['line']
   }).show() //;
+  const ctx = window.p.ctx;
+
+  console.log(ctx);
+  ctx.beginPath();
+  ctx.moveTo(0,0);
+  ctx.lineTo(300,150);
+  ctx.strokeStyle="#FF0000";
+  ctx.stroke();
+    
+
+  
+
 </script>
 </body>
 </html>

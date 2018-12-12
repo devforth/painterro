@@ -5,12 +5,14 @@ let instance = null;
 export default class Inserter {
   constructor() {
     this.pasteOptions = {
-      fit: {
+      replace_all: {
+        internalName: 'fit',
         handle: (img) => {
           this.main.fitImage(img);
         },
       },
       extend_down: {
+        internalName: 'extend_down',
         handle: (img) => {
           this.tmpImg = img;
           const oldH = this.main.size.h;
@@ -32,6 +34,7 @@ export default class Inserter {
         },
       },
       extend_right: {
+        internalName: 'extend_right',
         handle: (img) => {
           this.tmpImg = img;
           const oldH = this.main.size.h;
@@ -52,7 +55,8 @@ export default class Inserter {
           this.worklog.captureState();
         },
       },
-      over: {
+      paste_over: {
+        internalName: 'over',
         handle: (img) => {
           this.tmpImg = img;
           const oldH = this.main.size.h;
@@ -229,8 +233,8 @@ export default class Inserter {
       const o = this.pasteOptions[k];
       o.id = genId();
       buttons += `<button type="button" id="${o.id}" class="ptro-selector-btn ptro-color-control">` +
-        `<div><i class="ptro-icon ptro-icon-paste_${k}"></i></div>` +
-        `<div>${tr(`pasteOptions.${k}`)}</div>` +
+        `<div><i class="ptro-icon ptro-icon-paste_${o.internalName}"></i></div>` +
+        `<div>${tr(`pasteOptions.${o.internalName}`)}</div>` +
       '</button>';
     });
     return '<div class="ptro-paster-select-wrapper" hidden><div class="ptro-paster-select ptro-v-middle">' +
