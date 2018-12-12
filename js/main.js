@@ -751,9 +751,15 @@ class PainterroProc {
             (evt.keyCode === KEYS.z && evt.ctrlKey && evt.shiftKey)) {
             this.worklog.redoState();
             e.preventDefault();
+            if (this.params.userRedo) {
+              this.params.userRedo.call();
+            }
           } else if (evt.keyCode === KEYS.z && evt.ctrlKey) {
             this.worklog.undoState();
             e.preventDefault();
+            if (this.params.userUndo) {
+              this.params.userUndo.call();
+            }
           }
 
           if (this.saveBtn) {
