@@ -1,6 +1,9 @@
 import enl from '../langs/en.lang';
 import esl from '../langs/es.lang';
 import cal from '../langs/ca.lang';
+import frl from '../langs/fr.lang';
+import ptPTl from '../langs/pt-PT.lang';
+import ptBRl from '../langs/pt-BR.lang';
 
 let instance = null;
 
@@ -10,6 +13,9 @@ export default class Translation {
       en: enl,
       es: esl,
       ca: cal,
+      fr: frl,
+      'pt-PT': ptPTl,
+      'pt-BR': ptBRl,
     };
     this.defaultTranslator = this.translations.en;
   }
