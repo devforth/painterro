@@ -1,7 +1,9 @@
 <img src="https://rawgit.com/ivictbor/painterro/master/res/0painterro.svg" align="right" style="padding:5px; width:70px" />
  
 [GitHub](https://github.com/ivictbor/painterro) | [npm](https://www.npmjs.com/package/painterro) | [DEMO](https://maketips.net/paste)
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           Support by [DevForth](https://devforth.io) - Best quality, rapid,  modern tech development services
+                 
+                 
 [![npm][npm]][npm-url] 
 
 Painterro is JavaScript paint widget which allows editing images directly in a browser.
