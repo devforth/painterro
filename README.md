@@ -143,7 +143,7 @@ Painterro({
 |`defaultSize` | default image size, should be string in format `<width>x<height>` in pixel, e.g. `'200x100'`. If value is `'fill'`(default) than all container size will be used | `'fill'` |
 |`fontStrokeSize` | default stroke width of text | 0 |
 |`defaultTool` | Tool selected by default | 'select' | 
-|`hiddenTools` | List of tools that you wish to exclude from toolbar e.g. something from this list `['crop', 'line', 'rect', 'ellipse', 'brush', 'text', 'rotate', 'resize',  'save', 'open', 'close']`, You can't hide default tool | [] |
+|`hiddenTools` | List of tools that you wish to exclude from toolbar e.g. something from this list `['crop', 'line', 'arrow', 'rect', 'ellipse', 'brush', 'text', 'rotate', 'resize',  'save', 'open', 'close']`, You can't hide default tool | [] |
 |`initText` | Display some centered text before painting (supports HTML). If null, no text will be shown | null |
 |`initTextColor` | Color of init text | '#808080' |
 |`initTextStyle` | Style of init text | "26px 'Open Sans', sans-serif" |
@@ -151,6 +151,7 @@ Painterro({
 |`changeHandler` | Function that will be called if something will be changed (painted, erased, resized, etc) | undefined |
 |`undoHandler` | Function that will be called if user will undo (Ctrl+Z) | undefined |
 |`availableLineWidths` | A list of the line width values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | undefined |
+|`availableArrowLengths` | A list of the arrow sizes values that are available for selection in a drop down list e.g. `[10,20,30,40,50,60]`.  Otherwise an input field is used. | 30 |
 |`availableEraserWidths` | A list of the eraser width values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | undefined |
 |`availableFontSizes` | A list of the font size values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | undefined |
 |`toolbarPosition` | Whether to position the toolbar at the top or bottom. | 'bottom' |
@@ -407,7 +408,6 @@ ToDo list
 - Add recent colors pallete
 - Add recent image sizes in resize tool
 - Ability to save locally
-- Line arrows
 - Edit button on page <img> tags (provide selector)
 
 [npm]: https://img.shields.io/npm/v/painterro.svg

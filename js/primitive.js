@@ -11,7 +11,7 @@ export default class PrimitiveTool {
   activate(type) {
     this.type = type;
     this.state = {};
-    if (type === 'line' || type === 'brush' || type === 'eraser') {
+    if (type === 'line' || type === 'brush' || type === 'eraser' || type === 'arrow') {
       this.ctx.lineJoin = 'round';
     } else {
       this.ctx.lineJoin = 'miter';
@@ -20,6 +20,10 @@ export default class PrimitiveTool {
 
   setLineWidth(width) {
     this.lineWidth = width;
+  }
+
+  setArrowLength(length) {
+    this.arrowLength = length;
   }
 
   setEraserWidth(width) {
@@ -146,6 +150,47 @@ export default class PrimitiveTool {
         this.ctx.beginPath();
         this.ctx.moveTo(this.centerCord[0], this.centerCord[1]);
         this.ctx.lineTo(this.curCord[0], this.curCord[1]);
+        this.ctx.closePath();
+        this.ctx.stroke();
+      } else if (this.type === 'arrow') {
+        let deg = (Math.atan(
+          -(this.curCord[1] - this.centerCord[1]) / (this.curCord[0] - this.centerCord[0]),
+        ) * 180) / Math.PI;
+        if (event.ctrlKey || event.shiftKey) {
+          if (Math.abs(deg) < 45.0 / 2) {
+            this.curCord[1] = this.centerCord[1];
+          } else if (Math.abs(deg) > 45.0 + (45.0 / 2)) {
+            this.curCord[0] = this.centerCord[0];
+          } else {
+            const base = (Math.abs(this.curCord[0] - this.centerCord[0])
+              - Math.abs(this.centerCord[1] - this.curCord[1])) / 2;
+
+            this.curCord[0] -= base * (this.centerCord[0] < this.curCord[0] ? 1 : -1);
+            this.curCord[1] -= base * (this.centerCord[1] > this.curCord[1] ? 1 : -1);
+          }
+        }
+        if (this.curCord[0] < this.centerCord[0]) {
+          deg = (180 + deg);
+        }
+        const arrowLength = this.arrowLength;
+        const arrowAngle = this.main.params.defaultArrowAngle;
+        const arrow = [
+          [
+            this.curCord[0] - (Math.cos((arrowAngle - deg) / (180 / Math.PI)) * arrowLength),
+            this.curCord[1] - (Math.sin((arrowAngle - deg) / (180 / Math.PI)) * arrowLength),
+          ],
+          [
+            this.curCord[0] - (Math.cos((-arrowAngle - deg) / (180 / Math.PI)) * arrowLength),
+            this.curCord[1] - (Math.sin((-arrowAngle - deg) / (180 / Math.PI)) * arrowLength),
+          ],
+        ];
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.centerCord[0], this.centerCord[1]);
+        this.ctx.lineTo(this.curCord[0], this.curCord[1]);
+        this.ctx.moveTo(this.curCord[0], this.curCord[1]);
+        this.ctx.lineTo(arrow[0][0], arrow[0][1]);
+        this.ctx.moveTo(this.curCord[0], this.curCord[1]);
+        this.ctx.lineTo(arrow[1][0], arrow[1][1]);
         this.ctx.closePath();
         this.ctx.stroke();
       } else if (this.type === 'rect') {

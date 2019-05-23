@@ -47,6 +47,19 @@ export default class ControlBuilder {
     }
     return ControlBuilder.buildInputControl('lineWidth', action, getValue, 1, 99);
   }
+  buildArrowLengthControl(controlIndex) {
+    const action = () => {
+      const width = document.getElementById(this.main.activeTool.controls[controlIndex].id).value;
+      this.main.primitiveTool.setArrowLength(width);
+      setParam('defaultArrowLength', width);
+    };
+    const getValue = () => this.main.primitiveTool.arrowLength;
+
+    if (this.main.params.availableArrowLengths) {
+      return ControlBuilder.buildDropDownControl('arrowLength', action, getValue, this.main.params.availableArrowLengths);
+    }
+    return ControlBuilder.buildInputControl('arrowLength', action, getValue, 1, 99);
+  }
 
   static buildInputControl(name, action, getValue, minVal, maxVal) {
     return {

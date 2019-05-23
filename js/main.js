@@ -95,6 +95,24 @@ class PainterroProc {
       },
       eventListner: () => this.primitiveTool,
     }, {
+      name: 'arrow',
+      controls: [{
+        type: 'color',
+        title: 'lineColor',
+        target: 'line',
+        titleFull: 'lineColorFull',
+        action: () => {
+          this.colorPicker.open(this.colorWidgetState.line);
+        },
+      }, this.controlBuilder.buildLineWidthControl(1),
+      this.controlBuilder.buildArrowLengthControl(2),
+      ],
+      activate: () => {
+        this.toolContainer.style.cursor = 'crosshair';
+        this.primitiveTool.activate('arrow');
+      },
+      eventListner: () => this.primitiveTool,
+    }, {
       name: 'rect',
       controls: [{
         type: 'color',
@@ -431,6 +449,7 @@ class PainterroProc {
     this.settings = new Settings(this);
     this.primitiveTool = new PrimitiveTool(this);
     this.primitiveTool.setLineWidth(this.params.defaultLineWidth);
+    this.primitiveTool.setArrowLength(this.params.defaultArrowLength);
     this.primitiveTool.setEraserWidth(this.params.defaultEraserWidth);
     this.primitiveTool.setPixelSize(this.params.defaultPixelSize);
     this.worklog = new WorkLog(this, (state) => {
