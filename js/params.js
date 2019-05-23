@@ -58,6 +58,8 @@ export function setDefaults(parameters) {
   params.initTextColor = params.initTextColor || '#808080';
   params.initTextStyle = params.initTextStyle || '26px \'Open Sans\', sans-serif';
   params.defaultLineWidth = settings.defaultLineWidth || params.defaultLineWidth || 5;
+  params.defaultArrowAngle = params.defaultArrowAngle || 30;
+  params.defaultArrowLength = settings.defaultArrowLength || params.defaultArrowLength || 30;
   params.defaultEraserWidth = firstDefined(settings.defaultEraserWidth,
     params.defaultEraserWidth, 5);
   params.defaultFontSize = firstDefined(settings.defaultFontSize, params.defaultFontSize, 24);
