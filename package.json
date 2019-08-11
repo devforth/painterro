@@ -27,7 +27,7 @@
     "eslint-loader": "^2.2.1",
     "eslint-plugin-import": "^2.7.0",
     "html2canvas": "^1.0.0-alpha.9",
-    "icon-font-generator": "^1.1.1",
+    "icon-font-generator": "^2.1.10",
     "ismobilejs": "^0.4.1",
     "raw-loader": "^0.5.1",
     "style-loader": "^0.18.1",
