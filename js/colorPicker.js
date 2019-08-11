@@ -1,7 +1,7 @@
 import { tr } from './translation';
 import { KEYS } from './utils';
 
-function HexToRGB(hex) {
+export function HexToRGB(hex) {
   let parse = /^#?([a-fA-F\d]{2})([a-fA-F\d]{2})([a-fA-F\d]{2})$/i.exec(hex);
   if (parse) {
     return {
@@ -30,7 +30,7 @@ function format2Hex(val) {
   return (hex.length === 1 && (`0${hex}`)) || hex;
 }
 
-function rgbToHex(r, g, b) {
+export function rgbToHex(r, g, b) {
   return `#${format2Hex(r)}${format2Hex(g)}${format2Hex(b)}`;
 }
 
