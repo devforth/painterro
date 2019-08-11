@@ -23,7 +23,7 @@ function webpackConfig(target) {
       libraryTarget: target
     },
     module: {
-      loaders: [
+      rules: [
         {
           enforce: "pre",
           test: /\.js$/,
