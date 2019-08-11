@@ -472,6 +472,7 @@ class PainterroProc {
       this.doc.querySelector(
         `#${this.id} .ptro-color-btn[data-id='${widgetState.target}']`).style['background-color'] =
         widgetState.alphaColor;
+      if (widgetState.palleteColor.substr(0, 1) !== '#') widgetState.palleteColor = `#${widgetState.palleteColor}`;
       if (widgetState.target === 'line') {
         setParam('activeColor', widgetState.palleteColor);
         setParam('activeColorAlpha', widgetState.alpha);
