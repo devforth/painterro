@@ -9,7 +9,7 @@ import WorkLog from './worklog';
 import { genId, addDocumentObjectHelpers, KEYS, trim,
   getScrollbarWidth, distance } from './utils';
 import PrimitiveTool from './primitive';
-import ColorPicker from './colorPicker';
+import ColorPicker, { HexToRGB, rgbToHex } from './colorPicker';
 import { setDefaults, setParam, logError } from './params';
 import { tr } from './translation';
 import ZoomHelper from './zoomHelper';
@@ -472,18 +472,22 @@ class PainterroProc {
       this.doc.querySelector(
         `#${this.id} .ptro-color-btn[data-id='${widgetState.target}']`).style['background-color'] =
         widgetState.alphaColor;
-      if (widgetState.target === 'line') {
-        setParam('activeColor', widgetState.palleteColor);
-        setParam('activeColorAlpha', widgetState.alpha);
-      } else if (widgetState.target === 'fill') {
-        setParam('activeFillColor', widgetState.palleteColor);
-        setParam('activeFillColorAlpha', widgetState.alpha);
-      } else if (widgetState.target === 'bg') {
-        setParam('backgroundFillColor', widgetState.palleteColor);
-        setParam('backgroundFillColorAlpha', widgetState.alpha);
-      } else if (widgetState.target === 'stroke') {
-        setParam('textStrokeColor', widgetState.palleteColor);
-        setParam('textStrokeColorAlpha', widgetState.alpha);
+      const palletRGB = HexToRGB(widgetState.palleteColor);
+      if (palletRGB !== undefined) {
+        widgetState.palleteColor = rgbToHex(palletRGB.r, palletRGB.g, palletRGB.b);
+        if (widgetState.target === 'line') {
+          setParam('activeColor', widgetState.palleteColor);
+          setParam('activeColorAlpha', widgetState.alpha);
+        } else if (widgetState.target === 'fill') {
+          setParam('activeFillColor', widgetState.palleteColor);
+          setParam('activeFillColorAlpha', widgetState.alpha);
+        } else if (widgetState.target === 'bg') {
+          setParam('backgroundFillColor', widgetState.palleteColor);
+          setParam('backgroundFillColorAlpha', widgetState.alpha);
+        } else if (widgetState.target === 'stroke') {
+          setParam('textStrokeColor', widgetState.palleteColor);
+          setParam('textStrokeColorAlpha', widgetState.alpha);
+        }
       }
     });
 
