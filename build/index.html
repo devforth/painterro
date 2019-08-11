@@ -27,7 +27,7 @@
 
   </div>
   <button onclick="p.show()">Show</button>
-  
+  <button onclick="saveTest()">Save</button>
 </div>
 
 <!--<script src="https://github.com/ivictbor/painterro/releases/download/0.1.7/painterro-0.1.7.min.js"></script>-->
@@ -46,7 +46,10 @@
 //    }
 //  });
 
-  
+  function saveTest() {
+    const u = window.p.imageSaver.asDataURL('image/png');
+    console.log('saved', u.length, u);
+  }  
 
   window.p = Painterro({
     id: 'conatiner',

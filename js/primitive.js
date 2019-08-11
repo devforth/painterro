@@ -1,4 +1,3 @@
-
 export default class PrimitiveTool {
   constructor(main) {
     this.ctx = main.ctx;
@@ -172,27 +171,57 @@ export default class PrimitiveTool {
         if (this.curCord[0] < this.centerCord[0]) {
           deg = (180 + deg);
         }
-        const arrowLength = this.arrowLength;
-        const arrowAngle = this.main.params.defaultArrowAngle;
-        const arrow = [
-          [
-            this.curCord[0] - (Math.cos((arrowAngle - deg) / (180 / Math.PI)) * arrowLength),
-            this.curCord[1] - (Math.sin((arrowAngle - deg) / (180 / Math.PI)) * arrowLength),
-          ],
-          [
-            this.curCord[0] - (Math.cos((-arrowAngle - deg) / (180 / Math.PI)) * arrowLength),
-            this.curCord[1] - (Math.sin((-arrowAngle - deg) / (180 / Math.PI)) * arrowLength),
-          ],
-        ];
         this.ctx.beginPath();
+        const origCap = this.ctx.lineCap;
+        const origFill = this.ctx.fillStyle;
+        this.ctx.lineCap = 'butt';
+        this.ctx.fillStyle = this.main.colorWidgetState.line.alphaColor;
+
         this.ctx.moveTo(this.centerCord[0], this.centerCord[1]);
         this.ctx.lineTo(this.curCord[0], this.curCord[1]);
-        this.ctx.moveTo(this.curCord[0], this.curCord[1]);
-        this.ctx.lineTo(arrow[0][0], arrow[0][1]);
-        this.ctx.moveTo(this.curCord[0], this.curCord[1]);
-        this.ctx.lineTo(arrow[1][0], arrow[1][1]);
-        this.ctx.closePath();
         this.ctx.stroke();
+        this.ctx.lineCap = 'square';
+
+        const r = Math.min(this.arrowLength, 0.9 * Math.sqrt(
+          ((this.centerCord[0] - this.curCord[0]) ** 2) +
+          ((this.centerCord[1] - this.curCord[1]) ** 2)));
+
+        const fromx = this.centerCord[0];
+        const fromy = this.centerCord[1];
+        const tox = this.curCord[0];
+        const toy = this.curCord[1];
+        const xCenter = this.curCord[0];
+        const yCenter = this.curCord[1];
+        let angle;
+        let x;
+        let y;
+        angle = Math.atan2(toy - fromy, tox - fromx);
+        x = (r * Math.cos(angle)) + xCenter;
+        y = (r * Math.sin(angle)) + yCenter;
+        this.ctx.moveTo(x, y);
+        angle += (1.0 / 3) * (2 * Math.PI);
+        x = (r * Math.cos(angle)) + xCenter;
+        y = (r * Math.sin(angle)) + yCenter;
+        this.ctx.lineTo(x, y);
+        angle += (1.0 / 3) * (2 * Math.PI);
+        x = (r * Math.cos(angle)) + xCenter;
+        y = (r * Math.sin(angle)) + yCenter;
+        this.ctx.lineTo(x, y);
+        this.ctx.closePath();
+        this.ctx.fill();
+        this.ctx.lineCap = origCap;
+        this.ctx.fillStyle = origFill;
+
+        // this.ctx.beginPath();
+        // this.ctx.lineCap = 'square';
+        // this.ctx.moveTo(this.centerCord[0], this.centerCord[1]);
+        // this.ctx.lineTo(this.curCord[0], this.curCord[1]);
+        // this.ctx.moveTo(this.curCord[0], this.curCord[1]);
+        // this.ctx.lineTo(arrow[0][0], arrow[0][1]);
+        // this.ctx.moveTo(this.curCord[0], this.curCord[1]);
+        // this.ctx.lineTo(arrow[1][0], arrow[1][1]);
+        // this.ctx.closePath();
+        // this.ctx.stroke();
       } else if (this.type === 'rect') {
         this.ctx.beginPath();
 
