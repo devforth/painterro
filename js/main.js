@@ -860,12 +860,13 @@ class PainterroProc {
     if (this.listenersInstalled) {
       return;
     }
+    // passive: false fixes Unable to preventDefault inside passive event listener due to target being treated as passive
     Object.keys(this.documentHandlers).forEach((key) => {
-      this.doc.addEventListener(key, this.documentHandlers[key]);
+      this.doc.addEventListener(key, this.documentHandlers[key], { passive: false });
     });
 
     Object.keys(this.windowHandlers).forEach((key) => {
-      window.addEventListener(key, this.windowHandlers[key]);
+      window.addEventListener(key, this.windowHandlers[key], { passive: false });
     });
     this.listenersInstalled = true;
   }

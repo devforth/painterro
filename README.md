@@ -360,7 +360,7 @@ Development
 After pulling repo install node modules:
 ```bash
 cd painterro
-npm install
+npm ci
 ```
 
 Building painterro
