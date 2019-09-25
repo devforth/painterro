@@ -457,8 +457,8 @@ class PainterroProc {
         this.saveBtn.removeAttribute('disabled');
       }
       this.setToolEnabled(this.toolByName.undo, !state.first);
-      if (this.params.changeHandler) {
-        this.params.changeHandler.call(this, {
+      if (this.params.onChange) {
+        this.params.onChange.call(this, {
           image: this.imageSaver,
           operationsDone: this.worklog.current.prevCount,
           realesedMemoryOperations: this.worklog.clearedCount,
@@ -612,8 +612,8 @@ class PainterroProc {
   }
 
   close() {
-    if (this.params.onCloseHandler !== undefined) {
-      this.params.onCloseHandler();
+    if (this.params.onClose !== undefined) {
+      this.params.onClose();
     }
   }
 

@@ -52,6 +52,9 @@
   }  
 
   window.p = Painterro({
+    onChange: (e) => {console.log('onchange e', e)},
+    onUndo: (e) => {console.log('onUndo e', e)},
+    onRedo: (e) => {console.log('onRedo e', e)},
     id: 'conatiner',
     initText: 'Press <strong>Prn Scr</strong>, Ctrl+V to paste a screenshot',
     changeHandler: function (state) {

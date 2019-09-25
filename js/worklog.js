@@ -96,6 +96,9 @@ export default class WorkLog {
       this.current = this.current.prev;
       this.applyState(this.current);
       this.changed(false);
+      if (this.main.params.onUndo) {
+        this.main.params.onUndo(this.current);
+      }
     }
   }
 
@@ -104,6 +107,9 @@ export default class WorkLog {
       this.current = this.current.next;
       this.applyState(this.current);
       this.changed(false);
+      if (this.main.params.onRedo) {
+        this.main.params.onRedo(this.current);
+      }
     }
   }
 }

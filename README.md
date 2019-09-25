@@ -148,8 +148,7 @@ Painterro({
 |`initTextColor` | Color of init text | '#808080' |
 |`initTextStyle` | Style of init text | "26px 'Open Sans', sans-serif" |
 |`pixelizePixelSize` | Default pixel size of pixelize tool. Can accept values - `x` - x pixels, `x%` - means percents of minimal area rectangle side | `20%` |
-|`changeHandler` | Function that will be called if something will be changed (painted, erased, resized, etc) | undefined |
-|`undoHandler` | Function that will be called if user will undo (Ctrl+Z) | undefined |
+
 |`availableLineWidths` | A list of the line width values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | undefined |
 |`availableArrowLengths` | A list of the arrow sizes values that are available for selection in a drop down list e.g. `[10,20,30,40,50,60]`.  Otherwise an input field is used. | 30 |
 |`availableEraserWidths` | A list of the eraser width values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | undefined |
@@ -158,7 +157,42 @@ Painterro({
 |`fixMobilePageReloader` | By default painterro adds overflow-y: hidden to page body on mobile devices to prevent "super smart" feature lice Chrom's reload page. Unfortunately we can't prevent it by preventDefault. If your want to scroll page when painterro is open, set this to false | true |
 |`language` | Language of the widget. | `'en'` |
 |`how_to_paste_actions`| List of paste options that will be suggested on paste using some paste dialog e.g. `['extend_right', 'extend_down'] `. If there is only one option in list, then it will choosing automatically without dialog | `['replace_all', 'paste_over', 'extend_right', 'extend_down']` |
-|`onCloseHandler` | If passed will be triggered when painterro closed | `null` |
+
+## Events
+
+| Param | Description | Accepted Arguments |
+|-|-|-|
+| `onClose` | If passed will be triggered when painterro closed | `undefined` |
+| `onChange` | Function that will be called if something will be changed (painted, erased, resized, etc) | `<exportable image>` | `undefined` |
+| `onUndo` | Function that will be called if user will undo (Ctrl+Z) | `{<current history state>}` |
+| `onRedo` | Function that will be called if user will undo (Ctrl+Z) | `{<current history state>}` |
+| `saveHandler` | Function that will be called when user presses Save (or Ctrl+S) | `{<exportable image>}`, `done callback` |
+
+Events accepted arguments:
+
+* `{<exportable image>}` is object:
+
+```
+{ 
+  image:
+  asBlob: ƒ asBlob(type, quality)
+  asDataURL: ƒ asDataURL(type, quality)
+  suggestedFileName: ƒ suggestedFileName(type)
+  operationsDone: int
+} 
+```
+
+* `{<current history state>}` is object:
+
+```
+{
+  prev: {<current history state>} or undefined
+  next: {<current history state>} or undefined
+  prevCount: int
+  sizeh: int
+  sizew: int
+}
+```
 
 UI color scheme
 ---------------
