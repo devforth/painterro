@@ -229,8 +229,6 @@ export default class TextTool {
       logging: false,
       scale: (1.0 * scale) / (this.main.zoomFactor),
     }).then((can) => {
-      // debugger;
-      console.log('!!! drawing image'); // eslint-disable-line
       this.ctx.drawImage(can, this.scaledCord[0], this.scaledCord[1]);
       this.input.style.border = origBorder;
       this.close();
