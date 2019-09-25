@@ -426,7 +426,7 @@ select.ptro-input {
 
 .ptro-text-tool-input {
     background-color: rgba(0,0,0,0);
-    border: 1px dashed;
+    outline: 1px dotted;
     width: auto;
     display: block;
     min-width: 5px;
@@ -445,10 +445,6 @@ select.ptro-input {
 
 .ptro-text-tool-input-wrapper {
     position: absolute;
-}
-
-.ptro-text-tool-input:focus {
-    outline: none;
 }
 
 span.ptro-btn-color-checkers {
