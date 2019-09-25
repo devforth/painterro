@@ -173,10 +173,11 @@ Events accepted arguments:
 
 ```
 { 
-  image:
-  asBlob: ƒ asBlob(type, quality)
-  asDataURL: ƒ asDataURL(type, quality)
-  suggestedFileName: ƒ suggestedFileName(type)
+  image: {
+   asBlob: ƒ asBlob(type, quality)
+   asDataURL: ƒ asDataURL(type, quality)
+   suggestedFileName: ƒ suggestedFileName(type)
+  }
   operationsDone: int
 } 
 ```
