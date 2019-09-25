@@ -436,6 +436,7 @@ select.ptro-input {
     overflow-y: hidden;
     box-sizing: content-box;
     line-height: normal;
+    text-align: left;
 }
 
 .ptro-text-tool-buttons {

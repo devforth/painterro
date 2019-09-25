@@ -222,12 +222,14 @@ export default class TextTool {
   apply() {
     const origBorder = this.input.style.border;
     this.input.style.border = 'none';
+    const scale = this.main.getScale();
     html2canvas(this.input, {
       backgroundColor: null,
       logging: false,
-      scale: 1 / this.main.zoomFactor,
+      scale: (1.0 * scale) / (this.main.zoomFactor),
     }).then((can) => {
-      this.ctx.drawImage(can, this.scaledCord[0], this.scaledCord[1]);
+      console.log('!!! drawing image'); // eslint-disable-line
+      this.ctx.drawImage(can, this.scaledCord[0] + 1, this.scaledCord[1] + 1);
       this.input.style.border = origBorder;
       this.close();
       this.main.worklog.captureState();

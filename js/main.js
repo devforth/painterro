@@ -612,8 +612,8 @@ class PainterroProc {
   }
 
   close() {
-    if (this.params.closeHandler !== undefined) {
-      this.params.closeHandler();
+    if (this.params.onCloseHandler !== undefined) {
+      this.params.onCloseHandler();
     }
   }
 
@@ -860,7 +860,8 @@ class PainterroProc {
     if (this.listenersInstalled) {
       return;
     }
-    // passive: false fixes Unable to preventDefault inside passive event listener due to target being treated as passive
+    // passive: false fixes Unable to preventDefault inside passive event
+    // listener due to target being treated as passive
     Object.keys(this.documentHandlers).forEach((key) => {
       this.doc.addEventListener(key, this.documentHandlers[key], { passive: false });
     });
