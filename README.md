@@ -148,7 +148,6 @@ Painterro({
 |`initTextColor` | Color of init text | '#808080' |
 |`initTextStyle` | Style of init text | "26px 'Open Sans', sans-serif" |
 |`pixelizePixelSize` | Default pixel size of pixelize tool. Can accept values - `x` - x pixels, `x%` - means percents of minimal area rectangle side | `20%` |
-
 |`availableLineWidths` | A list of the line width values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | undefined |
 |`availableArrowLengths` | A list of the arrow sizes values that are available for selection in a drop down list e.g. `[10,20,30,40,50,60]`.  Otherwise an input field is used. | 30 |
 |`availableEraserWidths` | A list of the eraser width values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | undefined |
