@@ -6,21 +6,21 @@ require('es6-promise').polyfill();
 function webpackConfig(target) {
   let filename;
   if (target === 'var') {
-    filename = `painterro-${require("./package.json").version}.min.js`
+    filename = `painterro-${require('./package.json').version}.min.js`
   } else if (target === 'var-latest') {
-    filename = `painterro.min.js`
-    target = 'var'
+    filename = 'painterro.min.js';
+    target = 'var';
   } else {
-    filename = `painterro.${target}.js`
+    filename = `painterro.${target}.js`;
   }
 
   return {
     entry: './js/main.js',
     output: {
       path: path.resolve(__dirname, 'build'),
-      filename: filename,
+      filename,
       library: 'Painterro', // export as library
-      libraryTarget: target
+      libraryTarget: target,
     },
     module: {
       rules: [
