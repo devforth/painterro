@@ -6,16 +6,17 @@
                  
 [![npm][npm]][npm-url] 
 
-Painterro is JavaScript paint widget which allows editing images directly in a browser.
-It can be easily integrated into your website or blog by including only one js file and calling initialization code.
+Painterro is JavaScript painting widget (paint library) which allows editing images in a browser.
+It can be easily integrated into your website or blog by including only one JS file and calling initialization code.
 
 With Painterro you can:
 - Paste image from clipboard with `Ctrl+V` (e.g. `PtnScr` screenshot), drag and drop it into widget, or load with open dialog
 - Crop image by defined area
 - Paint primitives (alpha color can be used)
-- Add text
+- Add text (you can use Ctrl+B - bold, Ctrl+I - italic, Ctrl+U - underlined, or just pase formatted HTML)
 - Rotate / resize (scale) image
 - Pixelize some area to hide sensitive data
+- Draw arrows
 
 
 ![Painterro preview](https://rawgit.com/ivictbor/painterro/master/docs/preview.png)
@@ -31,7 +32,7 @@ If you want to see some feature in Painterro, please leave (or vote for) an issu
 There is no promise that it will be implemented soon or ever, but it is interesting to know what features users want to have.
 
 Painterro is written with vanilla JS to stay lightweight and minimalistic. Code
-written on ES6 which transplited by Babel and packed to a single file using webpack.
+written on ES6 which transplited by Babel and packed(minified) to a single file using webpack.
 
 
 Table of contents
@@ -65,7 +66,7 @@ Installation
 With npm
 --------
 
-If you have npm-based project you can run:
+If you have npm-based project (e.g. SPA like React/Vue) you can run:
 ```bash
 npm install painterro --save
 ```
@@ -114,6 +115,8 @@ Supported hotkeys
 | `Alt` when using pipette | Hide zoom helper (colored grid) |
 | `Ctrl` + `Wheel mouse up/down` | Zoom image |
 | `Ctrl + S` | Save image |
+
+Also some tools have own one-button hotkeys e.g. `C` - crop, you could see this shortcuts if you will hold mouse on toolbutton.
 
 Configuration
 =============
