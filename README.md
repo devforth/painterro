@@ -396,8 +396,8 @@ When you call `image.asDataURL()` or `image.asBlob()`, you can also specify imag
 If type is `image/jpeg` or `image/webp`, you can also define image quality from `0.0` to `1.0`, default is `0.92`,
 example: `image.asDataURL('image/jpeg', 0.5)`
 
-Example: Open Painterro by Ctrl+V when it is closed
-===========
+Example: Open Painterro by Ctrl+V
+-----------------
 
 ```js
 document.onpaste = (event) => {
@@ -407,17 +407,12 @@ document.onpaste = (event) => {
       const blob = item.getAsFile();
       const reader = new FileReader();
       reader.onload = (readerEvent) => {
-        const img = new Image();
-        const vm = this;
-        img.onload = function sizeDiscoverer() {
           Painterro({
             saveHandler: (image, done) => {
               console.log('Save it here', image.asDataURL());  // you could provide your save handler
               done(true);
             },
           }).show(readerEvent.target.result);
-        };
-        img.src = readerEvent.target.result;
       };
       reader.readAsDataURL(blob);
     }
