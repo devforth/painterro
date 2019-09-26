@@ -227,7 +227,7 @@ export default class TextTool {
     html2canvas(this.input, {
       backgroundColor: null,
       logging: false,
-      scale: (1.0 * scale) / (this.main.zoomFactor),
+      scale: 1.0 * scale,
     }).then((can) => {
       this.ctx.drawImage(can, this.scaledCord[0], this.scaledCord[1]);
       this.input.style.border = origBorder;

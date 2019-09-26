@@ -812,6 +812,7 @@ class PainterroProc {
               }
             }
           });
+          event.preventDefault();
         }
       },
       dragover: (event) => {
