@@ -148,7 +148,6 @@ Painterro({
 |`initTextColor` | Color of init text | '#808080' |
 |`initTextStyle` | Style of init text | "26px 'Open Sans', sans-serif" |
 |`pixelizePixelSize` | Default pixel size of pixelize tool. Can accept values - `x` - x pixels, `x%` - means percents of minimal area rectangle side | `20%` |
-
 |`availableLineWidths` | A list of the line width values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | undefined |
 |`availableArrowLengths` | A list of the arrow sizes values that are available for selection in a drop down list e.g. `[10,20,30,40,50,60]`.  Otherwise an input field is used. | 30 |
 |`availableEraserWidths` | A list of the eraser width values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | undefined |
@@ -174,10 +173,11 @@ Events accepted arguments:
 
 ```
 { 
-  image:
-  asBlob: ƒ asBlob(type, quality)
-  asDataURL: ƒ asDataURL(type, quality)
-  suggestedFileName: ƒ suggestedFileName(type)
+  image: {
+   asBlob: ƒ asBlob(type, quality)
+   asDataURL: ƒ asDataURL(type, quality)
+   suggestedFileName: ƒ suggestedFileName(type)
+  }
   operationsDone: int
 } 
 ```
@@ -249,18 +249,23 @@ Translation
 -----------
 
 Want to translate Painterro into your language?
- If you need English, Spanish or Catalan language,
- you should pass `language` parameter, for example:
+ If you need on of languages in table below, just pass pass `language` parameter, for example:
  
 ```js
 Painterro({
-  language: 'es'
+  language: 'es'  // Spanish
 }).show()
 ```
-`language` can have next values:
-* `en` - for using English language
-* `es` - for using Spanish language
-* `ca` - for using Catalan language
+Translated languages:
+
+| `language` param | Name |
+|-|-|
+| `en` | English |
+| `es` | Spanish |
+| `ca` | Catalan | 
+| `fr` | French |
+| `pt-PT` | European Portuguese |
+| `pt-BR` | Brazilian  Portuguese |
 
  If you want to add another language, then fork. Create file in folder langs for your translation and copy [langs/en.lang.js] in it. Then translate all `'Strings'` and add reference in [js/translation.js]. After that create pull-request, or just open [issue](https://github.com/ivictbor/painterro/issues)
  if you don't know how to create a PR.
@@ -386,6 +391,35 @@ When you call `image.asDataURL()` or `image.asBlob()`, you can also specify imag
 `image.asDataURL('image/jpeg')`. Default type is `'image/png'`.
 If type is `image/jpeg` or `image/webp`, you can also define image quality from `0.0` to `1.0`, default is `0.92`,
 example: `image.asDataURL('image/jpeg', 0.5)`
+
+Example: Open Painterro by Ctrl+V when it is closed
+===========
+
+```js
+document.onpaste = (event) => {
+  const { items } = event.clipboardData || event.originalEvent.clipboardData;
+  Array.from(items).forEach((item) => {
+    if (item.kind === 'file') {
+      const blob = item.getAsFile();
+      const reader = new FileReader();
+      reader.onload = (readerEvent) => {
+        const img = new Image();
+        const vm = this;
+        img.onload = function sizeDiscoverer() {
+          Painterro({
+            saveHandler: (image, done) => {
+              console.log('Save it here', image.asDataURL());  // you could provide your save handler
+              done(true);
+            },
+          }).show(readerEvent.target.result);
+        };
+        img.src = readerEvent.target.result;
+      };
+      reader.readAsDataURL(blob);
+    }
+  });
+};
+```
 
 
 
