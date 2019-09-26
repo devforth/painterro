@@ -200,19 +200,21 @@ export default class TextTool {
       this.input.onkeydown = (e) => {
         if (e.ctrlKey && e.keyCode === KEYS.enter) {
           this.apply();
-
           e.preventDefault();
+          return true;
         }
         if (e.keyCode === KEYS.esc) {
           this.close();
           this.main.closeActiveTool();
           e.preventDefault();
+          return true;
         }
         this.reLimit();
         if (this.pendingClear) {
           this.input.innerText = this.input.innerText.slice(1);
           this.pendingClear = false;
         }
+        return true;
       };
       if (!this.main.isMobile) {
         event.preventDefault();

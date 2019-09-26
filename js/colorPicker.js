@@ -166,9 +166,11 @@ export default class ColorPicker {
   }
 
   handleKeyDown(event) {
-    if (event.keyCode === KEYS.esc) {
+    if (this.opened && event.keyCode === KEYS.esc) {
       this.close();
+      return true;
     }
+    return false;
   }
 
   handleMouseDown(e) {

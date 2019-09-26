@@ -639,9 +639,10 @@ class PainterroProc {
     if (this.activeTool && this.activeTool.eventListner) {
       const listner = this.activeTool.eventListner();
       if (listner[eventHandler]) {
-        listner[eventHandler](event);
+        return listner[eventHandler](event);
       }
     }
+    return false;
   }
 
   initEventHandlers() {
@@ -766,9 +767,13 @@ class PainterroProc {
       },
       keydown: (e) => {
         if (this.shown) {
-          this.colorPicker.handleKeyDown(e);
+          if (this.colorPicker.handleKeyDown(e)) {
+            return;
+          }
           const evt = window.event ? event : e;
-          this.handleToolEvent('handleKeyDown', evt);
+          if (this.handleToolEvent('handleKeyDown', evt)) {
+            return;
+          }
           if (
             (evt.keyCode === KEYS.y && evt.ctrlKey) ||
             (evt.keyCode === KEYS.z && evt.ctrlKey && evt.shiftKey)) {
@@ -784,7 +789,9 @@ class PainterroProc {
               this.params.userUndo.call();
             }
           }
-
+          if (event.keyCode === KEYS.esc && this.params.hideByEsc) {
+            this.hide();
+          }
           if (this.saveBtn) {
             if (evt.keyCode === KEYS.s && evt.ctrlKey) {
               this.save();

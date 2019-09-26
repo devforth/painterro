@@ -101,6 +101,7 @@ export default class Resizer {
   }
 
   handleKeyDown(event) {
+    console.log('sadasdsa'); // eslint-disable-line
     if (event.keyCode === KEYS.esc) {
       this.startClose();
     }

@@ -156,6 +156,7 @@ Painterro({
 |`fixMobilePageReloader` | By default painterro adds overflow-y: hidden to page body on mobile devices to prevent "super smart" feature lice Chrom's reload page. Unfortunately we can't prevent it by preventDefault. If your want to scroll page when painterro is open, set this to false | true |
 |`language` | Language of the widget. | `'en'` |
 |`how_to_paste_actions`| List of paste options that will be suggested on paste using some paste dialog e.g. `['extend_right', 'extend_down'] `. If there is only one option in list, then it will choosing automatically without dialog | `['replace_all', 'paste_over', 'extend_right', 'extend_down']` |
+|`hideByEsc`| If `true` then `ESC` press will hide widget | `false` | 
 
 ## Events
 
