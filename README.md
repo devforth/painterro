@@ -249,18 +249,23 @@ Translation
 -----------
 
 Want to translate Painterro into your language?
- If you need English, Spanish or Catalan language,
- you should pass `language` parameter, for example:
+ If you need on of languages in table below, just pass pass `language` parameter, for example:
  
 ```js
 Painterro({
-  language: 'es'
+  language: 'es'  // Spanish
 }).show()
 ```
-`language` can have next values:
-* `en` - for using English language
-* `es` - for using Spanish language
-* `ca` - for using Catalan language
+Translated languages:
+
+| `language` param | Name |
+|-|-|
+| `en` | English |
+| `es` | Spanish |
+| `ca` | Catalan | 
+| `fr` | French |
+| `pt-PT` | European Portuguese |
+| `pt-BR` | Brazilian  Portuguese |
 
  If you want to add another language, then fork. Create file in folder langs for your translation and copy [langs/en.lang.js] in it. Then translate all `'Strings'` and add reference in [js/translation.js]. After that create pull-request, or just open [issue](https://github.com/ivictbor/painterro/issues)
  if you don't know how to create a PR.
