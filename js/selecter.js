@@ -200,18 +200,23 @@ ${Math.round(pxData[i][j][3] / s)})`;
     if (this.shown && this.imagePlaced) {
       if (evt.keyCode === KEYS.enter) {
         this.finishPlacing();
+        return true;
       } else if (evt.keyCode === KEYS.esc) {
         this.cancelPlacing();
+        return true;
       }
     } else if (this.shown && evt.keyCode === KEYS.del) {
       this.doClearArea();
+      return true;
     } else if (evt.keyCode === KEYS.a && evt.ctrlKey) {
       this.selectAll();
       event.preventDefault();
+      return true;
     } else if (evt.keyCode === KEYS.esc && this.shown) {
       this.hide();
+      return true;
     }
-    return true;
+    return false;
   }
 
   handleMouseDown(event) {

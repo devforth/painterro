@@ -55,6 +55,7 @@ class PainterroProc {
 
     this.tools = [{
       name: 'select',
+      hotkey: 's',
       activate: () => {
         this.toolContainer.style.cursor = 'crosshair';
         this.select.activate();
@@ -67,6 +68,7 @@ class PainterroProc {
       eventListner: () => this.select,
     }, {
       name: 'crop',
+      hotkey: 'c',
       activate: () => {
         this.select.doCrop();
         this.closeActiveTool();
@@ -79,6 +81,7 @@ class PainterroProc {
       },
     }, {
       name: 'line',
+      hotkey: 'l',
       controls: [{
         type: 'color',
         title: 'lineColor',
@@ -96,6 +99,7 @@ class PainterroProc {
       eventListner: () => this.primitiveTool,
     }, {
       name: 'arrow',
+      hotkey: 'a',
       controls: [{
         type: 'color',
         title: 'lineColor',
@@ -164,6 +168,7 @@ class PainterroProc {
       eventListner: () => this.primitiveTool,
     }, {
       name: 'brush',
+      hotkey: 'b',
       controls: [{
         type: 'color',
         title: 'lineColor',
@@ -190,6 +195,7 @@ class PainterroProc {
       eventListner: () => this.primitiveTool,
     }, {
       name: 'text',
+      hotkey: 't',
       controls: [
         {
           type: 'color',
@@ -264,6 +270,7 @@ class PainterroProc {
       eventListner: () => this.textTool,
     }, {
       name: 'rotate',
+      hotkey: 'r',
       activate: () => {
         const w = this.size.w;
         const h = this.size.h;
@@ -332,6 +339,7 @@ class PainterroProc {
       },
     }, {
       name: 'close',
+      hotkey: 'esc',
       right: true,
       activate: () => {
         this.closeActiveTool();
@@ -341,8 +349,15 @@ class PainterroProc {
     }];
     this.isMobile = isMobile.any;
     this.toolByName = {};
+    this.toolByKeyCode = {};
     this.tools.forEach((t) => {
       this.toolByName[t.name] = t;
+      if (t.hotkey) {
+        if (!KEYS[t.hotkey]) {
+          throw new Error(`Key code for ${t.hotkey} not defined in KEYS`);
+        }
+        this.toolByKeyCode[KEYS[t.hotkey]] = t;
+      }
     });
     this.activeTool = undefined;
     this.zoom = false;
@@ -368,7 +383,8 @@ class PainterroProc {
     this.tools.filter(t => this.params.hiddenTools.indexOf(t.name) === -1).forEach((b) => {
       const id = genId();
       b.buttonId = id;
-      const btn = `<button type="button" class="ptro-icon-btn ptro-color-control" title="${tr(`tools.${b.name}`)}" ` +
+      const hotkey = b.hotkey ? ` [${b.hotkey.toUpperCase()}]` : '';
+      const btn = `<button type="button" class="ptro-icon-btn ptro-color-control" title="${tr(`tools.${b.name}`)}${hotkey}" ` +
         `id="${id}" >` +
         `<i class="ptro-icon ptro-icon-${b.name}"></i></button>`;
       if (b.right) {
@@ -491,7 +507,6 @@ class PainterroProc {
       }
     });
 
-
     this.defaultTool = this.toolByName[this.params.defaultTool] || this.toolByName.select;
 
     this.tools.filter(t => this.params.hiddenTools.indexOf(t.name) === -1).forEach((b) => {
@@ -573,8 +588,8 @@ class PainterroProc {
     return this.canvas.toDataURL(type, realQuality);
   }
 
-  getBtnEl(b) {
-    return this.doc.getElementById(b.buttonId);
+  getBtnEl(tool) {
+    return this.doc.getElementById(tool.buttonId);
   }
 
   save() {
@@ -789,8 +804,8 @@ class PainterroProc {
               this.params.userUndo.call();
             }
           }
-          if (event.keyCode === KEYS.esc && this.params.hideByEsc) {
-            this.hide();
+          if (this.toolByKeyCode[event.keyCode]) {
+            this.getBtnEl(this.toolByKeyCode[event.keyCode]).click();
           }
           if (this.saveBtn) {
             if (evt.keyCode === KEYS.s && evt.ctrlKey) {
