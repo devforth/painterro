@@ -211,6 +211,7 @@ ${Math.round(pxData[i][j][3] / s)})`;
     } else if (evt.keyCode === KEYS.esc && this.shown) {
       this.hide();
     }
+    return true;
   }
 
   handleMouseDown(event) {

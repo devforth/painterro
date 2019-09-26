@@ -57,7 +57,9 @@ export default class Settings {
   handleKeyDown(event) {
     if (event.keyCode === KEYS.esc) {
       this.startClose();
+      return true;
     }
+    return false;
   }
 
   open() {

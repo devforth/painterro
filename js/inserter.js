@@ -177,6 +177,7 @@ export default class Inserter {
         console.error(`Unable save image to localstorage: ${e}`);
       }
     }
+    return true;
   }
 
   startLoading() {
