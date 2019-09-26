@@ -253,7 +253,7 @@ Translation
 -----------
 
 Want to translate Painterro into your language?
- If you need on of languages in table below, just pass pass `language` parameter, for example:
+ If you need one of languages in table below, just pass pass `language` parameter, for example:
  
 ```js
 Painterro({
