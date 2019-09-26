@@ -216,6 +216,9 @@ ${Math.round(pxData[i][j][3] / s)})`;
       this.hide();
       return true;
     }
+    if (event.keyCode === KEYS.enter) {
+      return true; // mark as handled - user might expect doing save by enter
+    }
     return false;
   }
 

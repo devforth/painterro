@@ -317,6 +317,7 @@ class PainterroProc {
     }, {
       name: 'save',
       right: true,
+      hotkey: this.params.saveByEnter ? 'enter' : false,
       activate: () => {
         this.save();
         this.closeActiveTool();
@@ -339,7 +340,7 @@ class PainterroProc {
       },
     }, {
       name: 'close',
-      hotkey: 'esc',
+      hotkey: this.params.hideByEsc ? 'esc' : false,
       right: true,
       activate: () => {
         this.closeActiveTool();

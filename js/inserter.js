@@ -177,6 +177,9 @@ export default class Inserter {
         console.error(`Unable save image to localstorage: ${e}`);
       }
     }
+    if (event.keyCode === KEYS.enter) {
+      return true; // mark as handled - user might expect doing save by enter
+    }
     return true;
   }
 

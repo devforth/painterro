@@ -166,6 +166,9 @@ export default class ColorPicker {
   }
 
   handleKeyDown(event) {
+    if (this.opened && event.keyCode === KEYS.enter) {
+      return true; // mark as handled - user might expect doing save by enter
+    }
     if (this.opened && event.keyCode === KEYS.esc) {
       this.close();
       return true;

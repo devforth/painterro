@@ -55,6 +55,9 @@ export default class Settings {
   }
 
   handleKeyDown(event) {
+    if (event.keyCode === KEYS.enter) {
+      return true; // mark as handled - user might expect doing save by enter
+    }
     if (event.keyCode === KEYS.esc) {
       this.startClose();
       return true;
