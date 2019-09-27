@@ -4,7 +4,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           Support by [DevForth](https://devforth.io) - Best quality, rapid,  modern tech development services
                  
                  
-[![npm][npm]][npm-url] 
+![npmvers](https://img.shields.io/npm/v/painterro) ![npmDown](https://img.shields.io/npm/dw/painterro?label=npm%20downloads) ![totalNpm](https://img.shields.io/npm/dt/painterro?label=npm%20downloads) ![ghdownloads](https://img.shields.io/github/downloads/ivictbor/painterro/total?label=script%20downloads) 
 
 Painterro is JavaScript painting widget (paint library) which allows editing images in a browser.
 It can be easily integrated into your website or blog by including only one JS file and calling initialization code.
