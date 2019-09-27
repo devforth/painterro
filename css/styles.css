@@ -12,11 +12,11 @@
 @media screen and (min-width: 869px) {
     .ptro-holder {
         position: fixed;
-        box-shadow: 3px 3px 15px #787878;
         left: 35px;
         right: 35px;
         top: 35px;
         bottom: 35px;
+        box-shadow: 1px 1px 5px #888;
     }
 }
 
@@ -61,8 +61,10 @@
     /* vertical-align: middle; */
     display: inline-block;
     touch-action: none;
-    margin-left:auto;
-    margin-right:auto;
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+    height: auto;
 }
 
 .ptro-center-table {
