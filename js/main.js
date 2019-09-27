@@ -75,6 +75,7 @@ class PainterroProc {
       },
     }, {
       name: 'pixelize',
+      hotkey: 'p',
       activate: () => {
         this.select.doPixelize();
         this.closeActiveTool();
