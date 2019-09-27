@@ -14,6 +14,7 @@ export default class PainterroSelecter {
     };
     this.imagePlaced = false;
     this.pixelizePixelSize = main.params.pixelizePixelSize;
+    this.areaionCallback(false);
   }
 
   static code() {

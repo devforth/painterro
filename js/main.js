@@ -298,14 +298,24 @@ class PainterroProc {
         this.resizer.close();
       },
       eventListner: () => this.resizer,
-    }, {
+    },
+    {
       name: 'undo',
       activate: () => {
         this.worklog.undoState();
         this.closeActiveTool();
       },
       eventListner: () => this.resizer,
-    }, {
+    },
+    {
+      name: 'redo',
+      activate: () => {
+        this.worklog.redoState();
+        this.closeActiveTool();
+      },
+      eventListner: () => this.resizer,
+    },
+    {
       name: 'settings',
       activate: () => {
         this.settings.open();
@@ -474,6 +484,7 @@ class PainterroProc {
         this.saveBtn.removeAttribute('disabled');
       }
       this.setToolEnabled(this.toolByName.undo, !state.first);
+      this.setToolEnabled(this.toolByName.redo, !state.last);
       if (this.params.onChange) {
         this.params.onChange.call(this, {
           image: this.imageSaver,
@@ -526,7 +537,7 @@ class PainterroProc {
       this.getBtnEl(b).ontouch = this.getBtnEl(b).onclick;
     });
 
-    this.setActiveTool(this.defaultTool);
+    this.getBtnEl(this.defaultTool).click();
 
     this.imageSaver = {
       /**

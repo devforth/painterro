@@ -85,6 +85,7 @@ export const KEYS = {
   x: 88,
   a: 65,
   l: 76,
+  p: 80,
   r: 82,
   o: 79,
   b: 66,

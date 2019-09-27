@@ -49,7 +49,7 @@ export default class WorkLog {
     }
     this.changedHandler({
       first: this.current.prev === null,
-      last: this.current.last === null,
+      last: this.current.next === null,
       initial,
     });
     this.empty = initial;

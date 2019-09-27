@@ -59,6 +59,8 @@ export default {
     close: 'Close Painterro',
     eraser: 'Eraser',
     settings: 'Settings',
+    undo: 'Undo',
+    redo: 'Redo',
   },
   pasteOptions: {
     fit: 'Replace all',
