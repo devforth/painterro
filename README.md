@@ -185,6 +185,8 @@ Events accepted arguments:
    asBlob: ƒ asBlob(type, quality)
    asDataURL: ƒ asDataURL(type, quality)
    suggestedFileName: ƒ suggestedFileName(type)
+   getWidth: ƒ getWidth()
+   getHeight: ƒ getHeight()
   }
   operationsDone: int
 } 

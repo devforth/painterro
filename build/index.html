@@ -70,7 +70,9 @@
     availableFontSizes: [1,2,4,8,16,64],
     availableArrowLengths: [10,20,30,40,50,60],
     // how_to_paste_actions: ['replace_all'],
-  
+    saveHandler: (saver) => {
+      console.log('saving', saver.getWidth(), saver.getHeight())
+    }
     //toolbarPosition: 'top',
     // fixMobilePageReloader: false,
     // defaultTool: 'line',

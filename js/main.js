@@ -575,6 +575,8 @@ class PainterroProc {
         }
         return `${(this.loadedName || `image-${genId()}`)}.${realType}`;
       },
+      getWidth: () => this.size.w,
+      getHeight: () => this.size.h,
     };
 
     this.initEventHandlers();
