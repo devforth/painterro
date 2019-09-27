@@ -204,6 +204,9 @@ export default class Inserter {
     if (icon) {
       icon.className = 'ptro-icon ptro-icon-open';
     }
+    if (this.main.params.onImageLoaded) {
+      this.main.params.onImageLoaded();
+    }
   }
 
   static get() {

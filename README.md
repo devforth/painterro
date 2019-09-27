@@ -131,33 +131,33 @@ Painterro({
 
 | Param | Description | Default |
 |-|-|-|
-| `id` | If provided, then Painterro will be placed to some holder on page with this `id`, in other case holder-element will be created (fullscreen with margins) | undefined |
-|`activeColor`| Line/Text color that selected by default | '#ff0000' |
-|`activeColorAlpha` | Transparancy of `activeColor` from 0.0 to 1.0, 0.0 = transparent | 1 |
-|`activeFillColor` | Fill color that selected by default | '#000000' |
-|`activeFillColorAlpha` | Transparancy of `activeColor` from 0.0 to 1.0 | 0 |
-|`defaultLineWidth` | Line width in `px` that selected by default | 5 |
-|`defaultEraserWidth` | Eraser width in `px` that selected by default | 5 |
-|`backgroundFillColor` | Default background color when image created/erased | "#ffffff" |
-|`backgroundFillColorAlpha`| Transparancy of `backgroundFillColor` from 0.0 to 1.0 | 1.0 |
-|`textStrokeColor`| Stroke color of text tool | "#ffffff" |
-|`textStrokeColorAlpha`| Stroke color of text tool | 1.0 |
-|`defaultFontSize` | Default font size in pixels | 24 |
+| `id` | If provided, then Painterro will be placed to some holder on page with this `id`, in other case holder-element will be created (fullscreen with margins) | `undefined` |
+|`activeColor`| Line/Text color that selected by default | `'#ff0000'` |
+|`activeColorAlpha` | Transparancy of `activeColor` from `0.0` to `1.0`, `0.0` = transparent | `1` |
+|`activeFillColor` | Fill color that selected by default | `'#000000'` |
+|`activeFillColorAlpha` | Transparancy of `activeColor` from `0.0` to `1.0` | `0` |
+|`defaultLineWidth` | Line width in `px` that selected by default | `5` |
+|`defaultEraserWidth` | Eraser width in `px` that selected by default | `5` |
+|`backgroundFillColor` | Default background color when image created/erased | `'#ffffff'` |
+|`backgroundFillColorAlpha`| Transparancy of `backgroundFillColor` from `0.0` to `1.0` | `1.0` |
+|`textStrokeColor`| Stroke color of text tool | `'#ffffff'` |
+|`textStrokeColorAlpha`| Stroke color of text tool | `1.0` |
+|`defaultFontSize` | Default font size in pixels | `24` |
 |`defaultSize` | default image size, should be string in format `<width>x<height>` in pixel, e.g. `'200x100'`. If value is `'fill'`(default) than all container size will be used | `'fill'` |
-|`fontStrokeSize` | default stroke width of text | 0 |
-|`defaultTool` | Tool selected by default | 'select' | 
+|`fontStrokeSize` | default stroke width of text | `0` |
+|`defaultTool` | Tool selected by default | `'select'` | 
 |`hiddenTools` | List of tools that you wish to exclude from toolbar e.g. something from this list `['crop', 'line', 'arrow', 'rect', 'ellipse', 'brush', 'text', 'rotate', 'resize',  'save', 'open', 'close']`, You can't hide default tool | `['redo']` |
-|`initText` | Display some centered text before painting (supports HTML). If null, no text will be shown | null |
-|`initTextColor` | Color of init text | '#808080' |
-|`initTextStyle` | Style of init text | "26px 'Open Sans', sans-serif" |
+|`initText` | Display some centered text before painting (supports HTML). If null, no text will be shown | `null` |
+|`initTextColor` | Color of init text | `'#808080'` |
+|`initTextStyle` | Style of init text | `"26px 'Open Sans', sans-serif"` |
 |`pixelizePixelSize` | Default pixel size of pixelize tool. Can accept values - `x` - x pixels, `x%` - means percents of minimal area rectangle side | `20%` |
-|`availableLineWidths` | A list of the line width values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | undefined |
-|`availableArrowLengths` | A list of the arrow sizes values that are available for selection in a drop down list e.g. `[10,20,30,40,50,60]`.  Otherwise an input field is used. | undefined |
+|`availableLineWidths` | A list of the line width values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | `undefined` |
+|`availableArrowLengths` | A list of the arrow sizes values that are available for selection in a drop down list e.g. `[10,20,30,40,50,60]`.  Otherwise an input field is used. | `undefined` |
 | `defaultArrowLength` | default arrow length | `15` |
-|`availableEraserWidths` | A list of the eraser width values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | undefined |
-|`availableFontSizes` | A list of the font size values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | undefined |
-|`toolbarPosition` | Whether to position the toolbar at the top or bottom. | 'bottom' |
-|`fixMobilePageReloader` | By default painterro adds overflow-y: hidden to page body on mobile devices to prevent "super smart" feature lice Chrom's reload page. Unfortunately we can't prevent it by preventDefault. If your want to scroll page when painterro is open, set this to false | true |
+|`availableEraserWidths` | A list of the eraser width values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | `undefined` |
+|`availableFontSizes` | A list of the font size values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | `undefined` |
+|`toolbarPosition` | Whether to position the toolbar at the top or bottom. | `'bottom'` |
+|`fixMobilePageReloader` | By default painterro adds overflow-y: hidden to page body on mobile devices to prevent "super smart" feature lice Chrom's reload page. Unfortunately we can't prevent it by preventDefault. If your want to scroll page when painterro is open, set this to false | `true` |
 |`language` | Language of the widget. | `'en'` |
 |`how_to_paste_actions`| List of paste options that will be suggested on paste using some paste dialog e.g. `['extend_right', 'extend_down'] `. If there is only one option in list, then it will choosing automatically without dialog | `['replace_all', 'paste_over', 'extend_right', 'extend_down']` |
 |`hideByEsc`| If `true` then `ESC` press will hide widget | `false` | 
@@ -170,9 +170,10 @@ Painterro({
 |-|-|-|
 | `onClose` | If passed will be triggered when painterro closed | `undefined` |
 | `onChange` | Function that will be called if something will be changed (painted, erased, resized, etc) | `<exportable image>` | `undefined` |
-| `onUndo` | Function that will be called if user will undo (Ctrl+Z) | `{<current history state>}` |
-| `onRedo` | Function that will be called if user will undo (Ctrl+Z) | `{<current history state>}` |
-| `saveHandler` | Function that will be called when user presses Save (or Ctrl+S) | `{<exportable image>}`, `done callback` |
+| `onUndo` | Function that will be called if user will undo (`Ctrl+Z`) | `{<current history state>}` |
+| `onRedo` | Function that will be called if user will redo (`Ctrl+Z`) | `{<current history state>}` |
+| `onImageLoaded` | Function that will be called if you passed image to `show` and when it was loaded | `undefined` | 
+| `saveHandler` | Function that will be called when user presses Save (or `Ctrl+S`) | `{<exportable image>}`, `done callback` |
 
 Events accepted arguments:
 
@@ -217,19 +218,19 @@ Painterro({
 
 | Param | Description | Default |
 |-|-|-|
-|`main` | Color of panels, take most of UI space | '#dbebff' |
-|`control` | Color of controls background (e.g. button background) | "#abc6ff" |
-|`controlContent` | Content of controls (e.g. button text) | '#000000' |
-|`activeControl` | Color for control when it active (e.g. button pressed) | '#7485B1' |
+|`main` | Color of panels, take most of UI space | `'#dbebff'` |
+|`control` | Color of controls background (e.g. button background) | `'#abc6ff'` |
+|`controlContent` | Content of controls (e.g. button text) | `'#000000'` |
+|`activeControl` | Color for control when it active (e.g. button pressed) | `'#7485B1'` |
 |`activeControlContent` | Color for activated control content | `main` |
 |`inputBorderColor` | You can add border to inputs, by default color is same as `main` so borders will not be seen | `main` |
-|`inputBackground` | Background of inputs | '#ffffff' |
+|`inputBackground` | Background of inputs | `'#ffffff'` |
 |`inputText` | Color of text in input | `activeControl` |
-|`backgroundColor`| Background color of component area which left outside of image due to it size/ratio | '#999999' |
-|`dragOverBarColor`| Color of bar when dropping file to painterro | '#899dff' |
+|`backgroundColor`| Background color of component area which left outside of image due to it size/ratio | `'#999999'` |
+|`dragOverBarColor`| Color of bar when dropping file to painterro | `'#899dff'` |
 |`hoverControl`| Controls color when mouse hovered | `control` |
-|`hoverControlContent`| Controls background color when mouse hovered | '#1a3d67' |
-|`toolControlNameColor`| Color of toolbar labels that prepend controls | rgba(255,255,255,0.7) |
+|`hoverControlContent`| Controls background color when mouse hovered | `'#1a3d67'` |
+|`toolControlNameColor`| Color of toolbar labels that prepend controls | `rgba(255,255,255,0.7)` |
 
 
 API
