@@ -6,16 +6,17 @@
                  
 [![npm][npm]][npm-url] 
 
-Painterro is JavaScript paint widget which allows editing images directly in a browser.
-It can be easily integrated into your website or blog by including only one js file and calling initialization code.
+Painterro is JavaScript painting widget (paint library) which allows editing images in a browser.
+It can be easily integrated into your website or blog by including only one JS file and calling initialization code.
 
 With Painterro you can:
 - Paste image from clipboard with `Ctrl+V` (e.g. `PtnScr` screenshot), drag and drop it into widget, or load with open dialog
 - Crop image by defined area
 - Paint primitives (alpha color can be used)
-- Add text
+- Add text (you can use Ctrl+B - bold, Ctrl+I - italic, Ctrl+U - underlined, or just pase formatted HTML)
 - Rotate / resize (scale) image
 - Pixelize some area to hide sensitive data
+- Draw arrows
 
 
 ![Painterro preview](https://rawgit.com/ivictbor/painterro/master/docs/preview.png)
@@ -31,7 +32,7 @@ If you want to see some feature in Painterro, please leave (or vote for) an issu
 There is no promise that it will be implemented soon or ever, but it is interesting to know what features users want to have.
 
 Painterro is written with vanilla JS to stay lightweight and minimalistic. Code
-written on ES6 which transplited by Babel and packed to a single file using webpack.
+written on ES6 which transplited by Babel and packed(minified) to a single file using webpack.
 
 
 Table of contents
@@ -65,7 +66,7 @@ Installation
 With npm
 --------
 
-If you have npm-based project you can run:
+If you have npm-based project (e.g. SPA like React/Vue) you can run:
 ```bash
 npm install painterro --save
 ```
@@ -114,6 +115,8 @@ Supported hotkeys
 | `Alt` when using pipette | Hide zoom helper (colored grid) |
 | `Ctrl` + `Wheel mouse up/down` | Zoom image |
 | `Ctrl + S` | Save image |
+
+Also some tools have own one-button hotkeys e.g. `C` - crop, you could see this shortcuts if you will hold mouse on toolbutton.
 
 Configuration
 =============
@@ -253,7 +256,7 @@ Translation
 -----------
 
 Want to translate Painterro into your language?
- If you need on of languages in table below, just pass pass `language` parameter, for example:
+ If you need one of languages in table below, just pass pass `language` parameter, for example:
  
 ```js
 Painterro({
@@ -396,8 +399,8 @@ When you call `image.asDataURL()` or `image.asBlob()`, you can also specify imag
 If type is `image/jpeg` or `image/webp`, you can also define image quality from `0.0` to `1.0`, default is `0.92`,
 example: `image.asDataURL('image/jpeg', 0.5)`
 
-Example: Open Painterro by Ctrl+V when it is closed
-===========
+Example: Open Painterro by Ctrl+V
+-----------------
 
 ```js
 document.onpaste = (event) => {
@@ -407,17 +410,12 @@ document.onpaste = (event) => {
       const blob = item.getAsFile();
       const reader = new FileReader();
       reader.onload = (readerEvent) => {
-        const img = new Image();
-        const vm = this;
-        img.onload = function sizeDiscoverer() {
           Painterro({
             saveHandler: (image, done) => {
               console.log('Save it here', image.asDataURL());  // you could provide your save handler
               done(true);
             },
           }).show(readerEvent.target.result);
-        };
-        img.src = readerEvent.target.result;
       };
       reader.readAsDataURL(blob);
     }
