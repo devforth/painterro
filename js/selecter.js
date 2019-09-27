@@ -197,7 +197,9 @@ ${Math.round(pxData[i][j][3] / s)})`;
   }
 
   handleKeyDown(evt) {
-    this.main.inserter.handleKeyDown(evt);
+    if (this.main.inserter.handleKeyDown(evt)) {
+      return true;
+    }
     if (this.shown && this.imagePlaced) {
       if (evt.keyCode === KEYS.enter) {
         this.finishPlacing();

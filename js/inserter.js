@@ -159,6 +159,7 @@ export default class Inserter {
   handleKeyDown(evt) {
     if (this.waitChoice && evt.keyCode === KEYS.esc) {
       this.cancelChoosing();
+      return true;
     }
     if (!this.waitChoice && !this.main.select.imagePlaced && this.main.select.shown &&
         evt.keyCode === KEYS.c && (evt.ctrlKey || evt.metaKey)) {
@@ -177,10 +178,10 @@ export default class Inserter {
         console.error(`Unable save image to localstorage: ${e}`);
       }
     }
-    if (event.keyCode === KEYS.enter) {
+    if (this.waitChoice && event.keyCode === KEYS.enter) {
       return true; // mark as handled - user might expect doing save by enter
     }
-    return true;
+    return false;
   }
 
   startLoading() {
