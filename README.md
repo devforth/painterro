@@ -1,10 +1,10 @@
 <img src="https://rawgit.com/ivictbor/painterro/master/res/0painterro.svg" align="right" style="padding:5px; width:70px" />
  
-[GitHub](https://github.com/ivictbor/painterro) | [npm](https://www.npmjs.com/package/painterro) | [DEMO](https://maketips.net/paste)
+**[Live Demo](https://maketips.net/paste)** | [npm](https://www.npmjs.com/package/painterro) | [GitHub](https://github.com/ivictbor/painterro)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           Support by [DevForth](https://devforth.io) - Best quality, rapid,  modern tech development services
                  
                  
-![npmvers](https://img.shields.io/npm/v/painterro) ![npmDown](https://img.shields.io/npm/dw/painterro?label=npm%20downloads) ![totalNpm](https://img.shields.io/npm/dt/painterro?label=npm%20downloads) ![ghdownloads](https://img.shields.io/github/downloads/ivictbor/painterro/total?label=script%20downloads) 
+![npmvers](https://img.shields.io/npm/v/painterro) ![npmDown](https://img.shields.io/npm/dw/painterro?label=npm%20downloads) ![totalNpm](https://img.shields.io/npm/dt/painterro?label=npm%20downloads) ![ghdownloads](https://img.shields.io/github/downloads/ivictbor/painterro/total?label=github%20script%20downloads) 
 
 Painterro is JavaScript painting widget (paint library) which allows editing images in a browser.
 It can be easily integrated into your website or blog by including only one JS file and calling initialization code.
