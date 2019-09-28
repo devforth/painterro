@@ -13,7 +13,7 @@ With Painterro you can:
 - Paste image from clipboard with `Ctrl+V` (e.g. `PtnScr` screenshot), drag and drop it into widget, or load with open dialog
 - Crop image by defined area
 - Paint primitives (alpha color can be used)
-- Add text (you can use Ctrl+B - bold, Ctrl+I - italic, Ctrl+U - underlined, or just pase formatted HTML)
+- Add text (you can use `Ctrl+B` - bold, `Ctrl+I` - italic, `Ctrl+U` - underlined, or just pase formatted HTML)
 - Rotate / resize (scale) image
 - Pixelize some area to hide sensitive data
 - Draw arrows
@@ -26,14 +26,14 @@ Originally Painterro was designed for quick screenshots processing: You make scr
 then open Painterro on your website, paste an image with `Ctrl+V`,
 crop it to interested area, highlight something with line/rectangle tool and/or add some text 
 to the image and save on server with custom save handler (e.g. simple `XHR` request to your backend).
-In addition, you can use it for processing any kind of raster images. Please try a [demo](https://maketips.net/paste).
+In addition, you can use Painterro as image aditor for any kind of raster images. Please try a [demo](https://maketips.net/paste).
 Also painterro has [Wordpress Plugin](https://wordpress.org/plugins/painterro/).
 
 If you want to see some feature in Painterro, please leave (or vote for) an issue [here](https://github.com/ivictbor/painterro/issues).
 There is no promise that it will be implemented soon or ever, but it is interesting to know what features users want to have.
 
 Painterro is written with vanilla JS to stay lightweight and minimalistic. Code
-written on ES6 which transplited by Babel and packed(minified) to a single file using webpack.
+written on ES6 which transplited by Babel and packed (minified) to a single file using webpack.
 
 ![Painterro gif preview](https://rawgit.com/ivictbor/painterro/master/docs/painterro_gif.gif)
 
