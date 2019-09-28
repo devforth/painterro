@@ -21,6 +21,7 @@ With Painterro you can:
 
 ![Painterro preview](https://rawgit.com/ivictbor/painterro/master/docs/preview.png)
 
+
 Originally Painterro was designed for quick screenshots processing: You make screenshot by pressing `PrtSc` button,
 then open Painterro on your website, paste an image with `Ctrl+V`,
 crop it to interested area, highlight something with line/rectangle tool and/or add some text 
@@ -33,6 +34,8 @@ There is no promise that it will be implemented soon or ever, but it is interest
 
 Painterro is written with vanilla JS to stay lightweight and minimalistic. Code
 written on ES6 which transplited by Babel and packed(minified) to a single file using webpack.
+
+![Painterro gif preview](https://rawgit.com/ivictbor/painterro/master/docs/painterro_gif.gif)
 
 
 Table of contents
