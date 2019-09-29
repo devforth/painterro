@@ -18,9 +18,7 @@ With Painterro you can:
 - Pixelize some area to hide sensitive data
 - Draw arrows
 
-
-![Painterro preview](https://rawgit.com/ivictbor/painterro/master/docs/preview.png)
-
+![Painterro gif preview](https://rawgit.com/ivictbor/painterro/master/docs/painterro_gif.gif)
 
 Originally Painterro was designed for quick screenshots processing: You make screenshot by pressing `PrtSc` button,
 then open Painterro on your website, paste an image with `Ctrl+V`,
@@ -35,7 +33,7 @@ There is no promise that it will be implemented soon or ever, but it is interest
 Painterro is written with vanilla JS to stay lightweight and minimalistic. Code
 written on ES6 which transplited by Babel and packed (minified) to a single file using webpack.
 
-![Painterro gif preview](https://rawgit.com/ivictbor/painterro/master/docs/painterro_gif.gif)
+
 
 
 Table of contents
