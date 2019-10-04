@@ -14,7 +14,7 @@ With Painterro you can:
 - Crop image by defined area
 - Paint primitives (alpha color can be used)
 - Add text (you can use `Ctrl+B` - bold, `Ctrl+I` - italic, `Ctrl+U` - underlined, or just pase formatted HTML)
-- Rotate / resize (scale) image
+- Rotate / resize, scale image
 - Pixelize some area to hide sensitive data
 - Draw arrows
 
