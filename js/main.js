@@ -839,6 +839,7 @@ class PainterroProc {
             if (item.kind === 'file' && item.type.split('/')[0] === 'image') {
               this.openFile(item.getAsFile());
               event.preventDefault();
+              event.stopPropagation();
             } else if (item.kind === 'string') {
               let txt = '';
               if (window.clipboardData && window.clipboardData.getData) { // IE
@@ -849,6 +850,7 @@ class PainterroProc {
               if (txt.startsWith(this.inserter.CLIP_DATA_MARKER)) {
                 this.loadImage(localStorage.getItem(this.inserter.CLIP_DATA_MARKER));
                 event.preventDefault();
+                event.stopPropagation();
               }
             }
           });
