@@ -4,7 +4,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           Support by [DevForth](https://devforth.io) - Best quality, rapid,  modern tech development services
                  
                  
-![npmvers](https://img.shields.io/npm/v/painterro) ![npmDown](https://img.shields.io/npm/dw/painterro?label=npm%20downloads) ![totalNpm](https://img.shields.io/npm/dt/painterro?label=npm%20downloads) ![ghdownloads](https://img.shields.io/github/downloads/ivictbor/painterro/total?label=github%20script%20downloads) 
+![npmvers](https://img.shields.io/npm/v/painterro) ![npmDown](https://img.shields.io/npm/dw/painterro?label=npm%20💾) ![totalNpm](https://img.shields.io/npm/dt/painterro?label=npm%20💾) ![ghdownloads](https://img.shields.io/github/downloads/ivictbor/painterro/total?label=github%20script%20💾) 
 
 Painterro is JavaScript painting widget (paint library) which allows editing images in a browser.
 It can be easily integrated into your website or blog by including only one JS file and calling initialization code.
@@ -18,9 +18,7 @@ With Painterro you can:
 - Pixelize some area to hide sensitive data
 - Draw arrows
 
-
-![Painterro preview](https://rawgit.com/ivictbor/painterro/master/docs/preview.png)
-
+![Painterro gif preview](https://rawgit.com/ivictbor/painterro/master/docs/painterro_gif.gif)
 
 Originally Painterro was designed for quick screenshots processing: You make screenshot by pressing `PrtSc` button,
 then open Painterro on your website, paste an image with `Ctrl+V`,
@@ -35,7 +33,7 @@ There is no promise that it will be implemented soon or ever, but it is interest
 Painterro is written with vanilla JS to stay lightweight and minimalistic. Code
 written on ES6 which transplited by Babel and packed (minified) to a single file using webpack.
 
-![Painterro gif preview](https://rawgit.com/ivictbor/painterro/master/docs/painterro_gif.gif)
+
 
 
 Table of contents
