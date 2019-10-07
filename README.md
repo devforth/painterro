@@ -271,10 +271,11 @@ Translated languages:
 
 | `language` param | Name |
 |-|-|
+| `ca` | Catalan |
+| `fa` | Iran-Farsi (Persian (Ir-Fa) |
+| `fr` | French |
 | `en` | English |
 | `es` | Spanish |
-| `ca` | Catalan | 
-| `fr` | French |
 | `pt-PT` | European Portuguese |
 | `pt-BR` | Brazilian  Portuguese |
 
