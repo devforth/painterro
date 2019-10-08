@@ -50,6 +50,7 @@ Table of contents
     * [Read after installation](#read-after-installation)
   * [Supported hotkeys](#supported-hotkeys)
   * [Configuration](#configuration)
+    * [Events](#events)
     * [UI color scheme](#ui-color-scheme)
     * [Translation](#translation)
   * [Saving image](#saving-image)
