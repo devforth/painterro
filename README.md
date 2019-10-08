@@ -52,6 +52,7 @@ Table of contents
   * [Configuration](#configuration)
     * [Events](#events)
     * [UI color scheme](#ui-color-scheme)
+    * [API](#api)
     * [Translation](#translation)
   * [Saving image](#saving-image)
     * [Base64 saving](#base64-saving)
