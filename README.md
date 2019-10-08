@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/devforth/painterro/master/res/0painterro.svg" align="right" style="padding:5px; width:70px" />
+<img src="https://github.com/devforth/painterro/master/res/0painterro.svg" align="right" style="padding:5px; width:70px" />
  
 **[Live Demo](https://maketips.net/paste)** | [npm](https://www.npmjs.com/package/painterro) | [GitHub](https://github.com/devforth/painterro)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           Support by [DevForth](https://devforth.io) - Best quality, rapid,  modern tech development services
