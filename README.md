@@ -6,8 +6,8 @@
                  
 ![npmvers](https://img.shields.io/npm/v/painterro) ![npmDown](https://img.shields.io/npm/dw/painterro?label=npm%20💾) ![totalNpm](https://img.shields.io/npm/dt/painterro?label=npm%20💾) ![ghdownloads](https://img.shields.io/github/downloads/ivictbor/painterro/total?label=github%20script%20💾) 
 
-Painterro is JavaScript painting widget (paint library) which allows editing images in a browser.
-It can be easily integrated into your website or blog by including only one JS file and calling initialization code.
+JavaScript painting widget (paint library) which allows editing images in a browser.
+Can be easily integrated into your website or blog by including only one JS file and calling simple initialization code.
 
 With Painterro you can:
 - Paste image from clipboard with `Ctrl+V` (e.g. `PtnScr` screenshot), drag and drop it into widget, or load with open dialog
@@ -20,6 +20,13 @@ With Painterro you can:
 
 ![Painterro gif preview](https://rawgit.com/ivictbor/painterro/master/docs/painterro_gif.gif)
 
+- Written with vanilla JS, you don't need dependencies to use it
+- Lightweight and minimalistic. Code written on ES6 which transplited by Babel and packed (minified) to a single file using webpack
+- Designed to process images with minimal cliks, most actions support hot-keys
+- Could be easily integrated into SPA application (React, Vue)
+- Could be used in Electron and Cordova
+- Flexibale image saving - you provide your save handler
+
 Originally Painterro was designed for quick screenshots processing: You make screenshot by pressing `PrtSc` button,
 then open Painterro on your website, paste an image with `Ctrl+V`,
 crop it to interested area, highlight something with line/rectangle tool and/or add some text 
@@ -29,11 +36,6 @@ Also painterro has [Wordpress Plugin](https://wordpress.org/plugins/painterro/).
 
 If you want to see some feature in Painterro, please leave (or vote for) an issue [here](https://github.com/ivictbor/painterro/issues).
 There is no promise that it will be implemented soon or ever, but it is interesting to know what features users want to have.
-
-Painterro is written with vanilla JS to stay lightweight and minimalistic. Code
-written on ES6 which transplited by Babel and packed (minified) to a single file using webpack.
-
-
 
 
 Table of contents
