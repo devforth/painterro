@@ -88,7 +88,7 @@ Painterro().show()
 By including script
 -------------------
 
-You can download latest `painterro-*.min.js` here https://github.com/ivictbor/painterro/releases/ 
+You can download latest `painterro-*.min.js` here https://github.com/devforth/painterro/releases/ 
 or [build it by yourself](#building-painterro).
 
 Then insert `<script>` e.g:
@@ -285,7 +285,7 @@ Translated languages:
 | `pt-PT` | European Portuguese |
 | `pt-BR` | Brazilian  Portuguese |
 
- If you want to add another language, then fork. Create file in folder langs for your translation and copy [langs/en.lang.js] in it. Then translate all `'Strings'` and add reference in [js/translation.js]. After that create pull-request, or just open [issue](https://github.com/ivictbor/painterro/issues)
+ If you want to add another language, then fork. Create file in folder langs for your translation and copy [langs/en.lang.js] in it. Then translate all `'Strings'` and add reference in [js/translation.js]. After that create pull-request, or just open [issue](https://github.com/devforth/painterro/issues)
  if you don't know how to create a PR.
  
 If you want to translate or change strings without contributing you can do this by passing 

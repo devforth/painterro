@@ -15,15 +15,15 @@ Absolutely free and open source.
 
 = Where can I report an issue? (Please add 'wordpress' label)
 
-Here: https://github.com/ivictbor/painterro/issues/new
+Here: https://github.com/devforth/painterro/issues/new
 
 = Where can I suggest a new feature?
 
-Here: https://github.com/ivictbor/painterro/issues/new (Please add 'wordpress' label)
+Here: https://github.com/devforth/painterro/issues/new (Please add 'wordpress' label)
 
 = Where can I found more info about Painterro? =
 
-See readme https://github.com/ivictbor/painterro
+See readme https://github.com/devforth/painterro
 
 == Changelog ==
 

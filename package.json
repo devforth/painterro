@@ -5,7 +5,7 @@
   "main": "build/painterro.commonjs2.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ivictbor/painterro"
+    "url": "https://github.com/devforth/painterro"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

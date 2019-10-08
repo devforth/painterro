@@ -34,19 +34,19 @@ Supported hotkeys:
 
 = Where can I found more info about Painterro? =
 
-See [ReadMe](https://github.com/ivictbor/painterro)
+See [ReadMe](https://github.com/devforth/painterro)
 
 = Where can I report an issue?
 
-Create [github issue](https://github.com/ivictbor/painterro/issues/new)  (Please add `wordpress` label)
+Create [github issue](https://github.com/devforth/painterro/issues/new)  (Please add `wordpress` label)
 
 = Where can I suggest a new feature?
 
-Create [github issue](https://github.com/ivictbor/painterro/issues/new) (Please add `wordpress` label)
+Create [github issue](https://github.com/devforth/painterro/issues/new) (Please add `wordpress` label)
 
 = How to help the project without money? =
 
-Press `Star` on [github](https://github.com/ivictbor/painterro). This will help to know how many people intrested in project.
+Press `Star` on [github](https://github.com/devforth/painterro). This will help to know how many people intrested in project.
 
 == Changelog ==
 
