@@ -1,4 +1,4 @@
-<img src="https://rawgit.com/devforth/painterro/master/res/0painterro.svg" align="right" style="padding:5px; width:70px" />
+<img src="https://raw.githubusercontent.com/devforth/painterro/master/res/0painterro.svg" align="right" style="padding:5px; width:70px" />
  
 **[Live Demo](https://maketips.net/paste)** | [npm](https://www.npmjs.com/package/painterro) | [GitHub](https://github.com/devforth/painterro)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           Support by [DevForth](https://devforth.io) - Best quality, rapid,  modern tech development services
@@ -18,7 +18,7 @@ With Painterro you can:
 - Pixelize some area to hide sensitive data
 - Draw arrows
 
-![Painterro gif preview](https://rawgit.com/devforth/painterro/master/docs/painterro_gif.gif)
+![Painterro gif preview](https://raw.githubusercontent.com/devforth/painterro/master/docs/painterro_gif.gif)
 
 Why Painterro?
 - It is lightweight and minimalistic - written with vanilla JS, you don't need dependencies to use it
