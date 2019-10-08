@@ -1,10 +1,10 @@
-<img src="https://rawgit.com/ivictbor/painterro/master/res/0painterro.svg" align="right" style="padding:5px; width:70px" />
+<img src="https://rawgit.com/devforth/painterro/master/res/0painterro.svg" align="right" style="padding:5px; width:70px" />
  
 **[Live Demo](https://maketips.net/paste)** | [npm](https://www.npmjs.com/package/painterro) | [GitHub](https://github.com/devforth/painterro)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           Support by [DevForth](https://devforth.io) - Best quality, rapid,  modern tech development services
                  
                  
-![npmvers](https://img.shields.io/npm/v/painterro) ![npmDown](https://img.shields.io/npm/dw/painterro?label=npm%20💾) ![totalNpm](https://img.shields.io/npm/dt/painterro?label=npm%20💾) ![ghdownloads](https://img.shields.io/github/downloads/ivictbor/painterro/total?label=github%20script%20💾) 
+![npmvers](https://img.shields.io/npm/v/painterro) ![npmDown](https://img.shields.io/npm/dw/painterro?label=npm%20💾) ![totalNpm](https://img.shields.io/npm/dt/painterro?label=npm%20💾) ![ghdownloads](https://img.shields.io/github/downloads/devforth/painterro/total?label=github%20script%20💾) 
 
 JavaScript painting plugin which allows editing images in a browser.
 Can be easily integrated into your website or blog by including only one JS file and calling simple initialization code.
@@ -18,7 +18,7 @@ With Painterro you can:
 - Pixelize some area to hide sensitive data
 - Draw arrows
 
-![Painterro gif preview](https://rawgit.com/ivictbor/painterro/master/docs/painterro_gif.gif)
+![Painterro gif preview](https://rawgit.com/devforth/painterro/master/docs/painterro_gif.gif)
 
 Why Painterro?
 - It is lightweight and minimalistic - written with vanilla JS, you don't need dependencies to use it
@@ -35,7 +35,7 @@ to the image and save on server with custom save handler (e.g. simple `XHR` requ
 In addition, you can use Painterro as image aditor for any kind of raster images. Please try a [demo](https://maketips.net/paste).
 Also painterro has [Wordpress Plugin](https://wordpress.org/plugins/painterro/).
 
-If you want to see some feature in Painterro, please leave (or vote for) an issue [here](https://github.com/ivictbor/painterro/issues).
+If you want to see some feature in Painterro, please leave (or vote for) an issue [here](https://github.com/devforth/painterro/issues).
 There is no promise that it will be implemented soon or ever, but it is interesting to know what features users want to have.
 
 Code written on ES6 which transplited by Babel and packed (minified) to a single file using webpack
