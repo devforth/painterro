@@ -6,7 +6,7 @@
                  
 ![npmvers](https://img.shields.io/npm/v/painterro) ![npmDown](https://img.shields.io/npm/dw/painterro?label=npm%20💾) ![totalNpm](https://img.shields.io/npm/dt/painterro?label=npm%20💾) ![ghdownloads](https://img.shields.io/github/downloads/ivictbor/painterro/total?label=github%20script%20💾) 
 
-JavaScript painting widget (paint library) which allows editing images in a browser.
+JavaScript painting plugin which allows editing images in a browser.
 Can be easily integrated into your website or blog by including only one JS file and calling simple initialization code.
 
 With Painterro you can:
