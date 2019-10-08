@@ -64,7 +64,6 @@ Table of contents
     * [Building painterro](#building-painterro)
     * [Dev-server](#dev-server)
     * [Regenerating icons font](#regenerating-icons-font)
-    * [ToDo list](#todo-list)
 
 
 Installation
@@ -484,14 +483,6 @@ Contributing
 ------------
 Pull-requests are welcome.
 
-
-ToDo list
----------
-
-- Add recent colors pallete
-- Add recent image sizes in resize tool
-- Ability to save locally
-- Edit button on page <img> tags (provide selector)
 
 [npm]: https://img.shields.io/npm/v/painterro.svg
 [npm-url]: https://npmjs.com/package/painterro
