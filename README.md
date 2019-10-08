@@ -57,6 +57,7 @@ Table of contents
     * [Binary saving](#binary-saving)
     * [Saving to WYSIWYG](#saving-to-wysiwyg)
     * [Format and quality](#format-and-quality)
+    * [Example: Open Painterro by Ctrl+V](#example-open-painterro-by-ctrlv)
   * [Development](#development)
     * [Building painterro](#building-painterro)
     * [Dev-server](#dev-server)
