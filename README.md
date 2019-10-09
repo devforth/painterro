@@ -1,15 +1,14 @@
-<img src="https://raw.githubusercontent.com/devforth/painterro/master/res/painterro.png" align="right" style="padding:5px; width:70px" />
- 
+<img src="https://raw.githubusercontent.com/devforth/painterro/master/res/painterro.png" align="right" style="padding:5px; width:70px" /> 
+
 **[Live Demo](https://maketips.net/paste)** | [npm](https://www.npmjs.com/package/painterro) | [GitHub](https://github.com/devforth/painterro)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           Support by [DevForth](https://devforth.io) - Best quality, rapid,  modern tech development services
-                 
-                 
-![npmvers](https://img.shields.io/npm/v/painterro) ![npmDown](https://img.shields.io/npm/dw/painterro?label=npm%20💾) ![totalNpm](https://img.shields.io/npm/dt/painterro?label=npm%20💾) ![ghdownloads](https://img.shields.io/github/downloads/devforth/painterro/total?label=github%20script%20💾) 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ![npmvers](https://img.shields.io/npm/v/painterro) ![npmDown](https://img.shields.io/npm/dw/painterro?label=npm%20💾) ![totalNpm](https://img.shields.io/npm/dt/painterro?label=npm%20💾) ![ghdownloads](https://img.shields.io/github/downloads/devforth/painterro/total?label=github%20script%20💾) 
 
 JavaScript painting plugin which allows editing images in a browser.
 Can be easily integrated into any website or webapp by including only one JS file and calling simple initialization code.
 
-With Painterro you can:
+Features
+=================
+
 - Paste image from clipboard with `Ctrl+V` (e.g. `PtnScr` screenshot), drag and drop it into widget, or load with open dialog
 - Crop image by defined area
 - Paint primitives (alpha color can be used)
@@ -20,7 +19,9 @@ With Painterro you can:
 
 ![Painterro gif preview](https://raw.githubusercontent.com/devforth/painterro/master/docs/painterro_gif.gif)
 
-Why Painterro?
+Advantages
+=================
+
 - It is lightweight and minimalistic - written with vanilla JS, you don't need dependencies to use it
 - Designed to process images with minimal clicks, most actions support hot-keys
 - Could be easily integrated into SPA application (React, Vue, Angular)
@@ -486,3 +487,5 @@ Pull-requests are welcome.
 
 [deps]: https://david-dm.org/webpack/painterro.svg
 [deps-url]: https://david-dm.org/webpack/painterro
+
+Support by [DevForth](https://devforth.io) - Best quality, rapid,  modern tech development services
