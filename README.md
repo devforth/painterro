@@ -17,7 +17,9 @@ Features
 - Pixelize some area to hide sensitive data
 - Draw arrows
 
-![Painterro gif preview](https://raw.githubusercontent.com/devforth/painterro/master/docs/painterro_gif.gif)
+<img alt="Painterro gif preview" src="https://raw.githubusercontent.com/devforth/painterro/master/docs/painterro_gif.gif" 
+ style="box-shadow: 0 0 20px lightgrey; margin: 0 0 20px 0;" /> 
+
 
 Advantages
 =================
