@@ -7,7 +7,7 @@
 ![npmvers](https://img.shields.io/npm/v/painterro) ![npmDown](https://img.shields.io/npm/dw/painterro?label=npm%20💾) ![totalNpm](https://img.shields.io/npm/dt/painterro?label=npm%20💾) ![ghdownloads](https://img.shields.io/github/downloads/devforth/painterro/total?label=github%20script%20💾) 
 
 JavaScript painting plugin which allows editing images in a browser.
-Can be easily integrated into your website or blog by including only one JS file and calling simple initialization code.
+Can be easily integrated into any website or webapp by including only one JS file and calling simple initialization code.
 
 With Painterro you can:
 - Paste image from clipboard with `Ctrl+V` (e.g. `PtnScr` screenshot), drag and drop it into widget, or load with open dialog
@@ -25,20 +25,18 @@ Why Painterro?
 - Designed to process images with minimal clicks, most actions support hot-keys
 - Could be easily integrated into SPA application (React, Vue, Angular)
 - Could be used in Electron and Cordova apps
-- Flexibale image saving - you provide your save handler, can consime base64 data with any jpeg/png compression
+- Flexibale image saving - you provide your save handler, and get base64 data with any jpeg/png compression
 - Could be translated to any language 
 
 Originally Painterro was designed for quick screenshots processing: You make screenshot by pressing `PrtSc` button,
 then open Painterro on your website, paste an image with `Ctrl+V`,
 crop it to interested area, highlight something with line/rectangle tool and/or add some text 
 to the image and save on server with custom save handler (e.g. simple `XHR` request to your backend).
-In addition, you can use Painterro as image aditor for any kind of raster images. Please try a [demo](https://maketips.net/paste).
+In addition, you can use Painterro as image editor for any kind of raster images. Please try a [demo](https://maketips.net/paste).
 Also painterro has [Wordpress Plugin](https://wordpress.org/plugins/painterro/).
 
 If you want to see some feature in Painterro, please leave (or vote for) an issue [here](https://github.com/devforth/painterro/issues).
 There is no promise that it will be implemented soon or ever, but it is interesting to know what features users want to have.
-
-Code written on ES6 which transplited by Babel and packed (minified) to a single file using webpack
 
 Table of contents
 =================
@@ -439,7 +437,7 @@ document.onpaste = (event) => {
 Development
 ===========
 
-After pulling repo install node modules:
+Code written on ES6 which transplited by Babel and packed (minified) to a single file using webpack. All configs are inside so all you have to do after pulling repo is installing node modules:
 ```bash
 cd painterro
 npm ci
@@ -461,7 +459,6 @@ Actually, above command produces 4 versions of library:
 - `build/painterro.amd.js` and `build/painterro.umd.js` - these both are same as above but for `AMD` and `UMD` importers respectivly.
 
 
-
 Dev-server
 ----------
 
@@ -474,7 +471,7 @@ Then open http://localhost:8080 with demo page
 Regenerating icons font
 -----------------------
 
-Add/edit icons in `res` folder. Then run
+If you need add/edit icons in `res` folder, please after editing run
 ```bash
 npm run buildfont
 ```
