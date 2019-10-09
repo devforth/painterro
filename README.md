@@ -9,9 +9,9 @@ Can be easily integrated into any website or webapp by including only one JS fil
 Features
 =================
 
-- Paste image from clipboard with `Ctrl+V` (e.g. `PtnScr` screenshot), drag and drop it into widget, or load with open dialog
+- Paste image from clipboard with `Ctrl+V` (e.g. `PtnScr` screenshot), drag and drop it into widget, or load with file select dialog
 - Crop image by defined area
-- Paint primitives (alpha color can be used)
+- Paint primitives: line, rectangle, ellipse (alpha color can be used)
 - Add text (you can use `Ctrl+B` - bold, `Ctrl+I` - italic, `Ctrl+U` - underlined, or just pase formatted HTML)
 - Rotate / resize, scale image
 - Pixelize some area to hide sensitive data
