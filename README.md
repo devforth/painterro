@@ -102,7 +102,7 @@ Then in your code:
   Painterro().show()
 </script>
 ```
-See [fiddle example](https://jsfiddle.net/vanbrosh/Levaqoeh/10/)
+See [jsfiddle.net example](https://jsfiddle.net/vanbrosh/Levaqoeh/)
 
 
 Read after installation
