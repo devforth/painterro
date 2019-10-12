@@ -11,7 +11,7 @@ function loadSettings() {
   try {
     settings = JSON.parse(localStorage.getItem(STORAGE_KEY));
   } catch (e) {
-    console.error(`Unable get from localstorage: ${e}`);
+    console.warn(`Unable get from localstorage: ${e}`);
   }
   if (!settings) {
     settings = {};
@@ -23,7 +23,7 @@ export function setParam(name, val) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
   } catch (e) {
-    console.error(`Unable save to localstorage: ${e}`);
+    console.warn(`Unable save to localstorage: ${e}`);
   }
 }
 

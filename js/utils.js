@@ -155,7 +155,7 @@ export function imgToDataURL(url, callback) {
 }
 
 export function logError(error) {
-  console.error(`[Painterro] ${error}`);
+  console.warn(`[Painterro] ${error}`);
 }
 
 export function checkIn(what, where) {

@@ -848,7 +848,14 @@ class PainterroProc {
                 txt = event.clipboardData.getData('text/plain');
               }
               if (txt.startsWith(this.inserter.CLIP_DATA_MARKER)) {
-                this.loadImage(localStorage.getItem(this.inserter.CLIP_DATA_MARKER));
+                let img;
+                try {
+                  img = localStorage.getItem(this.inserter.CLIP_DATA_MARKER);
+                } catch (e) {
+                  console.warn(`Unable get from localstorage: ${e}`);
+                  return;
+                }
+                this.loadImage(img);
                 event.preventDefault();
                 event.stopPropagation();
               }

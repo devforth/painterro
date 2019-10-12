@@ -175,7 +175,7 @@ export default class Inserter {
       try {
         localStorage.setItem(this.CLIP_DATA_MARKER, tmpCan.toDataURL());
       } catch (e) {
-        console.error(`Unable save image to localstorage: ${e}`);
+        console.warn(`Unable save image to localstorage: ${e}`);
       }
       return true;
     }
