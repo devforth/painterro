@@ -6,6 +6,8 @@
 JavaScript painting plugin which allows editing images in a browser.
 Can be easily integrated into any website or webapp by including only one JS file and calling simple initialization code.
 
+Want to support? [Just upvote us on StackOverflow](https://meta.stackoverflow.com/a/390394/3479125)
+
 Features
 =================
 
