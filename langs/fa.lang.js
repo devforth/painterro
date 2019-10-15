@@ -38,7 +38,7 @@
             resizeScale: 'مقیاس',
             resizeResize: 'تغییر اندازه',
             backgroundColor: 'رنگ پس زمینه',
-            pixelizePixelSize: 'اندازه پیکس پیکسلی کردن',
+            pixelizePixelSize: 'اندازه پیکس شطرجی کردن' ,
             language: 'زبان',
             wrongPixelSizeValue:
             'اندازه پیکسل اشتباه است. به طور مثال \'20%\' که به معنی اندازه 1/5 of ' +
