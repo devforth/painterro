@@ -71,4 +71,4 @@ export default {
     over: "重ねて貼り付け",
     how_to_paste: "どう貼り付ける？",
   },
-}};
+};
