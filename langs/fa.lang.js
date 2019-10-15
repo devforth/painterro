@@ -38,7 +38,7 @@
             resizeScale: 'مقیاس',
             resizeResize: 'تغییر اندازه',
             backgroundColor: 'رنگ پس زمینه',
-            pixelizePixelSize: 'اندازه پیکس پیکسلی کردن',
+            pixelizePixelSize: 'اندازه پیکس شطرنجی کردن' ,
             language: 'زبان',
             wrongPixelSizeValue:
             'اندازه پیکسل اشتباه است. به طور مثال \'20%\' که به معنی اندازه 1/5 of ' +
@@ -54,7 +54,7 @@
                 save: 'ذخیره تصویر',
                 load: 'بارگذازی تصویر',
                 text: 'گذاشتن متن',
-                brush: 'قلم پشم',
+                brush: 'قلم مو',
                 resize: 'تغییر سایز یا مقیاس',
                 open: 'باز کردن تصویر',
                 select: 'انتخاب محدوده',
