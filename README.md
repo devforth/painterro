@@ -283,6 +283,7 @@ Translated languages:
 | `ca` | Catalan |
 | `fa` | Iran-Farsi (Persian (Ir-Fa) |
 | `fr` | French |
+| `ja` | Japanese |
 | `en` | English |
 | `es` | Spanish |
 | `pt-PT` | European Portuguese |

@@ -1,21 +1,23 @@
-import enl from '../langs/en.lang';
-import esl from '../langs/es.lang';
-import cal from '../langs/ca.lang';
-import frl from '../langs/fr.lang';
+import en from '../langs/en.lang';
+import es from '../langs/es.lang';
+import ca from '../langs/ca.lang';
+import fr from '../langs/fr.lang';
 import ptPTl from '../langs/pt-PT.lang';
 import ptBRl from '../langs/pt-BR.lang';
+import ja from '../langs/ja.lang';
 
 let instance = null;
 
 export default class Translation {
   constructor() {
     this.translations = {
-      en: enl,
-      es: esl,
-      ca: cal,
-      fr: frl,
+      en,
+      es,
+      ca,
+      fr,
       'pt-PT': ptPTl,
       'pt-BR': ptBRl,
+      ja,
     };
     this.defaultTranslator = this.translations.en;
   }
