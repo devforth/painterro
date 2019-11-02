@@ -39,7 +39,7 @@ export default {
   pixelizePixelSize: 'Pixelate Pixelgröße',
   language: 'Sprache',
   wrongPixelSizeValue:
-    'Falsche Pixelgröße. Sie können zum Beispiel \'20%\' eingeben. Welche mittlere Pixelgröße wird 1/5 von ' + 'die ausgewählte Bereichsseite, oder \'4\' bedeutet 4 px',
+    'Falsche Pixelgröße. Sie können zum Beispiel \'20%\' eingeben. Welche mittlere Pixelgröße wird 1/5 von die ausgewählte Bereichsseite, oder \'4\' bedeutet 4 px',
   tools: {
     crop: 'Bild auf ausgewählten Bereich zuschneiden',
     pixelize: 'Pixelisierung des ausgewählten Bereiches',
