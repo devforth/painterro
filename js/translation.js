@@ -1,3 +1,4 @@
+import de from '../langs/de.lang';
 import en from '../langs/en.lang';
 import es from '../langs/es.lang';
 import ca from '../langs/ca.lang';
@@ -11,6 +12,7 @@ let instance = null;
 export default class Translation {
   constructor() {
     this.translations = {
+      de,
       en,
       es,
       ca,
