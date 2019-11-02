@@ -94,11 +94,11 @@ By including script
 You can download latest `painterro-*.min.js` here https://github.com/devforth/painterro/releases/ 
 or [build it by yourself](#building-painterro).
 
-Then insert `<script>` e.g:
+Then insert `<script>` e.g to `<head>` section of your HTML file:
 ```html
 <script src="/xxx/painterro-x.x.x.min.js"></script>
 ```
-Then in your code:
+Then in your code (`body` section, `onclick` handler, etc):
 ```html
 <script>
   Painterro().show()
