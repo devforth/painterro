@@ -281,6 +281,7 @@ Translated languages:
 | `language` param | Name |
 |-|-|
 | `ca` | Catalan |
+| `de` | German |
 | `fa` | Iran-Farsi (Persian (Ir-Fa) |
 | `fr` | French |
 | `ja` | Japanese |
