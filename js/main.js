@@ -821,6 +821,7 @@ class PainterroProc {
           }
           if (this.toolByKeyCode[event.keyCode]) {
             this.getBtnEl(this.toolByKeyCode[event.keyCode]).click();
+            e.stopPropagation();
             e.preventDefault();
           }
           if (this.saveBtn) {
