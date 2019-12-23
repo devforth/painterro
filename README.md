@@ -494,4 +494,4 @@ Pull-requests are welcome.
 [deps]: https://david-dm.org/webpack/painterro.svg
 [deps-url]: https://david-dm.org/webpack/painterro
 
-Support by [DevForth](https://devforth.io) - Best quality, rapid,  modern tech development services
+Supported by [DevForth](https://devforth.io) - Best quality, rapid,  modern tech development services
