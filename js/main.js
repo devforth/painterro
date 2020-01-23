@@ -19,6 +19,8 @@ import Inserter from './inserter';
 import Settings from './settings';
 import ControlBuilder from './controlbuilder';
 
+require('string.prototype.repeat');
+
 class PainterroProc {
   constructor(params) {
     addDocumentObjectHelpers();
