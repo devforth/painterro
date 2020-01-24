@@ -198,6 +198,7 @@ export default class TextTool {
       this.input.focus();
       this.reLimit();
       this.input.onkeydown = (e) => {
+        if (event.target !== document.body) return;
         if (e.ctrlKey && e.keyCode === KEYS.enter) {
           this.apply();
           e.preventDefault();
