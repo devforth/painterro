@@ -8,6 +8,7 @@
     "url": "https://github.com/devforth/painterro"
   },
   "scripts": {
+    "prepare": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --optimize-minimize --progress",
     "dev": "webpack-dev-server --inline --hot --content-base build/ --port 8081 --host 127.0.0.1",
