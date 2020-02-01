@@ -357,9 +357,17 @@ class PainterroProc {
       hotkey: this.params.hideByEsc ? 'esc' : false,
       right: true,
       activate: () => {
-        this.closeActiveTool();
-        this.close();
-        this.hide();
+        const doClose = () => {
+          this.closeActiveTool();
+          this.close();
+          this.hide();
+        };
+
+        if (this.params.onBeforeClose) {
+          this.params.onBeforeClose(this.hasUnsaved, doClose);
+        } else {
+          doClose();
+        }
       },
     }];
     this.isMobile = isMobile.any;
@@ -483,9 +491,11 @@ class PainterroProc {
     this.primitiveTool.setArrowLength(this.params.defaultArrowLength);
     this.primitiveTool.setEraserWidth(this.params.defaultEraserWidth);
     this.primitiveTool.setPixelSize(this.params.defaultPixelSize);
+    this.hasUnsaved = false;
     this.worklog = new WorkLog(this, (state) => {
       if (this.saveBtn && !state.initial) {
         this.saveBtn.removeAttribute('disabled');
+        this.hasUnsaved = true;
       }
       this.setToolEnabled(this.toolByName.undo, !state.first);
       this.setToolEnabled(this.toolByName.redo, !state.last);
@@ -619,6 +629,7 @@ class PainterroProc {
     const icon = this.doc.querySelector(`#${this.toolByName.save.buttonId} > i`);
     if (btn) {
       btn.setAttribute('disabled', 'true');
+      this.hasUnsaved = false;
     }
     if (icon) {
       icon.className = 'ptro-icon ptro-icon-loading ptro-spinning';
@@ -799,6 +810,9 @@ class PainterroProc {
         }
       },
       keydown: (e) => {
+        if (event.target !== document.body) {
+          return; // ignore all focused inputs on page
+        }
         if (this.shown) {
           if (this.colorPicker.handleKeyDown(e)) {
             return;

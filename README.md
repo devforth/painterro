@@ -177,12 +177,15 @@ Painterro({
 
 | Param | Description | Accepted Arguments |
 |-|-|-|
+| `onBeforeClose` | Function that will be called when user closes painterro it, call `doClose` to confirm close | `hasUnsavedChaged: bool`, `doCloseCallback: function` |
+
 | `onClose` | If passed will be triggered when painterro closed | `undefined` |
 | `onChange` | Function that will be called if something will be changed (painted, erased, resized, etc) | `<exportable image>` | `undefined` |
 | `onUndo` | Function that will be called if user will undo (`Ctrl+Z`) | `{<current history state>}` |
 | `onRedo` | Function that will be called if user will redo (`Ctrl+Z`) | `{<current history state>}` |
 | `onImageLoaded` | Function that will be called if you passed image to `show` and when it was loaded | `undefined` | 
-| `saveHandler` | Function that will be called when user presses Save (or `Ctrl+S`) | `{<exportable image>}`, `done callback` |
+| `saveHandler` | Function that will be called when user presses Save (or `Ctrl+S`), Call `doneCallback` to reflect in painterro that image was saved | `{<exportable image>}`, `doneCallback : function` |
+
 
 Events accepted arguments:
 
@@ -444,6 +447,7 @@ Development
 ===========
 
 Code written on ES6 which transplited by Babel and packed (minified) to a single file using webpack. All configs are inside so all you have to do after pulling repo is installing node modules:
+
 ```bash
 cd painterro
 npm ci
@@ -478,6 +482,7 @@ Regenerating icons font
 -----------------------
 
 If you need add/edit icons in `res` folder, please after editing run
+
 ```bash
 npm run buildfont
 ```

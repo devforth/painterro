@@ -23,6 +23,7 @@
 <body>
 
 <div id="wrapper">
+  <input type='text'/>
   <div id="conatiner">
 
   </div>
@@ -63,6 +64,10 @@
     changeHandler: function (state) {
       console.log('Something drawed: ', state);
      // localStorage.setItem('painterroImage', this.imageSaver.asDataURL())
+    },
+    onBeforeClose: function (has, done) {
+      console.log('hh', has);
+      window.confirmClose = done;
     },
     // language: 'ja',
     availableLineWidths: [1,2,4,8,16,64],
