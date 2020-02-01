@@ -8,6 +8,7 @@
     "url": "https://github.com/devforth/painterro"
   },
   "scripts": {
+    "prepare": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --optimize-minimize --progress",
     "dev": "webpack-dev-server --inline --hot --content-base build/ --port 8081 --host 127.0.0.1",
@@ -24,13 +25,13 @@
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
     "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2016": "^6.24.1",
     "css-loader": "^0.28.3",
-    "es6-promise": "^4.1.1",
     "eslint": "^4.1.1",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-loader": "^2.2.1",
     "eslint-plugin-import": "^2.7.0",
-    "html2canvas": "^1.0.0-alpha.9",
+    "html2canvas": "^1.0.0-rc.5",
     "icon-font-generator": "^2.1.10",
     "ismobilejs": "^1.0.3",
     "js-yaml": ">=3.13.1",
@@ -44,5 +45,8 @@
     "webpack-cli": "^3.3.2",
     "webpack-dev-server": "^3.8.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "es6-promise": "^4.2.8",
+    "string.prototype.repeat": "^0.2.0"
+  }
 }

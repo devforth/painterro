@@ -6,7 +6,6 @@
 JavaScript painting plugin which allows editing images in a browser.
 Can be easily integrated into any website or webapp by including only one JS file and calling simple initialization code.
 
-Want to support? [Just upvote us on StackOverflow](https://meta.stackoverflow.com/a/390396/3479125)
 
 Features
 =================
@@ -94,11 +93,11 @@ By including script
 You can download latest `painterro-*.min.js` here https://github.com/devforth/painterro/releases/ 
 or [build it by yourself](#building-painterro).
 
-Then insert `<script>` e.g:
+Then insert `<script>` e.g to `<head>` section of your HTML file:
 ```html
 <script src="/xxx/painterro-x.x.x.min.js"></script>
 ```
-Then in your code:
+Then in your code (`body` section, `onclick` handler, etc):
 ```html
 <script>
   Painterro().show()
@@ -494,4 +493,4 @@ Pull-requests are welcome.
 [deps]: https://david-dm.org/webpack/painterro.svg
 [deps-url]: https://david-dm.org/webpack/painterro
 
-Support by [DevForth](https://devforth.io) - Best quality, rapid,  modern tech development services
+Supported by [DevForth](https://devforth.io) - Best quality, rapid,  modern tech development services

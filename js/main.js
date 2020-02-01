@@ -19,6 +19,9 @@ import Inserter from './inserter';
 import Settings from './settings';
 import ControlBuilder from './controlbuilder';
 
+require('es6-promise').polyfill();
+require('string.prototype.repeat');
+
 class PainterroProc {
   constructor(params) {
     addDocumentObjectHelpers();
@@ -821,6 +824,7 @@ class PainterroProc {
           }
           if (this.toolByKeyCode[event.keyCode]) {
             this.getBtnEl(this.toolByKeyCode[event.keyCode]).click();
+            e.stopPropagation();
             e.preventDefault();
           }
           if (this.saveBtn) {
