@@ -90,7 +90,7 @@
         return {
             longname: "Painterro",
             author: "Ivan Borshchov",
-            version: "1.0.32",
+            version: "1.0.34",
         };
     }
   });
