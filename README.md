@@ -178,7 +178,6 @@ Painterro({
 | Param | Description | Accepted Arguments |
 |-|-|-|
 | `onBeforeClose` | Function that will be called when user closes painterro it, call `doClose` to confirm close | `hasUnsavedChaged: bool`, `doCloseCallback: function` |
-
 | `onClose` | If passed will be triggered when painterro closed | `undefined` |
 | `onChange` | Function that will be called if something will be changed (painted, erased, resized, etc) | `<exportable image>` | `undefined` |
 | `onUndo` | Function that will be called if user will undo (`Ctrl+Z`) | `{<current history state>}` |
