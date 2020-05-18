@@ -21,6 +21,30 @@ Features
 <img alt="Painterro gif preview" src="https://raw.githubusercontent.com/devforth/painterro/master/docs/painterro_gif.gif" 
  style="box-shadow: 0 0 20px lightgrey; margin: 0 0 20px 0;" /> 
 
+Used by
+=================
+
+<table>
+ <tr>
+  <td align="center">
+   <a href="https://nasa.github.io/openmct/"><img src="https://nasa.github.io/openmct/static/res/images/logo-nasa.svg"  height='100px'/></a><br>
+   <a href="https://nasa.github.io/openmct/">NASA Open MCT</a>
+  </td>
+  <td align="center">
+   <a href="https://github.com/Appdynamics/ContainerLabs" ><img src="https://avatars3.githubusercontent.com/u/1772014?s=200&v=4" height='100px' /></a><br>
+   <a href="https://github.com/Appdynamics/ContainerLabs" >Appdynamics ContainerLabs</a>
+  </td>
+  <td align="center"> 
+   <a href="https://github.com/Appdynamics/ContainerLabs" ><img src="https://devforth.s3.amazonaws.com/t.svg" height='100px' /></a><br>
+   <a href="https://tracklify.com">Tracklify</a>
+  </td>
+ </tr>
+ <tr>
+
+ </tr>
+ </table>
+ 
+
 
 Advantages
 =================
