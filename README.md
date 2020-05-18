@@ -24,7 +24,7 @@ Features
 Used by
 =================
 
-<table>
+<table border="0">
  <tr>
   <td align="center">
    <a href="https://nasa.github.io/openmct/"><img src="https://nasa.github.io/openmct/static/res/images/logo-nasa.svg"  height='100px'/></a><br>
@@ -35,7 +35,7 @@ Used by
    <a href="https://github.com/Appdynamics/ContainerLabs" >Appdynamics ContainerLabs</a>
   </td>
   <td align="center"> 
-   <a href="https://github.com/Appdynamics/ContainerLabs" ><img src="https://devforth.s3.amazonaws.com/t.svg" height='100px' /></a><br>
+   <a href="https://tracklify.com" ><img src="https://devforth.s3.amazonaws.com/t.svg" height='100px' /></a><br>
    <a href="https://tracklify.com">Tracklify</a>
   </td>
  </tr>
