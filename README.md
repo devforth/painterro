@@ -8,7 +8,7 @@ Can be easily integrated into any website or webapp by including only one JS fil
 
 Save to: 
 
-[![alt text][1.1]][1] [![alt text][2.1]][2] [![alt text][3.1]][3] [![alt text][4.1]][4] [![alt text][5.1]][5]
+[![alt text][1.1]][1] [![alt text][2.1]][2] [![alt text][3.1]][3]&nbsp;&nbsp;[![alt text][4.1]][4]&nbsp;&nbsp;[![alt text][5.1]][5]
 
 <!-- Please don't remove this: Grab your social icons from https://github.com/carlsednaoui/gitsocial -->
 
