@@ -20,11 +20,11 @@ Save to:
 
 <!-- icons with padding -->
 
-[1.1]: res/twitter.png (twitter icon with padding)
-[2.1]: res/facebook.png (facebook icon with padding)
-[3.1]: res/thumblr.png (thumblr icon with padding)
-[4.1]: res/linkedin.png (linkedin icon with padding)
-[5.1]: res/pinterest.png (pinterest icon with padding)
+[1.1]: res/twitter.png (Save to Twitter)
+[2.1]: res/facebook.png (Save to Facebook)
+[3.1]: res/thumblr.png (Save to Thumblr)
+[4.1]: res/linkedin.png (Save to Linkedin)
+[5.1]: res/pinterest.png (Save to Pinterest)
 
 <!-- links to your social media accounts -->
 <!-- update these accordingly -->
