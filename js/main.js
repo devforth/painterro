@@ -473,7 +473,7 @@ class PainterroProc {
     }
     this.body = this.doc.body;
     this.info = this.doc.querySelector(`#${this.id}-bar .ptro-info`);
-    this.canvas = this.doc.querySelector(`#${this.id}-canvas`);
+    this.canvas = this.wrapper.querySelector(`#${this.id}-canvas`);
     this.ctx = this.canvas.getContext('2d');
     this.toolControls = this.doc.querySelector(`#${this.id}-bar .tool-controls`);
     this.toolContainer = this.doc.querySelector(`#${this.id}-wrapper .ptro-crp-el`);
@@ -930,7 +930,7 @@ class PainterroProc {
     // passive: false fixes Unable to preventDefault inside passive event
     // listener due to target being treated as passive
     Object.keys(this.documentHandlers).forEach((key) => {
-      this.doc.addEventListener(key, this.documentHandlers[key], { passive: false });
+      this.wrapper.addEventListener(key, this.documentHandlers[key], { passive: false });
     });
 
     Object.keys(this.windowHandlers).forEach((key) => {
@@ -944,7 +944,7 @@ class PainterroProc {
       return;
     }
     Object.keys(this.documentHandlers).forEach((key) => {
-      this.doc.removeEventListener(key, this.documentHandlers[key]);
+      this.wrapper.removeEventListener(key, this.documentHandlers[key]);
     });
     Object.keys(this.windowHandlers).forEach((key) => {
       window.removeEventListener(key, this.windowHandlers[key]);
