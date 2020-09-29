@@ -19,7 +19,7 @@ else
     echo FAIL
     exit 0
 fi
-
+svn st | grep ^! | awk '{print " --force "$2}' | xargs svn rm
 rm wp/trunk/painterro-*.min.js
 rm wp/trunk/painterro-*.min.js.map
 cp build/painterro-${VERSION}.min.js wp/trunk/
