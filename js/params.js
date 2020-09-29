@@ -108,6 +108,9 @@ export function setDefaults(parameters) {
 
   params.defaultSize = params.defaultSize || 'fill';
   params.defaultPixelSize = params.defaultPixelSize || 4;
+
+  params.extraFonts = params.extraFonts || [];
+
   if (typeof params.defaultSize !== 'object') {
     // otherwise its an object from localstorage
     if (params.defaultSize === 'fill') {

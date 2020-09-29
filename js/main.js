@@ -223,7 +223,7 @@ class PainterroProc {
             this.textTool.setFont(font);
           },
           getValue: () => this.textTool.getFont(),
-          getAvailableValues: () => TextTool.getFonts(),
+          getAvailableValues: () => this.textTool.getFonts(),
         }, {
           type: 'dropdown',
           title: 'fontStyle',

@@ -13,7 +13,7 @@ export default class TextTool {
     this.inputWrapper.style.display = 'none';
     this.setFontSize(main.params.defaultFontSize);
     this.setFontStrokeSize(main.params.fontStrokeSize);
-    this.setFont(TextTool.getFonts()[0].value);
+    this.setFont(this.getFonts()[0].value);
     this.setFontStyle(TextTool.getFontStyles()[0].value);
 
     this.el.querySelector('.ptro-text-tool-apply').onclick = () => {
@@ -33,7 +33,7 @@ export default class TextTool {
     return this.fontStyle;
   }
 
-  static getFonts() {
+  getFonts() {
     const fonts = [
       'Arial, Helvetica, sans-serif',
       '"Arial Black", Gadget, sans-serif',
@@ -45,15 +45,17 @@ export default class TextTool {
       'Verdana, Geneva, sans-serif',
       '"Courier New", Courier, monospace',
       '"Lucida Console", Monaco, monospace',
+      ...this.main.params.extraFonts,
     ];
 
     const res = [];
     fonts.forEach((f) => {
+      const fontName = f.split(',')[0].replace(/"/g, '');
       res.push({
         value: f,
-        name: f.split(',')[0].replace(/"/g, ''),
+        name: fontName,
         extraStyle: `font-family:${f}`,
-        title: f.split(',')[0].replace(/"/g, ''),
+        title: fontName,
       });
     });
     return res;
