@@ -2,7 +2,7 @@
 Contributors: Ivan Borshchov,
 Tags: crop, Image editor, paint, image
 Requires at least: 3.7
-Tested up to: 4.8
+Tested up to: 5.5.1
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
