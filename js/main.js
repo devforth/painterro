@@ -447,7 +447,7 @@ class PainterroProc {
     this.bar.id = `${this.id}-bar`;
     this.bar.className = 'ptro-bar ptro-color-main';
     this.bar.innerHTML =
-      `<div><span>${bar}</span>` +
+      `<div>${bar}` +
       '<span class="tool-controls"></span>' +
       `<span class="ptro-bar-right">${rightBar}</span>` +
       '<span class="ptro-info"></span>' +

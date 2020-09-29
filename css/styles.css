@@ -242,6 +242,10 @@
     -webkit-touch-callout: none;
 }
 
+.ptro-bar > div {
+    overflow-x: scroll;
+}
+
 .ptro-info {
     font-family: "Open Sans", sans-serif;
     font-size: 10px;
