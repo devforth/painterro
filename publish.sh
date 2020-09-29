@@ -19,7 +19,6 @@ else
     echo FAIL
     exit 0
 fi
-svn st | grep ^! | awk '{print " --force "$2}' | xargs svn rm
 rm wp/trunk/painterro-*.min.js
 rm wp/trunk/painterro-*.min.js.map
 cp build/painterro-${VERSION}.min.js wp/trunk/
@@ -29,6 +28,7 @@ sed -i -E "s/(Version: )[0-9\\.]+/\1${VERSION}/" wp/trunk/painterro-wp.php
 sed -i -E "s/(define\\(\"PAINTERRO_FILE\", \"painterro-)[0-9\\.]+(\\.min\\.js\"\\);)/\1${VERSION}\2/" wp/trunk/painterro-wp.php
 cd wp
 svn add trunk/*
+svn st | grep ^! | awk '{print " --force "$2}' | xargs svn rm
 svn ci -m "${VERSION}"
 cd ..
 
