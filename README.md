@@ -225,7 +225,7 @@ Painterro({
 |`how_to_paste_actions`| List of paste options that will be suggested on paste using some paste dialog e.g. `['extend_right', 'extend_down'] `. If there is only one option in list, then it will choosing automatically without dialog | `['replace_all', 'paste_over', 'extend_right', 'extend_down']` |
 |`hideByEsc`| If `true` then `ESC` press will hide widget | `false` | 
 |`saveByEnter`| If `true` then `ENTER` press will do same as `Ctrl+S` | `false` | 
-|`extraFonts`| By default Text tool supports only several predefined fonts due to compatibility considirations https://github.com/devforth/painterro/blob/master/js/text.js#L38 , but yousing this option you can add any fonts you want if you are sure they are available on your page/app |
+|`extraFonts`| By default Text tool supports only several [predefined](https://github.com/devforth/painterro/blob/master/js/text.js#L38) fonts due to compatibility considirations , but yousing this option you can add any fonts you want if you are sure they are available on your page/app | `['Roboto']` |
 
 ## Events
 
