@@ -3,6 +3,7 @@ import en from '../langs/en.lang';
 import es from '../langs/es.lang';
 import ca from '../langs/ca.lang';
 import fr from '../langs/fr.lang';
+import pl from '../langs/pl.lang';
 import ptPTl from '../langs/pt-PT.lang';
 import ptBRl from '../langs/pt-BR.lang';
 import ja from '../langs/ja.lang';
@@ -17,6 +18,7 @@ export default class Translation {
       es,
       ca,
       fr,
+      pl,
       'pt-PT': ptPTl,
       'pt-BR': ptBRl,
       ja,

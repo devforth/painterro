@@ -342,6 +342,7 @@ Translated languages:
 | `ja` | Japanese |
 | `en` | English |
 | `es` | Spanish |
+| `pl` | Polish |
 | `pt-PT` | European Portuguese |
 | `pt-BR` | Brazilian  Portuguese |
 
