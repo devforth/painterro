@@ -83,10 +83,11 @@
     flex-shrink: 0;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
-.ptro-icon-btn i:before {
-    line-height: 17px;
+.ptro-icon-btn i {
+    padding-bottom: 1px;
 }
 
 
