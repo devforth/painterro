@@ -226,8 +226,8 @@ Painterro({
 |`hideByEsc`| If `true` then `ESC` press will hide widget | `false` | 
 |`saveByEnter`| If `true` then `ENTER` press will do same as `Ctrl+S` | `false` | 
 |`extraFonts`| By default Text tool supports only several [predefined](https://github.com/devforth/painterro/blob/master/js/text.js#L38) fonts due to compatibility considirations , but yousing this option you can add any fonts you want if you are sure they are available on your page/app | `['Roboto']` |
-|`toolbarHeightPx`| Height of toolbar | `46` | 
-|`buttonSizePx`| Button for toolbar | `40` |; 
+|`toolbarHeightPx`| Height of toolbar in pixels | `40` | 
+|`buttonSizePx`| Button for toolbar in pixels | `32` |; 
 ## Events
 
 | Param | Description | Accepted Arguments |
