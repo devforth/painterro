@@ -111,6 +111,9 @@ export function setDefaults(parameters) {
 
   params.extraFonts = params.extraFonts || [];
 
+  params.toolbarHeightPx = params.toolbarHeightPx || 46;
+  params.buttonSizePx = params.buttonSizePx || 40;
+
   if (typeof params.defaultSize !== 'object') {
     // otherwise its an object from localstorage
     if (params.defaultSize === 'fill') {
@@ -167,10 +170,16 @@ export function setDefaults(parameters) {
         color:${params.colorScheme.activeControlContent}}
     .ptro-wrapper{
       background-color:${params.colorScheme.backgroundColor};
-      bottom:${params.toolbarPosition === 'top' ? '0' : '40px'};
-      top:${params.toolbarPosition === 'top' ? '40px' : '0'};
+      bottom:${params.toolbarPosition === 'top' ? '0' : params.toolbarHeightPx};
+      top:${params.toolbarPosition === 'top' ? params.toolbarHeightPx : '0'};
+    }
+    .ptro-icon-btn {
+      height: ${params.buttonSizePx};
+      width: ${params.buttonSizePx};
+      margin: 0 0 0 ${(params.toolbarHeightPx - params.buttonSizePx) / 2}px;
     }
     .ptro-bar {
+      height: ${params.toolbarHeightPx};
       ${params.toolbarPosition === 'top' ? 'top' : 'bottom'}: 0;
     }`;
 

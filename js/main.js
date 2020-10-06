@@ -449,8 +449,8 @@ class PainterroProc {
     this.bar.innerHTML =
       `<div>${bar}` +
       '<span class="tool-controls"></span>' +
-      `<span class="ptro-bar-right">${rightBar}</span>` +
       '<span class="ptro-info"></span>' +
+      `<span class="ptro-bar-right">${rightBar}</span>` +
       '<input id="ptro-file-input" type="file" style="display: none;" accept="image/x-png,image/png,image/gif,image/jpeg" /></div>';
     if (this.isMobile) {
       this.bar.style['overflow-x'] = 'auto';

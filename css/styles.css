@@ -1,7 +1,6 @@
 .ptro-wrapper {
     position: absolute;
     top: 0;
-    bottom: 40px;
     left: 0;
     right: 0;
     text-align: center;
@@ -80,10 +79,8 @@
 
 .ptro-icon-btn {
     border: 0;
-    padding: 4px 0 5px 0;
-    height: 32px;
-    width: 32px;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .ptro-icon-btn i {
@@ -141,9 +138,9 @@
 
 .ptro-wrapper .ptro-close-color-picker {
     height: 24px;
-    float: right;
     margin-top: 5px;
     margin-bottom: -5px;
+    margin-left: auto;
 }
 
 .ptro-wrapper .ptro-crp-rect {
@@ -244,13 +241,16 @@
 
 .ptro-bar > div {
     overflow-x: auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .ptro-info {
     font-family: "Open Sans", sans-serif;
     font-size: 10px;
-    float: right;
     padding: 22px  4px 4px 0;
+    margin-left: auto;
 }
 
 .ptro-wrapper .ptro-common-widget-wrapper {

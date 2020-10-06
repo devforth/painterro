@@ -65,7 +65,6 @@ select.ptro-input[data-id='fontName'] {
 }
 
 .ptro-bar {
-    height: 40px;
     bottom: 0;
     position: absolute;
     width: 100%;
@@ -74,7 +73,6 @@ select.ptro-input[data-id='fontName'] {
 }
 
 .ptro-bar .ptro-icon-btn {
-    margin: 4px 0 0 4px;
 }
 
 button.ptro-icon-right:first-of-type {
