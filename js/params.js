@@ -170,19 +170,19 @@ export function setDefaults(parameters) {
         color:${params.colorScheme.activeControlContent}}
     .ptro-wrapper{
       background-color:${params.colorScheme.backgroundColor};
-      bottom:${params.toolbarPosition === 'top' ? '0' : params.toolbarHeightPx};
-      top:${params.toolbarPosition === 'top' ? params.toolbarHeightPx : '0'};
+      bottom:${params.toolbarPosition === 'top' ? '0' : params.toolbarHeightPx}px;
+      top:${params.toolbarPosition === 'top' ? params.toolbarHeightPx : '0'}px;
     }
     .ptro-icon-btn {
-      height: ${params.buttonSizePx};
-      width: ${params.buttonSizePx};
+      height: ${params.buttonSizePx}px;
+      width: ${params.buttonSizePx}px;
       margin: 0 0 0 ${(params.toolbarHeightPx - params.buttonSizePx) / 2}px;
     }
     .ptro-bar-right {
       margin-right: ${(params.toolbarHeightPx - params.buttonSizePx) / 2}px;
     }
     .ptro-bar {
-      height: ${params.toolbarHeightPx};
+      height: ${params.toolbarHeightPx}px;
       ${params.toolbarPosition === 'top' ? 'top' : 'bottom'}: 0;
     }`;
 
