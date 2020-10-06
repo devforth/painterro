@@ -111,8 +111,8 @@ export function setDefaults(parameters) {
 
   params.extraFonts = params.extraFonts || [];
 
-  params.toolbarHeightPx = params.toolbarHeightPx || 46;
-  params.buttonSizePx = params.buttonSizePx || 40;
+  params.toolbarHeightPx = params.toolbarHeightPx || 40;
+  params.buttonSizePx = params.buttonSizePx || 32;
 
   if (typeof params.defaultSize !== 'object') {
     // otherwise its an object from localstorage
@@ -177,6 +177,9 @@ export function setDefaults(parameters) {
       height: ${params.buttonSizePx};
       width: ${params.buttonSizePx};
       margin: 0 0 0 ${(params.toolbarHeightPx - params.buttonSizePx) / 2}px;
+    }
+    .ptro-bar-right {
+      margin-right: ${(params.toolbarHeightPx - params.buttonSizePx) / 2}px;
     }
     .ptro-bar {
       height: ${params.toolbarHeightPx};

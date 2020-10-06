@@ -81,10 +81,12 @@
     border: 0;
     cursor: pointer;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
 }
 
-.ptro-icon-btn i {
-    line-height: 23px;
+.ptro-icon-btn i:before {
+    line-height: 17px;
 }
 
 
@@ -241,6 +243,7 @@
 
 .ptro-bar > div {
     overflow-x: auto;
+    overflow-y: hidden;
     height: 100%;
     display: flex;
     align-items: center;
@@ -477,8 +480,8 @@ span.ptro-btn-color-checkers-bar {
 }
 
 .ptro-bar-right {
-    float:right;
-    margin-right: 4px;
+    display: flex;
+
 }
 
 .ptro-link {
