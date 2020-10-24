@@ -90,7 +90,7 @@ export default class Settings {
               '<tr>' +
                 `<td class="ptro-label ptro-resize-table-left" style="height:30px;">${tr('backgroundColor')}</td>` +
                 '<td class="ptro-strict-cell">' +
-                  '<button type="button" data-id="bg" class="ptro-color-btn ptro-bordered-btn" ' +
+                  '<button type="button" data-id="bg" class="ptro-color-btn ptro-bordered-btn ptro-color-control" ' +
                     'style="margin-top: -12px;"></button>' +
                   '<span class="ptro-btn-color-checkers"></span>' +
                 '</td>' +

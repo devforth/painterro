@@ -251,6 +251,7 @@ Events accepted arguments:
    asBlob: ƒ asBlob(type, quality)
    asDataURL: ƒ asDataURL(type, quality)
    suggestedFileName: ƒ suggestedFileName(type)
+   getOriginalMimeType: ƒ getOriginalMimeType()
    getWidth: ƒ getWidth()
    getHeight: ƒ getHeight()
   }
@@ -273,7 +274,7 @@ Events accepted arguments:
 UI color scheme
 ---------------
 
-Next group of params used to configure painterro user interface. 
+Next group of params used to configure painterro user interface in simple "JS way". 
 They should be placed under `colorScheme` group, for example:
 ```js
 Painterro({
@@ -286,13 +287,15 @@ Painterro({
 
 | Param | Description | Default |
 |-|-|-|
-|`main` | Color of panels, take most of UI space | `'#dbebff'` |
-|`control` | Color of controls background (e.g. button background) | `'#abc6ff'` |
+|`main` | Color of panels, take most of UI space | `'#fff'` |
+|`control` | Color of controls background (e.g. button background) | `'#fff'` |
+|`controlShadow` | Color controls box shadow | `'0px 0px 3px 1px #bbb'` |
 |`controlContent` | Content of controls (e.g. button text) | `'#000000'` |
 |`activeControl` | Color for control when it active (e.g. button pressed) | `'#7485B1'` |
 |`activeControlContent` | Color for activated control content | `main` |
 |`inputBorderColor` | You can add border to inputs, by default color is same as `main` so borders will not be seen | `main` |
 |`inputBackground` | Background of inputs | `'#ffffff'` |
+|`inputShadow` | shadow of input | `'inset 0 0 4px 1px #ccc'` |
 |`inputText` | Color of text in input | `activeControl` |
 |`backgroundColor`| Background color of component area which left outside of image due to it size/ratio | `'#999999'` |
 |`dragOverBarColor`| Color of bar when dropping file to painterro | `'#899dff'` |
@@ -300,6 +303,7 @@ Painterro({
 |`hoverControlContent`| Controls background color when mouse hovered | `'#1a3d67'` |
 |`toolControlNameColor`| Color of toolbar labels that prepend controls | `rgba(255,255,255,0.7)` |
 
+> NOTE: all these params are defined only for simplicity, you are free to redefine them in your cascade style files (we don't use importants and so on, so all props should be easily editable). This mettod is recommended for experts - because you can use your CSS preprocessor variables and adopt Painterro for your design. Example usecase is different color of shadows for a buttons with `::after`/`::before`
 
 API
 -------
@@ -468,7 +472,10 @@ Format and quality
 ------------------
 
 When you call `image.asDataURL()` or `image.asBlob()`, you can also specify image mime type (format), e.g.
-`image.asDataURL('image/jpeg')`. Default type is `'image/png'`.
+`image.asDataURL('image/jpeg')`. 
+
+Default type is mimetype used by image which was loaded into Painterro, or "image/png" if image was created from scratch.
+
 If type is `image/jpeg` or `image/webp`, you can also define image quality from `0.0` to `1.0`, default is `0.92`,
 example: `image.asDataURL('image/jpeg', 0.5)`
 

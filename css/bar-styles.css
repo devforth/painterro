@@ -72,6 +72,29 @@ select.ptro-input[data-id='fontName'] {
     line-height: normal;
 }
 
+.ptro-bar > div {
+    position: relative;
+}
+
+.ptro-bar > div::-webkit-scrollbar {
+    height: 2px;
+}
+    
+/* Track */
+.ptro-bar > div::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+    
+/* Handle */
+.ptro-bar > div::-webkit-scrollbar-thumb {
+    background: #888;
+}
+    
+/* Handle on hover */
+.ptro-bar > div::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
 .ptro-bar .ptro-icon-btn {
 }
 

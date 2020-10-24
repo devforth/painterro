@@ -146,6 +146,10 @@
     margin-left: auto;
 }
 
+.ptro-tool-controls {
+    flex-shrink: 0;
+}
+
 .ptro-wrapper .ptro-crp-rect {
     position: absolute;
     background-color: rgba(225, 225, 225, .5);
@@ -253,8 +257,10 @@
 .ptro-info {
     font-family: "Open Sans", sans-serif;
     font-size: 10px;
-    padding: 22px  4px 4px 0;
+    padding: 4px;
     margin-left: auto;
+    word-break: keep-all;
+    white-space: normal;
 }
 
 .ptro-wrapper .ptro-common-widget-wrapper {

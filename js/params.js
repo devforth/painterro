@@ -88,8 +88,9 @@ export function setDefaults(parameters) {
   params.pixelizePixelSize = settings.pixelizePixelSize || params.pixelizePixelSize || '20%';
 
   params.colorScheme = params.colorScheme || {};
-  params.colorScheme.main = params.colorScheme.main || '#dbebff';
-  params.colorScheme.control = params.colorScheme.control || '#abc6ff';
+  params.colorScheme.main = params.colorScheme.main || '#fff';
+  params.colorScheme.control = params.colorScheme.control || '#fff';
+  params.colorScheme.controlShadow = params.colorScheme.controlShadow || '0px 0px 3px 1px #bbb';
   params.colorScheme.controlContent = params.colorScheme.controlContent || '#000000';
   params.colorScheme.hoverControl = params.colorScheme.hoverControl || params.colorScheme.control;
   params.colorScheme.hoverControlContent = params.colorScheme.hoverControlContent || '#1a3d67';
@@ -101,6 +102,8 @@ export function setDefaults(parameters) {
   params.colorScheme.inputBorderColor = params.colorScheme.inputBorderColor ||
     params.colorScheme.main;
   params.colorScheme.inputBackground = params.colorScheme.inputBackground || '#ffffff';
+  params.colorScheme.inputShadow = params.colorScheme.inputShadow || 'inset 0 0 4px 1px #ccc';
+
   params.colorScheme.inputText = params.colorScheme.inputText ||
     params.colorScheme.activeControl;
   params.colorScheme.backgroundColor = params.colorScheme.backgroundColor || '#999999';
@@ -141,13 +144,15 @@ export function setDefaults(parameters) {
 
   params.styles =
     `.ptro-color-main{
-        background-color: ${params.colorScheme.main};
-        color: ${params.colorScheme.controlContent}}
+      background-color:${params.colorScheme.main};
+      color:${params.colorScheme.controlContent};
+    }
     .ptro-color-control{
-        background-color: ${params.colorScheme.control};
-        color:${params.colorScheme.controlContent}}
+      box-shadow:${params.colorScheme.controlShadow};
+      background-color:${params.colorScheme.control};
+      color:${params.colorScheme.controlContent}}
     .ptro-tool-ctl-name{
-        background-color: ${params.colorScheme.toolControlNameColor};
+      background-color:${params.colorScheme.toolControlNameColor};
     }
     button.ptro-color-control:hover:not(.ptro-color-active-control):not([disabled]){
         background-color: ${params.colorScheme.hoverControl};
@@ -156,7 +161,8 @@ export function setDefaults(parameters) {
     input.ptro-input, input.ptro-input:focus, select.ptro-input, select.ptro-input:focus {
       border: 1px solid ${params.colorScheme.inputBorderColor};
       background-color: ${params.colorScheme.inputBackground};
-      color: ${params.colorScheme.inputText}
+      color: ${params.colorScheme.inputText};
+      box-shadow:${params.colorScheme.inputShadow};
     }
     .ptro-bar-dragover{background-color:${params.colorScheme.dragOverBarColor}}
     .ptro-color,.ptro-bordered-btn{

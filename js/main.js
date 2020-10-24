@@ -448,7 +448,7 @@ class PainterroProc {
     this.bar.className = 'ptro-bar ptro-color-main';
     this.bar.innerHTML =
       `<div>${bar}` +
-      '<span class="tool-controls"></span>' +
+      '<span class="ptro-tool-controls"></span>' +
       '<span class="ptro-info"></span>' +
       `<span class="ptro-bar-right">${rightBar}</span>` +
       '<input id="ptro-file-input" type="file" style="display: none;" accept="image/x-png,image/png,image/gif,image/jpeg" /></div>';
@@ -475,7 +475,7 @@ class PainterroProc {
     this.info = this.doc.querySelector(`#${this.id}-bar .ptro-info`);
     this.canvas = this.doc.querySelector(`#${this.id}-canvas`);
     this.ctx = this.canvas.getContext('2d');
-    this.toolControls = this.doc.querySelector(`#${this.id}-bar .tool-controls`);
+    this.toolControls = this.doc.querySelector(`#${this.id}-bar .ptro-tool-controls`);
     this.toolContainer = this.doc.querySelector(`#${this.id}-wrapper .ptro-crp-el`);
     this.substrate = this.doc.querySelector(`#${this.id}-wrapper .ptro-substrate`);
     this.zoomHelper = new ZoomHelper(this);
@@ -562,14 +562,22 @@ class PainterroProc {
       asDataURL: (type, quality) => {
         let realType = type;
         if (realType === undefined) {
-          realType = 'image/png';
+          if (this.loadedImageType) {
+            realType = this.loadedImageType;
+          } else {
+            realType = 'image/png';
+          }
         }
         return this.getAsUri(realType, quality);
       },
       asBlob: (type, quality) => {
         let realType = type;
         if (realType === undefined) {
-          realType = 'image/png';
+          if (this.loadedImageType) {
+            realType = this.loadedImageType;
+          } else {
+            realType = 'image/png';
+          }
         }
         const uri = this.getAsUri(realType, quality);
         const byteString = atob(uri.split(',')[1]);
@@ -582,6 +590,7 @@ class PainterroProc {
           type: realType,
         });
       },
+      getOriginalMimeType: () => this.loadedImageType,
       suggestedFileName: (type) => {
         let realType = type;
         if (realType === undefined) {
@@ -873,7 +882,7 @@ class PainterroProc {
                   console.warn(`Unable get from localstorage: ${e}`);
                   return;
                 }
-                this.loadImage(img);
+                this.loadImage(img, item.type);
                 event.preventDefault();
                 event.stopPropagation();
               }
@@ -961,7 +970,8 @@ class PainterroProc {
     return this.toolContainer.documentOffsetTop + this.scroller.scrollTop;
   }
 
-  fitImage(img) {
+  fitImage(img, mimetype) {
+    this.loadedImageType = mimetype;
     this.resize(img.naturalWidth, img.naturalHeight);
     this.ctx.drawImage(img, 0, 0);
     this.zoomFactor = (this.wrapper.documentClientHeight / this.size.h) - 0.2;
@@ -969,8 +979,8 @@ class PainterroProc {
     this.worklog.captureState();
   }
 
-  loadImage(source) {
-    this.inserter.handleOpen(source);
+  loadImage(source, mimetype) {
+    this.inserter.handleOpen(source, mimetype);
   }
 
   show(openImage) {
@@ -1017,7 +1027,7 @@ class PainterroProc {
     }
     this.loadedName = trim((f.name || '').replace(/\..+$/, ''));
     const dataUrl = URL.createObjectURL(f);
-    this.loadImage(dataUrl);
+    this.loadImage(dataUrl, f.type);
   }
 
   getScale() {
@@ -1147,7 +1157,7 @@ class PainterroProc {
       } else if (ctl.type === 'color') {
         ctrls += `<button type="button" id=${ctl.id} data-id='${ctl.target}' ` +
           `style="background-color: ${this.colorWidgetState[ctl.target].alphaColor}" ` +
-          'class="color-diwget-btn ptro-color-btn ptro-bordered-btn"></button>' +
+          'class="color-diwget-btn ptro-color-btn ptro-bordered-btn ptro-color-control"></button>' +
           '<span class="ptro-btn-color-checkers-bar"></span>';
       } else if (ctl.type === 'int') {
         ctrls += `<input id=${ctl.id} class="ptro-input" type="number" min="${ctl.min}" max="${ctl.max}" ` +

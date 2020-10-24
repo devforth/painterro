@@ -8,7 +8,7 @@ export default class Inserter {
       replace_all: {
         internalName: 'fit',
         handle: (img) => {
-          this.main.fitImage(img);
+          this.main.fitImage(img, this.mimetype);
         },
       },
       extend_down: {
@@ -88,6 +88,7 @@ export default class Inserter {
     this.selector = main.wrapper.querySelector('.ptro-paster-select-wrapper');
     this.cancelChoosing();
     this.img = null;
+    this.mimetype = null; // mime of pending image
     Object.keys(this.pasteOptions).forEach((k) => {
       const o = this.pasteOptions[k];
       this.main.doc.getElementById(o.id).onclick = () => {
@@ -113,8 +114,9 @@ export default class Inserter {
     this.waitChoice = false;
   }
 
-  loaded(img) {
+  loaded(img, mimetype) {
     this.img = img;
+    this.mimetype = mimetype;
     this.loading = false;
     if (this.doLater) {
       this.doLater(img);
@@ -122,16 +124,16 @@ export default class Inserter {
     }
   }
 
-  handleOpen(src) {
+  handleOpen(src, mimetype) {
     this.startLoading();
     const handleIt = (source) => {
       const img = new Image();
       const empty = this.main.worklog.clean;
       img.onload = () => {
         if (empty) {
-          this.main.fitImage(img);
+          this.main.fitImage(img, mimetype);
         } else {
-          this.loaded(img);
+          this.loaded(img, mimetype);
         }
         this.finishLoading();
       };
