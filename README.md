@@ -96,6 +96,13 @@ Also painterro has [Wordpress Plugin](https://wordpress.org/plugins/painterro/).
 If you want to see some feature in Painterro, please leave (or vote for) an issue [here](https://github.com/devforth/painterro/issues).
 There is no promise that it will be implemented soon or ever, but it is interesting to know what features users want to have.
 
+Also some usefull hints on HINTY for you:
+
+- [Painterro JS paint features review on HINTY](https://hinty.io/ivictbor/simplest-js-paint/)
+- [Dark theme for Painterro JS paint](https://hinty.io/ivictbor/painterro-dark-theme/)
+- [Round buttons for Painterro JS paint](https://hinty.io/ivictbor/how-to-round-the-painterro-buttons/)
+
+
 Table of contents
 =================
 
@@ -157,7 +164,7 @@ Then in your code (`body` section, `onclick` handler, etc):
   Painterro().show()
 </script>
 ```
-See [jsfiddle.net example](https://jsfiddle.net/vanbrosh/Levaqoeh/)
+See [jsfiddle.net example](https://jsfiddle.net/vanbrosh/mc94z8Lg/18/)
 
 
 Read after installation
