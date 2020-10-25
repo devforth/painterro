@@ -1,18 +1,22 @@
-const webfontsGenerator = require('webfonts-generator');
+const webfontsGenerator = require('vusion-webfonts-generator');
 const fs = require('fs');
 
-fs.readdir('res', function(err, items) {
+fs.readdir('res/font', function(err, items) {
   if (err) {
     console.log('cant read res directory');
   }
   const files = items.filter((i) => i.toLowerCase().endsWith('.svg')).map(
-    (i) => 'res/'+i);
+    (i) => 'res/font/'+i);
 
   webfontsGenerator({
     files: files,
     dest: 'css/icons',
     fontName: 'ptroiconfont',
-    cssTemplate: 'res/font-css.hbs',
+    
+    // https://github.com/nfroidure/svgicons2svgfont
+    normalize: true,
+    
+    cssTemplate: 'res/font/font-css.hbs',
     templateOptions: {
       classPrefix: 'ptro-icon-',
       baseSelector: '.ptro-icon'
