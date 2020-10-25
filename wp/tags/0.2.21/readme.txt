@@ -9,7 +9,7 @@ License URI: https://opensource.org/licenses/MIT
 
 Paste screenshots and edit images directly in your wordpress admin.
 Adds Painterro button to visual editor for images editing.
-Absolutely free and open source.
+Absolutely free and open source, features review: https://hinty.io/ivictbor/simplest-js-paint/
 
 == Frequently Asked Questions ==
 
@@ -23,7 +23,8 @@ Here: https://github.com/ivictbor/painterro/issues/new (Please add 'wordpress' l
 
 = Where can I found more info about Painterro? =
 
-See readme https://github.com/ivictbor/painterro
+See features here: https://hinty.io/ivictbor/simplest-js-paint/
+Or check readme https://github.com/ivictbor/painterro
 
 == Changelog ==
 
