@@ -263,6 +263,7 @@
     margin-left: auto;
     word-break: keep-all;
     white-space: normal;
+    text-align: right;
 }
 
 .ptro-wrapper .ptro-common-widget-wrapper {

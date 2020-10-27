@@ -983,7 +983,7 @@ class PainterroProc {
     this.inserter.handleOpen(source, mimetype);
   }
 
-  show(openImage) {
+  show(openImage, originalMime) {
     this.shown = true;
     this.scrollWidth = getScrollbarWidth();
     if (this.isMobile) {
@@ -1000,7 +1000,7 @@ class PainterroProc {
       this.loadedName = trim(
         (openImage.substring(openImage.lastIndexOf('/') + 1) || '').replace(/\..+$/, ''));
 
-      this.loadImage(openImage);
+      this.loadImage(openImage, originalMime);
     } else if (openImage !== false) {
       this.clear();
     }
@@ -1067,7 +1067,7 @@ class PainterroProc {
   }
 
   resize(x, y) {
-    this.info.innerHTML = `${x} x ${y}`;
+    this.info.innerHTML = `${x}x${y}<br>${(this.originalMime || 'png').replace('image/', '')}`;
     this.size = {
       w: x,
       h: y,

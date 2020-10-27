@@ -98,9 +98,9 @@ There is no promise that it will be implemented soon or ever, but it is interest
 
 Also some usefull hints on HINTY for you:
 
-- [Painterro JS paint features review on HINTY](https://hinty.io/ivictbor/simplest-js-paint/)
-- [Dark theme for Painterro JS paint](https://hinty.io/ivictbor/painterro-dark-theme/)
-- [Round buttons for Painterro JS paint](https://hinty.io/ivictbor/how-to-round-the-painterro-buttons/)
+- [Painterro JS paint features review on HINTY](https://hinty.io/ivanborshchov/simplest-js-paint/)
+- [Dark theme for Painterro JS paint](https://hinty.io/ivanborshchov/painterro-dark-theme/)
+- [Round buttons for Painterro JS paint](https://hinty.io/ivanborshchov/how-to-round-the-painterro-buttons/)
 
 
 Table of contents
@@ -315,11 +315,13 @@ Painterro({
 API
 -------
 
-**.show(openImage)** - Shows painterro instance. `openImage` can have next values:
+**.show([optional]openImage, [optional]initialMimeType)** - Shows painterro instance. `openImage` can have next values:
 
 * `false` - will open image that already was drawn before last close
 * `some string value`, e.g. `'http://placehold.it/120x120&text=image1'` - will try to load image from url
 * all another values - will clear content before open
+
+`initialMimeType` could be used to help painterro understand which file do you try to load there. Could be useful if you want to save the original mime and file opened explicitly (painterro open tool or dnd/ctrl+v handlers get it automatically)
 
 **.hide()** - hide instance
 
@@ -497,12 +499,13 @@ document.onpaste = (event) => {
       const blob = item.getAsFile();
       const reader = new FileReader();
       reader.onload = (readerEvent) => {
+          var b64image = readerEvent.target.result;
           Painterro({
             saveHandler: (image, done) => {
               console.log('Save it here', image.asDataURL());  // you could provide your save handler
               done(true);
             },
-          }).show(readerEvent.target.result);
+          }).show(b64image, item.type);
       };
       reader.readAsDataURL(blob);
     }
