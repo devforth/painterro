@@ -62,7 +62,8 @@
     onUndo: (e) => {console.log('onUndo e', e)},
     onRedo: (e) => {console.log('onRedo e', e)},
     //id: 'conatiner',
-    initText: 'Press <strong>Prn Scr</strong>, Ctrl+V to paste a screenshot',
+    initText: 'Press <b>PrtScr</b>, <b>Ctrl+V</b> to paste screenshot.<br>Press <b>Ctrl+S</b> to save', // todo: different for os-es
+
     extraFonts: ['Open Sans'],
     changeHandler: function (state) {
       console.log('Something drawed: ', state);
@@ -86,16 +87,45 @@
     // defaultTool: 'line',
     //hiddenTools: ['line']
   }).show() //;
-  const ctx = window.p.ctx;
+  const ctx = window.p.ctx; 
 
-  console.log(ctx);
+console.log(ctx);
   ctx.beginPath();
   ctx.moveTo(0,0);
   ctx.lineTo(300,150);
   ctx.strokeStyle="#FF0000";
-  ctx.stroke();
-    
+  ctx.stroke(); 
 
+
+  /*
+    
+document.onpaste = (event) => {
+  const { items } = event.clipboardData || event.originalEvent.clipboardData;
+  Array.from(items).forEach((item) => {
+    if (item.kind === 'file') {
+      if (!window.painterroOpenedInstance) {
+        // if painterro already opened - it will handle onpaste
+        const blob = item.getAsFile();
+        const reader = new FileReader();
+        reader.onload = (readerEvent) => {
+            window.painterroOpenedInstance = Painterro({
+              initText: 'Press <b>PrtScr</b>, <b>Ctrl+V</b> to paste screenshot.<br>Press <b>Ctrl+S</b> to save', // todo: different for os-es
+              onHide: () => {
+                window.painterroOpenedInstance = undefined;
+              },
+              saveHandler: (image, done) => {
+                console.log('Save it here', image.asDataURL());  // you could provide your save handler
+                done(true);
+              },
+            }).show(readerEvent.target.result, item.type);
+        };
+        reader.readAsDataURL(blob);
+      }
+    }
+  });
+};
+
+*/
   
 
 </script>

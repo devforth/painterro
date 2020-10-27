@@ -1018,6 +1018,9 @@ class PainterroProc {
       this.holderEl.setAttribute('hidden', '');
     }
     this.removeEventHandlers();
+    if (this.params.onHide !== undefined) {
+      this.params.onHide();
+    }
     return this;
   }
 

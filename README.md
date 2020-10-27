@@ -240,7 +240,9 @@ Painterro({
 | Param | Description | Accepted Arguments |
 |-|-|-|
 | `onBeforeClose` | Function that will be called when user closes painterro it, call `doClose` to confirm close | `hasUnsavedChaged: bool`, `doCloseCallback: function` |
-| `onClose` | If passed will be triggered when painterro closed | `undefined` |
+| `onClose` | If passed will be triggered when painterro closed by X button (use `onHide` for all close reasons) | `undefined` |
+| `onHide` | If passed will be triggered when painterro hides (by X button or save or any other way) | `undefined` |
+
 | `onChange` | Function that will be called if something will be changed (painted, erased, resized, etc) | `<exportable image>` | `undefined` |
 | `onUndo` | Function that will be called if user will undo (`Ctrl+Z`) | `{<current history state>}` |
 | `onRedo` | Function that will be called if user will redo (`Ctrl+Z`) | `{<current history state>}` |
@@ -496,18 +498,23 @@ document.onpaste = (event) => {
   const { items } = event.clipboardData || event.originalEvent.clipboardData;
   Array.from(items).forEach((item) => {
     if (item.kind === 'file') {
-      const blob = item.getAsFile();
-      const reader = new FileReader();
-      reader.onload = (readerEvent) => {
-          var b64image = readerEvent.target.result;
-          Painterro({
-            saveHandler: (image, done) => {
-              console.log('Save it here', image.asDataURL());  // you could provide your save handler
-              done(true);
-            },
-          }).show(b64image, item.type);
-      };
-      reader.readAsDataURL(blob);
+      if (!window.painterroOpenedInstance) {
+        // if painterro already opened - it will handle onpaste
+        const blob = item.getAsFile();
+        const reader = new FileReader();
+        reader.onload = (readerEvent) => {
+            window.painterroOpenedInstance = Painterro({
+              onHide: () => {
+                window.painterroOpenedInstance = undefined;
+              },
+              saveHandler: (image, done) => {
+                console.log('Save it here', image.asDataURL());  // you could provide your save handler
+                done(true);
+              },
+            }).show(readerEvent.target.result, item.type);
+        };
+        reader.readAsDataURL(blob);
+      }
     }
   });
 };
