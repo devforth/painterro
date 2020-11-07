@@ -1070,7 +1070,7 @@ class PainterroProc {
   }
 
   resize(x, y) {
-    this.info.innerHTML = `${x}x${y}<br>${(this.originalMime || 'png').replace('image/', '')}`;
+    this.info.innerHTML = `${x}<span>x</span>${y}<br>${(this.originalMime || 'png').replace('image/', '')}`;
     this.size = {
       w: x,
       h: y,

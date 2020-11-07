@@ -256,15 +256,7 @@
     align-items: center;
 }
 
-.ptro-info {
-    font-family: "Open Sans", sans-serif;
-    font-size: 10px;
-    padding: 4px;
-    margin-left: auto;
-    word-break: keep-all;
-    white-space: normal;
-    text-align: right;
-}
+
 
 .ptro-wrapper .ptro-common-widget-wrapper {
     position: absolute;

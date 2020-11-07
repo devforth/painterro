@@ -33,6 +33,20 @@ select.ptro-input[data-id='fontName'] {
     padding-bottom: 4px;
 }
 
+.ptro-info {
+    font-family: "Open Sans", sans-serif;
+    font-size: 10px;
+    padding: 4px;
+    margin-left: auto;
+    word-break: keep-all;
+    white-space: normal;
+    text-align: right;
+}
+
+.ptro-info > span {
+    color: #555;
+}
+
 @media screen and (max-width: 768px) {
     .ptro-bar > div {
         white-space: nowrap;
@@ -43,6 +57,7 @@ select.ptro-input[data-id='fontName'] {
     span.ptro-info {
         display: none;
     }
+    
 }
 
 .ptro-bar .ptro-input {
