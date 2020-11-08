@@ -13,9 +13,10 @@ export default class TextTool {
     this.inputWrapper.style.display = 'none';
     this.isBold = main.params.defaultFontBold;
     this.isItalic = main.params.defaultFontItalic;
+    this.strokeOn = main.params.defaultTextStrokeAndShadow;
 
+    this.strokeColor = main.params.textStrokeAlphaColor;
     this.setFontSize(main.params.defaultFontSize);
-    this.setFontStrokeSize(main.params.fontStrokeSize);
     this.setFont(this.getFonts()[0].value);
     this.setFontIsBold(this.isBold);
     this.setFontIsItalic(this.isItalic);
@@ -72,6 +73,11 @@ export default class TextTool {
     }
   }
 
+  setStrokeOn(state) {
+    this.strokeOn = state;
+    this.setStrokeParams();
+  }
+
   setFontIsBold(state) {
     this.isBold = state;
     if (state) {
@@ -83,6 +89,7 @@ export default class TextTool {
       this.input.focus();
       this.reLimit();
     }
+    this.setStrokeParams();
   }
 
   setFontIsItalic(state) {
@@ -101,22 +108,21 @@ export default class TextTool {
   setFontSize(size) {
     this.fontSize = size;
     this.input.style['font-size'] = `${size}px`;
-    // if (this.active) {
-    //   this.input.focus();
-    // }
+    this.setStrokeParams();
     if (this.active) {
       this.reLimit();
     }
   }
 
-  setFontStrokeSize(size) {
-    this.fontStrokeSize = size;
-    this.input.style['-webkit-text-stroke'] = `${this.fontStrokeSize}px ${this.strokeColor}`;
-    if (this.active) {
-      this.input.focus();
-    }
-    if (this.active) {
-      this.reLimit();
+  setStrokeParams() {
+    if (this.strokeOn) {
+      const st = 1;
+      this.input.style['text-shadow'] = `
+      -${st}px -${st}px 1px ${this.strokeColor},${st}px -${st}px 1px ${this.strokeColor},
+      -${st}px  ${st}px 1px ${this.strokeColor},${st}px  ${st}px 1px ${this.strokeColor},
+      ${st}px ${st}px ${this.fontSize / 5.0}px black`;
+    } else {
+      this.input.style['text-shadow'] = 'none';
     }
   }
 
@@ -124,11 +130,6 @@ export default class TextTool {
     this.color = color;
     this.input.style.color = color;
     this.input.style['outline-color'] = color;
-  }
-
-  setStrokeColor(color) {
-    this.strokeColor = color;
-    this.input.style['-webkit-text-stroke'] = `${this.fontStrokeSize}px ${this.strokeColor}`;
   }
 
   inputLeft() {

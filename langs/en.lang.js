@@ -23,6 +23,9 @@ export default {
   fontIsItalicFull: 'Italic',
   shadowOn: 'SH',
   shadowOnFull: 'Shadow',
+  fontStrokeAndShadow: 'S&S',
+  fontStrokeAndShadowFull: 'Stroke & Shadow',
+
   fontName: 'F',
   fontNameFull: 'Font name',
   textStrokeColor: 'SC',

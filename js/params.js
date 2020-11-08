@@ -69,7 +69,6 @@ export function setDefaults(parameters) {
   params.defaultFontItalic = firstDefined(settings.defaultFontItalic,
     params.defaultFontItalic, false);
 
-  params.fontStrokeSize = firstDefined(settings.fontStrokeSize, params.fontStrokeSize, 0);
   params.backgroundFillColor = settings.backgroundFillColor || params.backgroundFillColor || '#ffffff';
   params.backgroundFillColorAlpha = firstDefined(settings.backgroundFillColorAlpha,
     params.backgroundFillColorAlpha, 1.0);
@@ -80,6 +79,8 @@ export function setDefaults(parameters) {
   params.textStrokeColorAlpha = firstDefined(settings.textStrokeColorAlpha,
     params.textStrokeColorAlpha, 1.0);
   params.textStrokeAlphaColor = HexToRGBA(params.textStrokeColor, params.textStrokeColorAlpha);
+  
+  params.defaultTextStrokeAndShadow = firstDefined(settings.defaultTextStrokeAndShadow, params.defaultTextStrokeAndShadow, true);
 
   params.worklogLimit = firstDefined(params.worklogLimit, 100);
 

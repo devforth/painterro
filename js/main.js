@@ -1,5 +1,5 @@
 import isMobile from 'ismobilejs';
-import html2canvas from 'html2canvas';
+import html2canvas from 'html2canvas-stroke';
 import '../css/styles.css';
 import '../css/bar-styles.css';
 import '../css/icons/ptroiconfont.css';
@@ -264,44 +264,20 @@ class PainterroProc {
           },
           getValue: () => this.textTool.isItalic,
         },
-        // {
-        //   type: 'dropdown',
-        //   title: 'fontStyle',
-        //   titleFull: 'fontStyleFull',
-        //   target: 'fontStyle',
-        //   action: () => {
-        //     const dropdown = document.getElementById(this.activeTool.controls[3].id);
-        //     const style = dropdown.value;
-        //     this.textTool.setFontStyle(style);
-        //   },
-        //   getValue: () => this.textTool.getFontStyle(),
-        //   getAvailableValues: () => TextTool.getFontStyles(),
-        // },
-        // {
-        //   type: 'int',
-        //   title: 'fontStrokeSize',
-        //   titleFull: 'fontStrokeSizeFull',
-        //   target: 'fontStrokeSize',
-        //   min: 0,
-        //   max: 200,
-        //   action: () => {
-        //     const inp = document.getElementById(this.activeTool.controls[4].id).value;
-        //     this.textTool.setFontStrokeSize(inp);
-        //     setParam('fontStrokeSize', inp);
-        //   },
-        //   getValue: () => this.textTool.fontStrokeSize,
-        // },
-        // {
-        //   type: 'color',
-        //   title: 'textStrokeColor',
-        //   titleFull: 'textStrokeColorFull',
-        //   target: 'stroke',
-        //   action: () => {
-        //     this.colorPicker.open(this.colorWidgetState.stroke, (c) => {
-        //       this.textTool.setStrokeColor(c.alphaColor);
-        //     });
-        //   },
-        // },
+        {
+          type: 'bool',
+          title: 'fontStrokeAndShadow',
+          titleFull: 'fontStrokeAndShadowFull',
+          target: 'fontStrokeAndShadow',
+          action: () => {
+            const btn = document.getElementById(this.activeTool.controls[5].id);
+            const nextState = !(btn.getAttribute('data-value') === 'true');
+            this.textTool.setStrokeOn(nextState);
+            setParam('defaultTextStrokeAndShadow', nextState);
+            btn.setAttribute('data-value', nextState ? 'true' : 'false');
+          },
+          getValue: () => this.textTool.strokeOn,
+        },
       ],
       activate: () => {
         this.textTool.setFontColor(this.colorWidgetState.line.alphaColor);

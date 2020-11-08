@@ -1,6 +1,6 @@
 {
   "name": "painterro",
-  "version": "1.1.7",
+  "version": "1.2.0",
   "description": "HTML5 image editor widget",
   "main": "build/painterro.commonjs2.js",
   "repository": {
@@ -32,7 +32,6 @@
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-loader": "^2.2.1",
     "eslint-plugin-import": "^2.7.0",
-    "html2canvas": "^1.0.0-rc.5",
     "ismobilejs": "^1.0.3",
     "js-yaml": ">=3.13.1",
     "lodash": ">=4.17.13",
@@ -44,7 +43,9 @@
     "vusion-webfonts-generator": "^0.4.1",
     "webpack": "^4.39.1",
     "webpack-cli": "^3.3.2",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.0",
+    "html2canvas": "^1.0.0-rc.7"
   },
-  "dependencies": {}
+  "dependencies": {
+  }
 }

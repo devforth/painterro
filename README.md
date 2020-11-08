@@ -98,9 +98,9 @@ There is no promise that it will be implemented soon or ever, but it is interest
 
 Also some usefull hints on HINTY for you:
 
-- [Painterro JS paint features review on HINTY](https://hinty.io/ivanborshchov/simplest-js-paint/)
-- [Dark theme for Painterro JS paint](https://hinty.io/ivanborshchov/painterro-dark-theme/)
-- [Round buttons for Painterro JS paint](https://hinty.io/ivanborshchov/how-to-round-the-painterro-buttons/)
+- [Painterro JS paint features review on HINTY](https://hinty.io/devforth/simplest-js-paint/)
+- [Dark theme for Painterro JS paint](https://hinty.io/devforth/painterro-dark-theme/)
+- [Round buttons for Painterro JS paint](https://hinty.io/devforth/how-to-round-the-painterro-buttons/)
 
 
 Table of contents
@@ -207,14 +207,16 @@ Painterro({
 |`activeFillColor` | Fill color that selected by default | `'#000000'` |
 |`activeFillColorAlpha` | Transparancy of `activeColor` from `0.0` to `1.0` | `0` |
 |`defaultLineWidth` | Line width in `px` that selected by default | `5` |
+|`defaultPrimitiveShadowOn` | Enable Shadow for primitive tools (easier recognize them on a screenshots) | `true` |
 |`defaultEraserWidth` | Eraser width in `px` that selected by default | `5` |
 |`backgroundFillColor` | Default background color when image created/erased | `'#ffffff'` |
 |`backgroundFillColorAlpha`| Transparancy of `backgroundFillColor` from `0.0` to `1.0` | `1.0` |
 |`textStrokeColor`| Stroke color of text tool | `'#ffffff'` |
 |`textStrokeColorAlpha`| Stroke color of text tool | `1.0` |
 |`defaultFontSize` | Default font size in pixels | `24` |
+|`defaultTextStrokeAndShadow` | Enables Stroke and Shadow for text tool by default (easier recognize text on screenshots) | `true` |
+
 |`defaultSize` | default image size, should be string in format `<width>x<height>` in pixel, e.g. `'200x100'`. If value is `'fill'`(default) than all container size will be used | `'fill'` |
-|`fontStrokeSize` | default stroke width of text | `0` |
 |`defaultTool` | Tool selected by default | `'select'` | 
 |`hiddenTools` | List of tools that you wish to exclude from toolbar e.g. something from this list `['crop', 'line', 'arrow', 'rect', 'ellipse', 'brush', 'text', 'rotate', 'resize',  'save', 'open', 'close']`, You can't hide default tool | `['redo']` |
 |`initText` | Display some centered text before painting (supports HTML). If null, no text will be shown | `null` |

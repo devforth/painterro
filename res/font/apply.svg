@@ -1,3 +1,61 @@
-<svg width="76" height="56" viewBox="0 0 76 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M1.59619 24.4937C-0.384942 26.4412 -0.398562 29.6304 1.56586 31.5948L24.4355 54.4645C26.3881 56.4171 29.554 56.4171 31.5066 54.4645L74.4765 11.4945C76.4131 9.55799 76.4314 6.42394 74.5176 4.46495L71.7368 1.61853C69.7912 -0.37306 66.5935 -0.39172 64.6247 1.57703L31.7373 34.4645C29.7847 36.4171 26.6188 36.4171 24.6662 34.4645L11.7072 21.5055C9.76637 19.5646 6.62382 19.5512 4.66648 21.4754L1.59619 24.4937Z" fill="black"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="76"
+   height="56"
+   viewBox="0 0 76 56"
+   fill="none"
+   version="1.1"
+   id="svg827"
+   sodipodi:docname="apply.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata833">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs831" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     id="namedview829"
+     showgrid="true"
+     inkscape:zoom="5.6568543"
+     inkscape:cx="76.950414"
+     inkscape:cy="11.416086"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg827">
+    <inkscape:grid
+       type="xygrid"
+       id="grid835" />
+  </sodipodi:namedview>
+  <path
+     style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:9.69448853;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+     d="M 71.275391,0.92578125 A 4.847729,4.847729 0 0 0 67.53125,2.5605469 L 29.835938,43.980469 8.4277344,22.572266 a 4.847729,4.847729 0 1 0 -6.8554688,6.855468 l 25.0000004,25 a 4.847729,4.847729 0 0 0 7.011718,-0.166015 L 74.701172,9.0859375 A 4.847729,4.847729 0 0 0 71.275391,0.92578125 Z"
+     id="path837"
+     inkscape:connector-curvature="0" />
 </svg>
