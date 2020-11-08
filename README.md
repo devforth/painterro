@@ -164,7 +164,7 @@ Then in your code (`body` section, `onclick` handler, etc):
   Painterro().show()
 </script>
 ```
-See [jsfiddle.net example](https://jsfiddle.net/vanbrosh/mc94z8Lg/18/)
+See [jsfiddle.net example](https://jsfiddle.net/vanbrosh/wnebj4h7/)
 
 
 Read after installation
