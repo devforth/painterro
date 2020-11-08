@@ -79,8 +79,9 @@ export function setDefaults(parameters) {
   params.textStrokeColorAlpha = firstDefined(settings.textStrokeColorAlpha,
     params.textStrokeColorAlpha, 1.0);
   params.textStrokeAlphaColor = HexToRGBA(params.textStrokeColor, params.textStrokeColorAlpha);
-  
-  params.defaultTextStrokeAndShadow = firstDefined(settings.defaultTextStrokeAndShadow, params.defaultTextStrokeAndShadow, true);
+
+  params.defaultTextStrokeAndShadow = firstDefined(settings.defaultTextStrokeAndShadow,
+    params.defaultTextStrokeAndShadow, true);
 
   params.worklogLimit = firstDefined(params.worklogLimit, 100);
 

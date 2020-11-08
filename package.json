@@ -1,6 +1,6 @@
 {
   "name": "painterro",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "HTML5 image editor widget",
   "main": "build/painterro.commonjs2.js",
   "repository": {
@@ -46,6 +46,5 @@
     "webpack-dev-server": "^3.11.0",
     "html2canvas": "^1.0.0-rc.7"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
