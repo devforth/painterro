@@ -224,19 +224,46 @@ class PainterroProc {
           },
           getValue: () => this.textTool.getFont(),
           getAvailableValues: () => this.textTool.getFonts(),
-        }, {
-          type: 'dropdown',
-          title: 'fontStyle',
-          titleFull: 'fontStyleFull',
-          target: 'fontStyle',
-          action: () => {
-            const dropdown = document.getElementById(this.activeTool.controls[3].id);
-            const style = dropdown.value;
-            this.textTool.setFontStyle(style);
-          },
-          getValue: () => this.textTool.getFontStyle(),
-          getAvailableValues: () => TextTool.getFontStyles(),
         },
+        {
+          type: 'bool',
+          title: 'fontIsBold',
+          titleFull: 'fontIsBoldFull',
+          target: 'fontIsBold',
+          action: () => {
+            const btn = document.getElementById(this.activeTool.controls[3].id);
+            const state = btn.getAttribute('data-value') === 'true';
+            this.textTool.setFontIsBold(!state);
+            btn.setAttribute('data-value', state ? 'false' : 'true'); // invert
+          },
+          getValue: () => this.textTool.getIsBold(),
+        },
+        {
+          type: 'bool',
+          title: 'fontIsItalic',
+          titleFull: 'fontIsItalicFull',
+          target: 'fontIsItalic',
+          action: () => {
+            const btn = document.getElementById(this.activeTool.controls[4].id);
+            const state = btn.getAttribute('data-value') === 'true';
+            this.textTool.setFontIsItalic(!state);
+            btn.setAttribute('data-value', state ? 'false' : 'true'); // invert
+          },
+          getValue: () => this.textTool.getIsBold(),
+        },
+        // {
+        //   type: 'dropdown',
+        //   title: 'fontStyle',
+        //   titleFull: 'fontStyleFull',
+        //   target: 'fontStyle',
+        //   action: () => {
+        //     const dropdown = document.getElementById(this.activeTool.controls[3].id);
+        //     const style = dropdown.value;
+        //     this.textTool.setFontStyle(style);
+        //   },
+        //   getValue: () => this.textTool.getFontStyle(),
+        //   getAvailableValues: () => TextTool.getFontStyles(),
+        // },
         // {
         //   type: 'int',
         //   title: 'fontStrokeSize',
@@ -1165,6 +1192,9 @@ class PainterroProc {
       } else if (ctl.type === 'int') {
         ctrls += `<input id=${ctl.id} class="ptro-input" type="number" min="${ctl.min}" max="${ctl.max}" ` +
           `data-id='${ctl.target}'/>`;
+      } else if (ctl.type === 'bool') {
+        ctrls += `<button id=${ctl.id} class="ptro-input" data-value="false" type="button" ` +
+          `data-id='${ctl.target}'></button>`;
       } else if (ctl.type === 'dropdown') {
         let options = '';
         ctl.getAvailableValues().forEach((o) => {

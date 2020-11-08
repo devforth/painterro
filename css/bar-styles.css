@@ -3,12 +3,9 @@
     width: 32px;
     cursor: pointer;
     z-index: 1;
-    position: absolute;
-    margin-top: 4px;
 }
 
 .color-diwget-btn-substrate {
-    display: inline-block;
     width: 32px;
 }
 
@@ -18,10 +15,8 @@ select.ptro-input[data-id='fontName'] {
 
 .ptro-bar .ptro-tool-ctl-name {
     padding: 0 2px 0 0;
-    line-height: 30px;
     font-family: "Open Sans", sans-serif;
-    position: relative;
-    top: -4px;
+    line-height: 22px;
 }
 
 .ptro-bar .ptro-tool-ctl-name {
@@ -44,7 +39,7 @@ select.ptro-input[data-id='fontName'] {
 }
 
 .ptro-info > span {
-    color: #555;
+    opacity: 0.5;
 }
 
 @media screen and (max-width: 768px) {
@@ -66,7 +61,6 @@ select.ptro-input[data-id='fontName'] {
     font-family: "Open Sans", sans-serif;
     font-size: 16px;
     position: relative;
-    top: -4px;
     padding-left: 2px;
     padding-right: 0;
 }
@@ -117,6 +111,27 @@ button.ptro-icon-right:first-of-type {
     margin-right: 4px;
 }
 
+button.ptro-input[data-value="false"],button.ptro-input[data-value="true"] {
+    width: 20px;
+    height: 20px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 0px;
+    cursor: pointer;
+}
+
+button.ptro-input[data-value="true"]::after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    background: black;
+    display: inline-block;
+}
 
 @-webkit-keyframes ptro-spin {
   0% {

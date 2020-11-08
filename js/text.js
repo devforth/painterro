@@ -1,5 +1,5 @@
 import html2canvas from 'html2canvas';
-import { KEYS, checkIn } from './utils';
+import { KEYS } from './utils';
 import { tr } from './translation';
 
 export default class TextTool {
@@ -14,7 +14,8 @@ export default class TextTool {
     this.setFontSize(main.params.defaultFontSize);
     this.setFontStrokeSize(main.params.fontStrokeSize);
     this.setFont(this.getFonts()[0].value);
-    this.setFontStyle(TextTool.getFontStyles()[0].value);
+    this.setFontIsBold(false); // todo - could make it input from params
+    this.setFontIsItalic(false);
 
     this.el.querySelector('.ptro-text-tool-apply').onclick = () => {
       this.apply();
@@ -27,10 +28,6 @@ export default class TextTool {
 
   getFont() {
     return this.font;
-  }
-
-  getFontStyle() {
-    return this.fontStyle;
   }
 
   getFonts() {
@@ -61,34 +58,6 @@ export default class TextTool {
     return res;
   }
 
-  static getFontStyles() {
-    return [
-      {
-        value: 'normal',
-        name: 'N',
-        title: 'Normal',
-      },
-      {
-        value: 'bold',
-        name: 'B',
-        extraStyle: 'font-weight: bold',
-        title: 'Bold',
-      },
-      {
-        value: 'italic',
-        name: 'I',
-        extraStyle: 'font-style: italic',
-        title: 'Italic',
-      },
-      {
-        value: 'italic bold',
-        name: 'BI',
-        extraStyle: 'font-weight: bold; font-style: italic',
-        title: 'Bold + Italic',
-      },
-    ];
-  }
-
   setFont(font) {
     this.font = font;
     this.input.style['font-family'] = font;
@@ -100,23 +69,26 @@ export default class TextTool {
     }
   }
 
-  setFontStyle(style) {
-    this.fontStyle = style;
-    if (checkIn('bold', this.fontStyle)) {
+  setFontIsBold(state) {
+    if (state) {
       this.input.style['font-weight'] = 'bold';
     } else {
       this.input.style['font-weight'] = 'normal';
     }
-    if (checkIn('italic', this.fontStyle)) {
+    if (this.active) {
+      this.input.focus();
+      this.reLimit();
+    }
+  }
+
+  setFontIsItalic(state) {
+    if (state) {
       this.input.style['font-style'] = 'italic';
     } else {
       this.input.style['font-style'] = 'normal';
     }
-
     if (this.active) {
       this.input.focus();
-    }
-    if (this.active) {
       this.reLimit();
     }
   }

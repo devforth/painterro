@@ -55,8 +55,8 @@
   window.p = Painterro({
     hideByEsc: true,
     saveByEnter: true,
-    toolbarHeightPx: 50,
-    buttonSizePx: 42,
+    //toolbarHeightPx: 50,
+    //buttonSizePx: 42,
     // defaultTool: 'arrow',
     onChange: (e) => {console.log('onchange e', e)},
     onUndo: (e) => {console.log('onUndo e', e)},
@@ -64,7 +64,7 @@
     //id: 'conatiner',
     initText: 'Press <b>PrtScr</b>, <b>Ctrl+V</b> to paste screenshot.<br>Press <b>Ctrl+S</b> to save', // todo: different for os-es
 
-    extraFonts: ['Open Sans'],
+    //extraFonts: ['Open Sans'],
     changeHandler: function (state) {
       console.log('Something drawed: ', state);
      // localStorage.setItem('painterroImage', this.imageSaver.asDataURL())
@@ -74,10 +74,10 @@
       window.confirmClose = done;
     },
     // language: 'ja',
-    availableLineWidths: [1,2,4,8,16,64],
-    availableEraserWidths: [1,2,4,8,16,64],
-    availableFontSizes: [1,2,4,8,16,64],
-    availableArrowLengths: [10,20,30,40,50,60],
+    //availableLineWidths: [1,2,4,8,16,64],
+    //availableEraserWidths: [1,2,4,8,16,64],
+    //availableFontSizes: [1,2,4,8,16,64],
+    //availableArrowLengths: [10,20,30,40,50,60],
     // how_to_paste_actions: ['replace_all'],
     saveHandler: (saver) => {
       console.log('saving', saver.getWidth(), saver.getHeight())
@@ -86,7 +86,7 @@
     // fixMobilePageReloader: false,
     // defaultTool: 'line',
     //hiddenTools: ['line']
-  }).show() //;
+  }).show('https://images.unsplash.com/photo-1565118531796-763e5082d113?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80') //;
   const ctx = window.p.ctx; 
 
 console.log(ctx);

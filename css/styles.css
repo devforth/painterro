@@ -150,6 +150,8 @@
 
 .ptro-tool-controls {
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
 }
 
 .ptro-wrapper .ptro-crp-rect {
@@ -451,7 +453,8 @@ select.ptro-input {
 }
 
 .ptro-text-tool-buttons {
-    display: block;
+    display: flex;
+    position: fixed;
 }
 
 .ptro-text-tool-input-wrapper {
@@ -469,16 +472,13 @@ span.ptro-btn-color-checkers {
 
 span.ptro-btn-color-checkers-bar {
     background-image: url("checkers.svg");
-    display: inline-block;
     width: 32px;
     line-height: 12px;
     height: 32px;
     background-size: 16px 16px;
     z-index: 0;
     position: relative;
-    top: 6px;
-    left: 0;
-    margin-top: -2px;
+    margin-left: -32px;
 }
 
 .ptro-bar-right {
