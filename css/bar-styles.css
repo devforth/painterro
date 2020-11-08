@@ -112,24 +112,26 @@ button.ptro-icon-right:first-of-type {
 }
 
 button.ptro-input[data-value="false"],button.ptro-input[data-value="true"] {
-    width: 20px;
-    height: 20px;
-    border: 2px solid black;
-    border-radius: 4px;
+    width: 28px;
+    height: 28px;
+    border: 0;
     background: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
     padding-left: 0px;
     cursor: pointer;
+    outline: 0;
 }
 
 button.ptro-input[data-value="true"]::after {
-    content: '';
+    content: '✔';
+    font-size: 20px;
+    line-height: 12px;
     width: 12px;
     height: 12px;
-    border-radius: 2px;
-    background: black;
+    border: 0;
+    /* background: rgba(0,0,0,0.5); */
     display: inline-block;
 }
 

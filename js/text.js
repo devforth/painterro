@@ -11,11 +11,14 @@ export default class TextTool {
     this.input = this.el.querySelector('.ptro-text-tool-input');
     this.inputWrapper = this.el.querySelector('.ptro-text-tool-input-wrapper');
     this.inputWrapper.style.display = 'none';
+    this.isBold = main.params.defaultFontBold;
+    this.isItalic = main.params.defaultFontItalic;
+
     this.setFontSize(main.params.defaultFontSize);
     this.setFontStrokeSize(main.params.fontStrokeSize);
     this.setFont(this.getFonts()[0].value);
-    this.setFontIsBold(false); // todo - could make it input from params
-    this.setFontIsItalic(false);
+    this.setFontIsBold(this.isBold);
+    this.setFontIsItalic(this.isItalic);
 
     this.el.querySelector('.ptro-text-tool-apply').onclick = () => {
       this.apply();
@@ -70,6 +73,7 @@ export default class TextTool {
   }
 
   setFontIsBold(state) {
+    this.isBold = state;
     if (state) {
       this.input.style['font-weight'] = 'bold';
     } else {
@@ -82,6 +86,7 @@ export default class TextTool {
   }
 
   setFontIsItalic(state) {
+    this.isItalic = state;
     if (state) {
       this.input.style['font-style'] = 'italic';
     } else {

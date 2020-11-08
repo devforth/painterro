@@ -21,6 +21,10 @@ export default class PrimitiveTool {
     this.lineWidth = width;
   }
 
+  setShadowOn(state) {
+    this.shadowOn = state;
+  }
+
   setArrowLength(length) {
     this.arrowLength = length;
   }
@@ -112,6 +116,7 @@ export default class PrimitiveTool {
   }
 
   handleMouseMove(event) {
+    const ctx = this.ctx;
     if (this.state.cornerMarked) {
       this.ctx.putImageData(this.tmpData, 0, 0);
       this.curCord = [
@@ -146,11 +151,19 @@ export default class PrimitiveTool {
             this.curCord[1] -= base * (this.centerCord[1] > this.curCord[1] ? 1 : -1);
           }
         }
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.centerCord[0], this.centerCord[1]);
-        this.ctx.lineTo(this.curCord[0], this.curCord[1]);
-        this.ctx.closePath();
-        this.ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(this.centerCord[0], this.centerCord[1]);
+        ctx.lineTo(this.curCord[0], this.curCord[1]);
+        ctx.closePath();
+        const origShadowColor = ctx.shadowColor;
+        if (this.shadowOn) {
+          ctx.shadowColor = 'rgba(0,0,0,0.7)';
+          ctx.shadowBlur = this.lineWidth;
+          ctx.shadowOffsetX = this.lineWidth / 2.0;
+          ctx.shadowOffsetY = this.lineWidth / 2.0;
+        }
+        ctx.stroke();
+        ctx.shadowColor = origShadowColor;
       } else if (this.type === 'arrow') {
         let deg = (Math.atan(
           -(this.curCord[1] - this.centerCord[1]) / (this.curCord[0] - this.centerCord[0]),
@@ -174,12 +187,7 @@ export default class PrimitiveTool {
         this.ctx.beginPath();
         const origCap = this.ctx.lineCap;
         const origFill = this.ctx.fillStyle;
-        this.ctx.lineCap = 'butt';
         this.ctx.fillStyle = this.main.colorWidgetState.line.alphaColor;
-
-        this.ctx.moveTo(this.centerCord[0], this.centerCord[1]);
-        this.ctx.lineTo(this.curCord[0], this.curCord[1]);
-        this.ctx.stroke();
         this.ctx.lineCap = 'square';
 
         const r = Math.min(this.arrowLength, 0.9 * Math.sqrt(
@@ -196,34 +204,45 @@ export default class PrimitiveTool {
         let x;
         let y;
         angle = Math.atan2(toy - fromy, tox - fromx);
-        x = (r * Math.cos(angle)) + xCenter;
-        y = (r * Math.sin(angle)) + yCenter;
-        this.ctx.moveTo(x, y);
-        angle += (1.0 / 3) * (2 * Math.PI);
-        x = (r * Math.cos(angle)) + xCenter;
-        y = (r * Math.sin(angle)) + yCenter;
-        this.ctx.lineTo(x, y);
-        angle += (1.0 / 3) * (2 * Math.PI);
-        x = (r * Math.cos(angle)) + xCenter;
-        y = (r * Math.sin(angle)) + yCenter;
-        this.ctx.lineTo(x, y);
-        this.ctx.closePath();
-        this.ctx.fill();
-        this.ctx.lineCap = origCap;
-        this.ctx.fillStyle = origFill;
 
-        // this.ctx.beginPath();
-        // this.ctx.lineCap = 'square';
-        // this.ctx.moveTo(this.centerCord[0], this.centerCord[1]);
-        // this.ctx.lineTo(this.curCord[0], this.curCord[1]);
-        // this.ctx.moveTo(this.curCord[0], this.curCord[1]);
-        // this.ctx.lineTo(arrow[0][0], arrow[0][1]);
-        // this.ctx.moveTo(this.curCord[0], this.curCord[1]);
-        // this.ctx.lineTo(arrow[1][0], arrow[1][1]);
-        // this.ctx.closePath();
-        // this.ctx.stroke();
+        x = (r * Math.cos(angle)) + xCenter;
+        y = (r * Math.sin(angle)) + yCenter;
+
+        this.ctx.moveTo(x, y);
+
+        angle += (1.0 / 3) * (2 * Math.PI);
+        x = (r * Math.cos(angle)) + xCenter;
+        y = (r * Math.sin(angle)) + yCenter;
+        this.ctx.lineTo(x, y);
+
+        const xTail1 = xCenter + ((x - xCenter) / 3.0);
+        const yTail1 = yCenter + ((y - yCenter) / 3.0);
+        ctx.lineTo(xTail1, yTail1);
+
+        ctx.lineTo(this.centerCord[0], this.centerCord[1]);
+
+        angle += (1.0 / 3) * (2 * Math.PI);
+        x = (r * Math.cos(angle)) + xCenter;
+        y = (r * Math.sin(angle)) + yCenter;
+        const xTail2 = xCenter + ((x - xCenter) / 3.0);
+        const yTail2 = yCenter + ((y - yCenter) / 3.0);
+        ctx.lineTo(xTail2, yTail2);
+
+        ctx.lineTo(x, y);
+        ctx.closePath();
+        const origShadowColor = ctx.shadowColor;
+        if (this.shadowOn) {
+          ctx.shadowColor = 'rgba(0,0,0,0.7)';
+          ctx.shadowBlur = r / 3.0;
+          ctx.shadowOffsetX = r / 20.0;
+          ctx.shadowOffsetY = r / 20.0;
+        }
+        ctx.fill();
+        ctx.lineCap = origCap;
+        ctx.fillStyle = origFill;
+        ctx.shadowColor = origShadowColor;
       } else if (this.type === 'rect') {
-        this.ctx.beginPath();
+        ctx.beginPath();
 
         const tl = [
           this.centerCord[0],
@@ -243,7 +262,17 @@ export default class PrimitiveTool {
           tl[0] + halfLW, tl[1] + halfLW,
           (w - this.lineWidth) + oddCorrecter, (h - this.lineWidth) + oddCorrecter);
         this.ctx.fill();
+
+        const origShadowColor = ctx.shadowColor;
+        if (this.shadowOn) {
+          ctx.shadowColor = 'rgba(0,0,0,0.7)';
+          ctx.shadowBlur = this.lineWidth;
+          ctx.shadowOffsetX = this.lineWidth / 2.0;
+          ctx.shadowOffsetY = this.lineWidth / 2.0;
+        }
         this.ctx.strokeRect(tl[0], tl[1], w, h);
+        ctx.shadowColor = origShadowColor;
+
         this.ctx.closePath();
       } else if (this.type === 'ellipse') {
         this.ctx.beginPath();
@@ -284,8 +313,15 @@ export default class PrimitiveTool {
           radius, 0, 2 * Math.PI);
         this.ctx.restore();
         this.ctx.fill();
-        this.ctx.stroke();
-
+        const origShadowColor = ctx.shadowColor;
+        if (this.shadowOn) {
+          ctx.shadowColor = 'rgba(0,0,0,0.7)';
+          ctx.shadowBlur = this.lineWidth;
+          ctx.shadowOffsetX = this.lineWidth / 2.0;
+          ctx.shadowOffsetY = this.lineWidth / 2.0;
+        }
+        ctx.stroke();
+        ctx.shadowColor = origShadowColor;
         this.ctx.beginPath();
       }
     }

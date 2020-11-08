@@ -21,6 +21,8 @@ export default {
   fontIsBoldFull: 'Bold',
   fontIsItalic: '<i>I</i>',
   fontIsItalicFull: 'Italic',
+  shadowOn: 'SH',
+  shadowOnFull: 'Shadow',
   fontName: 'F',
   fontNameFull: 'Font name',
   textStrokeColor: 'SC',

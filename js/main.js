@@ -86,15 +86,18 @@ class PainterroProc {
     }, {
       name: 'line',
       hotkey: 'l',
-      controls: [{
-        type: 'color',
-        title: 'lineColor',
-        target: 'line',
-        titleFull: 'lineColorFull',
-        action: () => {
-          this.colorPicker.open(this.colorWidgetState.line);
+      controls: [
+        {
+          type: 'color',
+          title: 'lineColor',
+          target: 'line',
+          titleFull: 'lineColorFull',
+          action: () => {
+            this.colorPicker.open(this.colorWidgetState.line);
+          },
         },
-      }, this.controlBuilder.buildLineWidthControl(1),
+        this.controlBuilder.buildLineWidthControl(1),
+        this.controlBuilder.buildShadowOnControl(2),
       ],
       activate: () => {
         this.toolContainer.style.cursor = 'crosshair';
@@ -104,16 +107,18 @@ class PainterroProc {
     }, {
       name: 'arrow',
       hotkey: 'a',
-      controls: [{
-        type: 'color',
-        title: 'lineColor',
-        target: 'line',
-        titleFull: 'lineColorFull',
-        action: () => {
-          this.colorPicker.open(this.colorWidgetState.line);
+      controls: [
+        {
+          type: 'color',
+          title: 'lineColor',
+          target: 'line',
+          titleFull: 'lineColorFull',
+          action: () => {
+            this.colorPicker.open(this.colorWidgetState.line);
+          },
         },
-      }, this.controlBuilder.buildLineWidthControl(1),
-      this.controlBuilder.buildArrowLengthControl(2),
+        this.controlBuilder.buildArrowLengthControl(1),
+        this.controlBuilder.buildShadowOnControl(2),
       ],
       activate: () => {
         this.toolContainer.style.cursor = 'crosshair';
@@ -122,23 +127,26 @@ class PainterroProc {
       eventListner: () => this.primitiveTool,
     }, {
       name: 'rect',
-      controls: [{
-        type: 'color',
-        title: 'lineColor',
-        titleFull: 'lineColorFull',
-        target: 'line',
-        action: () => {
-          this.colorPicker.open(this.colorWidgetState.line);
+      controls: [
+        {
+          type: 'color',
+          title: 'lineColor',
+          titleFull: 'lineColorFull',
+          target: 'line',
+          action: () => {
+            this.colorPicker.open(this.colorWidgetState.line);
+          },
+        }, {
+          type: 'color',
+          title: 'fillColor',
+          titleFull: 'fillColorFull',
+          target: 'fill',
+          action: () => {
+            this.colorPicker.open(this.colorWidgetState.fill);
+          },
         },
-      }, {
-        type: 'color',
-        title: 'fillColor',
-        titleFull: 'fillColorFull',
-        target: 'fill',
-        action: () => {
-          this.colorPicker.open(this.colorWidgetState.fill);
-        },
-      }, this.controlBuilder.buildLineWidthControl(2),
+        this.controlBuilder.buildLineWidthControl(2),
+        this.controlBuilder.buildShadowOnControl(3),
       ],
       activate: () => {
         this.toolContainer.style.cursor = 'crosshair';
@@ -147,23 +155,26 @@ class PainterroProc {
       eventListner: () => this.primitiveTool,
     }, {
       name: 'ellipse',
-      controls: [{
-        type: 'color',
-        title: 'lineColor',
-        titleFull: 'lineColorFull',
-        target: 'line',
-        action: () => {
-          this.colorPicker.open(this.colorWidgetState.line);
+      controls: [
+        {
+          type: 'color',
+          title: 'lineColor',
+          titleFull: 'lineColorFull',
+          target: 'line',
+          action: () => {
+            this.colorPicker.open(this.colorWidgetState.line);
+          },
+        }, {
+          type: 'color',
+          title: 'fillColor',
+          titleFull: 'fillColorFull',
+          target: 'fill',
+          action: () => {
+            this.colorPicker.open(this.colorWidgetState.fill);
+          },
         },
-      }, {
-        type: 'color',
-        title: 'fillColor',
-        titleFull: 'fillColorFull',
-        target: 'fill',
-        action: () => {
-          this.colorPicker.open(this.colorWidgetState.fill);
-        },
-      }, this.controlBuilder.buildLineWidthControl(2),
+        this.controlBuilder.buildLineWidthControl(2),
+        this.controlBuilder.buildShadowOnControl(3),
       ],
       activate: () => {
         this.toolContainer.style.cursor = 'crosshair';
@@ -232,11 +243,12 @@ class PainterroProc {
           target: 'fontIsBold',
           action: () => {
             const btn = document.getElementById(this.activeTool.controls[3].id);
-            const state = btn.getAttribute('data-value') === 'true';
-            this.textTool.setFontIsBold(!state);
-            btn.setAttribute('data-value', state ? 'false' : 'true'); // invert
+            const state = !(btn.getAttribute('data-value') === 'true');
+            this.textTool.setFontIsBold(state);
+            setParam('defaultFontBold', state);
+            btn.setAttribute('data-value', state ? 'true' : 'false'); // invert
           },
-          getValue: () => this.textTool.getIsBold(),
+          getValue: () => this.textTool.isBold,
         },
         {
           type: 'bool',
@@ -245,11 +257,12 @@ class PainterroProc {
           target: 'fontIsItalic',
           action: () => {
             const btn = document.getElementById(this.activeTool.controls[4].id);
-            const state = btn.getAttribute('data-value') === 'true';
-            this.textTool.setFontIsItalic(!state);
-            btn.setAttribute('data-value', state ? 'false' : 'true'); // invert
+            const state = !(btn.getAttribute('data-value') === 'true'); // invert
+            this.textTool.setFontIsItalic(state);
+            setParam('defaultFontItalic', state);
+            btn.setAttribute('data-value', state ? 'true' : 'false');
           },
-          getValue: () => this.textTool.getIsBold(),
+          getValue: () => this.textTool.isItalic,
         },
         // {
         //   type: 'dropdown',
@@ -514,6 +527,7 @@ class PainterroProc {
     this.resizer = new Resizer(this);
     this.settings = new Settings(this);
     this.primitiveTool = new PrimitiveTool(this);
+    this.primitiveTool.setShadowOn(this.params.defaultPrimitiveShadowOn);
     this.primitiveTool.setLineWidth(this.params.defaultLineWidth);
     this.primitiveTool.setArrowLength(this.params.defaultArrowLength);
     this.primitiveTool.setEraserWidth(this.params.defaultEraserWidth);
@@ -1193,7 +1207,7 @@ class PainterroProc {
         ctrls += `<input id=${ctl.id} class="ptro-input" type="number" min="${ctl.min}" max="${ctl.max}" ` +
           `data-id='${ctl.target}'/>`;
       } else if (ctl.type === 'bool') {
-        ctrls += `<button id=${ctl.id} class="ptro-input" data-value="false" type="button" ` +
+        ctrls += `<button id=${ctl.id} class="ptro-input ptro-check" data-value="false" type="button" ` +
           `data-id='${ctl.target}'></button>`;
       } else if (ctl.type === 'dropdown') {
         let options = '';
@@ -1210,6 +1224,9 @@ class PainterroProc {
       if (ctl.type === 'int') {
         this.doc.getElementById(ctl.id).value = ctl.getValue();
         this.doc.getElementById(ctl.id).oninput = ctl.action;
+      } else if (ctl.type === 'bool') {
+        this.doc.getElementById(ctl.id).setAttribute('data-value', ctl.getValue() ? 'true' : 'false');
+        this.doc.getElementById(ctl.id).onclick = ctl.action;
       } else if (ctl.type === 'dropdown') {
         this.doc.getElementById(ctl.id).onchange = ctl.action;
         this.doc.getElementById(ctl.id).value = ctl.getValue();

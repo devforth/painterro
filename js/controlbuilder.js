@@ -47,6 +47,24 @@ export default class ControlBuilder {
     }
     return ControlBuilder.buildInputControl('lineWidth', action, getValue, 1, 99);
   }
+
+  buildShadowOnControl(controlIndex) {
+    return {
+      type: 'bool',
+      title: 'shadowOn',
+      titleFull: 'shadowOnFull',
+      target: 'shadowOn',
+      action: () => {
+        const btn = document.getElementById(this.main.activeTool.controls[controlIndex].id);
+        const state = !(btn.getAttribute('data-value') === 'true');
+        this.main.primitiveTool.setShadowOn(state);
+        btn.setAttribute('data-value', state ? 'true' : 'false');
+        setParam('defaultPrimitiveShadowOn', state);
+      },
+      getValue: () => this.main.primitiveTool.shadowOn,
+    };
+  }
+
   buildArrowLengthControl(controlIndex) {
     const action = () => {
       const width = document.getElementById(this.main.activeTool.controls[controlIndex].id).value;

@@ -58,11 +58,17 @@ export function setDefaults(parameters) {
   params.initTextColor = params.initTextColor || '#808080';
   params.initTextStyle = params.initTextStyle || '26px \'Open Sans\', sans-serif';
   params.defaultLineWidth = settings.defaultLineWidth || params.defaultLineWidth || 5;
-  params.defaultArrowAngle = params.defaultArrowAngle || 30;
-  params.defaultArrowLength = settings.defaultArrowLength || params.defaultArrowLength || 15;
+  params.defaultPrimitiveShadowOn = firstDefined(settings.defaultPrimitiveShadowOn,
+    params.defaultPrimitiveShadowOn, true);
+
+  params.defaultArrowLength = settings.defaultArrowLength || params.defaultArrowLength || 32;
   params.defaultEraserWidth = firstDefined(settings.defaultEraserWidth,
     params.defaultEraserWidth, 5);
   params.defaultFontSize = firstDefined(settings.defaultFontSize, params.defaultFontSize, 24);
+  params.defaultFontBold = firstDefined(settings.defaultFontBold, params.defaultFontBold, false);
+  params.defaultFontItalic = firstDefined(settings.defaultFontItalic,
+    params.defaultFontItalic, false);
+
   params.fontStrokeSize = firstDefined(settings.fontStrokeSize, params.fontStrokeSize, 0);
   params.backgroundFillColor = settings.backgroundFillColor || params.backgroundFillColor || '#ffffff';
   params.backgroundFillColorAlpha = firstDefined(settings.backgroundFillColorAlpha,
@@ -94,7 +100,7 @@ export function setDefaults(parameters) {
   params.colorScheme.controlContent = params.colorScheme.controlContent || '#000000';
   params.colorScheme.hoverControl = params.colorScheme.hoverControl || params.colorScheme.control;
   params.colorScheme.hoverControlContent = params.colorScheme.hoverControlContent || '#1a3d67';
-  params.colorScheme.toolControlNameColor = params.colorScheme.toolControlNameColor || 'rgba(255,255,255,0.7)';
+  params.colorScheme.toolControlNameColor = params.colorScheme.toolControlNameColor || 'rgba(0,0,0,0.07)';
 
   params.colorScheme.activeControl = params.colorScheme.activeControl || '#7485B1';
   params.colorScheme.activeControlContent = params.colorScheme.activeControlContent ||
@@ -158,7 +164,7 @@ export function setDefaults(parameters) {
         background-color: ${params.colorScheme.hoverControl};
         color:${params.colorScheme.hoverControlContent}}    
     .ptro-bordered-control{border-color: ${params.colorScheme.activeControl}}
-    input.ptro-input, input.ptro-input:focus, select.ptro-input, select.ptro-input:focus {
+    input.ptro-input,.ptro-check,input.ptro-input:focus,select.ptro-input,select.ptro-input:focus {
       border: 1px solid ${params.colorScheme.inputBorderColor};
       background-color: ${params.colorScheme.inputBackground};
       color: ${params.colorScheme.inputText};
