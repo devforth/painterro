@@ -65,10 +65,6 @@
     initText: 'Press <b>PrtScr</b>, <b>Ctrl+V</b> to paste screenshot.<br>Press <b>Ctrl+S</b> to save', // todo: different for os-es
 
     //extraFonts: ['Open Sans'],
-    changeHandler: function (state) {
-      console.log('Something drawed: ', state);
-     // localStorage.setItem('painterroImage', this.imageSaver.asDataURL())
-    },
     onBeforeClose: function (has, done) {
       console.log('has unsaved: ', has);
       window.confirmClose = done;

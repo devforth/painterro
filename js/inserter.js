@@ -1,5 +1,5 @@
 import { tr } from './translation';
-import { genId, KEYS, copyToClipboard, imgToDataURL } from './utils';
+import { genId, KEYS, imgToDataURL } from './utils';
 
 let instance = null;
 export default class Inserter {
@@ -161,24 +161,6 @@ export default class Inserter {
   handleKeyDown(evt) {
     if (this.waitChoice && evt.keyCode === KEYS.esc) {
       this.cancelChoosing();
-      return true;
-    }
-    if (!this.waitChoice && !this.main.select.imagePlaced && this.main.select.shown &&
-        evt.keyCode === KEYS.c && (evt.ctrlKey || evt.metaKey)) {
-      const a = this.main.select.area;
-      const w = a.bottoml[0] - a.topl[0];
-      const h = a.bottoml[1] - a.topl[1];
-      const tmpCan = this.main.doc.createElement('canvas');
-      tmpCan.width = w;
-      tmpCan.height = h;
-      const tmpCtx = tmpCan.getContext('2d');
-      tmpCtx.drawImage(this.main.canvas, -a.topl[0], -a.topl[1]);
-      copyToClipboard(this.CLIP_DATA_MARKER);
-      try {
-        localStorage.setItem(this.CLIP_DATA_MARKER, tmpCan.toDataURL());
-      } catch (e) {
-        console.warn(`Unable save image to localstorage: ${e}`);
-      }
       return true;
     }
     if (this.waitChoice && event.keyCode === KEYS.enter) {

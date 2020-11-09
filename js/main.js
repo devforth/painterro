@@ -715,6 +715,35 @@ class PainterroProc {
     return false;
   }
 
+  handleClipCopyEvent(evt) {
+    let handled = false;
+    const clipFormat = 'image/png';
+    if (evt.keyCode === KEYS.c && (evt.ctrlKey || evt.metaKey)) {
+      if (!this.inserter.waitChoice && !this.select.imagePlaced && this.select.shown) {
+        const a = this.select.area;
+        const w = a.bottoml[0] - a.topl[0];
+        const h = a.bottoml[1] - a.topl[1];
+        const tmpCan = this.doc.createElement('canvas');
+        tmpCan.width = w;
+        tmpCan.height = h;
+        const tmpCtx = tmpCan.getContext('2d');
+        tmpCtx.drawImage(this.canvas, -a.topl[0], -a.topl[1]);
+        tmpCan.toBlob((b) => {
+          /* eslint no-undef: "off" */
+          navigator.clipboard.write([new ClipboardItem({ [clipFormat]: b })]);
+        }, clipFormat, 1.0);
+        handled = true;
+      } else {
+        this.canvas.toBlob((b) => {
+          /* eslint no-undef: "off" */
+          navigator.clipboard.write([new ClipboardItem({ [clipFormat]: b })]);
+        }, clipFormat, 1.0);
+        handled = true;
+      }
+    }
+    return handled;
+  }
+
   initEventHandlers() {
     this.documentHandlers = {
       mousedown: (e) => {
@@ -843,6 +872,9 @@ class PainterroProc {
           if (this.colorPicker.handleKeyDown(e)) {
             return;
           }
+          if (this.handleClipCopyEvent(e)) {
+            return;
+          }
           const evt = window.event ? event : e;
           if (this.handleToolEvent('handleKeyDown', evt)) {
             return;
@@ -884,25 +916,6 @@ class PainterroProc {
               this.openFile(item.getAsFile());
               event.preventDefault();
               event.stopPropagation();
-            } else if (item.kind === 'string') {
-              let txt = '';
-              if (window.clipboardData && window.clipboardData.getData) { // IE
-                txt = window.clipboardData.getData('Text');
-              } else if (event.clipboardData && event.clipboardData.getData) {
-                txt = event.clipboardData.getData('text/plain');
-              }
-              if (txt.startsWith(this.inserter.CLIP_DATA_MARKER)) {
-                let img;
-                try {
-                  img = localStorage.getItem(this.inserter.CLIP_DATA_MARKER);
-                } catch (e) {
-                  console.warn(`Unable get from localstorage: ${e}`);
-                  return;
-                }
-                this.loadImage(img, item.type);
-                event.preventDefault();
-                event.stopPropagation();
-              }
             }
           });
         }
