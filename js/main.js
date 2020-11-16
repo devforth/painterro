@@ -500,6 +500,19 @@ class PainterroProc {
         this.setToolEnabled(c, notEmpty);
       });
     });
+    if (this.params.backplateImgUrl) {
+      const tabelCell = this.canvas.parentElement;
+      tabelCell.style.backgroundImage = `url(${this.params.backplateImgUrl})`;
+      tabelCell.style.backgroundRepeat = 'no-repeat';
+      tabelCell.style.backgroundPosition = 'center center';
+      const img = new Image();
+      img.onload = () => {
+        this.resize(img.width, img.height);
+        this.adjustSizeFull();
+        tabelCell.style.backgroundSize = `auto ${this.canvas.style.height}`;
+      };
+      img.src = this.params.backplateImgUrl;
+    }
     this.resizer = new Resizer(this);
     this.settings = new Settings(this);
     this.primitiveTool = new PrimitiveTool(this);

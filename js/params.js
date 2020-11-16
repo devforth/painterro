@@ -70,10 +70,12 @@ export function setDefaults(parameters) {
     params.defaultFontItalic, false);
 
   params.backgroundFillColor = settings.backgroundFillColor || params.backgroundFillColor || '#ffffff';
-  params.backgroundFillColorAlpha = firstDefined(settings.backgroundFillColorAlpha,
-    params.backgroundFillColorAlpha, 1.0);
+  params.backgroundFillColorAlpha = params.backplateImgUrl ? 0 :
+    firstDefined(settings.backgroundFillColorAlpha, params.backgroundFillColorAlpha, 1.0);
   params.backgroundFillAlphaColor = HexToRGBA(params.backgroundFillColor,
     params.backgroundFillColorAlpha);
+
+  params.backplateImgUrl = firstDefined(settings.backplateImgUrl, params.backplateImgUrl, '');
 
   params.textStrokeColor = settings.textStrokeColor || params.textStrokeColor || '#ffffff';
   params.textStrokeColorAlpha = firstDefined(settings.textStrokeColorAlpha,
