@@ -55,6 +55,7 @@
   window.p = Painterro({
     hideByEsc: true,
     saveByEnter: true,
+    // backplateImgUrl: 'https://www.meme-arsenal.com/memes/50569ac974c29121ff9075e45a334942.jpg',
     //toolbarHeightPx: 50,
     //buttonSizePx: 42,
     // defaultTool: 'arrow',
@@ -62,7 +63,7 @@
     onUndo: (e) => {console.log('onUndo e', e)},
     onRedo: (e) => {console.log('onRedo e', e)},
     //id: 'conatiner',
-    initText: 'Press <b>PrtScr</b>, <b>Ctrl+V</b> to paste screenshot.<br>Press <b>Ctrl+S</b> to save', // todo: different for os-es
+    // initText: 'Press <b>PrtScr</b>, <b>Ctrl+V</b> to paste screenshot.<br>Press <b>Ctrl+S</b> to save', // todo: different for os-es
 
     //extraFonts: ['Open Sans'],
     onBeforeClose: function (has, done) {
@@ -75,22 +76,24 @@
     //availableFontSizes: [1,2,4,8,16,64],
     //availableArrowLengths: [10,20,30,40,50,60],
     // how_to_paste_actions: ['replace_all'],
-    saveHandler: (saver) => {
+    saveHandler: (saver, done) => {
       console.log('saving', saver.getWidth(), saver.getHeight())
+      console.log('Base64', saver.asDataURL())
+      done(true);
     }
     //toolbarPosition: 'top',
     // fixMobilePageReloader: false,
     // defaultTool: 'line',
     //hiddenTools: ['line']
-  }).show('https://images.unsplash.com/photo-1565118531796-763e5082d113?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80') //;
+  }).show('https://www.meme-arsenal.com/memes/50569ac974c29121ff9075e45a334942.jpg') 
   const ctx = window.p.ctx; 
 
 console.log(ctx);
-  ctx.beginPath();
-  ctx.moveTo(0,0);
-  ctx.lineTo(300,150);
-  ctx.strokeStyle="#FF0000";
-  ctx.stroke(); 
+  // ctx.beginPath();
+  // ctx.moveTo(0,0);
+  // ctx.lineTo(300,150);
+  // ctx.strokeStyle="#FF0000";
+  // ctx.stroke(); 
 
 
   /*

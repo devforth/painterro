@@ -500,6 +500,17 @@ class PainterroProc {
         this.setToolEnabled(c, notEmpty);
       });
     });
+    if (this.params.backplateImgUrl) {
+      this.tabelCell = this.canvas.parentElement;
+      this.tabelCell.style.backgroundImage = `url(${this.params.backplateImgUrl})`;
+      this.tabelCell.style.backgroundRepeat = 'no-repeat';
+      this.tabelCell.style.backgroundPosition = 'center center';
+      const img = new Image();
+      img.onload = () => {
+        this.fitImage(img);
+      };
+      img.src = this.params.backplateImgUrl;
+    }
     this.resizer = new Resizer(this);
     this.settings = new Settings(this);
     this.primitiveTool = new PrimitiveTool(this);
@@ -1003,10 +1014,15 @@ class PainterroProc {
   fitImage(img, mimetype) {
     this.loadedImageType = mimetype;
     this.resize(img.naturalWidth, img.naturalHeight);
-    this.ctx.drawImage(img, 0, 0);
-    this.zoomFactor = (this.wrapper.documentClientHeight / this.size.h) - 0.2;
+    if (!this.params.backplateImgUrl) {
+      this.ctx.drawImage(img, 0, 0);
+      this.zoomFactor = (this.wrapper.documentClientHeight / this.size.h) - 0.2;
+    }
     this.adjustSizeFull();
     this.worklog.captureState();
+    if (this.params.backplateImgUrl) {
+      this.tabelCell.style.backgroundSize = `auto ${window.getComputedStyle(this.substrate).width}`;
+    }
   }
 
   loadImage(source, mimetype) {
