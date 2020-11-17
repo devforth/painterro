@@ -80,6 +80,8 @@ export function setDefaults(parameters) {
     params.textStrokeColorAlpha, 1.0);
   params.textStrokeAlphaColor = HexToRGBA(params.textStrokeColor, params.textStrokeColorAlpha);
 
+  params.shadowScale = firstDefined(params.shadowScale, 1);
+
   params.defaultTextStrokeAndShadow = firstDefined(settings.defaultTextStrokeAndShadow,
     params.defaultTextStrokeAndShadow, true);
 

@@ -233,9 +233,9 @@ export default class PrimitiveTool {
         const origShadowColor = ctx.shadowColor;
         if (this.shadowOn) {
           ctx.shadowColor = 'rgba(0,0,0,0.7)';
-          ctx.shadowBlur = r / 3.0;
-          ctx.shadowOffsetX = r / 20.0;
-          ctx.shadowOffsetY = r / 20.0;
+          ctx.shadowBlur = Math.log(r) * this.main.params.shadowScale;
+          ctx.shadowOffsetX = Math.log10(r);
+          ctx.shadowOffsetY = Math.log10(r);
         }
         ctx.fill();
         ctx.lineCap = origCap;

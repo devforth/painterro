@@ -120,7 +120,7 @@ export default class TextTool {
       this.input.style['text-shadow'] = `
       -${st}px -${st}px 1px ${this.strokeColor},${st}px -${st}px 1px ${this.strokeColor},
       -${st}px  ${st}px 1px ${this.strokeColor},${st}px  ${st}px 1px ${this.strokeColor},
-      ${st}px ${st}px ${this.fontSize / 5.0}px black`;
+      ${st}px ${st}px ${Math.log(this.fontSize) * this.main.params.shadowScale}px black`;
     } else {
       this.input.style['text-shadow'] = 'none';
     }
@@ -207,7 +207,7 @@ export default class TextTool {
     html2canvas(this.input, {
       backgroundColor: null,
       logging: false,
-      scale: 1.0 * scale,
+      scale,
     }).then((can) => {
       this.ctx.drawImage(can, this.scaledCord[0], this.scaledCord[1]);
       this.input.style.border = origBorder;
