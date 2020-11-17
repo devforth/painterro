@@ -24,6 +24,11 @@ export default class Inserter {
           this.main.clearBackground();
           this.ctx.putImageData(tmpData, 0, 0);
           this.main.adjustSizeFull();
+          if (this.main.params.backplateImgUrl) {
+            this.main.tabelCell.style.backgroundPosition = 'top center';
+            this.main.tabelCell.style.backgroundSize = `auto ${this.main.substrate.style.width}`;
+            this.main.substrate.style.opacity = 0;
+          }
           if (img.naturalWidth < oldW) {
             const offset = Math.round((oldW - img.naturalWidth) / 2);
             this.main.select.placeAt(offset, oldH, offset, 0, img);
@@ -46,6 +51,12 @@ export default class Inserter {
           this.main.clearBackground();
           this.ctx.putImageData(tmpData, 0, 0);
           this.main.adjustSizeFull();
+          if (this.main.params.backplateImgUrl) {
+            this.main.tabelCell.style.backgroundPosition = `${this.main.substrate.style.left} center`;
+            this.main.tabelCell.style.backgroundSize = `auto ${this.main.substrate.style.height}`;
+            this.main.tabelCell.style.width = this.main.substrate.style.width;
+            this.main.substrate.style.opacity = 0;
+          }
           if (img.naturalHeight < oldH) {
             const offset = Math.round((oldH - img.naturalHeight) / 2);
             this.main.select.placeAt(oldW, offset, 0, offset, img);

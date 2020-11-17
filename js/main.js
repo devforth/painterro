@@ -501,15 +501,13 @@ class PainterroProc {
       });
     });
     if (this.params.backplateImgUrl) {
-      const tabelCell = this.canvas.parentElement;
-      tabelCell.style.backgroundImage = `url(${this.params.backplateImgUrl})`;
-      tabelCell.style.backgroundRepeat = 'no-repeat';
-      tabelCell.style.backgroundPosition = 'center center';
+      this.tabelCell = this.canvas.parentElement;
+      this.tabelCell.style.backgroundImage = `url(${this.params.backplateImgUrl})`;
+      this.tabelCell.style.backgroundRepeat = 'no-repeat';
+      this.tabelCell.style.backgroundPosition = 'center center';
       const img = new Image();
       img.onload = () => {
-        this.resize(img.width, img.height);
-        this.adjustSizeFull();
-        tabelCell.style.backgroundSize = `auto ${this.canvas.style.height}`;
+        this.fitImage(img);
       };
       img.src = this.params.backplateImgUrl;
     }
@@ -1016,10 +1014,15 @@ class PainterroProc {
   fitImage(img, mimetype) {
     this.loadedImageType = mimetype;
     this.resize(img.naturalWidth, img.naturalHeight);
-    this.ctx.drawImage(img, 0, 0);
-    this.zoomFactor = (this.wrapper.documentClientHeight / this.size.h) - 0.2;
+    if (!this.params.backplateImgUrl) {
+      this.ctx.drawImage(img, 0, 0);
+      this.zoomFactor = (this.wrapper.documentClientHeight / this.size.h) - 0.2;
+    }
     this.adjustSizeFull();
     this.worklog.captureState();
+    if (this.params.backplateImgUrl) {
+      this.tabelCell.style.backgroundSize = `auto ${window.getComputedStyle(this.substrate).width}`;
+    }
   }
 
   loadImage(source, mimetype) {
