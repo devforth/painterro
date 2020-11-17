@@ -213,6 +213,7 @@ Painterro({
 |`backgroundFillColorAlpha`| Transparancy of `backgroundFillColor` from `0.0` to `1.0` | `1.0` |
 |`textStrokeColor`| Stroke color of text tool | `'#ffffff'` |
 |`textStrokeColorAlpha`| Stroke color of text tool | `1.0` |
+|`shadowScale`| Change text shadow blur for text and arrow | `1.0` |
 |`defaultFontSize` | Default font size in pixels | `24` |
 |`backplateImgUrl`| background for drawing, doesn't include in final image |`undefined` |
 |`defaultTextStrokeAndShadow` | Enables Stroke and Shadow for text tool by default (easier recognize text on screenshots) | `true` |
