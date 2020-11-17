@@ -214,7 +214,7 @@ Painterro({
 |`textStrokeColor`| Stroke color of text tool | `'#ffffff'` |
 |`textStrokeColorAlpha`| Stroke color of text tool | `1.0` |
 |`defaultFontSize` | Default font size in pixels | `24` |
-|`backplateImgUrl`| background for drawing, doesn't include in final image |img url|
+|`backplateImgUrl`| background for drawing, doesn't include in final image |`undefined` |
 |`defaultTextStrokeAndShadow` | Enables Stroke and Shadow for text tool by default (easier recognize text on screenshots) | `true` |
 |`defaultSize` | default image size, should be string in format `<width>x<height>` in pixel, e.g. `'200x100'`. If value is `'fill'`(default) than all container size will be used | `'fill'` |
 |`defaultTool` | Tool selected by default | `'select'` | 
