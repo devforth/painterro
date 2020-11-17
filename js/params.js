@@ -75,8 +75,6 @@ export function setDefaults(parameters) {
   params.backgroundFillAlphaColor = HexToRGBA(params.backgroundFillColor,
     params.backgroundFillColorAlpha);
 
-  params.backplateImgUrl = firstDefined(settings.backplateImgUrl, params.backplateImgUrl, '');
-
   params.textStrokeColor = settings.textStrokeColor || params.textStrokeColor || '#ffffff';
   params.textStrokeColorAlpha = firstDefined(settings.textStrokeColorAlpha,
     params.textStrokeColorAlpha, 1.0);
