@@ -9,34 +9,36 @@ export default class Inserter {
         internalName: 'fit',
         handle: (img) => {
           this.main.fitImage(img, this.mimetype);
-        },
+        }
       },
-      extend_down: {
-        internalName: 'extend_down',
+      paste_over: {
+        internalName: 'over',
         handle: (img) => {
           this.tmpImg = img;
           const oldH = this.main.size.h;
           const oldW = this.main.size.w;
-          const newH = oldH + img.naturalHeight;
-          const newW = Math.max(oldW, img.naturalWidth);
-          const tmpData = this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h);
-          this.main.resize(newW, newH);
-          this.main.clearBackground();
-          this.ctx.putImageData(tmpData, 0, 0);
-          this.main.adjustSizeFull();
-          if (this.main.params.backplateImgUrl) {
-            this.main.tabelCell.style.backgroundPosition = 'top center';
-            this.main.tabelCell.style.backgroundSize = `auto ${this.main.substrate.style.width}`;
-            this.main.substrate.style.opacity = 0;
-          }
-          if (img.naturalWidth < oldW) {
-            const offset = Math.round((oldW - img.naturalWidth) / 2);
-            this.main.select.placeAt(offset, oldH, offset, 0, img);
+          if (img.naturalHeight <= oldH && img.naturalWidth <= oldW) {
+            this.main.select.placeAt(
+              0, 0,
+              oldW - img.naturalWidth,
+              oldH - img.naturalHeight, img);
+          } else if (img.naturalWidth / img.naturalHeight > oldW / oldH) {
+            const newH = oldW * (img.naturalHeight / img.naturalWidth);
+            this.main.select.placeAt(0, 0, 0, oldH - newH, img);
           } else {
-            this.main.select.placeAt(0, oldH, 0, 0, img);
+            const newW = oldH * (img.naturalWidth / img.naturalHeight);
+            this.main.select.placeAt(0, 0, oldW - newW, 0, img);
           }
           this.worklog.captureState();
         },
+      },
+      extend_top: {
+        internalName: 'extend_top',
+        handle: (img) => {}
+      },
+      extend_left: {
+        internalName: 'extend_left',
+        handle: (img) => {}
       },
       extend_right: {
         internalName: 'extend_right',
@@ -66,23 +68,29 @@ export default class Inserter {
           this.worklog.captureState();
         },
       },
-      paste_over: {
-        internalName: 'over',
+      extend_down: {
+        internalName: 'extend_down',
         handle: (img) => {
           this.tmpImg = img;
           const oldH = this.main.size.h;
           const oldW = this.main.size.w;
-          if (img.naturalHeight <= oldH && img.naturalWidth <= oldW) {
-            this.main.select.placeAt(
-              0, 0,
-              oldW - img.naturalWidth,
-              oldH - img.naturalHeight, img);
-          } else if (img.naturalWidth / img.naturalHeight > oldW / oldH) {
-            const newH = oldW * (img.naturalHeight / img.naturalWidth);
-            this.main.select.placeAt(0, 0, 0, oldH - newH, img);
+          const newH = oldH + img.naturalHeight;
+          const newW = Math.max(oldW, img.naturalWidth);
+          const tmpData = this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h);
+          this.main.resize(newW, newH);
+          this.main.clearBackground();
+          this.ctx.putImageData(tmpData, 0, 0);
+          this.main.adjustSizeFull();
+          if (this.main.params.backplateImgUrl) {
+            this.main.tabelCell.style.backgroundPosition = 'top center';
+            this.main.tabelCell.style.backgroundSize = `auto ${this.main.substrate.style.width}`;
+            this.main.substrate.style.opacity = 0;
+          }
+          if (img.naturalWidth < oldW) {
+            const offset = Math.round((oldW - img.naturalWidth) / 2);
+            this.main.select.placeAt(offset, oldH, offset, 0, img);
           } else {
-            const newW = oldH * (img.naturalWidth / img.naturalHeight);
-            this.main.select.placeAt(0, 0, oldW - newW, 0, img);
+            this.main.select.placeAt(0, oldH, 0, 0, img);
           }
           this.worklog.captureState();
         },
@@ -231,21 +239,42 @@ export default class Inserter {
   }
 
   html() {
-    let buttons = '';
+    let fitControls = '';
+    let extendControls = '';
     Object.keys(this.pasteOptions).forEach((k) => {
-      const o = this.pasteOptions[k];
-      o.id = genId();
-      buttons += `<button type="button" id="${o.id}" class="ptro-selector-btn ptro-color-control">` +
-        `<div><i class="ptro-icon ptro-icon-paste_${o.internalName}"></i></div>` +
-        `<div>${tr(`pasteOptions.${o.internalName}`)}</div>` +
-      '</button>';
+      if(k === 'replace_all' || k === 'paste_over') {
+        const o = this.pasteOptions[k];
+        o.id = genId();
+        fitControls += `<div class="ptro-paster-fit">${controlObjToString(o, 'ptro-selector-fit')}<div class="ptro-paster-wrapper-label">${tr(`pasteOptions.${o.internalName}`)}</div></div>`;
+      } else {
+        const extendObj = this.pasteOptions[k]
+        extendObj.id = genId();
+        extendControls += controlObjToString(extendObj, 'ptro-selector-extend');
+      }
     });
     return '<div class="ptro-paster-select-wrapper" hidden><div class="ptro-paster-select ptro-v-middle">' +
       '<div class="ptro-in ptro-v-middle-in">' +
-      `<div class="ptro-paste-label">${tr('pasteOptions.how_to_paste')}</div>${
-        buttons}</div></div></div>`;
+      ` <div class="ptro-paster-wrappers-fits">
+        ${fitControls}
+        <div class="ptro-paster-select-wrapper-extends">
+          <div class="ptro-paster-extends-items">
+            ${extendControls}
+          </div>
+          <div class="ptro-paster-wrapper-label">extend</div>
+        </div>
+        </div>
+      </div></div></div>`;
   }
 }
+
 export function setActivePasteOptions(a) {
   return Inserter.get().activeOptions(a);
+}
+
+function controlObjToString(o, btnClassName='') {
+  console.log(o.internalName)
+  return `<button type="button" id="${o.id}" class="ptro-selector-btn ptro-color-control ${btnClassName}">` +
+  `<div><i class="ptro-icon ptro-icon-paste_${o.internalName}"></i></div>` +
+  `<div>${tr(`pasteOptions.${o.internalName}`)}</div>` +
+  '</button>';
 }

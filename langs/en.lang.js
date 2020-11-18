@@ -73,6 +73,8 @@ export default {
     fit: 'Replace all',
     extend_down: 'Extend down',
     extend_right: 'Extend right',
+    extend_left: 'Extend left',
+    extend_top: 'Extend top',
     over: 'Paste over',
     how_to_paste: 'How to paste?',
   },

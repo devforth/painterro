@@ -67,6 +67,14 @@ url("ptroiconfont.svg?bf58900bc0f41f759214435220e5b3df#ptroiconfont") format("sv
 .ptro-icon-paste_extend_right:before {
 	content: "\f10f";
 }
+.ptro-icon-paste_extend_left:before {
+	content: "\f10f";
+	transform: rotate(-180deg);
+}
+.ptro-icon-paste_extend_top:before {
+	content: "\f10f";
+	transform: rotate(-90deg);
+}
 .ptro-icon-paste_fit:before {
 	content: "\f110";
 }
