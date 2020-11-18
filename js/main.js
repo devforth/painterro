@@ -505,14 +505,15 @@ class PainterroProc {
       this.tabelCell.style.backgroundImage = `url(${this.params.backplateImgUrl})`;
       this.tabelCell.style.backgroundRepeat = 'no-repeat';
       this.tabelCell.style.backgroundPosition = 'center center';
-      this.backplateImgSize = {
-        height: parseInt(this.substrate.style.height),
-        width: parseInt(this.substrate.style.width)
-      }
-      console.log(this.backplateImgSize, this.tabelCell.style.backgroundSize);
       const img = new Image();
       img.onload = () => {
         this.fitImage(img);
+        this.backplateImgSize = {
+          height: parseInt(this.substrate.style.height),
+          width: Math.round(this.size.w * this.size.ratio),
+          ratio: this.size.ratio
+        };
+        console.log(this.backplateImgSize);
       };
       img.src = this.params.backplateImgUrl;
     }
@@ -1019,6 +1020,7 @@ class PainterroProc {
   fitImage(img, mimetype) {
     this.loadedImageType = mimetype;
     this.resize(img.naturalWidth, img.naturalHeight);
+    console.log(this.size)
     if (!this.params.backplateImgUrl) {
       this.ctx.drawImage(img, 0, 0);
       this.zoomFactor = (this.wrapper.documentClientHeight / this.size.h) - 0.2;
@@ -1026,7 +1028,7 @@ class PainterroProc {
     this.adjustSizeFull();
     this.worklog.captureState();
     if (this.params.backplateImgUrl) {
-      this.tabelCell.style.backgroundSize = `auto ${window.getComputedStyle(this.substrate).width}`;
+      this.tabelCell.style.backgroundSize = `${window.getComputedStyle(this.substrate).width} ${window.getComputedStyle(this.substrate).height}`;
     }
   }
 

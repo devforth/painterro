@@ -345,12 +345,12 @@ function calcBackplatePosition(extendSide, newH, newW) {
     const tabelCellPaddingLeft =  (tabelCellWidth - parseInt(this.main.substrate.style.width))/2;
     const imgContainerWidth = newW < tabelCellWidth ? newW : tabelCellWidth;
     this.main.tabelCell.style.width = this.main.substrate.style.width;
-    changeBackplateStyle.call(
-      this, 
-      ((imgContainerWidth - parseInt(this.main.substrate.style.height)) + tabelCellPaddingLeft) + 'px', 
-      'center',
-      this.main.substrate.style.height
-    );
+      changeBackplateStyle.call(
+        this, 
+        ((parseInt(this.main.substrate.style.width) - this.main.backplateImgSize.width) + tabelCellPaddingLeft) + 'px', 
+        'center',
+        this.main.substrate.style.height
+      );
   }
   else if(extendSide === 'right') {
     this.main.tabelCell.style.width = this.main.substrate.style.width;
