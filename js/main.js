@@ -505,6 +505,11 @@ class PainterroProc {
       this.tabelCell.style.backgroundImage = `url(${this.params.backplateImgUrl})`;
       this.tabelCell.style.backgroundRepeat = 'no-repeat';
       this.tabelCell.style.backgroundPosition = 'center center';
+      this.backplateImgSize = {
+        height: parseInt(this.substrate.style.height),
+        width: parseInt(this.substrate.style.width)
+      }
+      console.log(this.backplateImgSize, this.tabelCell.style.backgroundSize);
       const img = new Image();
       img.onload = () => {
         this.fitImage(img);

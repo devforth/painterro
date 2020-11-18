@@ -46,12 +46,7 @@ export default class Inserter {
           this.ctx.putImageData(tmpData, 0, img.naturalHeight);
           this.main.adjustSizeFull();
           if (this.main.params.backplateImgUrl) {
-            const tabelCellHeight = parseInt(window.getComputedStyle(this.main.tabelCell).height);
-            const tabelCellPadding =  (tabelCellHeight - parseInt(this.main.substrate.style.height))/2;
-            const imgContainer = newH  < tabelCellHeight ? newH : tabelCellHeight;
-            this.main.tabelCell.style.backgroundPosition = `center ${(imgContainer - parseInt(this.main.substrate.style.width)+tabelCellPadding)}px`;
-            this.main.tabelCell.style.backgroundSize = `auto ${this.main.substrate.style.width}`;
-            this.main.substrate.style.opacity = 0;
+            calcBackplatePosition.call(this, 'top', newH, newW);
           }
           if (img.naturalWidth < oldW) {
             const offset = Math.round((oldW - img.naturalWidth) / 2);
@@ -76,14 +71,7 @@ export default class Inserter {
           this.ctx.putImageData(tmpData, img.naturalWidth, 0);
           this.main.adjustSizeFull();
           if (this.main.params.backplateImgUrl) {
-            const tabelCellWidth = parseInt(window.getComputedStyle(this.main.tabelCell).width);
-            const tabelCellPaddingLeft =  (tabelCellWidth - parseInt(this.main.substrate.style.width))/2;
-            const imgContainerWidth = newW < tabelCellWidth ? newW : tabelCellWidth;
-            this.main.tabelCell.style.backgroundPosition = `${(imgContainerWidth - parseInt(this.main.substrate.style.height)) + tabelCellPaddingLeft}px center`;
-            this.main.tabelCell.style.backgroundSize = `auto ${this.main.substrate.style.height}`;
-            this.main.tabelCell.style.width = this.main.substrate.style.width;
-            this.main.substrate.style.opacity = 0;
-            console.log('end',tabelCellPaddingLeft)
+            calcBackplatePosition.call(this, 'left', newH, newW);
           }
           if (img.naturalHeight < oldH) {
             const offset = Math.round((oldH - img.naturalHeight) / 2);
@@ -108,10 +96,7 @@ export default class Inserter {
           this.ctx.putImageData(tmpData, 0, 0);
           this.main.adjustSizeFull();
           if (this.main.params.backplateImgUrl) {
-            this.main.tabelCell.style.backgroundPosition = `${this.main.substrate.style.left} center`;
-            this.main.tabelCell.style.backgroundSize = `auto ${this.main.substrate.style.height}`;
-            this.main.tabelCell.style.width = this.main.substrate.style.width;
-            this.main.substrate.style.opacity = 0;
+            calcBackplatePosition.call(this, 'right');
           }
           if (img.naturalHeight < oldH) {
             const offset = Math.round((oldH - img.naturalHeight) / 2);
@@ -136,11 +121,7 @@ export default class Inserter {
           this.ctx.putImageData(tmpData, 0, 0);
           this.main.adjustSizeFull();
           if (this.main.params.backplateImgUrl) {
-            const tabelCellHeight = parseInt(window.getComputedStyle(this.main.tabelCell).height);
-            const tabelCellPadding =  (tabelCellHeight - parseInt(this.main.substrate.style.height))/2;
-            this.main.tabelCell.style.backgroundPosition = `center ${tabelCellPadding}px`;
-            this.main.tabelCell.style.backgroundSize = `auto ${this.main.substrate.style.width}`;
-            this.main.substrate.style.opacity = 0;
+            calcBackplatePosition.call(this, 'down');
           }
           if (img.naturalWidth < oldW) {
             const offset = Math.round((oldW - img.naturalWidth) / 2);
@@ -332,4 +313,55 @@ function controlObjToString(o, btnClassName='') {
   `<div><i class="ptro-icon ptro-icon-paste_${o.internalName}"></i></div>` +
   `<div>${tr(`pasteOptions.${o.internalName}`)}</div>` +
   '</button>';
+}
+
+function changeBackplateStyle(xPos='center', yPos='center', size='auto') {
+  this.main.tabelCell.style.backgroundPosition = `${xPos} ${yPos}`;
+  this.main.tabelCell.style.backgroundSize = `auto ${size}`;
+  this.main.substrate.style.opacity = 0;
+}
+
+function calcBackplatePosition(extendSide, newH, newW) {
+  if(extendSide === 'top') {
+    const tabelCellHeight = parseInt(window.getComputedStyle(this.main.tabelCell).height);
+    const tabelCellPadding =  (tabelCellHeight - parseInt(this.main.substrate.style.height))/2;
+    const imgContainer = newH  < tabelCellHeight ? newH : tabelCellHeight;
+    changeBackplateStyle.call(
+      this, 
+      'center', 
+      (imgContainer - parseInt(this.main.substrate.style.width)+tabelCellPadding)+'px', 
+      this.main.substrate.style.width
+    );
+  } 
+  else if(extendSide === 'left') {
+    const tabelCellWidth = parseInt(window.getComputedStyle(this.main.tabelCell).width);
+    const tabelCellPaddingLeft =  (tabelCellWidth - parseInt(this.main.substrate.style.width))/2;
+    const imgContainerWidth = newW < tabelCellWidth ? newW : tabelCellWidth;
+    this.main.tabelCell.style.width = this.main.substrate.style.width;
+    changeBackplateStyle.call(
+      this, 
+      ((imgContainerWidth - parseInt(this.main.substrate.style.height)) + tabelCellPaddingLeft) + 'px', 
+      'center',
+      this.main.substrate.style.height
+    );
+  }
+  else if(extendSide === 'right') {
+    this.main.tabelCell.style.width = this.main.substrate.style.width;
+    changeBackplateStyle.call(
+      this, 
+      this.main.substrate.style.left, 
+      'center', 
+      this.main.substrate.style.height
+    );
+  }
+  else if(extendSide === 'down') {
+    const tabelCellHeight = parseInt(window.getComputedStyle(this.main.tabelCell).height);
+    const tabelCellPadding =  (tabelCellHeight - parseInt(this.main.substrate.style.height))/2;
+    changeBackplateStyle.call(
+      this, 
+      'center', 
+      tabelCellPadding+'px', 
+      this.main.substrate.style.width
+      );
+  }
 }
