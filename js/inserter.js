@@ -8,6 +8,13 @@ export default class Inserter {
       replace_all: {
         internalName: 'fit',
         handle: (img) => {
+          if(this.main.params.backplateImgUrl) {
+            this.main.params.backplateImgUrl = undefined;
+            this.main.tabelCell.style.background = '';
+            this.main.params.backgroundFillColorAlpha = 1;
+            this.main.canvas.style.backgroundColor = `${this.main.params.backgroundFillColor}ff`;
+            console.log(this.main.params.backgroundFillColor)
+          }
           this.main.fitImage(img, this.mimetype);
         }
       },
