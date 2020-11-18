@@ -34,11 +34,58 @@ export default class Inserter {
       },
       extend_top: {
         internalName: 'extend_top',
-        handle: (img) => {}
+        handle: (img) => {
+          this.tmpImg = img;
+          const oldH = this.main.size.h;
+          const oldW = this.main.size.w;
+          const newH = oldH + img.naturalHeight;
+          const newW = Math.max(oldW, img.naturalWidth);
+          const tmpData = this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h);
+          this.main.resize(newW, newH);
+          this.main.clearBackground();
+          this.ctx.putImageData(tmpData, 0, img.naturalHeight);
+          this.main.adjustSizeFull();
+          if (this.main.params.backplateImgUrl) {
+            this.main.tabelCell.style.backgroundPosition = 'down center';
+            this.main.tabelCell.style.backgroundSize = `auto ${this.main.substrate.style.width}`;
+            this.main.substrate.style.opacity = 0;
+          }
+          if (img.naturalWidth < oldW) {
+            const offset = Math.round((oldW - img.naturalWidth) / 2);
+            this.main.select.placeAt(offset, 0, offset, oldH, img);
+          } else {
+            this.main.select.placeAt(0, oldH, 0, 0, img);
+          }
+          this.worklog.captureState();
+        }
       },
       extend_left: {
         internalName: 'extend_left',
-        handle: (img) => {}
+        handle: (img) => {
+          this.tmpImg = img;
+          const oldH = this.main.size.h;
+          const oldW = this.main.size.w;
+          const newW = oldW + img.naturalWidth;
+          const newH = Math.max(oldH, img.naturalHeight);
+          const tmpData = this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h);
+          this.main.resize(newW, newH);
+          this.main.clearBackground();
+          this.ctx.putImageData(tmpData, img.naturalWidth, 0);
+          this.main.adjustSizeFull();
+          if (this.main.params.backplateImgUrl) {
+            this.main.tabelCell.style.backgroundPosition = `${this.main.substrate.style.right} center`;
+            this.main.tabelCell.style.backgroundSize = `auto ${this.main.substrate.style.height}`;
+            this.main.tabelCell.style.width = this.main.substrate.style.width;
+            this.main.substrate.style.opacity = 0;
+          }
+          if (img.naturalHeight < oldH) {
+            const offset = Math.round((oldH - img.naturalHeight) / 2);
+            this.main.select.placeAt(0, offset, oldW, offset, img);
+          } else {
+            this.main.select.placeAt(oldW, 0, 0, 0, img);
+          }
+          this.worklog.captureState();
+        }
       },
       extend_right: {
         internalName: 'extend_right',
@@ -89,8 +136,10 @@ export default class Inserter {
           if (img.naturalWidth < oldW) {
             const offset = Math.round((oldW - img.naturalWidth) / 2);
             this.main.select.placeAt(offset, oldH, offset, 0, img);
+            console.log('<', offset, oldH);
           } else {
             this.main.select.placeAt(0, oldH, 0, 0, img);
+            console.log('>', offset, oldH);
           }
           this.worklog.captureState();
         },
@@ -272,7 +321,6 @@ export function setActivePasteOptions(a) {
 }
 
 function controlObjToString(o, btnClassName='') {
-  console.log(o.internalName)
   return `<button type="button" id="${o.id}" class="ptro-selector-btn ptro-color-control ${btnClassName}">` +
   `<div><i class="ptro-icon ptro-icon-paste_${o.internalName}"></i></div>` +
   `<div>${tr(`pasteOptions.${o.internalName}`)}</div>` +

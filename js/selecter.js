@@ -164,8 +164,10 @@ ${Math.round(pxData[i][j][3] / s)})`;
     this.placedData = tmpCan.toDataURL('image/png');
     const lowScale = 1000 / Math.max(img.naturalWidth, img.naturalHeight);
     if (lowScale >= 1) {
+      console.log('lowScale < 1')
       this.placedDataLow = this.placedData;
     } else {
+      console.log('lowScale < 1')
       tmpCan.width = img.naturalWidth * lowScale;
       tmpCan.height = img.naturalHeight * lowScale;
       tmpCtx.scale(lowScale, lowScale);
