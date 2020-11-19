@@ -511,7 +511,7 @@ class PainterroProc {
         this.backplateImgSize = {
           height: parseInt(this.substrate.style.height),
           width: parseInt(this.substrate.style.width),
-          ratio: this.size.ratio,
+          ratio: parseInt(this.substrate.style.height) / parseInt(this.substrate.style.width),
           deltOfRealandCrop: this.size.h - parseInt(this.substrate.style.height)
         };
         console.log(this.backplateImgSize);
@@ -1093,7 +1093,6 @@ class PainterroProc {
 
   adjustSizeFull() {
     const ratio = this.wrapper.documentClientWidth / this.wrapper.documentClientHeight;
-    console.log(this.wrapper.documentClientWidth, this.wrapper.documentClientHeight, ratio);
     if (this.zoom === false) {
       if (this.size.w > this.wrapper.documentClientWidth ||
         this.size.h > this.wrapper.documentClientHeight) {
