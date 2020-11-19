@@ -510,8 +510,9 @@ class PainterroProc {
         this.fitImage(img);
         this.backplateImgSize = {
           height: parseInt(this.substrate.style.height),
-          width: Math.round(this.size.w * this.size.ratio),
-          ratio: this.size.ratio
+          width: parseInt(this.substrate.style.width),
+          ratio: this.size.ratio,
+          deltOfRealandCrop: this.size.h - parseInt(this.substrate.style.height)
         };
         console.log(this.backplateImgSize);
       };
@@ -1092,21 +1093,24 @@ class PainterroProc {
 
   adjustSizeFull() {
     const ratio = this.wrapper.documentClientWidth / this.wrapper.documentClientHeight;
-
+    console.log(this.wrapper.documentClientWidth, this.wrapper.documentClientHeight, ratio);
     if (this.zoom === false) {
       if (this.size.w > this.wrapper.documentClientWidth ||
         this.size.h > this.wrapper.documentClientHeight) {
         const newRelation = ratio < this.size.ratio;
         this.ratioRelation = newRelation;
         if (newRelation) {
+          console.log('cropp down 2 ')
           this.canvas.style.width = `${this.wrapper.clientWidth}px`;
           this.canvas.style.height = 'auto';
         } else {
+          console.log('cropp down 1 ')
           this.canvas.style.width = 'auto';
           this.canvas.style.height = `${this.wrapper.clientHeight}px`;
         }
         this.scroller.style.overflow = 'hidden';
       } else {
+        console.log('cropp down 0 ')
         this.scroller.style.overflow = 'hidden';
         this.canvas.style.width = 'auto';
         this.canvas.style.height = 'auto';

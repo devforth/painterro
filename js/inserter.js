@@ -123,12 +123,13 @@ export default class Inserter {
           const newH = oldH + img.naturalHeight;
           const newW = Math.max(oldW, img.naturalWidth);
           const tmpData = this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h);
+          console.log('downInit',oldH, oldW, newH, newW);
           this.main.resize(newW, newH);
           this.main.clearBackground();
           this.ctx.putImageData(tmpData, 0, 0);
           this.main.adjustSizeFull();
           if (this.main.params.backplateImgUrl) {
-            calcBackplatePosition.call(this, 'down');
+            calcBackplatePosition.call(this, 'down', newH, newW, img, oldH, oldW);
           }
           if (img.naturalWidth < oldW) {
             const offset = Math.round((oldW - img.naturalWidth) / 2);
@@ -322,13 +323,13 @@ function controlObjToString(o, btnClassName='') {
   '</button>';
 }
 
-function changeBackplateStyle(xPos='center', yPos='center', size='auto') {
+function changeBackplateStyle(xPos='center', yPos='center', sizeH='auto', sizeW='auto') {
   this.main.tabelCell.style.backgroundPosition = `${xPos} ${yPos}`;
-  this.main.tabelCell.style.backgroundSize = `auto ${size}`;
+  this.main.tabelCell.style.backgroundSize = `${sizeW} ${sizeH}`;
   this.main.substrate.style.opacity = 0;
 }
 
-function calcBackplatePosition(extendSide, newH, newW) {
+function calcBackplatePosition(extendSide, newH, newW, imgPaste, oldH, oldW) {
   if(extendSide === 'top') {
     const tabelCellHeight = parseInt(window.getComputedStyle(this.main.tabelCell).height);
     const tabelCellPadding =  (tabelCellHeight - parseInt(this.main.substrate.style.height))/2;
@@ -341,16 +342,29 @@ function calcBackplatePosition(extendSide, newH, newW) {
     );
   } 
   else if(extendSide === 'left') {
+    const imgContainerWidth = parseInt(this.main.substrate.style.width);
+    const imgContainerHeight = parseInt(this.main.substrate.style.height);
+    const imgSizeWidth = this.main.backplateImgSize.width;
+    const imgSizeHeight = this.main.backplateImgSize.height;
     const tabelCellWidth = parseInt(window.getComputedStyle(this.main.tabelCell).width);
-    const tabelCellPaddingLeft =  (tabelCellWidth - parseInt(this.main.substrate.style.width))/2;
-    const imgContainerWidth = newW < tabelCellWidth ? newW : tabelCellWidth;
-    this.main.tabelCell.style.width = this.main.substrate.style.width;
+    const tabelCellPaddingLeft =  (tabelCellWidth - imgContainerWidth) / 2;
+    const ratio = this.main.backplateImgSize.ratio;
+    console.log(this.main.backplateImgSize)
+    this.main.tabelCell.style.width = imgContainerWidth+'px';
+      console.log(ratio);
       changeBackplateStyle.call(
         this, 
-        ((parseInt(this.main.substrate.style.width) - this.main.backplateImgSize.width) + tabelCellPaddingLeft) + 'px', 
+        ((imgContainerWidth - imgSizeWidth) + tabelCellPaddingLeft) + 'px', 
         'center',
-        this.main.substrate.style.height
+        imgContainerHeight + 'px'
       );
+      if(imgSizeHeight > imgContainerHeight) {
+        this.main.backplateImgSize.height = imgContainerHeight;
+        this.main.backplateImgSize.ratio = imgSizeWidth / imgSizeHeight;
+        this.main.backplateImgSize.width = imgSizeWidth !== imgSizeHeight ? 
+            imgSizeWidth * ratio : imgContainerHeight;
+        console.log(this.main.backplateImgSize);
+      }
   }
   else if(extendSide === 'right') {
     this.main.tabelCell.style.width = this.main.substrate.style.width;
@@ -362,13 +376,20 @@ function calcBackplatePosition(extendSide, newH, newW) {
     );
   }
   else if(extendSide === 'down') {
+    const bckImgHeight = this.main.backplateImgSize.height;
+    const canvasWidth = parseInt(this.main.substrate.style.width);
+    const canvasHeight = parseInt(this.main.substrate.style.height);
     const tabelCellHeight = parseInt(window.getComputedStyle(this.main.tabelCell).height);
-    const tabelCellPadding =  (tabelCellHeight - parseInt(this.main.substrate.style.height))/2;
+    const tabelCellPaddingTop = (tabelCellHeight - canvasHeight) / 2;
+    const bckImgWidth = this.main.backplateImgSize.width;
+    const isRect = bckImgWidth !== bckImgHeight;
+    const bckSizeWidth = isRect ? 0 : 'auto';
+    const bckSizeHeight = isRect ? 0 : canvasWidth;
     changeBackplateStyle.call(
       this, 
       'center', 
-      tabelCellPadding+'px', 
-      this.main.substrate.style.width
-      );
+      tabelCellPaddingTop + 'px',
+      bckSizeHeight + 'px'
+    );
   }
 }
