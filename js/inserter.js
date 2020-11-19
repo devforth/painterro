@@ -386,12 +386,39 @@ function calcBackplatePosition(extendSide, newH, newW, imgPaste, oldH, oldW) {
     this.main.backplateImgSize.width = bckSizeWidth;
   }
   else if(extendSide === 'right') {
+    const bckImgHeight = this.main.backplateImgSize.height;
+    const bckImgWidth = this.main.backplateImgSize.width;
+    const bckImgOffSetUp = this.main.backplateImgSize.offSetUp || 0;
+    const bckImgOffSetDown = this.main.backplateImgSize.offSetDown || 0;
+    const canvasWidth = parseInt(this.main.substrate.style.width);
+    const canvasHeight = parseInt(this.main.substrate.style.height);
+    const tabelCellHeight = parseInt(window.getComputedStyle(this.main.tabelCell).height);
+    const tabelCellWidth = parseInt(window.getComputedStyle(this.main.tabelCell).width);
+    const tabelCellPaddingLeft = (tabelCellWidth - canvasWidth) / 2;
+    const tabelCellPaddingTop = (tabelCellHeight - canvasHeight) / 2;
+    const isRect = bckImgWidth !== bckImgHeight;
+    const bckHeightRatio = newW / oldW;
+    let bckSizeHeight = isRect ? canvasHeight : canvasHeight;
+    let bckOffsetLeft =  parseInt(this.main.substrate.style.left);
+    let bckOffsetTop = 'center';
+    if(bckImgOffSetDown) {
+      bckSizeHeight = bckImgHeight;
+      bckOffsetTop = 'top';
+    }
+    if(bckImgOffSetUp) {
+      bckSizeHeight = bckImgHeight;
+      bckOffsetTop = 'bottom';
+    }
+    if(bckImgOffSetDown && bckImgOffSetUp) {
+      bckSizeHeight = bckImgHeight;
+      bckOffsetTop = (bckImgOffSetUp + tabelCellPaddingTop) + 'px';
+    }
     this.main.tabelCell.style.width = this.main.substrate.style.width;
     changeBackplateStyle.call(
       this, 
-      this.main.substrate.style.left, 
-      'center', 
-      this.main.substrate.style.height
+      bckOffsetLeft + 'px', 
+      bckOffsetTop, 
+      bckSizeHeight + 'px',
     );
   }
   else if(extendSide === 'down') {
