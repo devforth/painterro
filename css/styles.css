@@ -451,7 +451,26 @@ select.ptro-input {
     line-height: normal;
     text-align: left;
 }
-
+.ptro-paster-wrappers-fits {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.ptro-selector-extend {
+    height: 70px;
+    width: 70px !important;
+}
+.ptro-selector-extend div:last-child {
+    display: none;
+}
+.ptro-selector-fit {
+    height: 220px;
+    width: 220px !important;
+    margin: 0px !important;
+}
+.ptro-paster-fit {
+    margin-right: 46px !important;
+}
 .ptro-text-tool-buttons {
     display: flex;
     position: fixed;
@@ -546,7 +565,7 @@ input.ptro-pixel-size-input {
 
 .ptro-paster-select .ptro-in {
     background-color: rgba(0,0,0,0.7);
-    padding: 10px;
+    padding: 40px;
 }
 .ptro-paster-select-wrapper {
     position: absolute;
@@ -555,7 +574,26 @@ input.ptro-pixel-size-input {
     right: 0;
     bottom: 0;
 }
-
+.ptro-paster-select-wrapper-extends button:first-child {
+    display: block;
+    margin: 0 auto;
+}
+.ptro-paster-select-wrapper-extends button:last-child{
+    display: block;
+    margin: 0 auto;
+}
+.ptro-paster-select-wrapper-extends button:nth-child(2){
+    display: inline-block;
+    margin-right: 78px;
+}
+.ptro-paster-wrapper-label {
+    display: block; 
+    color: white;
+    font-size: 20px !important;
+    text-align: center;
+    margin-top: 10px;
+    text-transform: uppercase;
+}
 .ptro-paste-label {
     color: white;
     margin-bottom: 10px;

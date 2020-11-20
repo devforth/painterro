@@ -433,7 +433,7 @@ class PainterroProc {
       }
     });
 
-    this.inserter = Inserter.get();
+    this.inserter = Inserter.get(this);
 
     const cropper = '<div class="ptro-crp-el">' +
       `${PainterroSelecter.code()}${TextTool.code()}</div>`;
@@ -507,7 +507,10 @@ class PainterroProc {
       this.tabelCell.style.backgroundPosition = 'center center';
       const img = new Image();
       img.onload = () => {
-        this.fitImage(img);
+        this.resize(img.naturalWidth, img.naturalHeight);
+        this.adjustSizeFull();
+        this.worklog.captureState();
+        this.tabelCell.style.backgroundSize = `${window.getComputedStyle(this.substrate).width} ${window.getComputedStyle(this.substrate).height}`;
       };
       img.src = this.params.backplateImgUrl;
     }
@@ -1014,15 +1017,10 @@ class PainterroProc {
   fitImage(img, mimetype) {
     this.loadedImageType = mimetype;
     this.resize(img.naturalWidth, img.naturalHeight);
-    if (!this.params.backplateImgUrl) {
-      this.ctx.drawImage(img, 0, 0);
-      this.zoomFactor = (this.wrapper.documentClientHeight / this.size.h) - 0.2;
-    }
+    this.ctx.drawImage(img, 0, 0);
+    this.zoomFactor = (this.wrapper.documentClientHeight / this.size.h) - 0.2;
     this.adjustSizeFull();
     this.worklog.captureState();
-    if (this.params.backplateImgUrl) {
-      this.tabelCell.style.backgroundSize = `auto ${window.getComputedStyle(this.substrate).width}`;
-    }
   }
 
   loadImage(source, mimetype) {
@@ -1085,7 +1083,6 @@ class PainterroProc {
 
   adjustSizeFull() {
     const ratio = this.wrapper.documentClientWidth / this.wrapper.documentClientHeight;
-
     if (this.zoom === false) {
       if (this.size.w > this.wrapper.documentClientWidth ||
         this.size.h > this.wrapper.documentClientHeight) {

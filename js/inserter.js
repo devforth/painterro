@@ -3,16 +3,11 @@ import { genId, KEYS, imgToDataURL } from './utils';
 
 let instance = null;
 export default class Inserter {
-  constructor() {
-    this.pasteOptions = {
-      replace_all: {
-        internalName: 'fit',
-        handle: (img) => {
-          this.main.fitImage(img, this.mimetype);
-        },
-      },
-      extend_down: {
-        internalName: 'extend_down',
+  constructor(main) {
+    this.main = main;
+    const extendObj = {
+      extend_top: {
+        internalName: 'extend_top',
         handle: (img) => {
           this.tmpImg = img;
           const oldH = this.main.size.h;
@@ -22,18 +17,35 @@ export default class Inserter {
           const tmpData = this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h);
           this.main.resize(newW, newH);
           this.main.clearBackground();
-          this.ctx.putImageData(tmpData, 0, 0);
+          this.ctx.putImageData(tmpData, 0, img.naturalHeight);
           this.main.adjustSizeFull();
-          if (this.main.params.backplateImgUrl) {
-            this.main.tabelCell.style.backgroundPosition = 'top center';
-            this.main.tabelCell.style.backgroundSize = `auto ${this.main.substrate.style.width}`;
-            this.main.substrate.style.opacity = 0;
-          }
           if (img.naturalWidth < oldW) {
             const offset = Math.round((oldW - img.naturalWidth) / 2);
-            this.main.select.placeAt(offset, oldH, offset, 0, img);
+            this.main.select.placeAt(offset, 0, offset, oldH, img);
           } else {
-            this.main.select.placeAt(0, oldH, 0, 0, img);
+            this.main.select.placeAt(0, 0, 0, oldH, img);
+          }
+          this.worklog.captureState();
+        },
+      },
+      extend_left: {
+        internalName: 'extend_left',
+        handle: (img) => {
+          this.tmpImg = img;
+          const oldH = this.main.size.h;
+          const oldW = this.main.size.w;
+          const newW = oldW + img.naturalWidth;
+          const newH = Math.max(oldH, img.naturalHeight);
+          const tmpData = this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h);
+          this.main.resize(newW, newH);
+          this.main.clearBackground();
+          this.ctx.putImageData(tmpData, img.naturalWidth, 0);
+          this.main.adjustSizeFull();
+          if (img.naturalHeight < oldH) {
+            const offset = Math.round((oldH - img.naturalHeight) / 2);
+            this.main.select.placeAt(0, offset, oldW, offset, img);
+          } else {
+            this.main.select.placeAt(0, 0, oldW, 0, img);
           }
           this.worklog.captureState();
         },
@@ -51,12 +63,6 @@ export default class Inserter {
           this.main.clearBackground();
           this.ctx.putImageData(tmpData, 0, 0);
           this.main.adjustSizeFull();
-          if (this.main.params.backplateImgUrl) {
-            this.main.tabelCell.style.backgroundPosition = `${this.main.substrate.style.left} center`;
-            this.main.tabelCell.style.backgroundSize = `auto ${this.main.substrate.style.height}`;
-            this.main.tabelCell.style.width = this.main.substrate.style.width;
-            this.main.substrate.style.opacity = 0;
-          }
           if (img.naturalHeight < oldH) {
             const offset = Math.round((oldH - img.naturalHeight) / 2);
             this.main.select.placeAt(oldW, offset, 0, offset, img);
@@ -64,6 +70,46 @@ export default class Inserter {
             this.main.select.placeAt(oldW, 0, 0, 0, img);
           }
           this.worklog.captureState();
+        },
+      },
+      extend_down: {
+        internalName: 'extend_down',
+        handle: (img) => {
+          this.tmpImg = img;
+          const oldH = this.main.size.h;
+          const oldW = this.main.size.w;
+          const newH = oldH + img.naturalHeight;
+          const newW = Math.max(oldW, img.naturalWidth);
+          const tmpData = this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h);
+          this.main.resize(newW, newH);
+          this.main.clearBackground();
+          this.ctx.putImageData(tmpData, 0, 0);
+          this.main.adjustSizeFull();
+          if (img.naturalWidth < oldW) {
+            const offset = Math.round((oldW - img.naturalWidth) / 2);
+            this.main.select.placeAt(offset, oldH, offset, 0, img);
+          } else {
+            this.main.select.placeAt(0, oldH, 0, 0, img);
+          }
+          this.worklog.captureState();
+        },
+      },
+    };
+    const fitObj = {
+      replace_all: {
+        internalName: 'fit',
+        handle: (img) => {
+          if (this.main.params.backplateImgUrl) {
+            this.main.params.backplateImgUrl = undefined;
+            this.main.tabelCell.style.background = '';
+            this.main.canvas.style.backgroundColor = `${this.main.params.backgroundFillColor}ff`;
+            this.pasteOptions = Object.assign({}, fitObj, extendObj);
+            this.activeOption = this.pasteOptions;
+            this.main.wrapper.querySelector('.ptro-paster-select-wrapper').remove();
+            this.main.wrapper.insertAdjacentHTML('beforeend', this.html());
+            this.init(main);
+          }
+          this.main.fitImage(img, this.mimetype);
         },
       },
       paste_over: {
@@ -88,6 +134,12 @@ export default class Inserter {
         },
       },
     };
+    if (this.main.params.backplateImgUrl) {
+      this.pasteOptions = Object.assign({}, fitObj);
+      this.activeOption = this.pasteOptions;
+      return;
+    }
+    this.pasteOptions = Object.assign({}, fitObj, extendObj);
     this.activeOption = this.pasteOptions;
   }
 
@@ -206,11 +258,11 @@ export default class Inserter {
     }
   }
 
-  static get() {
+  static get(main) {
     if (instance) {
       return instance;
     }
-    instance = new Inserter();
+    instance = new Inserter(main);
     return instance;
   }
 
@@ -229,23 +281,46 @@ export default class Inserter {
     });
     this.activeOption = this.pasteOptions;
   }
+  static controlObjToString(o, btnClassName = '') {
+    const tempObj = o;
+    tempObj.id = genId();
+    return `<button type="button" id="${o.id}" class="ptro-selector-btn ptro-color-control ${btnClassName}">` +
+    `<div><i class="ptro-icon ptro-icon-paste_${o.internalName}"></i></div>` +
+    `<div>${tr(`pasteOptions.${o.internalName}`)}</div>` +
+    '</button>';
+  }
 
   html() {
-    let buttons = '';
+    const bcklOptions = this.main.params.backplateImgUrl;
+    let fitControls = '';
+    let extendControls = '';
     Object.keys(this.pasteOptions).forEach((k) => {
-      const o = this.pasteOptions[k];
-      o.id = genId();
-      buttons += `<button type="button" id="${o.id}" class="ptro-selector-btn ptro-color-control">` +
-        `<div><i class="ptro-icon ptro-icon-paste_${o.internalName}"></i></div>` +
-        `<div>${tr(`pasteOptions.${o.internalName}`)}</div>` +
-      '</button>';
+      if (k === 'replace_all' || k === 'paste_over') {
+        fitControls += `<div class="ptro-paster-fit">
+          ${Inserter.controlObjToString(this.pasteOptions[k], 'ptro-selector-fit')}
+        <div class="ptro-paster-wrapper-label">
+          ${tr(`pasteOptions.${this.pasteOptions[k].internalName}`)}
+        </div></div>`;
+      } else {
+        extendControls += Inserter.controlObjToString(this.pasteOptions[k], 'ptro-selector-extend');
+      }
     });
     return '<div class="ptro-paster-select-wrapper" hidden><div class="ptro-paster-select ptro-v-middle">' +
       '<div class="ptro-in ptro-v-middle-in">' +
-      `<div class="ptro-paste-label">${tr('pasteOptions.how_to_paste')}</div>${
-        buttons}</div></div></div>`;
+      ` <div class="ptro-paster-wrappers-fits">
+        ${fitControls}
+          ${bcklOptions ? '' : `<div class="ptro-paster-select-wrapper-extends">
+          <div class="ptro-paster-extends-items">
+            ${extendControls}
+          </div>
+          <div class="ptro-paster-wrapper-label">extend</div>
+        </div>`}
+        </div>
+      </div></div></div>`;
   }
 }
+
 export function setActivePasteOptions(a) {
   return Inserter.get().activeOptions(a);
 }
+
