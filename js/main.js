@@ -433,7 +433,7 @@ class PainterroProc {
       }
     });
 
-    this.inserter = Inserter.get();
+    this.inserter = Inserter.get(this);
 
     const cropper = '<div class="ptro-crp-el">' +
       `${PainterroSelecter.code()}${TextTool.code()}</div>`;
@@ -507,14 +507,10 @@ class PainterroProc {
       this.tabelCell.style.backgroundPosition = 'center center';
       const img = new Image();
       img.onload = () => {
-        this.fitImage(img);
-        this.backplateImgSize = {
-          height: parseInt(this.substrate.style.height),
-          width: parseInt(this.substrate.style.width),
-          ratio: parseInt(this.substrate.style.height) / parseInt(this.substrate.style.width),
-          deltOfRealandCrop: this.size.h - parseInt(this.substrate.style.height)
-        };
-        console.log(this.backplateImgSize);
+        this.resize(img.naturalWidth, img.naturalHeight);
+        this.adjustSizeFull();
+        this.worklog.captureState();
+        this.tabelCell.style.backgroundSize = `${window.getComputedStyle(this.substrate).width} ${window.getComputedStyle(this.substrate).height}`;
       };
       img.src = this.params.backplateImgUrl;
     }
@@ -1021,16 +1017,10 @@ class PainterroProc {
   fitImage(img, mimetype) {
     this.loadedImageType = mimetype;
     this.resize(img.naturalWidth, img.naturalHeight);
-    console.log(this.size)
-    if (!this.params.backplateImgUrl) {
-      this.ctx.drawImage(img, 0, 0);
-      this.zoomFactor = (this.wrapper.documentClientHeight / this.size.h) - 0.2;
-    }
+    this.ctx.drawImage(img, 0, 0);
+    this.zoomFactor = (this.wrapper.documentClientHeight / this.size.h) - 0.2;
     this.adjustSizeFull();
     this.worklog.captureState();
-    if (this.params.backplateImgUrl) {
-      this.tabelCell.style.backgroundSize = `${window.getComputedStyle(this.substrate).width} ${window.getComputedStyle(this.substrate).height}`;
-    }
   }
 
   loadImage(source, mimetype) {
@@ -1099,17 +1089,14 @@ class PainterroProc {
         const newRelation = ratio < this.size.ratio;
         this.ratioRelation = newRelation;
         if (newRelation) {
-          console.log('cropp down 2 ')
           this.canvas.style.width = `${this.wrapper.clientWidth}px`;
           this.canvas.style.height = 'auto';
         } else {
-          console.log('cropp down 1 ')
           this.canvas.style.width = 'auto';
           this.canvas.style.height = `${this.wrapper.clientHeight}px`;
         }
         this.scroller.style.overflow = 'hidden';
       } else {
-        console.log('cropp down 0 ')
         this.scroller.style.overflow = 'hidden';
         this.canvas.style.width = 'auto';
         this.canvas.style.height = 'auto';

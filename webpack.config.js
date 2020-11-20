@@ -24,12 +24,12 @@ function webpackConfig(target) {
     },
     module: {
       rules: [
-        // {
-        //   enforce: "pre",
-        //   test: /\.js$/,
-        //   exclude: /node_modules/,
-        //   loader: "eslint-loader",
-        // },
+        {
+          enforce: "pre",
+          test: /\.js$/,
+          exclude: /node_modules/,
+          loader: "eslint-loader",
+        },
         {
           test: /\.js$/,
           loader: 'babel-loader',

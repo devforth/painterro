@@ -3,42 +3,9 @@ import { genId, KEYS, imgToDataURL } from './utils';
 
 let instance = null;
 export default class Inserter {
-  constructor() {
-    this.pasteOptions = {
-      replace_all: {
-        internalName: 'fit',
-        handle: (img) => {
-          if(this.main.params.backplateImgUrl) {
-            this.main.params.backplateImgUrl = undefined;
-            this.main.tabelCell.style.background = '';
-            this.main.params.backgroundFillColorAlpha = 1;
-            this.main.canvas.style.backgroundColor = `${this.main.params.backgroundFillColor}ff`;
-            console.log(this.main.params.backgroundFillColor)
-          }
-          this.main.fitImage(img, this.mimetype);
-        }
-      },
-      paste_over: {
-        internalName: 'over',
-        handle: (img) => {
-          this.tmpImg = img;
-          const oldH = this.main.size.h;
-          const oldW = this.main.size.w;
-          if (img.naturalHeight <= oldH && img.naturalWidth <= oldW) {
-            this.main.select.placeAt(
-              0, 0,
-              oldW - img.naturalWidth,
-              oldH - img.naturalHeight, img);
-          } else if (img.naturalWidth / img.naturalHeight > oldW / oldH) {
-            const newH = oldW * (img.naturalHeight / img.naturalWidth);
-            this.main.select.placeAt(0, 0, 0, oldH - newH, img);
-          } else {
-            const newW = oldH * (img.naturalWidth / img.naturalHeight);
-            this.main.select.placeAt(0, 0, oldW - newW, 0, img);
-          }
-          this.worklog.captureState();
-        },
-      },
+  constructor(main) {
+    this.main = main;
+    const extendObj = {
       extend_top: {
         internalName: 'extend_top',
         handle: (img) => {
@@ -52,17 +19,14 @@ export default class Inserter {
           this.main.clearBackground();
           this.ctx.putImageData(tmpData, 0, img.naturalHeight);
           this.main.adjustSizeFull();
-          if (this.main.params.backplateImgUrl) {
-            calcBackplatePosition.call(this, 'top', newH, newW, img, oldH, oldW);
-          }
           if (img.naturalWidth < oldW) {
             const offset = Math.round((oldW - img.naturalWidth) / 2);
             this.main.select.placeAt(offset, 0, offset, oldH, img);
           } else {
-            this.main.select.placeAt(0, oldH, 0, 0, img);
+            this.main.select.placeAt(0, 0, 0, oldH, img);
           }
           this.worklog.captureState();
-        }
+        },
       },
       extend_left: {
         internalName: 'extend_left',
@@ -77,17 +41,14 @@ export default class Inserter {
           this.main.clearBackground();
           this.ctx.putImageData(tmpData, img.naturalWidth, 0);
           this.main.adjustSizeFull();
-          if (this.main.params.backplateImgUrl) {
-            calcBackplatePosition.call(this, 'left', newH, newW, img, oldH, oldW);
-          }
           if (img.naturalHeight < oldH) {
             const offset = Math.round((oldH - img.naturalHeight) / 2);
             this.main.select.placeAt(0, offset, oldW, offset, img);
           } else {
-            this.main.select.placeAt(oldW, 0, 0, 0, img);
+            this.main.select.placeAt(0, 0, oldW, 0, img);
           }
           this.worklog.captureState();
-        }
+        },
       },
       extend_right: {
         internalName: 'extend_right',
@@ -102,9 +63,6 @@ export default class Inserter {
           this.main.clearBackground();
           this.ctx.putImageData(tmpData, 0, 0);
           this.main.adjustSizeFull();
-          if (this.main.params.backplateImgUrl) {
-            calcBackplatePosition.call(this, 'right');
-          }
           if (img.naturalHeight < oldH) {
             const offset = Math.round((oldH - img.naturalHeight) / 2);
             this.main.select.placeAt(oldW, offset, 0, offset, img);
@@ -127,9 +85,6 @@ export default class Inserter {
           this.main.clearBackground();
           this.ctx.putImageData(tmpData, 0, 0);
           this.main.adjustSizeFull();
-          if (this.main.params.backplateImgUrl) {
-            calcBackplatePosition.call(this, 'down', newH, newW, img, oldH, oldW);
-          }
           if (img.naturalWidth < oldW) {
             const offset = Math.round((oldW - img.naturalWidth) / 2);
             this.main.select.placeAt(offset, oldH, offset, 0, img);
@@ -140,6 +95,51 @@ export default class Inserter {
         },
       },
     };
+    const fitObj = {
+      replace_all: {
+        internalName: 'fit',
+        handle: (img) => {
+          if (this.main.params.backplateImgUrl) {
+            this.main.params.backplateImgUrl = undefined;
+            this.main.tabelCell.style.background = '';
+            this.main.canvas.style.backgroundColor = `${this.main.params.backgroundFillColor}ff`;
+            this.pasteOptions = Object.assign({}, fitObj, extendObj);
+            this.activeOption = this.pasteOptions;
+            this.main.wrapper.querySelector('.ptro-paster-select-wrapper').remove();
+            this.main.wrapper.insertAdjacentHTML('beforeend', this.html());
+            this.init(main);
+          }
+          this.main.fitImage(img, this.mimetype);
+        },
+      },
+      paste_over: {
+        internalName: 'over',
+        handle: (img) => {
+          this.tmpImg = img;
+          const oldH = this.main.size.h;
+          const oldW = this.main.size.w;
+          if (img.naturalHeight <= oldH && img.naturalWidth <= oldW) {
+            this.main.select.placeAt(
+              0, 0,
+              oldW - img.naturalWidth,
+              oldH - img.naturalHeight, img);
+          } else if (img.naturalWidth / img.naturalHeight > oldW / oldH) {
+            const newH = oldW * (img.naturalHeight / img.naturalWidth);
+            this.main.select.placeAt(0, 0, 0, oldH - newH, img);
+          } else {
+            const newW = oldH * (img.naturalWidth / img.naturalHeight);
+            this.main.select.placeAt(0, 0, oldW - newW, 0, img);
+          }
+          this.worklog.captureState();
+        },
+      },
+    };
+    if (this.main.params.backplateImgUrl) {
+      this.pasteOptions = Object.assign({}, fitObj);
+      this.activeOption = this.pasteOptions;
+      return;
+    }
+    this.pasteOptions = Object.assign({}, fitObj, extendObj);
     this.activeOption = this.pasteOptions;
   }
 
@@ -258,11 +258,11 @@ export default class Inserter {
     }
   }
 
-  static get() {
+  static get(main) {
     if (instance) {
       return instance;
     }
-    instance = new Inserter();
+    instance = new Inserter(main);
     return instance;
   }
 
@@ -281,31 +281,40 @@ export default class Inserter {
     });
     this.activeOption = this.pasteOptions;
   }
+  static controlObjToString(o, btnClassName = '') {
+    const tempObj = o;
+    tempObj.id = genId();
+    return `<button type="button" id="${o.id}" class="ptro-selector-btn ptro-color-control ${btnClassName}">` +
+    `<div><i class="ptro-icon ptro-icon-paste_${o.internalName}"></i></div>` +
+    `<div>${tr(`pasteOptions.${o.internalName}`)}</div>` +
+    '</button>';
+  }
 
   html() {
+    const bcklOptions = this.main.params.backplateImgUrl;
     let fitControls = '';
     let extendControls = '';
     Object.keys(this.pasteOptions).forEach((k) => {
-      if(k === 'replace_all' || k === 'paste_over') {
-        const o = this.pasteOptions[k];
-        o.id = genId();
-        fitControls += `<div class="ptro-paster-fit">${controlObjToString(o, 'ptro-selector-fit')}<div class="ptro-paster-wrapper-label">${tr(`pasteOptions.${o.internalName}`)}</div></div>`;
+      if (k === 'replace_all' || k === 'paste_over') {
+        fitControls += `<div class="ptro-paster-fit">
+          ${Inserter.controlObjToString(this.pasteOptions[k], 'ptro-selector-fit')}
+        <div class="ptro-paster-wrapper-label">
+          ${tr(`pasteOptions.${this.pasteOptions[k].internalName}`)}
+        </div></div>`;
       } else {
-        const extendObj = this.pasteOptions[k]
-        extendObj.id = genId();
-        extendControls += controlObjToString(extendObj, 'ptro-selector-extend');
+        extendControls += Inserter.controlObjToString(this.pasteOptions[k], 'ptro-selector-extend');
       }
     });
     return '<div class="ptro-paster-select-wrapper" hidden><div class="ptro-paster-select ptro-v-middle">' +
       '<div class="ptro-in ptro-v-middle-in">' +
       ` <div class="ptro-paster-wrappers-fits">
         ${fitControls}
-        <div class="ptro-paster-select-wrapper-extends">
+          ${bcklOptions ? '' : `<div class="ptro-paster-select-wrapper-extends">
           <div class="ptro-paster-extends-items">
             ${extendControls}
           </div>
           <div class="ptro-paster-wrapper-label">extend</div>
-        </div>
+        </div>`}
         </div>
       </div></div></div>`;
   }
@@ -313,141 +322,5 @@ export default class Inserter {
 
 export function setActivePasteOptions(a) {
   return Inserter.get().activeOptions(a);
-}
-
-function controlObjToString(o, btnClassName='') {
-  return `<button type="button" id="${o.id}" class="ptro-selector-btn ptro-color-control ${btnClassName}">` +
-  `<div><i class="ptro-icon ptro-icon-paste_${o.internalName}"></i></div>` +
-  `<div>${tr(`pasteOptions.${o.internalName}`)}</div>` +
-  '</button>';
-}
-
-function changeBackplateStyle(xPos='center', yPos='center', sizeH='auto', sizeW='auto') {
-  this.main.tabelCell.style.backgroundPosition = `${xPos} ${yPos}`;
-  this.main.tabelCell.style.backgroundSize = `${sizeW} ${sizeH}`;
-  this.main.substrate.style.opacity = 0;
-}
-
-function calcBackplatePosition(extendSide, newH, newW, imgPaste, oldH, oldW) {
-  if(extendSide === 'top') {
-    const bckImgOffsetDown = this.main.backplateImgSize.offSetDown || 0;
-    const bckImgHeight = this.main.backplateImgSize.height;
-    const bckImgWidth = this.main.backplateImgSize.width;
-    const canvasWidth = parseInt(this.main.substrate.style.width);
-    const canvasHeight = parseInt(this.main.substrate.style.height);
-    const tabelCellHeight = parseInt(window.getComputedStyle(this.main.tabelCell).height);
-    const tabelCellPaddingTop = (tabelCellHeight - canvasHeight) / 2;
-    const isRect = bckImgWidth !== bckImgHeight;
-    const bckHeightRatio = newH / oldH;
-    const bckSizeWidth = isRect ? canvasWidth : canvasWidth;
-    const bckSizeHeight = isRect ? bckImgHeight / bckHeightRatio : canvasWidth;
-    const bckOffsetTop = tabelCellPaddingTop + (canvasHeight - (bckSizeHeight + bckImgOffsetDown));
-    changeBackplateStyle.call(
-      this, 
-      'center', 
-      bckOffsetTop + 'px',
-      bckSizeHeight + 'px',
-      bckSizeWidth + 'px'
-    );
-    this.main.backplateImgSize.height = bckSizeHeight;
-    this.main.backplateImgSize.width = bckSizeWidth;
-    this.main.backplateImgSize.offSetUp = canvasHeight - bckSizeHeight - bckImgOffsetDown; 
-  } 
-  else if(extendSide === 'left') {
-    const bckImgHeight = this.main.backplateImgSize.height;
-    const bckImgWidth = this.main.backplateImgSize.width;
-    const canvasWidth = parseInt(this.main.substrate.style.width);
-    const canvasHeight = parseInt(this.main.substrate.style.height);
-    const tabelCellWidth = parseInt(window.getComputedStyle(this.main.tabelCell).width);
-    const tabelCellPaddingLeft = (tabelCellWidth - canvasWidth) / 2;
-    const isRect = bckImgWidth !== bckImgHeight;
-    const bckHeightRatio = newW / oldW;
-    let bckSizeWidth = 0;
-    if(!isRect) {
-      bckSizeWidth = canvasHeight;
-    } else {
-      if(canvasHeight < bckImgHeight) {
-        bckSizeWidth = bckImgWidth / bckHeightRatio;
-      } else {
-        bckSizeWidth = bckImgWidth;
-      }
-    }
-    const bckSizeHeight = isRect ? canvasHeight : canvasHeight;
-    const bckOffsetLeft = tabelCellPaddingLeft + (canvasWidth - bckSizeWidth);
-    console.log(bckHeightRatio, oldW)
-    changeBackplateStyle.call(
-      this, 
-      bckOffsetLeft + 'px', 
-      'center', 
-      bckSizeHeight + 'px', 
-      bckSizeWidth + 'px'
-    );
-    this.main.backplateImgSize.height = bckSizeHeight;
-    this.main.backplateImgSize.width = bckSizeWidth;
-  }
-  else if(extendSide === 'right') {
-    const bckImgHeight = this.main.backplateImgSize.height;
-    const bckImgWidth = this.main.backplateImgSize.width;
-    const bckImgOffSetUp = this.main.backplateImgSize.offSetUp || 0;
-    const bckImgOffSetDown = this.main.backplateImgSize.offSetDown || 0;
-    const canvasWidth = parseInt(this.main.substrate.style.width);
-    const canvasHeight = parseInt(this.main.substrate.style.height);
-    const tabelCellHeight = parseInt(window.getComputedStyle(this.main.tabelCell).height);
-    const tabelCellWidth = parseInt(window.getComputedStyle(this.main.tabelCell).width);
-    const tabelCellPaddingLeft = (tabelCellWidth - canvasWidth) / 2;
-    const tabelCellPaddingTop = (tabelCellHeight - canvasHeight) / 2;
-    const isRect = bckImgWidth !== bckImgHeight;
-    const bckHeightRatio = newW / oldW;
-    let bckSizeHeight = isRect ? canvasHeight : canvasHeight;
-    let bckOffsetLeft =  parseInt(this.main.substrate.style.left);
-    let bckOffsetTop = 'center';
-    if(bckImgOffSetDown) {
-      bckSizeHeight = bckImgHeight;
-      bckOffsetTop = 'top';
-    }
-    if(bckImgOffSetUp) {
-      bckSizeHeight = bckImgHeight;
-      bckOffsetTop = 'bottom';
-    }
-    if(bckImgOffSetDown && bckImgOffSetUp) {
-      bckSizeHeight = bckImgHeight;
-      bckOffsetTop = (bckImgOffSetUp + tabelCellPaddingTop) + 'px';
-    }
-    this.main.tabelCell.style.width = this.main.substrate.style.width;
-    changeBackplateStyle.call(
-      this, 
-      bckOffsetLeft + 'px', 
-      bckOffsetTop, 
-      bckSizeHeight + 'px',
-    );
-  }
-  else if(extendSide === 'down') {
-    const bckImgOffSetUp = this.main.backplateImgSize.offSetUp || 0;
-    const bckImgHeight = this.main.backplateImgSize.height;
-    const bckImgWidth = this.main.backplateImgSize.width;
-    const deltaOfRealCropImg = this.main.backplateImgSize.deltOfRealandCrop;
-    const canvasWidth = parseInt(this.main.substrate.style.width);
-    const canvasHeight = parseInt(this.main.substrate.style.height);
-    const tabelCellHeight = parseInt(window.getComputedStyle(this.main.tabelCell).height);
-    const tabelCellPaddingTop = (tabelCellHeight - canvasHeight) / 2;
-    const startCanvasRealHeight = canvasHeight + deltaOfRealCropImg;
-    const sizeOfPasteimgs = newH - startCanvasRealHeight;
-    const isRect = bckImgWidth !== bckImgHeight;
-    const bckHeightRatio = newH / oldH;
-    const bckSizeWidth = isRect ? canvasWidth : canvasWidth;
-    const bckSizeHeight = isRect ? bckImgHeight / bckHeightRatio : canvasWidth;
-    const bckOffSetTop = tabelCellPaddingTop + bckImgOffSetUp;
-    changeBackplateStyle.call(
-      this, 
-      'center', 
-      bckOffSetTop  + 'px',
-      bckSizeHeight + 'px',
-      bckSizeWidth + 'px'
-    );
-    this.main.backplateImgSize.height = bckSizeHeight;
-    this.main.backplateImgSize.width = bckSizeWidth;
-    console.log('down',canvasHeight - bckSizeHeight);
-    this.main.backplateImgSize.offSetDown = canvasHeight - bckSizeHeight;
-  }
 }
 
