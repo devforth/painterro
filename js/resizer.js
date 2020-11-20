@@ -8,6 +8,8 @@ export default class Resizer {
     this.wrapper = main.wrapper.querySelector('.ptro-resize-widget-wrapper');
     this.inputW = main.wrapper.querySelector('.ptro-resize-widget-wrapper .ptro-resize-width-input');
     this.inputH = main.wrapper.querySelector('.ptro-resize-widget-wrapper .ptro-resize-heigth-input');
+    this.inputWLimit = 10000;
+    this.inputHLimit = 13000;
 
     this.linkButton = main.wrapper.querySelector('.ptro-resize-widget-wrapper button.ptro-link');
     this.linkButtonIcon = main.wrapper.querySelector('.ptro-resize-widget-wrapper button.ptro-link i');
@@ -65,7 +67,8 @@ export default class Resizer {
     };
 
     this.inputW.oninput = () => {
-      this.newW = +this.inputW.value;
+      const widthVal = Number(this.inputW.value);
+      this.validationWidth(widthVal);
       if (this.linked) {
         const ratio = this.main.size.ratio;
         this.newH = Math.round(this.newW / ratio);
@@ -73,13 +76,40 @@ export default class Resizer {
       }
     };
     this.inputH.oninput = () => {
-      this.newH = +this.inputH.value;
+      const heightVal = Number(this.inputH.value);
+      this.validationHeight(heightVal);
       if (this.linked) {
         const ratio = this.main.size.ratio;
         this.newW = Math.round(this.newH * ratio);
         this.inputW.value = +this.newW;
       }
     };
+  }
+
+  validationWidthValue(value) {
+    return value <= this.inputWLimit;
+  }
+
+  validationHeightValue(value) {
+    return value <= this.inputHLimit;
+  }
+
+  validationHeight(value) {
+    if (this.validationHeightValue(value)) {
+      this.newH = value;
+    } else {
+      this.inputH.value = this.inputHLimit;
+      this.newH = this.inputHLimit;
+    }
+  }
+
+  validationWidth(value) {
+    if (this.validationWidthValue(value)) {
+      this.newW = value;
+    } else {
+      this.inputW.value = this.inputWLimit;
+      this.newW = this.inputWLimit;
+    }
   }
 
   open() {
