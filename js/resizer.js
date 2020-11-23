@@ -8,6 +8,7 @@ export default class Resizer {
     this.wrapper = main.wrapper.querySelector('.ptro-resize-widget-wrapper');
     this.inputW = main.wrapper.querySelector('.ptro-resize-widget-wrapper .ptro-resize-width-input');
     this.inputH = main.wrapper.querySelector('.ptro-resize-widget-wrapper .ptro-resize-heigth-input');
+
     this.inputWLimit = 10000;
     this.inputHLimit = 13000;
 
@@ -22,6 +23,7 @@ export default class Resizer {
     };
 
     this.scaleButton.onclick = () => {
+      if(!Resizer.validationZeroValue(this.newH, this.newW)) return;
       const origW = this.main.size.w;
       const origH = this.main.size.h;
 
@@ -44,6 +46,7 @@ export default class Resizer {
     };
 
     this.resizeButton.onclick = () => {
+      if(!Resizer.validationZeroValue(this.newH, this.newW)) return;
       const tmpData = this.main.canvas.toDataURL();
       this.main.resize(this.newW, this.newH);
       this.main.clearBackground();
@@ -72,6 +75,7 @@ export default class Resizer {
       if (this.linked) {
         const ratio = this.main.size.ratio;
         this.newH = Math.round(this.newW / ratio);
+        this.validationHeight(this.newH);
         this.inputH.value = this.newH;
       }
     };
@@ -81,6 +85,7 @@ export default class Resizer {
       if (this.linked) {
         const ratio = this.main.size.ratio;
         this.newW = Math.round(this.newH * ratio);
+        this.validationWidth(this.newW);
         this.inputW.value = +this.newW;
       }
     };
@@ -94,12 +99,34 @@ export default class Resizer {
     return value <= this.inputHLimit;
   }
 
+  static validationEmptyValue(value) {
+    return value !== '' || value !== '0';
+  }
+
+  static validationZeroValue(...args) {
+    console.log('zero', args)
+    let isValid = true;
+    args.forEach( v => {
+      isValid = !(v === 0) && isValid;
+    });
+    return isValid;
+  }
+
   validationHeight(value) {
+    console.log(value);
     if (this.validationHeightValue(value)) {
       this.newH = value;
     } else {
       this.inputH.value = this.inputHLimit;
       this.newH = this.inputHLimit;
+      return;
+    }
+
+    if (Resizer.validationEmptyValue(value)) {
+      this.newH = value;
+    } else {
+      this.inputH.value = 0;
+      this.newH = 0;
     }
   }
 
@@ -109,6 +136,14 @@ export default class Resizer {
     } else {
       this.inputW.value = this.inputWLimit;
       this.newW = this.inputWLimit;
+      return;
+    }
+
+    if (Resizer.validationEmptyValue(value)) {
+      this.newW = value;
+    } else {
+      this.inputW.value = '0';
+      this.newW = 0;
     }
   }
 
