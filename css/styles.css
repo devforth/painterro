@@ -456,20 +456,20 @@ select.ptro-input {
     justify-content: space-around;
     align-items: center;
 }
-.ptro-selector-extend {
+.ptro-selector-extend[type] {
     height: 70px;
-    width: 70px !important;
+    width: 70px;
 }
 .ptro-selector-extend div:last-child {
     display: none;
 }
-.ptro-selector-fit {
+.ptro-selector-fit[type] {
     height: 220px;
-    width: 220px !important;
-    margin: 0px !important;
+    width: 220px;
+    margin: 0px;
 }
-.ptro-paster-fit {
-    margin-right: 46px !important;
+.ptro-paster-fit[class='ptro-paster-fit'] {
+    margin-right: 46px;
 }
 .ptro-text-tool-buttons {
     display: flex;
@@ -586,10 +586,18 @@ input.ptro-pixel-size-input {
     display: inline-block;
     margin-right: 78px;
 }
-.ptro-paster-wrapper-label {
+.ptro-paster-fit .ptro-paster-wrapper-label[class] {
     display: block; 
     color: white;
-    font-size: 20px !important;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+.ptro-paster-select-wrapper-extends .ptro-paster-wrapper-label[class] {
+    display: block; 
+    color: white;
+    font-size: 20px;
     text-align: center;
     margin-top: 10px;
     text-transform: uppercase;
@@ -606,12 +614,12 @@ input.ptro-pixel-size-input {
 }
 
 i.mce-i-painterro:before, span.mce_painterro:before {
-	font-size: 20px !important;
-	font-family: ptroiconfont !important;
-	font-style: normal !important;
-	font-weight: normal !important;
-	font-variant: normal !important;
-	text-transform: none !important;
+	font-size: 20px;
+	font-family: ptroiconfont;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
 	speak: none;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;

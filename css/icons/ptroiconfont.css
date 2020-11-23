@@ -12,11 +12,11 @@ url("ptroiconfont.svg?bf58900bc0f41f759214435220e5b3df#ptroiconfont") format("sv
 }
 
 .ptro-icon:before {
-	font-family: ptroiconfont !important;
-	font-style: normal !important;
-	font-weight: normal !important;
-	font-variant: normal !important;
-	text-transform: none !important;
+	font-family: ptroiconfont;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
 	speak: none;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
