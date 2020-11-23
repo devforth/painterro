@@ -57,14 +57,14 @@
     saveByEnter: true,
     shadowScale: 1,
     // backplateImgUrl: 'https://images.pexels.com/photos/4386297/pexels-photo-4386297.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    //toolbarHeightPx: 50,
-    //buttonSizePx: 42,
+    // toolbarHeightPx: 50,
+    // buttonSizePx: 42,
     // defaultTool: 'arrow',
     onChange: (e) => {console.log('onchange e', e)},
     onUndo: (e) => {console.log('onUndo e', e)},
     onRedo: (e) => {console.log('onRedo e', e)},
     //id: 'conatiner',
-    // initText: 'Press <b>PrtScr</b>, <b>Ctrl+V</b> to paste screenshot.<br>Press <b>Ctrl+S</b> to save', // todo: different for os-es
+    initText: 'Press <b>PrtScr</b>, <b>Ctrl+V</b> to paste screenshot.<br>Press <b>Ctrl+S</b> to save', // todo: different for os-es
 
     //extraFonts: ['Open Sans'],
     onBeforeClose: function (has, done) {
@@ -86,7 +86,7 @@
     // fixMobilePageReloader: false,
     // defaultTool: 'line',
     //hiddenTools: ['line']
-  }).show('https://images.pexels.com/photos/4386297/pexels-photo-4386297.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940') 
+  }).show() 
   const ctx = window.p.ctx; 
 
 console.log(ctx);
