@@ -1,5 +1,4 @@
 import isMobile from 'ismobilejs';
-import html2canvas from 'html2canvas';
 import '../css/styles.css';
 import '../css/bar-styles.css';
 import '../css/icons/ptroiconfont.css';
@@ -60,6 +59,7 @@ class PainterroProc {
       name: 'select',
       hotkey: 's',
       activate: () => {
+        if (this.initText) this.wrapper.click();
         this.toolContainer.style.cursor = 'crosshair';
         this.select.activate();
         this.select.draw();
@@ -73,6 +73,7 @@ class PainterroProc {
       name: 'crop',
       hotkey: 'c',
       activate: () => {
+        if (this.initText) this.wrapper.click();
         this.select.doCrop();
         this.closeActiveTool();
       },
@@ -80,6 +81,7 @@ class PainterroProc {
       name: 'pixelize',
       hotkey: 'p',
       activate: () => {
+        if (this.initText) this.wrapper.click();
         this.select.doPixelize();
         this.closeActiveTool();
       },
@@ -100,6 +102,7 @@ class PainterroProc {
         this.controlBuilder.buildShadowOnControl(2),
       ],
       activate: () => {
+        if (this.initText) this.wrapper.click();
         this.toolContainer.style.cursor = 'crosshair';
         this.primitiveTool.activate('line');
       },
@@ -121,6 +124,7 @@ class PainterroProc {
         this.controlBuilder.buildShadowOnControl(2),
       ],
       activate: () => {
+        if (this.initText) this.wrapper.click();
         this.toolContainer.style.cursor = 'crosshair';
         this.primitiveTool.activate('arrow');
       },
@@ -149,6 +153,7 @@ class PainterroProc {
         this.controlBuilder.buildShadowOnControl(3),
       ],
       activate: () => {
+        if (this.initText) this.wrapper.click();
         this.toolContainer.style.cursor = 'crosshair';
         this.primitiveTool.activate('rect');
       },
@@ -177,6 +182,7 @@ class PainterroProc {
         this.controlBuilder.buildShadowOnControl(3),
       ],
       activate: () => {
+        if (this.initText) this.wrapper.click();
         this.toolContainer.style.cursor = 'crosshair';
         this.primitiveTool.activate('ellipse');
       },
@@ -195,6 +201,7 @@ class PainterroProc {
       }, this.controlBuilder.buildLineWidthControl(1),
       ],
       activate: () => {
+        if (this.initText) this.wrapper.click();
         this.toolContainer.style.cursor = 'crosshair';
         this.primitiveTool.activate('brush');
       },
@@ -204,6 +211,7 @@ class PainterroProc {
       controls: [this.controlBuilder.buildEraserWidthControl(0),
       ],
       activate: () => {
+        if (this.initText) this.wrapper.click();
         this.toolContainer.style.cursor = 'crosshair';
         this.primitiveTool.activate('eraser');
       },
@@ -280,6 +288,7 @@ class PainterroProc {
         },
       ],
       activate: () => {
+        if (this.initText) this.wrapper.click();
         this.textTool.setFontColor(this.colorWidgetState.line.alphaColor);
         // this.textTool.setStrokeColor(this.colorWidgetState.stroke.alphaColor);
         this.toolContainer.style.cursor = 'crosshair';
@@ -292,6 +301,7 @@ class PainterroProc {
       name: 'rotate',
       hotkey: 'r',
       activate: () => {
+        if (this.initText) this.wrapper.click();
         const w = this.size.w;
         const h = this.size.h;
         const tmpData = this.ctx.getImageData(0, 0, this.size.w, this.size.h);
@@ -312,6 +322,7 @@ class PainterroProc {
     }, {
       name: 'resize',
       activate: () => {
+        if (this.initText) this.wrapper.click();
         this.resizer.open();
       },
       close: () => {
@@ -322,6 +333,7 @@ class PainterroProc {
     {
       name: 'undo',
       activate: () => {
+        if (this.initText) this.wrapper.click();
         this.worklog.undoState();
         this.closeActiveTool();
       },
@@ -330,6 +342,7 @@ class PainterroProc {
     {
       name: 'redo',
       activate: () => {
+        if (this.initText) this.wrapper.click();
         this.worklog.redoState();
         this.closeActiveTool();
       },
@@ -338,6 +351,7 @@ class PainterroProc {
     {
       name: 'settings',
       activate: () => {
+        if (this.initText) this.wrapper.click();
         this.settings.open();
       },
       close: () => {
@@ -349,6 +363,7 @@ class PainterroProc {
       right: true,
       hotkey: this.params.saveByEnter ? 'enter' : false,
       activate: () => {
+        if (this.initText) this.wrapper.click();
         this.save();
         this.closeActiveTool();
       },
@@ -356,6 +371,7 @@ class PainterroProc {
       name: 'open',
       right: true,
       activate: () => {
+        if (this.initText) this.wrapper.click();
         this.closeActiveTool();
         const input = document.getElementById('ptro-file-input');
         input.click();
@@ -373,6 +389,7 @@ class PainterroProc {
       hotkey: this.params.hideByEsc ? 'esc' : false,
       right: true,
       activate: () => {
+        if (this.initText) this.wrapper.click();
         const doClose = () => {
           this.closeActiveTool();
           this.close();
@@ -1151,28 +1168,25 @@ class PainterroProc {
     if (this.params.initText && this.worklog.empty) {
       this.ctx.lineWidth = 3;
       this.ctx.strokeStyle = '#fff';
-      const div = document.createElement('div');
-      this.scroller.appendChild(div);
-      div.innerHTML = '<div style="position:absolute;top:50%;width:100%;transform: translateY(-50%);">' +
+      this.initText = document.createElement('div');
+      this.wrapper.append(this.initText);
+      this.initText.innerHTML = '<div style="pointer-events: none;position:absolute;top:50%;width:100%;left: 50%; transform: translate(-50%, -50%)">' +
         `${this.params.initText}</div>`;
-      div.style.left = '0';
-      div.style.top = '0';
-      div.style.right = '0';
-      div.style.bottom = '0';
-      div.style['text-align'] = 'center';
-      div.style.position = 'absolute';
-      div.style.color = this.params.initTextColor;
-      div.style['font-family'] = this.params.initTextStyle.split(/ (.+)/)[1];
-      div.style['font-size'] = this.params.initTextStyle.split(/ (.+)/)[0];
+      this.initText.style.left = '0';
+      this.initText.style.top = '0';
+      this.initText.style.right = '0';
+      this.initText.style.bottom = '0';
+      this.initText.style.pointerEvents = 'none';
+      this.initText.style['text-align'] = 'center';
+      this.initText.style.position = 'absolute';
+      this.initText.style.color = this.params.initTextColor;
+      this.initText.style['font-family'] = this.params.initTextStyle.split(/ (.+)/)[1];
+      this.initText.style['font-size'] = this.params.initTextStyle.split(/ (.+)/)[0];
 
-      html2canvas(div, {
-        backgroundColor: null,
-        logging: false,
-        scale: 1,
-      }).then((can) => {
-        this.scroller.removeChild(div);
-        this.ctx.drawImage(can, 0, 0);
-      });
+      this.wrapper.addEventListener('click', () => {
+        this.initText.remove();
+        this.initText = null;
+      }, { once: true });
     }
   }
 
