@@ -105,7 +105,7 @@ export default class Resizer {
 
   static validationZeroValue(...args) {
     let isValid = true;
-    args.forEach( v => {
+    args.forEach((v) => {
       isValid = !(v === 0) && isValid;
     });
     return isValid;
