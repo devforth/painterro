@@ -468,7 +468,7 @@ select.ptro-input {
     width: 220px;
     margin: 0px;
 }
-.ptro-paster-fit[class='ptro-paster-fit'] {
+.ptro-paster-fit[class] {
     margin-right: 46px;
 }
 .ptro-text-tool-buttons {
