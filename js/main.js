@@ -932,6 +932,7 @@ class PainterroProc {
           }
           if (this.saveBtn) {
             if (evt.keyCode === KEYS.s && evt.ctrlKey) {
+              if (this.initText) this.wrapper.click();
               this.save();
               evt.preventDefault();
             }
@@ -939,6 +940,7 @@ class PainterroProc {
         }
       },
       paste: (event) => {
+        if (this.initText) this.wrapper.click();
         if (this.shown) {
           const items = (event.clipboardData || event.originalEvent.clipboardData).items;
           Object.keys(items).forEach((k) => {
