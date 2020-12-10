@@ -172,14 +172,14 @@ Read after installation
 
 To be able to save edited images on server or client see [Saving image](#saving-image). For configurations see [Configuration](#configuration)
 
-Supported hotkeys
+Supported hotkeys ⌨
 =================
 
-|||
+| | |
 |-|-|
 | `Ctrl + Z` | Cancel last operation |
 | `Ctrl + V` | Paste image from clipboard |
-| `Ctrl + C` | Copy selected aria to clipboard (*internal keyboard) |
+| `Ctrl + C` | Copy selected aria to clipboard |
 | `Shift` when drawing **rect**/**ellipse** | Draw **square**/**circle** |
 | `Shift` when drawing **line** | draw at angles of `0`, `45`, `90`, `135` etc degrees | 
 | `Alt` when using pipette | Hide zoom helper (colored grid) |
@@ -188,7 +188,7 @@ Supported hotkeys
 
 Also some tools have own one-button hotkeys e.g. `C` - crop, you could see this shortcuts if you will hold mouse on toolbutton.
 
-Configuration
+Configuration ⚙
 =============
 
 You can pass parameters map to Painterro constructor:
