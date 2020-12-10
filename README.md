@@ -1,6 +1,6 @@
 <img src="https://raw.githubusercontent.com/devforth/painterro/master/res/painterro.png" align="right" style="padding:5px; width:70px" /> 
 
-**[js paint live demo](https://hinty.io/login/?next=/add/%3Fpainterro)** | [npm](https://www.npmjs.com/package/painterro) | [GitHub](https://github.com/devforth/painterro)
+**[live demo](https://hinty.io/login/?next=/add/%3Fpainterro)** | [npm](https://www.npmjs.com/package/painterro) | [GitHub](https://github.com/devforth/painterro)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ![npmvers](https://img.shields.io/npm/v/painterro) ![npmDown](https://img.shields.io/npm/dw/painterro?label=npm%20💾) ![totalNpm](https://img.shields.io/npm/dt/painterro?label=npm%20💾) ![ghdownloads](https://img.shields.io/github/downloads/devforth/painterro/total?label=github%20script%20💾) 
 
 JavaScript painting plugin which allows editing images in a browser.
