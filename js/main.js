@@ -366,6 +366,8 @@ class PainterroProc {
         if (this.initText) this.wrapper.click();
         this.save();
         this.closeActiveTool();
+        this.close();
+        this.hide();
       },
     }, {
       name: 'open',
@@ -1170,7 +1172,14 @@ class PainterroProc {
     if (this.params.initText && this.worklog.empty) {
       this.ctx.lineWidth = 3;
       this.ctx.strokeStyle = '#fff';
+      const initTexts = this.wrapper.querySelectorAll('.init-text');
+      if (initTexts.length > 0) {
+        initTexts.forEach((text) => {
+          text.remove();
+        });
+      }
       this.initText = document.createElement('div');
+      this.initText.classList.add('init-text');
       this.wrapper.append(this.initText);
       this.initText.innerHTML = '<div style="pointer-events: none;position:absolute;top:50%;width:100%;left: 50%; transform: translate(-50%, -50%)">' +
         `${this.params.initText}</div>`;
