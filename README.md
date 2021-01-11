@@ -6,36 +6,8 @@
 JavaScript painting plugin which allows editing images in a browser.
 Can be easily integrated into any website or webapp by including only one JS file and calling simple initialization code.
 
-Save to: 
-
-[![alt text][1.1]][1] [![alt text][2.1]][2] [![alt text][3.1]][3]&nbsp;&nbsp;[![alt text][4.1]][4]&nbsp;&nbsp;&nbsp;[![alt text][5.1]][5]
-
-<!-- Please don't remove this: Grab your social icons from https://github.com/carlsednaoui/gitsocial -->
-
-<!-- display the social media buttons in your README -->
 
 
-<!-- links to social media icons -->
-<!-- no need to change these -->
-
-<!-- icons with padding -->
-
-[1.1]: res/twitter.png (Save to Twitter)
-[2.1]: res/facebook.png (Save to Facebook)
-[3.1]: res/thumblr.png (Save to Thumblr)
-[4.1]: res/linkedin.png (Save to Linkedin)
-[5.1]: res/pinterest.png (Save to Pinterest)
-
-<!-- links to your social media accounts -->
-<!-- update these accordingly -->
-
-[1]: https://twitter.com/home?status=https://github.com/devforth/painterro 
-[2]: https://www.facebook.com/sharer/sharer.php?u=https://github.com/devforth/painterro
-[3]: http://www.tumblr.com/share?v=3&u=https%3A%2F%2Fgithub.com%2Fdevforth%2Fpainterro&t=
-[4]: http://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fgithub.com%2Fdevforth%2Fpainterro&title=
-[5]: http://pinterest.com/pin/create/button/?url=https%3A%2F%2Fgithub.com%2Fdevforth%2Fpainterro&media=&description=
-
-<!-- Please don't remove this: Grab your social icons from https://github.com/carlsednaoui/gitsocial -->
 
 Features
 =================
