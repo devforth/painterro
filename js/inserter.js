@@ -200,6 +200,11 @@ export default class Inserter {
         }
         this.finishLoading();
       };
+      img.onerror = () => {
+        if (typeof this.main.params.onImageFailedOpen === 'function') {
+          this.main.params.onImageFailedOpen();
+        }
+      };
       img.src = source;
       if (!empty) {
         if (Object.keys(this.activeOption).length !== 1) {
@@ -215,6 +220,10 @@ export default class Inserter {
       imgToDataURL(src, (dataUrl) => { // if CORS will not allow,
         // better see error in console than have different canvas mode
         handleIt(dataUrl);
+      }, () => {
+        if (typeof this.main.params.onImageFailedOpen === 'function') {
+          this.main.params.onImageFailedOpen();
+        }
       });
     } else {
       handleIt(src);

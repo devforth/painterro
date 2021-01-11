@@ -140,7 +140,7 @@ export function getScrollbarWidth() {
   return widthNoScroll - widthWithScroll;
 }
 
-export function imgToDataURL(url, callback) {
+export function imgToDataURL(url, callback, failedCb) {
   const xhr = new XMLHttpRequest();
   xhr.onload = () => {
     const reader = new FileReader();
@@ -148,6 +148,11 @@ export function imgToDataURL(url, callback) {
       callback(reader.result);
     };
     reader.readAsDataURL(xhr.response);
+  };
+  xhr.onerror = () => {
+    if (typeof failedCb === 'function') {
+      failedCb();
+    }
   };
   xhr.open('GET', url);
   xhr.responseType = 'blob';

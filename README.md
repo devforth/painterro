@@ -249,6 +249,7 @@ Painterro({
 | `onChange` | Function that will be called if something will be changed (painted, erased, resized, etc) | `<exportable image>` | `undefined` |
 | `onUndo` | Function that will be called if user will undo (`Ctrl+Z`) | `{<current history state>}` |
 | `onRedo` | Function that will be called if user will redo (`Ctrl+Z`) | `{<current history state>}` |
+|`onImageFailedOpen`| Function that will be called if image can`t open | `undefined` |
 | `onImageLoaded` | Function that will be called if you passed image to `show` and when it was loaded | `undefined` | 
 | `saveHandler` | Function that will be called when user presses Save (or `Ctrl+S`), Call `doneCallback` to reflect in painterro that image was saved | `{<exportable image>}`, `doneCallback : function` |
 
