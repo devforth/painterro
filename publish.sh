@@ -51,6 +51,8 @@ echo Create release result: ${res}
 rel_id=`echo ${res} | python -c 'import json,sys;print(json.load(sys.stdin)["id"])'`
 file_name=painterro-${VERSION}.min.js
 
+echo "Release id", $rel_id
+
 curl --user "$GH_USER:$GH_PATH" -X POST https://uploads.github.com/repos/${GH_REPO_USER}/${GH_REPO}/releases/${rel_id}/assets?name=${file_name}\
  --header 'Content-Type: text/javascript ' --upload-file ${ASSETS_PATH}/${file_name}
 
