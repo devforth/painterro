@@ -474,11 +474,16 @@ example: `image.asDataURL('image/jpeg', 0.5)`
 Save to jpeg or png depending on whether there is an alpha channel
 ------------------
 
+An efficient way to save an image might be implmented by checking whether image has some alpha pixels:
+* If yes - we need to serve image in less efficient png format
+* Otherwise lets just use JPEG
+This is very simple with next:
+
 ```
 var ptro = Painterro({
   saveHandler: function (image, done) {
 
-    image.asBlob(image.hasAlphaChannel() ? 'image/png', 'image/jpeg' );
+    image.asBlob(image.hasAlphaChannel() ? 'image/png' : 'image/jpeg');
     // upload blob
   }
 })
