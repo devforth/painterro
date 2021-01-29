@@ -82,7 +82,8 @@
     // how_to_paste_actions: ['replace_all'],
     saveHandler: (saver, done) => {
       console.log('saving', saver.getWidth(), saver.getHeight())
-      console.log('Base64', saver.asDataURL())
+      console.log('hasAlphaChannel', saver.hasAlphaChannel())
+      // console.log('Base64', saver.asDataURL())
       done(true);
     }
     //toolbarPosition: 'top',

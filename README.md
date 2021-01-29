@@ -234,13 +234,14 @@ Events accepted arguments:
 { 
   image: {
    asBlob: ƒ asBlob(type, quality)
-   asDataURL: ƒ asDataURL(type, quality)
-   suggestedFileName: ƒ suggestedFileName(type)
-   getOriginalMimeType: ƒ getOriginalMimeType()
-   getWidth: ƒ getWidth()
-   getHeight: ƒ getHeight()
+   asDataURL: ƒ asDataURL(type, quality) // returns e.g. "data:image/jpeg;base64,/9j/4AAQS...."
+   suggestedFileName: ƒ suggestedFileName(type) // returns string
+   hasAlphaChannel(): ƒ suggestedFileName() // returns true or false
+   getOriginalMimeType: ƒ getOriginalMimeType() // e.g. image/jpeg;
+   getWidth: ƒ getWidth() // integer
+   getHeight: ƒ getHeight() // integer
   }
-  operationsDone: int
+  operationsDone: int // integer
 } 
 ```
 
@@ -255,6 +256,9 @@ Events accepted arguments:
   sizew: int
 }
 ```
+
+
+
 
 UI color scheme
 ---------------
@@ -465,6 +469,20 @@ Default type is mimetype used by image which was loaded into Painterro, or "imag
 
 If type is `image/jpeg` or `image/webp`, you can also define image quality from `0.0` to `1.0`, default is `0.92`,
 example: `image.asDataURL('image/jpeg', 0.5)`
+
+
+Save to jpeg or png depending on whether there is an alpha channel
+------------------
+
+```
+var ptro = Painterro({
+  saveHandler: function (image, done) {
+
+    image.asBlob(image.hasAlphaChannel() ? 'image/png', 'image/jpeg' );
+    // upload blob
+  }
+})
+```
 
 Example: Open Painterro by Ctrl+V
 -----------------

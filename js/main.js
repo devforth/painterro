@@ -641,6 +641,15 @@ class PainterroProc {
         });
       },
       getOriginalMimeType: () => this.loadedImageType,
+      hasAlphaChannel: () => {
+        const data = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height).data;
+        for (let i = 3, n = data.length; i < n; i += 4) {
+          if (data[i] < 255) {
+            return true;
+          }
+        }
+        return false;
+      },
       suggestedFileName: (type) => {
         let realType = type;
         if (realType === undefined) {
