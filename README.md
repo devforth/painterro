@@ -4,7 +4,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ![npmvers](https://img.shields.io/npm/v/painterro) ![npmDown](https://img.shields.io/npm/dw/painterro?label=npm%20💾) ![totalNpm](https://img.shields.io/npm/dt/painterro?label=npm%20💾) ![ghdownloads](https://img.shields.io/github/downloads/devforth/painterro/total?label=github%20script%20💾) 
 
 JavaScript painting plugin which allows editing images in a browser.
-Can be easily integrated into any website or webapp by including only one JS file and calling simple initialization code.
+Can be easily integrated into any website or webapp by calling simple initialization code.
 
 
 
