@@ -10,7 +10,7 @@ WP_PASSWORD=`cat ~/.wppassword`
 GH_REPO=painterro
 GH_TARGET=master
 ASSETS_PATH=build
-npm --no-git-tag-version version patch
+# npm --no-git-tag-version version patch
 VERSION=`grep '"version":' package.json | cut -d\" -f4`
 npm run build
 
@@ -20,8 +20,8 @@ else
     echo FAIL
     exit 0
 fi
-rm wp/trunk/painterro-*.min.js
-rm wp/trunk/painterro-*.min.js.map
+rm -f wp/trunk/painterro-*.min.js
+rm -f wp/trunk/painterro-*.min.js.map
 cp build/painterro-${VERSION}.min.js wp/trunk/
 cp build/painterro-${VERSION}.min.js.map wp/trunk/
 sed -i -E "s/([ \t]+version: \")[0-9\\.]+(\",)/\1${VERSION}\2/" wp/trunk/index.js
