@@ -20,6 +20,10 @@ else
     echo FAIL
     exit 0
 fi
+
+rm -rf wp
+svn co http://plugins.svn.wordpress.org/painterro/ wp
+
 rm -f wp/trunk/painterro-*.min.js
 rm -f wp/trunk/painterro-*.min.js.map
 cp build/painterro-${VERSION}.min.js wp/trunk/
@@ -28,7 +32,7 @@ sed -i -E "s/([ \t]+version: \")[0-9\\.]+(\",)/\1${VERSION}\2/" wp/trunk/index.j
 sed -i -E "s/(Version: )[0-9\\.]+/\1${VERSION}/" wp/trunk/painterro-wp.php
 sed -i -E "s/(define\\(\"PAINTERRO_FILE\", \"painterro-)[0-9\\.]+(\\.min\\.js\"\\);)/\1${VERSION}\2/" wp/trunk/painterro-wp.php
 cd wp
-svn add trunk/*
+svn add --force .
 svn st | grep ^! | awk '{print " --force "$2}' | xargs svn rm
 svn --username=vanbrosh --password="${WP_PASSWORD}" ci -m "${VERSION}"
 cd ..
