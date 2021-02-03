@@ -53,11 +53,11 @@ file_name=painterro-${VERSION}.min.js
 
 echo "Release id", $rel_id
 
-curl --user "$GH_USER:$GH_PATH" -X POST https://uploads.github.com/repos/${GH_REPO_USER}/${GH_REPO}/releases/${rel_id}/assets?name=${file_name}\
+curl --user "$GH_USER:$GH_PASS" -X POST https://uploads.github.com/repos/${GH_REPO_USER}/${GH_REPO}/releases/${rel_id}/assets?name=${file_name}\
  --header 'Content-Type: text/javascript ' --upload-file ${ASSETS_PATH}/${file_name}
 
 file_map_name=painterro-${VERSION}.min.js.map
-curl --user "$GH_USER:$GH_PATH" -X POST https://uploads.github.com/repos/${GH_REPO_USER}/${GH_REPO}/releases/${rel_id}/assets?name=${file_map_name}\
+curl --user "$GH_USER:$GH_PASS" -X POST https://uploads.github.com/repos/${GH_REPO_USER}/${GH_REPO}/releases/${rel_id}/assets?name=${file_map_name}\
  --header 'Content-Type: text/javascript ' --upload-file ${ASSETS_PATH}/${file_map_name}
 
 rm ${ASSETS_PATH}/${file_name}
