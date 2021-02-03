@@ -191,7 +191,7 @@ Painterro({
 |`defaultTextStrokeAndShadow` | Enables Stroke and Shadow for text tool by default (easier recognize text on screenshots) | `true` |
 |`defaultSize` | default image size, should be string in format `<width>x<height>` in pixel, e.g. `'200x100'`. If value is `'fill'`(default) than all container size will be used | `'fill'` |
 |`defaultTool` | Tool selected by default | `'select'` | 
-|`hiddenTools` | List of tools that you wish to exclude from toolbar e.g. something from this list `['crop', 'line', 'arrow', 'rect', 'ellipse', 'brush', 'text', 'rotate', 'resize',  'save', 'open', 'close']`, You can't hide default tool | `['redo']` |
+|`hiddenTools` | List of tools that you wish to exclude from toolbar e.g. something from this list `['crop', 'line', 'arrow', 'rect', 'ellipse', 'brush', 'text', 'rotate', 'resize',  'save', 'open', 'close', 'undo', 'redo']`, You can't hide default tool | `['redo']` |
 |`initText` | Display some centered text before painting (supports HTML). If null, no text will be shown | `null` |
 |`initTextColor` | Color of init text | `'#808080'` |
 |`initTextStyle` | Style of init text | `"26px 'Open Sans', sans-serif"` |
