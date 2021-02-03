@@ -3,6 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 require('es6-promise').polyfill();
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const TerserPlugin = require("terser-webpack-plugin");
 
 function webpackConfig(target) {
   let filename;
@@ -34,7 +35,7 @@ function webpackConfig(target) {
         {
           test: /\.js$/,
           loader: 'babel-loader',
-          query: {
+          options: {
             presets: ['es2015', 'es2016']
           }
         },
@@ -62,12 +63,13 @@ function webpackConfig(target) {
     plugins: [
       new BundleAnalyzerPlugin({
         analyzerMode: 'static',
-      })
+        reportFilename: `report-${target}.html`,
+      }),
     ]
   }
 }
 
-const isDevServer = process.argv.find(v => v.includes('webpack-dev-server'));
+const isDevServer = process.argv.find(v => v.includes('serve'));
 
 if (!isDevServer) {
   module.exports = [
@@ -78,7 +80,5 @@ if (!isDevServer) {
     webpackConfig('umd')
   ];
 } else {
-  module.exports = [
-    webpackConfig('var-latest'),
-  ];
+  module.exports = webpackConfig('var-latest');
 }
