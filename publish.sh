@@ -6,6 +6,7 @@
 GH_USER=ivictbor
 GH_REPO_USER=devforth
 GH_PASS=`cat ~/.ghtoken`
+WP_PASSWORD=`cat ~/.wppassword`
 GH_REPO=painterro
 GH_TARGET=master
 ASSETS_PATH=build
@@ -29,7 +30,7 @@ sed -i -E "s/(define\\(\"PAINTERRO_FILE\", \"painterro-)[0-9\\.]+(\\.min\\.js\"\
 cd wp
 svn add trunk/*
 svn st | grep ^! | awk '{print " --force "$2}' | xargs svn rm
-svn ci -m "${VERSION}"
+svn --username=vanbrosh --password="${WP_PASSWORD}" ci -m "${VERSION}"
 cd ..
 
 git add -u
