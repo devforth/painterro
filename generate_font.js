@@ -15,6 +15,7 @@ fs.readdir('res/font', function(err, items) {
     
     // https://github.com/nfroidure/svgicons2svgfont
     normalize: true,
+    round: 10e2,
     
     cssTemplate: 'res/font/font-css.hbs',
     templateOptions: {

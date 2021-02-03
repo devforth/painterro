@@ -1,4 +1,4 @@
-import html2canvas from 'html2canvas';
+import html2canvas from 'html2canvas/dist/html2canvas.min';
 import { KEYS } from './utils';
 import { tr } from './translation';
 

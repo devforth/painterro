@@ -2,6 +2,7 @@
 const path = require('path');
 const webpack = require('webpack');
 require('es6-promise').polyfill();
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 function webpackConfig(target) {
   let filename;
@@ -57,7 +58,12 @@ function webpackConfig(target) {
     devtool: 'source-map',
     devServer: {
       disableHostCheck: true
-    }
+    },
+    plugins: [
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'static',
+      })
+    ]
   }
 }
 
