@@ -6,10 +6,10 @@ import '../css/icons/ptroiconfont.css';
 import PainterroSelecter from './selecter';
 import WorkLog from './worklog';
 import { genId, addDocumentObjectHelpers, KEYS, trim,
-  getScrollbarWidth, distance } from './utils';
+  getScrollbarWidth, distance, logError } from './utils';
 import PrimitiveTool from './primitive';
 import ColorPicker, { HexToRGB, rgbToHex } from './colorPicker';
-import { setDefaults, setParam, logError } from './params';
+import { setDefaults, setParam } from './params';
 import { tr } from './translation';
 import ZoomHelper from './zoomHelper';
 import TextTool from './text';

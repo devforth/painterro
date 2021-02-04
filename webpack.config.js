@@ -3,9 +3,8 @@ const path = require('path');
 const webpack = require('webpack');
 require('es6-promise').polyfill();
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const TerserPlugin = require("terser-webpack-plugin");
 
-function webpackConfig(target) {
+function webpackConfig(target, mode) {
   let filename;
   if (target === 'var') {
     filename = `painterro-${require('./package.json').version}.min.js`
@@ -16,7 +15,8 @@ function webpackConfig(target) {
     filename = `painterro.${target}.js`;
   }
 
-  return {
+  let options = {
+    mode,
     entry: './js/main.js',
     output: {
       path: path.resolve(__dirname, 'build'),
@@ -36,6 +36,7 @@ function webpackConfig(target) {
           test: /\.js$/,
           loader: 'babel-loader',
           options: {
+            sourceType: "module",
             presets: ['es2015', 'es2016']
           }
         },
@@ -55,30 +56,40 @@ function webpackConfig(target) {
     stats: {
       colors: true
     },
-
     devtool: 'source-map',
-    devServer: {
-      disableHostCheck: true
-    },
-    plugins: [
-      new BundleAnalyzerPlugin({
-        analyzerMode: 'static',
-        reportFilename: `report-${target}.html`,
-      }),
-    ]
   }
+  if (mode === 'development') {
+    options = {
+      ...options,
+      devServer: {
+        injectClient: false,
+        static: path.join(__dirname, 'build'),
+        hot: true,
+      },
+      devtool: 'inline-source-map',
+      plugins: [
+        new BundleAnalyzerPlugin({
+          analyzerMode: 'static',
+          reportFilename: `report-${target}.html`,
+        }),
+      ],
+    }
+  }
+  return options;
 }
 
 const isDevServer = process.argv.find(v => v.includes('serve'));
 
 if (!isDevServer) {
+  console.log('Building production');
   module.exports = [
-    webpackConfig('var'),
-    webpackConfig('var-latest'),
-    webpackConfig('commonjs2'),
-    webpackConfig('amd'),
-    webpackConfig('umd')
+    webpackConfig('var', 'production'),
+    webpackConfig('var-latest', 'production'),
+    webpackConfig('commonjs2', 'production'),
+    webpackConfig('amd', 'production'),
+    webpackConfig('umd', 'production')
   ];
 } else {
-  module.exports = webpackConfig('var-latest');
+  console.log('Building development');
+  module.exports = [webpackConfig('var-latest', 'development')];
 }
