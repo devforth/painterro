@@ -1,7 +1,6 @@
 import { tr } from './translation';
 import { genId, KEYS, imgToDataURL } from './utils';
 
-let instance = null;
 export default class Inserter {
   constructor(main) {
     this.main = main;
@@ -268,11 +267,11 @@ export default class Inserter {
   }
 
   static get(main) {
-    if (instance) {
-      return instance;
+    if (main.instanceInstance) {
+      return main.instanceInstance;
     }
-    instance = new Inserter(main);
-    return instance;
+    main.instanceInstance = new Inserter(main);
+    return main.instanceInstance;
   }
 
   activeOptions(actOpt) {

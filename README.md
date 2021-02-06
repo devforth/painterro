@@ -173,7 +173,7 @@ Painterro({
 
 | Param | Description | Default |
 |-|-|-|
-| `id` | If provided, then Painterro will be placed to some holder on page with this `id`, in other case holder-element will be created (fullscreen with margins) | `undefined` |
+| `id` | If provided, then Painterro will be placed to some holder on page with this `id`, in other case holder-element will be created (fullscreen with margins). Important note: If you are using your block and id option, please add `position`:`relative` or `absolute` or `fixed` on your container, default (`static`) will lead to positioning issues | `undefined` |
 |`activeColor`| Line/Text color that selected by default | `'#ff0000'` |
 |`activeColorAlpha` | Transparancy of `activeColor` from `0.0` to `1.0`, `0.0` = transparent | `1` |
 |`activeFillColor` | Fill color that selected by default | `'#000000'` |

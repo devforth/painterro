@@ -18,17 +18,40 @@
         right: 20px;
       }
 
+#holder {
+  display: flex;
+}
+
+#test-1 {
+  position: relative;
+  width: 250px;
+  height: 200px;
+  border: 2px solid red;
+}
+
+#test-2 {
+  position: relative;
+  width: 250px;
+  height: 200px;
+  border: 2px solid green;
+}
+
     </style>
   </head>
 <body>
+  <div id="holder">
+    <div id="test-1"></div>
+    <div id="test-2"></div>
+  </div>
+<!--<div id="wrapper">
 
-<div id="wrapper">
+
   <input type='text'/>
   <div id="conatiner">
 
   </div>
   <button onclick="p.show()">Show</button>
-  <button onclick="saveTest()">Save</button>
+  <button onclick="saveTest()">Save</button>-->
 </div>
 
 <!--<script src="https://github.com/ivictbor/painterro/releases/download/0.1.7/painterro-0.1.7.min.js"></script>-->
@@ -52,7 +75,11 @@
     console.log('saved', u.length, u);
   }  
 
-  window.p = Painterro({
+window.p1 = Painterro({id: "test-1"}).show();
+
+window.p2 = Painterro({id: "test-2"}).show()
+
+/* window.p = Painterro({
     hideByEsc: true,
     saveByEnter: true,
     shadowScale: 1,
@@ -91,9 +118,8 @@
     // defaultTool: 'line',
     //hiddenTools: ['line']
   }).show()
-  const ctx = window.p.ctx; 
+  const ctx = window.p.ctx; */
 
-console.log(ctx);
   // ctx.beginPath();
   // ctx.moveTo(0,0);
   // ctx.lineTo(300,150);
