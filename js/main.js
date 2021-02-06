@@ -375,7 +375,7 @@ class PainterroProc {
       activate: () => {
         if (this.initText) this.wrapper.click();
         this.closeActiveTool();
-        const input = document.getElementById('ptro-file-input');
+        const input = this.doc.getElementById(this.bar.fileInputId);
         input.click();
         input.onchange = (event) => {
           const files = event.target.files || event.dataTransfer.files;
@@ -481,12 +481,13 @@ class PainterroProc {
     this.bar = this.doc.createElement('div');
     this.bar.id = `${this.id}-bar`;
     this.bar.className = 'ptro-bar ptro-color-main';
+    this.bar.fileInputId = genId();
     this.bar.innerHTML =
       `<div>${bar}` +
       '<span class="ptro-tool-controls"></span>' +
       '<span class="ptro-info"></span>' +
       `<span class="ptro-bar-right">${rightBar}</span>` +
-      '<input id="ptro-file-input" type="file" style="display: none;" accept="image/x-png,image/png,image/gif,image/jpeg" /></div>';
+      `<input id="${this.bar.fileInputId}" type="file" style="display: none;" accept="image/x-png,image/png,image/gif,image/jpeg" /></div>`;
     if (this.isMobile) {
       this.bar.style['overflow-x'] = 'auto';
     }
