@@ -21,7 +21,6 @@ function webpackConfig(target, mode) {
     output: {
       path: path.resolve(__dirname, 'build'),
       filename,
-      library: 'Painterro', // export as library
       libraryTarget: target,
     },
     module: {
@@ -36,8 +35,8 @@ function webpackConfig(target, mode) {
           test: /\.js$/,
           loader: 'babel-loader',
           options: {
-            sourceType: "module",
-            presets: ['es2015', 'es2016']
+            // sourceType: "module",
+            presets: [['@babel/env', { "modules": "commonjs" }]],
           }
         },
         {
@@ -57,6 +56,10 @@ function webpackConfig(target, mode) {
       colors: true
     },
     devtool: 'source-map',
+  }
+  if (target === 'var') {
+    options.output.library = 'Painterro';
+    options.output.libraryExport = 'default';
   }
   if (mode === 'development') {
     options = {

@@ -1275,4 +1275,4 @@ class PainterroProc {
   }
 }
 
-module.exports = params => new PainterroProc(params);
+export default params => new PainterroProc(params);
