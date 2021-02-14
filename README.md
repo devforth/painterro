@@ -15,6 +15,7 @@ Features
 - Paste image from clipboard with `Ctrl+V` (e.g. `PtnScr` screenshot), drag and drop it into widget, or load with file select dialog
 - Crop image by defined area
 - Paint primitives: line, rectangle, ellipse (alpha color can be used)
+- Brush – free drawing tool e.g. to implement finger-based signatures on tablet screens
 - Add text (you can use `Ctrl+B` - bold, `Ctrl+I` - italic, `Ctrl+U` - underlined, or just pase formatted HTML)
 - Rotate / resize, scale image
 - Pixelize some area to hide sensitive data
