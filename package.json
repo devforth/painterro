@@ -1,6 +1,6 @@
 {
   "name": "painterro",
-  "version": "1.2.32",
+  "version": "1.2.33",
   "description": "HTML5 image editing widget (js paint plugin)",
   "main": "build/painterro.commonjs2.js",
   "repository": {
@@ -29,8 +29,8 @@
   ],
   "homepage": "https://hinty.io/devforth/js-paint-plugin-for-your-website/",
   "bugs": {
-    "url" : "https://github.com/devforth/painterro/issues",
-    "email" : "contact@devforth.io"
+    "url": "https://github.com/devforth/painterro/issues",
+    "email": "contact@devforth.io"
   },
   "author": "Ivan Borshchov",
   "license": "MIT",

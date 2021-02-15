@@ -234,7 +234,7 @@ Events accepted arguments:
 ```
 { 
   image: {
-   asBlob: ƒ asBlob(type, quality)
+   asBlob: ƒ asBlob(type, quality) // returns blob
    asDataURL: ƒ asDataURL(type, quality) // returns e.g. "data:image/jpeg;base64,/9j/4AAQS...."
    suggestedFileName: ƒ suggestedFileName(type) // returns string
    hasAlphaChannel(): ƒ suggestedFileName() // returns true or false
