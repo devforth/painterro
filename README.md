@@ -71,7 +71,7 @@ There is no promise that it will be implemented soon or ever, but it is interest
 
 Also some usefull hints on HINTY for you:
 
-- [Painterro JS paint features review on HINTY](https://hinty.io/devforth/simplest-js-paint/)
+- [Painterro JS paint features review on HINTY](https://hinty.io/devforth/js-paint-plugin-for-your-website/)
 - [Dark theme for Painterro JS paint](https://hinty.io/devforth/painterro-dark-theme/)
 - [Round buttons for Painterro JS paint](https://hinty.io/devforth/how-to-round-the-painterro-buttons/)
 

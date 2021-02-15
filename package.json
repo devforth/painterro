@@ -17,14 +17,21 @@
   },
   "keywords": [
     "paint",
+    "paint plugin",
     "image editor",
-    "image",
+    "paint widget",
+    "screenshots edit",
     "js paint",
     "canvas paint",
+    "image",
     "js paint plugin",
-    "paint widget",
     "html5 canvas"
   ],
+  "homepage": "https://hinty.io/devforth/js-paint-plugin-for-your-website/",
+  "bugs": {
+    "url" : "https://github.com/devforth/painterro/issues",
+    "email" : "contact@devforth.io"
+  },
   "author": "Ivan Borshchov",
   "license": "MIT",
   "devDependencies": {
