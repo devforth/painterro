@@ -439,8 +439,8 @@ select.ptro-input {
 
 .ptro-text-tool-input {
     background-color: rgba(0,0,0,0);
-    outline: 1px dotted;
     width: auto;
+    outline: 1px dotted;
     display: block;
     min-width: 5px;
     padding: 0 1px;
@@ -473,9 +473,8 @@ select.ptro-input {
 }
 .ptro-text-tool-buttons {
     display: flex;
-    position: fixed;
+    position: absolute;
 }
-
 .ptro-text-tool-input-wrapper {
     position: absolute;
 }

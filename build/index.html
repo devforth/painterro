@@ -40,8 +40,8 @@
   </head>
 <body>
   <div id="holder">
-    <div id="test-1"></div>
-    <div id="test-2"></div>
+    <!-- <div id="test-1"></div>
+    <div id="test-2"></div>  -->
   </div>
 <!--<div id="wrapper">
 
@@ -75,11 +75,11 @@
     console.log('saved', u.length, u);
   }  
 
-window.p1 = Painterro({id: "test-1"}).show();
+// window.p1 = Painterro({id: "test-1"}).show();
 
-window.p2 = Painterro({id: "test-2"}).show()
+// window.p2 = Painterro({id: "test-2"}).show()
 
-/* window.p = Painterro({
+window.p = Painterro({
     hideByEsc: true,
     saveByEnter: true,
     shadowScale: 1,
@@ -118,7 +118,7 @@ window.p2 = Painterro({id: "test-2"}).show()
     // defaultTool: 'line',
     //hiddenTools: ['line']
   }).show()
-  const ctx = window.p.ctx; */
+  const ctx = window.p.ctx; 
 
   // ctx.beginPath();
   // ctx.moveTo(0,0);
@@ -127,8 +127,6 @@ window.p2 = Painterro({id: "test-2"}).show()
   // ctx.stroke(); 
 
 
-  /*
-    
 document.onpaste = (event) => {
   const { items } = event.clipboardData || event.originalEvent.clipboardData;
   Array.from(items).forEach((item) => {
@@ -154,8 +152,6 @@ document.onpaste = (event) => {
     }
   });
 };
-
-*/
   
 
 </script>
