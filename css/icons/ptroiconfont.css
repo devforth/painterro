@@ -1,9 +1,9 @@
 @font-face {
 	font-family: "ptroiconfont";
-	src: url("ptroiconfont.eot?45b85c96bad5b2fdaeef7dab5bc9ba66?#iefix") format("embedded-opentype"),
-url("ptroiconfont.woff?45b85c96bad5b2fdaeef7dab5bc9ba66") format("woff"),
-url("ptroiconfont.ttf?45b85c96bad5b2fdaeef7dab5bc9ba66") format("truetype"),
-url("ptroiconfont.svg?45b85c96bad5b2fdaeef7dab5bc9ba66#ptroiconfont") format("svg");
+	src: url("ptroiconfont.eot?1be5ecd87f55041f64940039f39c5d8b?#iefix") format("embedded-opentype"),
+url("ptroiconfont.woff?1be5ecd87f55041f64940039f39c5d8b") format("woff"),
+url("ptroiconfont.ttf?1be5ecd87f55041f64940039f39c5d8b") format("truetype"),
+url("ptroiconfont.svg?1be5ecd87f55041f64940039f39c5d8b#ptroiconfont") format("svg");
 	font-weight: normal;
     font-style: normal;
 }
@@ -108,4 +108,10 @@ url("ptroiconfont.svg?45b85c96bad5b2fdaeef7dab5bc9ba66#ptroiconfont") format("sv
 }
 .ptro-icon-unlinked:before {
 	content: "\f11d";
+}
+.ptro-icon-zoomm:before {
+	content: "\f11e";
+}
+.ptro-icon-zoomp:before {
+	content: "\f11f";
 }
