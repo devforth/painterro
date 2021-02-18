@@ -89,7 +89,7 @@ export function setDefaults(parameters) {
   params.worklogLimit = firstDefined(params.worklogLimit, 100);
 
   params.defaultTool = params.defaultTool || 'select';
-  params.hiddenTools = params.hiddenTools || ['redo'];
+  params.hiddenTools = params.hiddenTools || ['redo', 'zoomm', 'zoomp'];
   const defaultInHiddenIndex = params.hiddenTools.indexOf(params.defaultTool);
   if (defaultInHiddenIndex > -1) {
     logError(`Can't hide default tool '${params.defaultTool}', please change default tool to another to hide it`);
