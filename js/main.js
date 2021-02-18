@@ -358,7 +358,56 @@ class PainterroProc {
         this.settings.close();
       },
       eventListner: () => this.settings,
-    }, {
+    },
+    {
+      name: 'zoomm',
+      activate: () => {
+        if (this.initText) this.wrapper.click();
+        this.zoomButtonActive = true;
+        const canvas = this.canvas;
+        const gbr = canvas.getBoundingClientRect();
+        const e = {
+          wheelDelta: -120,
+          clientX: gbr.right / 2,
+          clientY: gbr.bottom / 2,
+        };
+
+        this.curCord = [
+          (e.clientX - this.elLeft()) + this.scroller.scrollLeft,
+          (e.clientY - this.elTop()) + this.scroller.scrollTop,
+        ];
+
+        const scale = this.getScale();
+        this.curCord = [this.curCord[0] * scale, this.curCord[1] * scale];
+
+        this.zoomImage(e);
+      },
+    },
+    {
+      name: 'zoomp',
+      activate: () => {
+        if (this.initText) this.wrapper.click();
+        this.zoomButtonActive = true;
+        const canvas = this.canvas;
+        const gbr = canvas.getBoundingClientRect();
+        const e = {
+          wheelDelta: 120,
+          clientX: gbr.right / 2,
+          clientY: gbr.bottom / 2,
+        };
+
+        this.curCord = [
+          (e.clientX - this.elLeft()) + this.scroller.scrollLeft,
+          (e.clientY - this.elTop()) + this.scroller.scrollTop,
+        ];
+
+        const scale = this.getScale();
+        this.curCord = [this.curCord[0] * scale, this.curCord[1] * scale];
+
+        this.zoomImage(e);
+      },
+    },
+    {
       name: 'save',
       right: true,
       hotkey: this.params.saveByEnter ? 'enter' : false,
@@ -515,6 +564,7 @@ class PainterroProc {
     this.toolContainer = this.doc.querySelector(`#${this.id}-wrapper .ptro-crp-el`);
     this.substrate = this.doc.querySelector(`#${this.id}-wrapper .ptro-substrate`);
     this.zoomHelper = new ZoomHelper(this);
+    this.zoomButtonActive = false;
     this.select = new PainterroSelecter(this, (notEmpty) => {
       [this.toolByName.crop, this.toolByName.pixelize].forEach((c) => {
         this.setToolEnabled(c, notEmpty);
@@ -786,7 +836,33 @@ class PainterroProc {
     }
     return handled;
   }
-
+  zoomImage({ wheelDelta, clientX, clientY }) {
+    let minFactor = 1;
+    if (this.size.w > this.wrapper.documentClientWidth) {
+      minFactor = Math.min(minFactor, this.wrapper.documentClientWidth / this.size.w);
+    }
+    if (this.size.h > this.wrapper.documentClientHeight) {
+      minFactor = Math.min(minFactor, this.wrapper.documentClientHeight / this.size.h);
+    }
+    if (!this.zoom && this.zoomFactor > minFactor) {
+      this.zoomFactor = minFactor;
+    }
+    this.zoomFactor += Math.sign(wheelDelta) * 0.2;
+    if (this.zoomFactor < minFactor) {
+      this.zoom = false;
+      this.zoomFactor = minFactor;
+    } else {
+      this.zoom = true;
+    }
+    this.adjustSizeFull();
+    this.select.adjustPosition();
+    if (this.zoom) {
+      this.scroller.scrollLeft = (this.curCord[0] / this.getScale()) -
+        (clientX - this.wrapper.documentOffsetLeft);
+      this.scroller.scrollTop = (this.curCord[1] / this.getScale()) -
+        (clientY - this.wrapper.documentOffsetTop);
+    }
+  }
   initEventHandlers() {
     this.documentHandlers = {
       mousedown: (e) => {
@@ -848,7 +924,7 @@ class PainterroProc {
           }
           this.lastFingerDist = fingersDist;
           e.stopPropagation();
-          e.preventDefault();
+          if (!this.zoomButtonActive) e.preventDefault();
         }
       },
       mousemove: (e) => {
@@ -864,7 +940,7 @@ class PainterroProc {
           this.curCord = [this.curCord[0] * scale, this.curCord[1] * scale];
           if (e.target.tagName.toLowerCase() !== 'input' && e.target.tagName.toLowerCase() !== 'button'
         && e.target.tagName.toLowerCase() !== 'i' && e.target.tagName.toLowerCase() !== 'select') {
-            e.preventDefault();
+            if (!this.zoomButtonActive) e.preventDefault();
           }
         }
       },
@@ -877,32 +953,7 @@ class PainterroProc {
       mousewheel: (e) => {
         if (this.shown) {
           if (e.ctrlKey) {
-            // console.log(e.wheelDelta);
-            let minFactor = 1;
-            if (this.size.w > this.wrapper.documentClientWidth) {
-              minFactor = Math.min(minFactor, this.wrapper.documentClientWidth / this.size.w);
-            }
-            if (this.size.h > this.wrapper.documentClientHeight) {
-              minFactor = Math.min(minFactor, this.wrapper.documentClientHeight / this.size.h);
-            }
-            if (!this.zoom && this.zoomFactor > minFactor) {
-              this.zoomFactor = minFactor;
-            }
-            this.zoomFactor += Math.sign(e.wheelDelta) * 0.2;
-            if (this.zoomFactor < minFactor) {
-              this.zoom = false;
-              this.zoomFactor = minFactor;
-            } else {
-              this.zoom = true;
-            }
-            this.adjustSizeFull();
-            this.select.adjustPosition();
-            if (this.zoom) {
-              this.scroller.scrollLeft = (this.curCord[0] / this.getScale()) -
-                (e.clientX - this.wrapper.documentOffsetLeft);
-              this.scroller.scrollTop = (this.curCord[1] / this.getScale()) -
-                (e.clientY - this.wrapper.documentOffsetTop);
-            }
+            this.zoomImage(e);
             e.preventDefault();
           }
         }
@@ -1221,6 +1272,7 @@ class PainterroProc {
 
   setActiveTool(b) {
     this.activeTool = b;
+    this.zoomButtonActive = false;
     const btnEl = this.getBtnEl(this.activeTool);
     if (btnEl) {
       btnEl.className += ' ptro-color-active-control';

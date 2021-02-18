@@ -74,6 +74,7 @@ function webpackConfig(target, mode) {
         new BundleAnalyzerPlugin({
           analyzerMode: 'static',
           reportFilename: `report-${target}.html`,
+          openAnalyzer: false,
         }),
       ],
     }
