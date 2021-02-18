@@ -360,7 +360,7 @@ class PainterroProc {
       eventListner: () => this.settings,
     },
     {
-      name: 'zoomm',
+      name: 'zoomout',
       activate: () => {
         if (this.initText) this.wrapper.click();
         this.zoomButtonActive = true;
@@ -384,7 +384,7 @@ class PainterroProc {
       },
     },
     {
-      name: 'zoomp',
+      name: 'zoomin',
       activate: () => {
         if (this.initText) this.wrapper.click();
         this.zoomButtonActive = true;
