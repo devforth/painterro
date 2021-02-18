@@ -13,6 +13,7 @@ fs.readdir('res/font', function(err, items) {
     dest: 'css/icons',
     fontName: 'ptroiconfont',
     
+    html: true,
     // https://github.com/nfroidure/svgicons2svgfont
     normalize: true,
     round: 10e2,
