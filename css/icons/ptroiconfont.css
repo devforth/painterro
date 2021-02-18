@@ -1,9 +1,9 @@
 @font-face {
 	font-family: "ptroiconfont";
-	src: url("ptroiconfont.eot?1be5ecd87f55041f64940039f39c5d8b?#iefix") format("embedded-opentype"),
-url("ptroiconfont.woff?1be5ecd87f55041f64940039f39c5d8b") format("woff"),
-url("ptroiconfont.ttf?1be5ecd87f55041f64940039f39c5d8b") format("truetype"),
-url("ptroiconfont.svg?1be5ecd87f55041f64940039f39c5d8b#ptroiconfont") format("svg");
+	src: url("ptroiconfont.eot?645366d92413784b0052e8ba090cd0c9?#iefix") format("embedded-opentype"),
+url("ptroiconfont.woff?645366d92413784b0052e8ba090cd0c9") format("woff"),
+url("ptroiconfont.ttf?645366d92413784b0052e8ba090cd0c9") format("truetype"),
+url("ptroiconfont.svg?645366d92413784b0052e8ba090cd0c9#ptroiconfont") format("svg");
 	font-weight: normal;
     font-style: normal;
 }
@@ -109,9 +109,9 @@ url("ptroiconfont.svg?1be5ecd87f55041f64940039f39c5d8b#ptroiconfont") format("sv
 .ptro-icon-unlinked:before {
 	content: "\f11d";
 }
-.ptro-icon-zoomm:before {
+.ptro-icon-zoomin:before {
 	content: "\f11e";
 }
-.ptro-icon-zoomp:before {
+.ptro-icon-zoomout:before {
 	content: "\f11f";
 }
