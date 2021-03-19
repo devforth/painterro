@@ -560,11 +560,13 @@ Then open http://localhost:8080 with demo page
 Regenerating icons font
 -----------------------
 
-If you need add/edit icons in `res` folder, please after editing run
+If you need add/edit icons in `res` folder, please after editing run:
 
 ```bash
 npm run buildfont
 ```
+
+For font generation we use method described here: [How to generate a webfont (automated setup)](https://hinty.io/brucehardywald/how-to-generate-a-webfont-automated-setup/)
 
 Contributing
 ------------
