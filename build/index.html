@@ -39,10 +39,12 @@
     </style>
   </head>
 <body>
-  <div id="holder">
+  <div id="app">
     <!-- <div id="test-1"></div>
     <div id="test-2"></div>  -->
   </div>
+  <div id="undefined"></div>
+  <div gg ></div>
 <!--<div id="wrapper">
 
 
@@ -70,10 +72,10 @@
 //    }
 //  });
 
-  function saveTest() {
-    const u = window.p.imageSaver.asDataURL('image/png');
-    console.log('saved', u.length, u);
-  }  
+  // function saveTest() {
+  //   const u = window.p.imageSaver.asDataURL('image/png');
+  //   console.log('saved', u.length, u);
+  // }  
 
 // window.p1 = Painterro({id: "test-1"}).show();
 
@@ -83,6 +85,7 @@ window.p = Painterro({
     hideByEsc: true,
     saveByEnter: true,
     shadowScale: 1,
+    id: 'app',
     // backplateImgUrl: 'https://images.pexels.com/photos/4386297/pexels-photo-4386297.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
     // toolbarHeightPx: 50,
     // buttonSizePx: 42,
@@ -92,7 +95,7 @@ window.p = Painterro({
     onRedo: (e) => {console.log('onRedo e', e)},
     //id: 'conatiner',
     initText: 'Press <b>PrtScr</b>, <b>Ctrl+V</b> to paste screenshot.<br>Press <b>Ctrl+S</b> to save', // todo: different for os-es
-
+    hiddenTools: ['eraser', 'pixelize', 'rotate', 'settings', 'resize'],
     //extraFonts: ['Open Sans'],
     onBeforeClose: function (has, done) {
       console.log('has unsaved: ', has);
@@ -111,7 +114,7 @@ window.p = Painterro({
       console.log('saving', saver.getWidth(), saver.getHeight())
       console.log('hasAlphaChannel', saver.hasAlphaChannel())
       // console.log('Base64', saver.asDataURL())
-      done(true);
+      //done(true);
     }
     //toolbarPosition: 'top',
     // fixMobilePageReloader: false,
@@ -127,31 +130,31 @@ window.p = Painterro({
   // ctx.stroke(); 
 
 
-document.onpaste = (event) => {
-  const { items } = event.clipboardData || event.originalEvent.clipboardData;
-  Array.from(items).forEach((item) => {
-    if (item.kind === 'file') {
-      if (!window.painterroOpenedInstance) {
-        // if painterro already opened - it will handle onpaste
-        const blob = item.getAsFile();
-        const reader = new FileReader();
-        reader.onload = (readerEvent) => {
-            window.painterroOpenedInstance = Painterro({
-              initText: 'Press <b>PrtScr</b>, <b>Ctrl+V</b> to paste screenshot.<br>Press <b>Ctrl+S</b> to save', // todo: different for os-es
-              onHide: () => {
-                window.painterroOpenedInstance = undefined;
-              },
-              saveHandler: (image, done) => {
-                console.log('Save it here', image.asDataURL());  // you could provide your save handler
-                done(true);
-              },
-            }).show(readerEvent.target.result, item.type);
-        };
-        reader.readAsDataURL(blob);
-      }
-    }
-  });
-};
+// document.onpaste = (event) => {
+//   const { items } = event.clipboardData || event.originalEvent.clipboardData;
+//   Array.from(items).forEach((item) => {
+//     if (item.kind === 'file') {
+//       if (!window.painterroOpenedInstance) {
+//         // if painterro already opened - it will handle onpaste
+//         const blob = item.getAsFile();
+//         const reader = new FileReader();
+//         reader.onload = (readerEvent) => {
+//             window.painterroOpenedInstance = Painterro({
+//               initText: 'Press <b>PrtScr</b>, <b>Ctrl+V</b> to paste screenshot.<br>Press <b>Ctrl+S</b> to save', // todo: different for os-es
+//               onHide: () => {
+//                 window.painterroOpenedInstance = undefined;
+//               },
+//               saveHandler: (image, done) => {
+//                 console.log('Save it here', image.asDataURL());  // you could provide your save handler
+//                 done(true);
+//               },
+//             }).show(readerEvent.target.result, item.type);
+//         };
+//         reader.readAsDataURL(blob);
+//       }
+//     }
+//   });
+// };
   
 
 </script>

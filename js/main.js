@@ -415,8 +415,6 @@ class PainterroProc {
         if (this.initText) this.wrapper.click();
         this.save();
         this.closeActiveTool();
-        this.close();
-        this.hide();
       },
     }, {
       name: 'open',
@@ -551,9 +549,8 @@ class PainterroProc {
     // this.iframe = this.baseEl.getElementsByTagName('iframe')[0];
     // this.doc = this.iframe.contentDocument || this.iframe.contentWindow.document;
     // this.doc.body.innerHTML = html;
-
-    this.saveBtn = this.doc.getElementById(this.toolByName.save.buttonId);
-    if (this.saveBtn) {
+    this.saveBtn = this.baseEl.querySelector(`#${this.toolByName.save.buttonId}`);
+    if (this.toolByName.save.buttonId && this.saveBtn) {
       this.saveBtn.setAttribute('disabled', 'true');
     }
     this.body = this.doc.body;
@@ -744,12 +741,13 @@ class PainterroProc {
       return this;
     }
     this.saving = true;
-    const btn = this.doc.getElementById(this.toolByName.save.buttonId);
-    const icon = this.doc.querySelector(`#${this.toolByName.save.buttonId} > i`);
-    if (btn) {
+    const btn = this.baseEl.querySelector(`#${this.toolByName.save.buttonId}`);
+    const icon = this.baseEl.querySelector(`#${this.toolByName.save.buttonId} > i`);
+    if (this.toolByName.save.buttonId && btn) {
       btn.setAttribute('disabled', 'true');
-      this.hasUnsaved = false;
     }
+    this.hasUnsaved = false;
+
     if (icon) {
       icon.className = 'ptro-icon ptro-icon-loading ptro-spinning';
     }
