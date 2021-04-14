@@ -204,6 +204,7 @@ export default class Inserter {
           this.main.params.onImageFailedOpen();
         }
       };
+      // img.crossOrigin = '*';
       img.src = source;
       if (!empty) {
         if (Object.keys(this.activeOption).length !== 1) {

@@ -1153,7 +1153,7 @@ class PainterroProc {
       return;
     }
     this.loadedName = trim((f.name || '').replace(/\..+$/, ''));
-    const dataUrl = URL.createObjectURL(f);
+    const dataUrl = (window.URL ? window.URL : window.webkitURL).createObjectURL(f);
     this.loadImage(dataUrl, f.type);
   }
 

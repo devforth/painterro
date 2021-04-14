@@ -82,14 +82,14 @@
 // window.p2 = Painterro({id: "test-2"}).show()
 
 window.p = Painterro({
-    hideByEsc: true,
-    saveByEnter: true,
-    shadowScale: 1,
+  //  hideByEsc: true,
+  //  saveByEnter: true,
+  //  shadowScale: 1,
     id: 'app',
     // backplateImgUrl: 'https://images.pexels.com/photos/4386297/pexels-photo-4386297.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
     // toolbarHeightPx: 50,
     // buttonSizePx: 42,
-    // defaultTool: 'arrow',
+    /* // defaultTool: 'arrow',
     onChange: (e) => {console.log('onchange e', e)},
     onUndo: (e) => {console.log('onUndo e', e)},
     onRedo: (e) => {console.log('onRedo e', e)},
@@ -104,6 +104,7 @@ window.p = Painterro({
     onImageFailedOpen: () => {
       console.log('open new image');
     },
+    */
     // language: 'ja',
     //availableLineWidths: [1,2,4,8,16,64],
     //availableEraserWidths: [1,2,4,8,16,64],
@@ -114,13 +115,13 @@ window.p = Painterro({
       console.log('saving', saver.getWidth(), saver.getHeight())
       console.log('hasAlphaChannel', saver.hasAlphaChannel())
       // console.log('Base64', saver.asDataURL())
-      //done(true);
+      done(true);
     }
     //toolbarPosition: 'top',
     // fixMobilePageReloader: false,
     // defaultTool: 'line',
     //hiddenTools: ['line']
-  }).show()
+  }).show('https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Gutenberg.jpg/300px-Gutenberg.jpg?12')
   const ctx = window.p.ctx; 
 
   // ctx.beginPath();
