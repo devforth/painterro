@@ -367,7 +367,7 @@ Saving image
 ============
 
 You should provide your save handler, which will post/update image on server or will pass image to another
-frontend components. In this section we will provide several backend examples on python Flask. It is easiest webframework for python. We understand that Frontend Developers might not be super interested in Python things, thats why we provided super simple views code which will help you to understand ho to implement this ir that type of sving. Anyway if you will face any python exception you can use super-helpfull [http://fixexception.com/](fixexception.com) service to fix any issue you will face 💪.
+frontend components. In this section we will provide several backend examples on python Flask. It is easiest webframework for python. We understand that Frontend Developers might not be super interested in Python things, thats why we provided super simple views code which will help you to understand ho to implement this ir that type of sving. Anyway if you will face any python exception you can use super-helpfull [https://fixexception.com/](fixexception.com) service to fix any issue you will face 💪.
 
 Binary saving
 -------------
