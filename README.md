@@ -334,14 +334,16 @@ Translated languages:
 |-|-|
 | `ca` | Catalan |
 | `de` | German |
+| `en` | English |
+| `es` | Spanish |
 | `fa` | Iran-Farsi (Persian (Ir-Fa) |
 | `fr` | French |
 | `ja` | Japanese |
-| `en` | English |
-| `es` | Spanish |
 | `pl` | Polish |
 | `pt-PT` | European Portuguese |
 | `pt-BR` | Brazilian  Portuguese |
+| `ru` | Russian |
+
 
  If you want to add another language, then fork. Create file in folder langs for your translation and copy [langs/en.lang.js] in it. Then translate all `'Strings'` and add reference in [js/translation.js]. After that create pull-request, or just open [issue](https://github.com/devforth/painterro/issues)
  if you don't know how to create a PR.
