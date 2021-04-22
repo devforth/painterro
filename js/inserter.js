@@ -186,6 +186,16 @@ export default class Inserter {
     }
   }
 
+  getAvailableOptions() {
+    if (this.main.params.how_to_paste_actions) {
+      // filter out only to selected
+      return Object.keys(this.activeOption).filter(
+        actionName => this.main.params.how_to_paste_actions.includes(actionName),
+      );
+    }
+    return Object.keys(this.activeOption);
+  }
+
   handleOpen(src, mimetype) {
     this.startLoading();
     const handleIt = (source) => {
@@ -207,11 +217,12 @@ export default class Inserter {
       // img.crossOrigin = '*';
       img.src = source;
       if (!empty) {
-        if (Object.keys(this.activeOption).length !== 1) {
+        const availableOptions = this.getAvailableOptions();
+        if (availableOptions.length !== 1) {
           this.selector.removeAttribute('hidden');
           this.waitChoice = true;
         } else {
-          this.doLater = this.activeOption[Object.keys(this.activeOption)[0]].handle;
+          this.doLater = this.activeOption[availableOptions[0]].handle;
         }
       }
     };
@@ -268,28 +279,13 @@ export default class Inserter {
   }
 
   static get(main) {
-    if (main.instanceInstance) {
-      return main.instanceInstance;
+    if (main.inserter) {
+      return main.inserter;
     }
-    main.instanceInstance = new Inserter(main);
-    return main.instanceInstance;
+    main.inserter = new Inserter(main);
+    return main.inserter;
   }
 
-  activeOptions(actOpt) {
-    const po = Object.keys(this.pasteOptions);
-    po.forEach((i) => {
-      let b = false;
-      actOpt.forEach((k) => {
-        if (i === k) {
-          b = true;
-        }
-      });
-      if (b === false) {
-        delete this.pasteOptions[i];
-      }
-    });
-    this.activeOption = this.pasteOptions;
-  }
   static controlObjToString(o, btnClassName = '') {
     const tempObj = o;
     tempObj.id = genId();
@@ -303,7 +299,7 @@ export default class Inserter {
     const bcklOptions = this.main.params.backplateImgUrl;
     let fitControls = '';
     let extendControls = '';
-    Object.keys(this.pasteOptions).forEach((k) => {
+    this.getAvailableOptions().forEach((k) => {
       if (k === 'replace_all' || k === 'paste_over') {
         fitControls += `<div class="ptro-paster-fit">
           ${Inserter.controlObjToString(this.pasteOptions[k], 'ptro-selector-fit')}
@@ -318,18 +314,15 @@ export default class Inserter {
       '<div class="ptro-in ptro-v-middle-in">' +
       ` <div class="ptro-paster-wrappers-fits">
         ${fitControls}
-          ${bcklOptions ? '' : `<div class="ptro-paster-select-wrapper-extends">
-          <div class="ptro-paster-extends-items">
-            ${extendControls}
-          </div>
-          <div class="ptro-paster-wrapper-label">extend</div>
-        </div>`}
+        ${bcklOptions || !extendControls ? '' : `
+          <div class="ptro-paster-select-wrapper-extends">
+            <div class="ptro-paster-extends-items">
+              ${extendControls}
+            </div>
+            <div class="ptro-paster-wrapper-label">${tr('pasteOptions.extend')}</div>
+          </div>`}
         </div>
       </div></div></div>`;
   }
-}
-
-export function setActivePasteOptions(a) {
-  return Inserter.get().activeOptions(a);
 }
 

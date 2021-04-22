@@ -65,6 +65,7 @@ export default {
     fit: 'Alle Austauschen ',
     extend_down: 'Nach unten strecken',
     extend_right: 'Nach rechts strecken',
+    extend: 'Strecken',
     over: 'Überkleben',
     how_to_paste: 'Wie füge ich hinzu?',
   },

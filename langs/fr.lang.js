@@ -66,6 +66,7 @@ export default {
     fit: 'Tout Remplacer',
     extend_down: 'Étendre vers le bas',
     extend_right: 'Étendre à droite',
+    extend: 'Étendre',
     over: 'Coller sur',
     how_to_paste: 'Comment coller?',
   },

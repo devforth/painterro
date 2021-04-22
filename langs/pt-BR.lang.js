@@ -59,6 +59,7 @@ export default {
     fit: 'Substituir tudo',
     extend_down: 'Acrescentar por baixo',
     extend_right: 'Acrescentar pela direita',
+    extend: 'Acrescentar',
     over: 'Por cima',
     how_to_paste: 'Como colar?',
   },

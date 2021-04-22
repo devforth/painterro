@@ -66,6 +66,7 @@ export default {
     fit: 'Zastąp',
     extend_down: 'Dodaj poniżej',
     extend_right: 'Dodaj po prawej',
+    extend: 'Dodaj',
     over: 'Dodaj ponad',
     how_to_paste: 'Jak wkleić?',
   },

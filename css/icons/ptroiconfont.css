@@ -1,9 +1,9 @@
 @font-face {
 	font-family: "ptroiconfont";
-	src: url("ptroiconfont.eot?c6c2932027105bb78ed89f5609b7e37d?#iefix") format("embedded-opentype"),
-url("ptroiconfont.woff?c6c2932027105bb78ed89f5609b7e37d") format("woff"),
-url("ptroiconfont.ttf?c6c2932027105bb78ed89f5609b7e37d") format("truetype"),
-url("ptroiconfont.svg?c6c2932027105bb78ed89f5609b7e37d#ptroiconfont") format("svg");
+	src: url("ptroiconfont.eot?369c1b36c410d0842646d6396ce5c2b6?#iefix") format("embedded-opentype"),
+url("ptroiconfont.woff?369c1b36c410d0842646d6396ce5c2b6") format("woff"),
+url("ptroiconfont.ttf?369c1b36c410d0842646d6396ce5c2b6") format("truetype"),
+url("ptroiconfont.svg?369c1b36c410d0842646d6396ce5c2b6#ptroiconfont") format("svg");
 	font-weight: normal;
     font-style: normal;
 }
@@ -64,54 +64,60 @@ url("ptroiconfont.svg?c6c2932027105bb78ed89f5609b7e37d#ptroiconfont") format("sv
 .ptro-icon-paste_extend_down:before {
 	content: "\f10e";
 }
-.ptro-icon-paste_extend_right:before {
+.ptro-icon-paste_extend_left:before {
 	content: "\f10f";
 }
-.ptro-icon-paste_fit:before {
+.ptro-icon-paste_extend_right:before {
 	content: "\f110";
 }
-.ptro-icon-paste_over:before {
+.ptro-icon-paste_extend_top:before {
 	content: "\f111";
 }
-.ptro-icon-pipette:before {
+.ptro-icon-paste_fit:before {
 	content: "\f112";
 }
-.ptro-icon-pixelize:before {
+.ptro-icon-paste_over:before {
 	content: "\f113";
 }
-.ptro-icon-rect:before {
+.ptro-icon-pipette:before {
 	content: "\f114";
 }
-.ptro-icon-redo:before {
+.ptro-icon-pixelize:before {
 	content: "\f115";
 }
-.ptro-icon-resize:before {
+.ptro-icon-rect:before {
 	content: "\f116";
 }
-.ptro-icon-rotate:before {
+.ptro-icon-redo:before {
 	content: "\f117";
 }
-.ptro-icon-save:before {
+.ptro-icon-resize:before {
 	content: "\f118";
 }
-.ptro-icon-select:before {
+.ptro-icon-rotate:before {
 	content: "\f119";
 }
-.ptro-icon-settings:before {
+.ptro-icon-save:before {
 	content: "\f11a";
 }
-.ptro-icon-text:before {
+.ptro-icon-select:before {
 	content: "\f11b";
 }
-.ptro-icon-undo:before {
+.ptro-icon-settings:before {
 	content: "\f11c";
 }
-.ptro-icon-unlinked:before {
+.ptro-icon-text:before {
 	content: "\f11d";
 }
-.ptro-icon-zoomin:before {
+.ptro-icon-undo:before {
 	content: "\f11e";
 }
-.ptro-icon-zoomout:before {
+.ptro-icon-unlinked:before {
 	content: "\f11f";
+}
+.ptro-icon-zoomin:before {
+	content: "\f120";
+}
+.ptro-icon-zoomout:before {
+	content: "\f121";
 }

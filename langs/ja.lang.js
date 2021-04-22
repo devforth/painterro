@@ -68,6 +68,7 @@ export default {
     fit: 'すべてを置き換え',
     extend_down: '下に拡張',
     extend_right: '右に拡張',
+    extend: '拡張',
     over: '重ねて貼り付け',
     how_to_paste: 'どう貼り付ける？',
   },

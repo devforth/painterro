@@ -75,6 +75,7 @@ export default {
     extend_right: 'Extend right',
     extend_left: 'Extend left',
     extend_top: 'Extend top',
+    extend: 'Add',
     over: 'Paste over',
     how_to_paste: 'How to paste?',
   },

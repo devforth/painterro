@@ -62,6 +62,7 @@ export default {
     fit: 'Reemplaçar tot',
     extend_down: 'Extendre cap avall',
     extend_right: 'Extendre a la dreta',
+    extend: 'Extendre',
     over: 'Empegar al damunt',
     how_to_paste: 'Com s\'ha d\'empegar?',
   },
