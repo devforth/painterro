@@ -197,6 +197,7 @@ Painterro({
 |`initTextColor` | Color of init text | `'#808080'` |
 |`initTextStyle` | Style of init text | `"26px 'Open Sans', sans-serif"` |
 |`pixelizePixelSize` | Default pixel size of pixelize tool. Can accept values - `x` - x pixels, `x%` - means percents of minimal area rectangle side | `20%` |
+|`pixelizeHideUserInput` | Don't allow users to enter pixel size In settings tools (and save in localstorage), this would allow developer to freeze pixel size by using params `pixelizePixelSize` to make sure users will not set low pixel sizes | `false` |
 |`availableLineWidths` | A list of the line width values that are available for selection in a drop down list e.g. `[1,2,4,8,16,64]`.  Otherwise an input field is used. | `undefined` |
 |`availableArrowLengths` | A list of the arrow sizes values that are available for selection in a drop down list e.g. `[10,20,30,40,50,60]`.  Otherwise an input field is used. | `undefined` |
 | `defaultArrowLength` | default arrow length | `15` |

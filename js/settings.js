@@ -30,28 +30,30 @@ export default class Settings {
       this.startClose();
     };
 
-    this.applyButton.onclick = () => {
-      let pixelVal = trim(this.inputPixelSize.value);
-      let valid;
-      if (pixelVal.slice(-1) === '%') {
-        const checkInt = trim(pixelVal.slice(0, -1));
-        valid = /^\d+$/.test(checkInt) && parseInt(checkInt, 10) !== 0;
-        if (valid) {
-          pixelVal = `${checkInt}%`;
+    if (this.applyButton) {
+      this.applyButton.onclick = () => {
+        let pixelVal = trim(this.inputPixelSize.value);
+        let valid;
+        if (pixelVal.slice(-1) === '%') {
+          const checkInt = trim(pixelVal.slice(0, -1));
+          valid = /^\d+$/.test(checkInt) && parseInt(checkInt, 10) !== 0;
+          if (valid) {
+            pixelVal = `${checkInt}%`;
+          }
+        } else {
+          valid = /^\d+$/.test(pixelVal) && parseInt(pixelVal, 10) !== 0;
         }
-      } else {
-        valid = /^\d+$/.test(pixelVal) && parseInt(pixelVal, 10) !== 0;
-      }
-      if (valid) {
-        this.main.select.pixelizePixelSize = pixelVal;
-        setParam('pixelizePixelSize', pixelVal);
-        this.startClose();
-        this.errorHolder.setAttribute('hidden', '');
-      } else {
-        this.errorHolder.innerText = tr('wrongPixelSizeValue');
-        this.errorHolder.removeAttribute('hidden');
-      }
-    };
+        if (valid) {
+          this.main.select.pixelizePixelSize = pixelVal;
+          setParam('pixelizePixelSize', pixelVal);
+          this.startClose();
+          this.errorHolder.setAttribute('hidden', '');
+        } else {
+          this.errorHolder.innerText = tr('wrongPixelSizeValue');
+          this.errorHolder.removeAttribute('hidden');
+        }
+      };
+    }
   }
 
   handleKeyDown(event) {
@@ -68,7 +70,9 @@ export default class Settings {
   open() {
     this.wrapper.removeAttribute('hidden');
     this.opened = true;
-    this.inputPixelSize.value = this.main.select.pixelizePixelSize;
+    if (this.inputPixelSize) {
+      this.inputPixelSize.value = this.main.select.pixelizePixelSize;
+    }
     this.bgSelBtn.style['background-color'] = this.main.colorWidgetState.bg.alphaColor;
   }
 
@@ -82,7 +86,8 @@ export default class Settings {
     this.main.closeActiveTool();
   }
 
-  static html() {
+  /* eslint-disable */
+  static html(main) {
     return '' +
       '<div class="ptro-settings-widget-wrapper ptro-common-widget-wrapper ptro-v-middle" hidden>' +
         '<div class="ptro-settings-widget ptro-color-main ptro-v-middle-in">' +
@@ -98,20 +103,26 @@ export default class Settings {
                   `<button type="button" style="margin-top: -2px;" class="ptro-named-btn ptro-clear ptro-color-control" title="${tr('fillPageWith')}">${tr('clear')}</button>` +
                 '</td>' +
               '</tr>' +
-              '<tr>' +
-                `<td class="ptro-label ptro-resize-table-left" >${tr('pixelizePixelSize')}</td>` +
-                '<td colspan="2">' +
-                  '<input class="ptro-input ptro-pixel-size-input" pattern="[0-9]{1,}%?" type="text" />' +
-                '</td>' +
-              '</tr>' +
+              (!main.params.pixelizeHideUserInput ?
+                '<tr>' +
+                  `<td class="ptro-label ptro-resize-table-left" >${tr('pixelizePixelSize')}</td>` +
+                  '<td colspan="2">' +
+                    '<input class="ptro-input ptro-pixel-size-input" pattern="[0-9]{1,}%?" type="text" />' +
+                  '</td>' +
+                '</tr>' : '') +
             '</table>' +
             '<div class="ptro-error" hidden></div>' +
             '<div style="margin-top: 20px">' +
-              '<button type="button" class="ptro-named-btn ptro-apply ptro-color-control">' +
-                    `${tr('apply')}</button>` +
-              `<button type="button" class="ptro-named-btn ptro-close ptro-color-control">${tr('cancel')}</button>` +
+              (!main.params.pixelizeHideUserInput ?
+                '<button type="button" class="ptro-named-btn ptro-apply ptro-color-control">' +
+                      `${tr('apply')}</button>` +
+                `<button type="button" class="ptro-named-btn ptro-close ptro-color-control">${tr('cancel')}</button>`
+                :
+                `<button type="button" class="ptro-named-btn ptro-close ptro-color-control">${tr('close')}</button>`
+              ) +
             '</div>' +
         '</div>' +
       '</div>';
   }
+  /* eslint-enable */
 }

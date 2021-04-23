@@ -94,7 +94,6 @@ export function setDefaults(parameters) {
   }
 
   params.pixelizePixelSize = settings.pixelizePixelSize || params.pixelizePixelSize || '20%';
-
   params.colorScheme = params.colorScheme || {};
   params.colorScheme.main = params.colorScheme.main || '#fff';
   params.colorScheme.control = params.colorScheme.control || '#fff';
