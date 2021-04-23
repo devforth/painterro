@@ -8,7 +8,7 @@ export default class ControlBuilder {
   buildFontSizeControl(controlIndex) {
     const action = () => {
       const fontSize =
-        document.getElementById(this.main.activeTool.controls[controlIndex].id).value;
+        this.main.getElemByIdSafe(this.main.activeTool.controls[controlIndex].id).value;
       this.main.textTool.setFontSize(fontSize);
       setParam('defaultFontSize', fontSize);
     };
@@ -22,7 +22,7 @@ export default class ControlBuilder {
 
   buildEraserWidthControl(controlIndex) {
     const action = () => {
-      const width = document.getElementById(this.main.activeTool.controls[controlIndex].id).value;
+      const width = this.main.getElemByIdSafe(this.main.activeTool.controls[controlIndex].id).value;
       this.main.primitiveTool.setEraserWidth(width);
       setParam('defaultEraserWidth', width);
     };
@@ -36,7 +36,7 @@ export default class ControlBuilder {
 
   buildLineWidthControl(controlIndex) {
     const action = () => {
-      const width = document.getElementById(this.main.activeTool.controls[controlIndex].id).value;
+      const width = this.main.getElemByIdSafe(this.main.activeTool.controls[controlIndex].id).value;
       this.main.primitiveTool.setLineWidth(width);
       setParam('defaultLineWidth', width);
     };
@@ -55,7 +55,7 @@ export default class ControlBuilder {
       titleFull: 'shadowOnFull',
       target: 'shadowOn',
       action: () => {
-        const btn = document.getElementById(this.main.activeTool.controls[controlIndex].id);
+        const btn = this.main.getElemByIdSafe(this.main.activeTool.controls[controlIndex].id);
         const state = !(btn.getAttribute('data-value') === 'true');
         this.main.primitiveTool.setShadowOn(state);
         btn.setAttribute('data-value', state ? 'true' : 'false');
@@ -67,7 +67,7 @@ export default class ControlBuilder {
 
   buildArrowLengthControl(controlIndex) {
     const action = () => {
-      const width = document.getElementById(this.main.activeTool.controls[controlIndex].id).value;
+      const width = this.main.getElemByIdSafe(this.main.activeTool.controls[controlIndex].id).value;
       this.main.primitiveTool.setArrowLength(width);
       setParam('defaultArrowLength', width);
     };

@@ -26,6 +26,13 @@ class PainterroProc {
     addDocumentObjectHelpers();
     this.params = setDefaults(params);
     this.controlBuilder = new ControlBuilder(this);
+    this.getElemByIdSafe = (id) => {
+      if (!id) {
+        throw new Error(`Can't get element with id=${id}, please create an issue here, we will easily fx it: https://github.com/devforth/painterro/issues/`);
+      }
+      return document.getElementById(id);
+    };
+
     this.colorWidgetState = {
       line: {
         target: 'line',
@@ -237,7 +244,7 @@ class PainterroProc {
           titleFull: 'fontNameFull',
           target: 'fontName',
           action: () => {
-            const dropdown = document.getElementById(this.activeTool.controls[2].id);
+            const dropdown = this.getElemByIdSafe(this.activeTool.controls[2].id);
             const font = dropdown.value;
             this.textTool.setFont(font);
           },
@@ -250,7 +257,7 @@ class PainterroProc {
           titleFull: 'fontIsBoldFull',
           target: 'fontIsBold',
           action: () => {
-            const btn = document.getElementById(this.activeTool.controls[3].id);
+            const btn = this.getElemByIdSafe(this.activeTool.controls[3].id);
             const state = !(btn.getAttribute('data-value') === 'true');
             this.textTool.setFontIsBold(state);
             setParam('defaultFontBold', state);
@@ -264,7 +271,7 @@ class PainterroProc {
           titleFull: 'fontIsItalicFull',
           target: 'fontIsItalic',
           action: () => {
-            const btn = document.getElementById(this.activeTool.controls[4].id);
+            const btn = this.getElemByIdSafe(this.activeTool.controls[4].id);
             const state = !(btn.getAttribute('data-value') === 'true'); // invert
             this.textTool.setFontIsItalic(state);
             setParam('defaultFontItalic', state);
@@ -278,7 +285,7 @@ class PainterroProc {
           titleFull: 'fontStrokeAndShadowFull',
           target: 'fontStrokeAndShadow',
           action: () => {
-            const btn = document.getElementById(this.activeTool.controls[5].id);
+            const btn = this.getElemByIdSafe(this.activeTool.controls[5].id);
             const nextState = !(btn.getAttribute('data-value') === 'true');
             this.textTool.setStrokeOn(nextState);
             setParam('defaultTextStrokeAndShadow', nextState);
@@ -422,7 +429,7 @@ class PainterroProc {
       activate: () => {
         if (this.initText) this.wrapper.click();
         this.closeActiveTool();
-        const input = document.getElementById(this.fileInputId);
+        const input = this.getElemByIdSafe(this.fileInputId);
         input.click();
         input.onchange = (event) => {
           const files = event.target.files || event.dataTransfer.files;
@@ -478,9 +485,9 @@ class PainterroProc {
       this.holderEl.className = 'ptro-holder-wrapper';
       document.body.appendChild(this.holderEl);
       this.holderEl.innerHTML = `<div id='${this.id}' class="ptro-holder"></div>`;
-      this.baseEl = document.getElementById(this.id);
+      this.baseEl = this.getElemByIdSafe(this.id);
     } else {
-      this.baseEl = document.getElementById(this.id);
+      this.baseEl = this.getElemByIdSafe(this.id);
       this.holderEl = null;
     }
     let bar = '';
@@ -715,8 +722,8 @@ class PainterroProc {
   }
 
   setToolEnabled(tool, state) {
-    const btn = this.doc.getElementById(tool.buttonId);
-    if (btn) {
+    if (tool.buttonId) {
+      const btn = this.getElemByIdSafe(tool.buttonId);
       if (state) {
         btn.removeAttribute('disabled');
       } else {
@@ -733,7 +740,7 @@ class PainterroProc {
   }
 
   getBtnEl(tool) {
-    return this.doc.getElementById(tool.buttonId);
+    return this.getElemByIdSafe(tool.buttonId);
   }
 
   save() {
@@ -1309,16 +1316,16 @@ class PainterroProc {
     this.toolControls.innerHTML = ctrls;
     (b.controls || []).forEach((ctl) => {
       if (ctl.type === 'int') {
-        this.doc.getElementById(ctl.id).value = ctl.getValue();
-        this.doc.getElementById(ctl.id).oninput = ctl.action;
+        this.getElemByIdSafe(ctl.id).value = ctl.getValue();
+        this.getElemByIdSafe(ctl.id).oninput = ctl.action;
       } else if (ctl.type === 'bool') {
-        this.doc.getElementById(ctl.id).setAttribute('data-value', ctl.getValue() ? 'true' : 'false');
-        this.doc.getElementById(ctl.id).onclick = ctl.action;
+        this.getElemByIdSafe(ctl.id).setAttribute('data-value', ctl.getValue() ? 'true' : 'false');
+        this.getElemByIdSafe(ctl.id).onclick = ctl.action;
       } else if (ctl.type === 'dropdown') {
-        this.doc.getElementById(ctl.id).onchange = ctl.action;
-        this.doc.getElementById(ctl.id).value = ctl.getValue();
+        this.getElemByIdSafe(ctl.id).onchange = ctl.action;
+        this.getElemByIdSafe(ctl.id).value = ctl.getValue();
       } else {
-        this.doc.getElementById(ctl.id).onclick = ctl.action;
+        this.getElemByIdSafe(ctl.id).onclick = ctl.action;
       }
     });
     b.activate();

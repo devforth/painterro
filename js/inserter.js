@@ -153,7 +153,7 @@ export default class Inserter {
     this.mimetype = null; // mime of pending image
     this.getAvailableOptions().forEach((k) => {
       const o = this.pasteOptions[k];
-      this.main.doc.getElementById(o.id).onclick = () => {
+      this.main.getElemByIdSafe(o.id).onclick = () => {
         if (this.loading) {
           this.doLater = o.handle;
         } else {
@@ -254,7 +254,7 @@ export default class Inserter {
 
   startLoading() {
     this.loading = true;
-    const btn = this.main.doc.getElementById(this.main.toolByName.open.buttonId);
+    const btn = this.main.getElemByIdSafe(this.main.toolByName.open.buttonId);
     const icon = this.main.doc.querySelector(`#${this.main.toolByName.open.buttonId} > i`);
     if (btn) {
       btn.setAttribute('disabled', 'true');
@@ -265,7 +265,7 @@ export default class Inserter {
   }
 
   finishLoading() {
-    const btn = this.main.doc.getElementById(this.main.toolByName.open.buttonId);
+    const btn = this.main.getElemByIdSafe(this.main.toolByName.open.buttonId);
     const icon = this.main.doc.querySelector(`#${this.main.toolByName.open.buttonId} > i`);
     if (btn) {
       btn.removeAttribute('disabled');
