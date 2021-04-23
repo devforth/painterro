@@ -129,7 +129,8 @@ ${Math.round(pxData[i][j][3] / s)})`;
     this.show();
     this.reCalcCropperCords();
     if (this.area.activated) {
-      this.areaionCallback(!this.imagePlaced && this.area.rect.clientWidth > 0 &&
+      this.areaionCallback(!this.imagePlaced &&
+        this.area.rect.clientWidth > 0 &&
         this.area.rect.clientHeight > 0);
     }
   }
