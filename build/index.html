@@ -110,18 +110,18 @@ window.p = Painterro({
     //availableEraserWidths: [1,2,4,8,16,64],
     //availableFontSizes: [1,2,4,8,16,64],
     //availableArrowLengths: [10,20,30,40,50,60],
-   //  how_to_paste_actions: ['paste_over', 'replace_all'],
-    saveHandler: (saver, done) => {
-      console.log('saving', saver.getWidth(), saver.getHeight())
-      console.log('hasAlphaChannel', saver.hasAlphaChannel())
+    how_to_paste_actions: ['paste_over', 'replace_all'],
+    //saveHandler: (saver, done) => {
+    //  console.log('saving', saver.getWidth(), saver.getHeight())
+    //  console.log('hasAlphaChannel', saver.hasAlphaChannel())
       // console.log('Base64', saver.asDataURL())
-      done(true);
-    }
+    //  done(true);
+    //}
     //toolbarPosition: 'top',
     // fixMobilePageReloader: false,
     // defaultTool: 'line',
     //hiddenTools: ['line']
-  }).show('https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Gutenberg.jpg/300px-Gutenberg.jpg?12')
+  }).show()
   const ctx = window.p.ctx; 
 
   // ctx.beginPath();

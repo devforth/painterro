@@ -151,7 +151,7 @@ export default class Inserter {
     this.cancelChoosing();
     this.img = null;
     this.mimetype = null; // mime of pending image
-    Object.keys(this.pasteOptions).forEach((k) => {
+    this.getAvailableOptions().forEach((k) => {
       const o = this.pasteOptions[k];
       this.main.doc.getElementById(o.id).onclick = () => {
         if (this.loading) {
