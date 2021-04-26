@@ -309,7 +309,9 @@ class PainterroProc {
       name: 'rotate',
       hotkey: 'r',
       activate: () => {
-        if (this.initText) this.wrapper.click();
+        if (this.initText) {
+          this.wrapper.click();
+        }
         const w = this.size.w;
         const h = this.size.h;
         const tmpData = this.ctx.getImageData(0, 0, this.size.w, this.size.h);

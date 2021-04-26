@@ -34,6 +34,7 @@ function webpackConfig(target, mode) {
         {
           test: /\.js$/,
           loader: 'babel-loader',
+          exclude: /node_modules/,
           options: {
             // sourceType: "module",
             presets: [["@babel/preset-env", {
