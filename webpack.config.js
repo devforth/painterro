@@ -36,7 +36,12 @@ function webpackConfig(target, mode) {
           loader: 'babel-loader',
           options: {
             // sourceType: "module",
-            presets: [['@babel/env', { "modules": "commonjs" }]],
+            presets: [["@babel/preset-env", {
+              "modules": "commonjs",
+              "targets": {
+                "ie": "11"
+              }
+            }]],
           }
         },
         {
@@ -60,6 +65,8 @@ function webpackConfig(target, mode) {
   if (target === 'var') {
     options.output.library = 'Painterro';
     options.output.libraryExport = 'default';
+    options.target = 'es5';
+
   }
   if (mode === 'development') {
     options = {
