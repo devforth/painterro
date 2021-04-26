@@ -1,4 +1,5 @@
 import isMobile from 'ismobilejs';
+
 import '../css/styles.css';
 import '../css/bar-styles.css';
 import '../css/icons/ptroiconfont.css';
