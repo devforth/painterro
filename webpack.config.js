@@ -17,7 +17,7 @@ function webpackConfig(target, mode) {
 
   let options = {
     mode,
-    entry: ['@babel/polyfill', './js/main.js'],
+    entry: ["core-js/stable", "regenerator-runtime/runtime", './js/main.js'],
     output: {
       path: path.resolve(__dirname, 'build'),
       filename,
