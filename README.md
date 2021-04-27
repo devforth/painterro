@@ -27,7 +27,7 @@ Features
 Used by
 =================
 
-<table border="0">
+<table border="0" cellpadding="60px">
  <tr>
   <td align="center">
    <a href="https://nasa.github.io/openmct/"><img src="https://nasa.github.io/openmct/static/res/images/logo-nasa.svg"  height='100px'/></a><br>
