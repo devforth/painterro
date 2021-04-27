@@ -18,7 +18,11 @@ export default class PrimitiveTool {
   }
 
   setLineWidth(width) {
-    this.lineWidth = width;
+    if (`${width}`.match(/^\d+$/)) {
+      this.lineWidth = +width;
+    } else {
+      throw Error(`WARN: STR "${width}" is not an int`);
+    }
   }
 
   setShadowOn(state) {
@@ -36,6 +40,7 @@ export default class PrimitiveTool {
   handleMouseDown(event) {
     this.activate(this.type);
     const mainClass = event.target.classList[0];
+
     this.ctx.lineWidth = this.lineWidth;
     this.ctx.strokeStyle = this.main.colorWidgetState.line.alphaColor;
     this.ctx.fillStyle = this.main.colorWidgetState.fill.alphaColor;
@@ -250,17 +255,26 @@ export default class PrimitiveTool {
 
         let w = this.curCord[0] - this.centerCord[0];
         let h = this.curCord[1] - this.centerCord[1];
-
         if (event.ctrlKey || event.shiftKey) {
           const min = Math.min(Math.abs(w), Math.abs(h));
           w = min * Math.sign(w);
           h = min * Math.sign(h);
         }
-        const halfLW = Math.floor(this.lineWidth / 2);
-        const oddCorrecter = this.lineWidth % 2;
+        const halfLW = this.lineWidth / 2.0;
+        // normalize fix half compensation
+        if (w < 0) {
+          tl[0] += w;
+          w = -w;
+        }
+        if (h < 0) {
+          tl[1] += h;
+          h = -h;
+        }
         this.ctx.rect(
-          tl[0] + halfLW, tl[1] + halfLW,
-          (w - this.lineWidth) + oddCorrecter, (h - this.lineWidth) + oddCorrecter);
+          tl[0] + halfLW,
+          tl[1] + halfLW,
+          (w - this.lineWidth),
+          (h - this.lineWidth));
         this.ctx.fill();
 
         const origShadowColor = ctx.shadowColor;
@@ -270,7 +284,10 @@ export default class PrimitiveTool {
           ctx.shadowOffsetX = this.lineWidth / 2.0;
           ctx.shadowOffsetY = this.lineWidth / 2.0;
         }
-        this.ctx.strokeRect(tl[0], tl[1], w, h);
+        if (this.lineWidth) {
+          // TODO: no shadow on unstroked, do we need it?
+          this.ctx.strokeRect(tl[0], tl[1], w, h);
+        }
         ctx.shadowColor = origShadowColor;
 
         this.ctx.closePath();

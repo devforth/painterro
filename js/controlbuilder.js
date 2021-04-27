@@ -45,7 +45,7 @@ export default class ControlBuilder {
     if (this.main.params.availableLineWidths) {
       return ControlBuilder.buildDropDownControl('lineWidth', action, getValue, this.main.params.availableLineWidths);
     }
-    return ControlBuilder.buildInputControl('lineWidth', action, getValue, 1, 99);
+    return ControlBuilder.buildInputControl('lineWidth', action, getValue, 0, 99);
   }
 
   buildShadowOnControl(controlIndex) {
