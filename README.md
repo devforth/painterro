@@ -27,7 +27,6 @@ Features
 Used by
 =================
 
-<center>
   <table border="0">
   <tr>
     <td align="center">
@@ -36,12 +35,14 @@ Used by
       <br>
       <a href="https://nasa.github.io/openmct/">NASA Open MCT</a>
       <br>
+      <br>
     </td>
     <td align="center"> 
       <br>
       <a href="https://tracklify.com" ><img src="https://tracklify.s3.eu-central-1.amazonaws.com/live/attachments/NGDPrTu6HMR4SAV8EeekE/pqUmAUENqEjcRLd1Gr2gtm/tuWej866xioDcDNqjFe8fR/tWidfqZnJqi273KG5FdWRg.svg" height='100px' /></a>
       <br>
       <a href="https://tracklify.com">Tracklify</a>
+      <br>
       <br>
     </td>
     <td align="center"> 
@@ -50,11 +51,11 @@ Used by
       <br>
       <a href="https://fastdivs.com">FastDivs</a>
       <br>
+      <br>
     </td>
   </tr>
   </table>
-</center>
-<br>
+  <br>
 
 
 Advantages 💪
