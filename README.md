@@ -27,27 +27,28 @@ Features
 Used by
 =================
 
-<table border="0">
- <tr>
-  <td align="center">
-   <a href="https://nasa.github.io/openmct/"><img src="https://nasa.github.io/openmct/static/res/images/logo-nasa.svg"  height='100px'/></a><br>
-   <a href="https://nasa.github.io/openmct/">NASA Open MCT</a>
-  </td>
-  <td align="center"> 
-   <a href="https://tracklify.com" ><img src="https://devforth.s3.amazonaws.com/t.svg" height='100px' /></a><br>
-   <a href="https://tracklify.com">Tracklify</a>
-  </td>
-   <td align="center"> 
-   <a href="https://fastdivs.com" ><img src="https://fastdivs.com/static/svg/logo.c1c15aa6d612.svg" height='100px' /></a><br>
-   <a href="https://fastdivs.com">FastDivs</a>
-  </td>
+<br><br><br>
+<center>
+  <table border="0">
+  <tr>
+    <td align="center">
+    <a href="https://nasa.github.io/openmct/"><img src="https://nasa.github.io/openmct/static/res/images/logo-nasa.svg" height='100px'/></a><br>
+    <a href="https://nasa.github.io/openmct/">NASA Open MCT</a>
+    </td>
+    <td align="center"> 
+    <a href="https://tracklify.com" ><img src="https://tracklify.s3.eu-central-1.amazonaws.com/live/attachments/NGDPrTu6HMR4SAV8EeekE/pqUmAUENqEjcRLd1Gr2gtm/tuWej866xioDcDNqjFe8fR/tWidfqZnJqi273KG5FdWRg.svg" height='100px' /></a><br>
+    <a href="https://tracklify.com">Tracklify</a>
+    </td>
+    <td align="center"> 
+      <a href="https://fastdivs.com" ><img src="https://fastdivs.com/static/svg/logo.c1c15aa6d612.svg" height='100px' /></a><br>
+      <a href="https://fastdivs.com">FastDivs</a>
+    </td>
+  </tr>
+  </table>
+</center>
+<br><br><br>
 
 
- </tr>
- <tr>
-
- </tr>
- </table>
  
 
 
