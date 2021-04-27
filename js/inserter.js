@@ -201,8 +201,9 @@ export default class Inserter {
     const handleIt = (source) => {
       const img = new Image();
       const empty = this.main.worklog.clean;
+      const replaceAllImmediately = empty && this.main.params.replaceAllOnEmptyBackground;
       img.onload = () => {
-        if (empty) {
+        if (replaceAllImmediately) {
           this.main.fitImage(img, mimetype);
         } else {
           this.loaded(img, mimetype);
@@ -214,9 +215,9 @@ export default class Inserter {
           this.main.params.onImageFailedOpen();
         }
       };
-      // img.crossOrigin = '*';
+      // img.crossOrigin = '*'; TODO: try to identify CORS issues earlier?
       img.src = source;
-      if (!empty) {
+      if (!replaceAllImmediately) {
         const availableOptions = this.getAvailableOptions();
         if (availableOptions.length !== 1) {
           this.selector.removeAttribute('hidden');

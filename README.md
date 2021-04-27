@@ -10,7 +10,7 @@ Can be easily integrated into any website or webapp by calling simple initializa
 
 
 Features
-=================
+========
 
 - Paste image from clipboard with `Ctrl+V` (e.g. `PtnScr` screenshot), drag and drop it into widget, or load with file select dialog
 - Crop image by defined area
@@ -33,14 +33,16 @@ Used by
    <a href="https://nasa.github.io/openmct/"><img src="https://nasa.github.io/openmct/static/res/images/logo-nasa.svg"  height='100px'/></a><br>
    <a href="https://nasa.github.io/openmct/">NASA Open MCT</a>
   </td>
-  <td align="center">
-   <a href="https://github.com/Appdynamics/ContainerLabs" ><img src="https://avatars3.githubusercontent.com/u/1772014?s=200&v=4" height='100px' /></a><br>
-   <a href="https://github.com/Appdynamics/ContainerLabs" >Appdynamics ContainerLabs</a>
-  </td>
   <td align="center"> 
    <a href="https://tracklify.com" ><img src="https://devforth.s3.amazonaws.com/t.svg" height='100px' /></a><br>
    <a href="https://tracklify.com">Tracklify</a>
   </td>
+   <td align="center"> 
+   <a href="https://fastdivs.com" ><img src="https://fastdivs.com/static/svg/logo.c1c15aa6d612.svg" height='100px' /></a><br>
+   <a href="https://fastdivs.com">FastDivs</a>
+  </td>
+
+
  </tr>
  <tr>
 
@@ -49,8 +51,8 @@ Used by
  
 
 
-Advantages
-=================
+Advantages 💪
+=============
 
 - It is lightweight and minimalistic - written with vanilla JS, you don't need dependencies to use it
 - Designed to process images with minimal clicks, most actions support hot-keys
@@ -206,7 +208,8 @@ Painterro({
 |`toolbarPosition` | Whether to position the toolbar at the top or bottom. | `'bottom'` |
 |`fixMobilePageReloader` | By default painterro adds overflow-y: hidden to page body on mobile devices to prevent "super smart" feature lice Chrom's reload page. Unfortunately we can't prevent it by preventDefault. If your want to scroll page when painterro is open, set this to false | `true` |
 |`language` | Language of the widget. | `'en'` |
-|`how_to_paste_actions`| List of paste options that will be suggested on paste using some paste dialog e.g. `['extend_right', 'extend_down'] `. If there is only one option in list, then it will choosing automatically without dialog | `['replace_all', 'paste_over', 'extend_right', 'extend_down']` |
+|`how_to_paste_actions`| List of paste options that will be suggested on paste using some paste dialog e.g. `['extend_right', 'extend_down'] `. If there is only one option in list, then it will chosen automatically without dialog | `['replace_all', 'paste_over', 'extend_right', 'extend_down']` |
+|`replaceAllOnEmptyBackground`| Whether to select `replace_all` without dialog on first paste after painterro was just opened. So it will replaces background with image (will change dimensions to pasted image when background is empty) | `true` |
 |`hideByEsc`| If `true` then `ESC` press will hide widget | `false` | 
 |`saveByEnter`| If `true` then `ENTER` press will do same as `Ctrl+S` | `false` | 
 |`extraFonts`| By default Text tool supports only several [predefined](https://github.com/devforth/painterro/blob/master/js/text.js#L38) fonts due to compatibility considirations , but yousing this option you can add any fonts you want if you are sure they are available on your page/app | `['Roboto']` |
@@ -318,11 +321,12 @@ var p = Painterro()
 p.show()
 ```
 
-Translation
------------
+Translation 📙
+--------------
 
 Want to translate Painterro into your language?
- If you need one of languages in table below, just pass pass `language` parameter, for example:
+
+If you need one of languages in table below, just pass pass `language` parameter, for example:
  
 ```js
 Painterro({
@@ -346,8 +350,16 @@ Translated languages:
 | `ru` | Russian |
 
 
- If you want to add another language, then fork. Create file in folder langs for your translation and copy [langs/en.lang.js] in it. Then translate all `'Strings'` and add reference in [js/translation.js]. After that create pull-request, or just open [issue](https://github.com/devforth/painterro/issues)
- if you don't know how to create a PR.
+If you want to add another language, then:
+
+1. fork to your GitHub with button on top.
+2. Create empty file in folder langs [<LANG_ISO_CODE>.lang.js] for your translation. `LANG_ISO_CODE` should follow [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+3. Copy content from [langs/en.lang.js] to a new file
+4. Then translate all `'Strings'`
+5. Add reference in [js/translation.js] inside of your repo. 
+5. After that create pull-request, or just open [issue](https://github.com/devforth/painterro/issues) if you don't know how to create a PR.
+
+🤔 Found a bug in some work for your languate? Form and use github editor to fix, then create a PR, we will judge the change.
  
 If you want to translate or change strings without contributing you can do this by passing 
 `translation` parameter, for example:
@@ -366,8 +378,8 @@ Painterro({
 For all strings that can be translated, see [langs/en.lang.js] 
     
 
-Saving image
-============
+Saving image 💾
+===============
 
 You should provide your save handler, which will post/update image on server or will pass image to another
 frontend components. In this section we will provide several backend examples on python Flask. It is easiest webframework for python. We understand that Frontend Developers might not be super interested in Python things, thats why we provided super simple views code which will help you to understand ho to implement this ir that type of sving. Anyway if you will face any python exception you can use super-helpfull [https://fixexception.com/](fixexception.com) service to fix any issue you will face 💪.
@@ -524,8 +536,8 @@ document.onpaste = (event) => {
 
 
 
-Development
-===========
+Development 🔨
+==============
 
 Code written on ES6 which transplited by Babel and packed (minified) to a single file using webpack. All configs are inside so all you have to do after pulling repo is installing node modules:
 
@@ -570,9 +582,12 @@ npm run buildfont
 
 For font generation we use method described here: [How to generate a webfont (automated setup)](https://hinty.io/brucehardywald/how-to-generate-a-webfont-automated-setup/)
 
-Contributing
+Contributing 
 ------------
+
 Pull-requests are welcome.
+
+If you want to say thank us [Patreon is here](https://www.patreon.com/devforth)
 
 
 [npm]: https://img.shields.io/npm/v/painterro.svg

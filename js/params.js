@@ -2,7 +2,6 @@
 import { HexToRGBA } from './colorPicker';
 import { trim, logError } from './utils';
 import Translation, { activate } from './translation';
-import { setActivePasteOptions } from './inserter';
 
 const STORAGE_KEY = 'painterro-data';
 
@@ -12,7 +11,7 @@ function loadSettings() {
   try {
     settings = JSON.parse(localStorage.getItem(STORAGE_KEY));
   } catch (e) {
-    console.warn(`Unable get from localstorage: ${e}`);
+    console.warn(`Unable get from localStorage: ${e}`);
   }
   if (!settings) {
     settings = {};
@@ -51,6 +50,7 @@ export function setDefaults(parameters) {
   params.activeFillColorAlpha = firstDefined(settings.activeFillColorAlpha,
     params.activeFillColorAlpha, 0.0);
   params.activeFillAlphaColor = HexToRGBA(params.activeFillColor, params.activeFillColorAlpha);
+  params.replace_all_on_empty_background = 
 
   params.initText = params.initText || null;
   params.initTextColor = params.initTextColor || '#808080';
@@ -66,7 +66,8 @@ export function setDefaults(parameters) {
   params.defaultFontBold = firstDefined(settings.defaultFontBold, params.defaultFontBold, false);
   params.defaultFontItalic = firstDefined(settings.defaultFontItalic,
     params.defaultFontItalic, false);
-
+  
+  params.replaceAllOnEmptyBackground = firstDefined(params.replaceAllOnEmptyBackground, true);
   params.backgroundFillColor = settings.backgroundFillColor || params.backgroundFillColor || '#ffffff';
   params.backgroundFillColorAlpha = params.backplateImgUrl ? 0 :
     firstDefined(settings.backgroundFillColorAlpha, params.backgroundFillColorAlpha, 1.0);
