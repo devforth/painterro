@@ -431,7 +431,6 @@ class PainterroProc {
         if (this.initText) this.wrapper.click();
         this.closeActiveTool();
         const input = this.getElemByIdSafe(this.fileInputId);
-        input.click();
         input.onchange = (event) => {
           const files = event.target.files || event.dataTransfer.files;
           if (!files.length) {
@@ -440,6 +439,7 @@ class PainterroProc {
           this.openFile(files[0]);
           input.value = ''; // to allow reopen
         };
+        input.click();
       },
     }, {
       name: 'close',
@@ -542,7 +542,7 @@ class PainterroProc {
       '<span class="ptro-tool-controls"></span>' +
       '<span class="ptro-info"></span>' +
       `<span class="ptro-bar-right">${rightBar}</span>` +
-      `<input id="${this.fileInputId}" type="file" style="display: none;" accept="image/x-png,image/png,image/gif,image/jpeg" /></div>`;
+      `<input id="${this.fileInputId}" type="file" style="display: none" value="none" accept="image/x-png,image/png,image/gif,image/jpeg" /></div>`;
     if (this.isMobile) {
       this.bar.style['overflow-x'] = 'auto';
     }
