@@ -254,24 +254,28 @@ export default class Inserter {
 
   startLoading() {
     this.loading = true;
-    const btn = this.main.getElemByIdSafe(this.main.toolByName.open.buttonId);
-    const icon = this.main.doc.querySelector(`#${this.main.toolByName.open.buttonId} > i`);
-    if (btn) {
-      btn.setAttribute('disabled', 'true');
-    }
-    if (icon) {
-      icon.className = 'ptro-icon ptro-icon-loading ptro-spinning';
+    if (this.main.toolByName.open.buttonId) {
+      const btn = this.main.getElemByIdSafe(this.main.toolByName.open.buttonId);
+      if (btn) {
+        btn.setAttribute('disabled', 'true');
+      }
+      const icon = this.main.doc.querySelector(`#${this.main.toolByName.open.buttonId} > i`);
+      if (icon) {
+        icon.className = 'ptro-icon ptro-icon-loading ptro-spinning';
+      }
     }
   }
 
   finishLoading() {
-    const btn = this.main.getElemByIdSafe(this.main.toolByName.open.buttonId);
-    const icon = this.main.doc.querySelector(`#${this.main.toolByName.open.buttonId} > i`);
-    if (btn) {
-      btn.removeAttribute('disabled');
-    }
-    if (icon) {
-      icon.className = 'ptro-icon ptro-icon-open';
+    if (this.main.toolByName.open.buttonId) {
+      const btn = this.main.getElemByIdSafe(this.main.toolByName.open.buttonId);
+      if (btn) {
+        btn.removeAttribute('disabled');
+      }
+      const icon = this.main.doc.querySelector(`#${this.main.toolByName.open.buttonId} > i`);
+      if (icon) {
+        icon.className = 'ptro-icon ptro-icon-open';
+      }
     }
     if (this.main.params.onImageLoaded) {
       this.main.params.onImageLoaded();
