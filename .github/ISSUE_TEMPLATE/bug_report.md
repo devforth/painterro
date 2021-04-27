@@ -27,4 +27,4 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots (Don't be lazy, PrnScr, Ctrl+V)
 
 **Browser**
- - e.g.  Google Chrome 11 on WIndows
+ - e.g.  Google Chrome 11 on Windows 
