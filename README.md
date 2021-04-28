@@ -366,7 +366,7 @@ If you want to add another language, then:
 5. Add reference in [js/translation.js] inside of your repo. 
 5. After that create pull-request, or just open [issue](https://github.com/devforth/painterro/issues) if you don't know how to create a PR.
 
-🤔 Found a bug in some work for your languate? Form and use github editor to fix, then create a PR, we will judge the change.
+🤔 Found a bug in some word for your languate? Fork and use github editor to fix, then create a PR, we will judge the change.
  
 If you want to translate or change strings without contributing you can do this by passing 
 `translation` parameter, for example:
@@ -382,7 +382,7 @@ Painterro({
   }
 }).show()
 ```
-For all strings that can be translated, see [langs/en.lang.js] 
+For all strings that should be translated, see [langs/en.lang.js] 
     
 
 Saving image 💾
