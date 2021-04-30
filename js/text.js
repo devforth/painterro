@@ -208,6 +208,8 @@ export default class TextTool {
       backgroundColor: null,
       logging: false,
       scale,
+      scrollX: -window.scrollX,
+      scrollY: -window.scrollY,
     }).then((can) => {
       this.ctx.drawImage(can, this.scaledCord[0], this.scaledCord[1]);
       this.input.style.border = origBorder;
