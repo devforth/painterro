@@ -958,7 +958,7 @@ class PainterroProc {
       },
       mousewheel: (e, forceWheenDelta, forceCtrlKey) => {
         if (this.shown) {
-          if (forceCtrlKey!= undefined? forceCtrlKey : e.ctrlKey) {
+          if (forceCtrlKey !== undefined ? forceCtrlKey : e.ctrlKey) {
             this.zoomImage(e, forceWheenDelta);
             e.preventDefault();
           }
