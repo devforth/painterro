@@ -1,6 +1,6 @@
 {
   "name": "painterro",
-  "version": "1.2.53",
+  "version": "1.2.54",
   "description": "HTML5 image editing widget (js paint plugin)",
   "main": "build/painterro.commonjs2.js",
   "repository": {
