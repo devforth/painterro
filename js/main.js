@@ -842,7 +842,11 @@ class PainterroProc {
     }
     return handled;
   }
-  zoomImage({ wheelDelta, clientX, clientY }) {
+  zoomImage({ wheelDelta, clientX, clientY }, forceWheenDelta) {
+    let whD = wheelDelta;
+    if (forceWheenDelta !== undefined) {
+      whD = 1;
+    }
     let minFactor = 1;
     if (this.size.w > this.wrapper.documentClientWidth) {
       minFactor = Math.min(minFactor, this.wrapper.documentClientWidth / this.size.w);
@@ -853,7 +857,7 @@ class PainterroProc {
     if (!this.zoom && this.zoomFactor > minFactor) {
       this.zoomFactor = minFactor;
     }
-    this.zoomFactor += Math.sign(wheelDelta) * 0.2;
+    this.zoomFactor += Math.sign(whD) * 0.2;
     if (this.zoomFactor < minFactor) {
       this.zoom = false;
       this.zoomFactor = minFactor;
@@ -920,13 +924,9 @@ class PainterroProc {
           });
 
           if (fingersDist > this.lastFingerDist) {
-            e.wheelDelta = 1;
-            e.ctrlKey = true;
-            this.documentHandlers.mousewheel(e);
-          } else if (fingersDist > this.lastFingerDist) {
-            e.wheelDelta = -1;
-            e.ctrlKey = true;
-            this.documentHandlers.mousewheel(e);
+            this.documentHandlers.mousewheel(e, 1, true);
+          } else if (fingersDist < this.lastFingerDist) {
+            this.documentHandlers.mousewheel(e, 1, true);
           }
           this.lastFingerDist = fingersDist;
           e.stopPropagation();
@@ -956,10 +956,10 @@ class PainterroProc {
           this.colorPicker.handleMouseUp(e);
         }
       },
-      mousewheel: (e) => {
+      mousewheel: (e, forceWheenDelta, forceCtrlKey) => {
         if (this.shown) {
-          if (e.ctrlKey) {
-            this.zoomImage(e);
+          if (forceCtrlKey!= undefined? forceCtrlKey : e.ctrlKey) {
+            this.zoomImage(e, forceWheenDelta);
             e.preventDefault();
           }
         }
