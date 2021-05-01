@@ -200,16 +200,26 @@ export default class TextTool {
     }
   }
 
+  hiddenInputClone() {
+    const clone = this.input.cloneNode(true);
+    const style = clone.style;
+    style.position = 'fixed';
+    style.top = `${window.innerHeight}px`;
+    style.left = 0;
+    document.body.appendChild(clone);
+    return clone;
+  }
+
   apply() {
     const origBorder = this.input.style.border;
     const scale = this.main.getScale();
     this.input.style.border = 'none';
-    html2canvas(this.input, {
+    html2canvas(this.hiddenInputClone(), {
       backgroundColor: null,
       logging: false,
       scale,
-      scrollX: -window.scrollX,
-      scrollY: -window.scrollY,
+      scrollX: 0,
+      scrollY: 0,
     }).then((can) => {
       this.ctx.drawImage(can, this.scaledCord[0], this.scaledCord[1]);
       this.input.style.border = origBorder;
