@@ -78,7 +78,7 @@ Also painterro has [Wordpress Plugin](https://wordpress.org/plugins/painterro/).
 If you want to see some feature in Painterro, please leave (or vote for) an issue [here](https://github.com/devforth/painterro/issues).
 There is no promise that it will be implemented soon or ever, but it is interesting to know what features users want to have.
 
-Also some usefull hints on HINTY for you:
+Usefull hints and tweaks 😋:
 
 - [Painterro JS paint features review on HINTY](https://hinty.io/devforth/js-paint-plugin-for-your-website/)
 - [Dark theme for Painterro JS paint](https://hinty.io/devforth/painterro-dark-theme/)
@@ -389,7 +389,7 @@ Saving image 💾
 ===============
 
 You should provide your save handler, which will post/update image on server or will pass image to another
-frontend components. In this section we will provide several backend examples on python Flask. It is easiest webframework for python. We understand that Frontend Developers might not be super interested in Python things, thats why we provided super simple views code which will help you to understand ho to implement this ir that type of sving. Anyway if you will face any python exception you can use super-helpfull [https://fixexception.com/](fixexception.com) service to fix any issue you will face 💪.
+frontend components. In this section we will provide several backend examples on python Flask. It is easiest webframework for python. We understand that Frontend Developers might not be super interested in Python things, thats why we provided super simple views code which will help you to understand ho to implement this ir that type of sving. Anyway if you will face any python exception you can use super-helpfull [fixexception.com](https://fixexception.com/) service to fix any issue you will face 💪.
 
 Binary saving
 -------------
