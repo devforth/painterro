@@ -66,6 +66,8 @@ export default {
     close: 'Close Painterro',
     eraser: 'Eraser',
     settings: 'Settings',
+    zoomin: 'Zoom In',
+    zoomout: 'Zoom Out',
     undo: 'Undo',
     redo: 'Redo',
   },
