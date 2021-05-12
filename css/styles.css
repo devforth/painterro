@@ -522,6 +522,7 @@ input.ptro-pixel-size-input {
     line-height: 22px;
     padding: 0 0 0 4px;
     height: 22px;
+    width: 80px;
 }
 
 .ptro-selector-btn i {
