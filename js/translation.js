@@ -8,6 +8,7 @@ import ptPTl from '../langs/pt-PT.lang';
 import ptBRl from '../langs/pt-BR.lang';
 import ru from '../langs/ru.lang';
 import ja from '../langs/ja.lang';
+import nl from '../langs/nl.lang';
 
 let instance = null;
 
@@ -24,6 +25,7 @@ export default class Translation {
       'pt-BR': ptBRl,
       ru,
       ja,
+      nl,
     };
     this.defaultTranslator = this.translations.en;
   }
