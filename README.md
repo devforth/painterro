@@ -355,6 +355,8 @@ Translated languages:
 | `pt-PT` | European Portuguese |
 | `pt-BR` | Brazilian  Portuguese |
 | `ru` | Russian |
+| `nl` | Dutch |
+
 
 
 If you want to add another language, then:
@@ -578,6 +580,43 @@ npm run dev
 ```
 Then open http://localhost:8080 with demo page
 
+
+Editing source on the fly for painterro imported from side webpack app (e.g. your project SPA)
+------------------------------------------
+
+1. If your side app uses 'eslint' it, most likely side app will need eslint-plugin-import:
+
+```
+npm i eslint-plugin-import
+```
+
+2. Since compiled painterro commonjs2 file already linted and minimized you need to exclude it from linting:
+
+Add to package.json of your side app:
+```
+  "eslintIgnore": [
+    "/home/ivan/devforth/painterro/build/painterro2.commonjs.js"
+  ],
+```
+where `/home/ivan/devforth/painterro` is a folder with Painterro sources
+
+3. Replace
+
+```
+import Painterro from 'painterro';
+```
+with
+ 
+```
+import Painterro from '/home/ivan/devforth/painterro/build/painterro.commonjs2.js';
+```
+
+4. Go to painterro source folder and run:
+
+```
+watch npm run build
+```
+
 Regenerating icons font
 -----------------------
 
@@ -588,6 +627,8 @@ npm run buildfont
 ```
 
 For font generation we use method described here: [How to generate a webfont (automated setup)](https://hinty.io/brucehardywald/how-to-generate-a-webfont-automated-setup/)
+
+
 
 Contributing 
 ------------

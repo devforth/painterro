@@ -11,7 +11,7 @@
     "prepare": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --progress",
-    "dev": "webpack serve --open --host 127.0.0.1",
+    "dev": "webpack serve --open --host 127.0.0.1 --port 3000",
     "watch": "webpack --watch",
     "buildfont": "node generate_font.js"
   },
