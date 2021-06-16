@@ -459,6 +459,14 @@ class PainterroProc {
           doClose();
         }
       },
+    }, {
+      name: 'sticker',
+      activate: () => {
+        if (this.initText) this.wrapper.click();
+        this.toolContainer.style.cursor = 'crosshair';
+        this.primitiveTool.activate('sticker');
+      },
+      eventListner: () => this.primitiveTool,
     }];
     this.isMobile = isMobile.any;
     this.toolByName = {};

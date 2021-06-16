@@ -10,7 +10,7 @@ export default class PrimitiveTool {
   activate(type) {
     this.type = type;
     this.state = {};
-    if (type === 'line' || type === 'brush' || type === 'eraser' || type === 'arrow') {
+    if (type === 'line' || type === 'brush' || type === 'eraser' || type === 'arrow' || type === 'sticker') {
       this.ctx.lineJoin = 'round';
     } else {
       this.ctx.lineJoin = 'miter';
@@ -61,6 +61,18 @@ export default class PrimitiveTool {
 
         this.points = [cur];
         this.drawBrushPath();
+      } else if (this.type === 'sticker') {
+        const cord = [
+          (event.clientX - this.main.elLeft()) + this.main.scroller.scrollLeft,
+          (event.clientY - this.main.elTop()) + this.main.scroller.scrollTop,
+        ];
+        const cur = {
+          x: cord[0] * scale,
+          y: cord[1] * scale,
+        };
+
+        this.points = [cur];
+        this.addSticker();
       } else {
         this.state.cornerMarked = true;
         this.centerCord = [
@@ -70,6 +82,13 @@ export default class PrimitiveTool {
         this.centerCord = [this.centerCord[0] * scale, this.centerCord[1] * scale];
       }
     }
+  }
+
+  addSticker() {
+    const image = new Image(150, 40);
+    image.src = 'https://www.netlify.com/img/press/logos/full-logo-light.svg';
+
+    this.ctx.drawImage(image, this.points[0].x, this.points[0].y);
   }
 
   drawBrushPath() {
