@@ -214,19 +214,24 @@ export default class TextTool {
     const origBorder = this.input.style.border;
     const scale = this.main.getScale();
     this.input.style.border = 'none';
-    html2canvas(this.hiddenInputClone(), {
+    const inputClone = this.hiddenInputClone();
+    html2canvas(inputClone, {
       backgroundColor: null,
       logging: false,
       scale,
       scrollX: 0,
       scrollY: 0,
-    }).then((can) => {
+    })
+    .then((can) => {
       this.ctx.drawImage(can, this.scaledCord[0], this.scaledCord[1]);
       this.input.style.border = origBorder;
       this.close();
       this.main.worklog.captureState();
       this.main.closeActiveTool();
-    });
+    })
+    .finally(() => {
+      inputClone.remove();
+    })
   }
 
   close() {
