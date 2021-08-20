@@ -62,6 +62,6 @@ typings/
 # custom
 build/painterro-*
 
-wp/.svn/
-wp/trunk/painterro-*.min.js
-wp/trunk/painterro-*.min.js.map
+wp/*
+docs/*
+
