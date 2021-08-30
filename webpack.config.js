@@ -2,6 +2,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const TerserPlugin = require("terser-webpack-plugin");
+
 
 function webpackConfig(target, mode) {
   let filename;
@@ -16,7 +18,7 @@ function webpackConfig(target, mode) {
 
   let options = {
     mode,
-    entry: ["core-js/stable", "regenerator-runtime/runtime", './js/main.js'],
+    entry: ['./js/main.js'],
     output: {
       path: path.resolve(__dirname, 'build'),
       filename,
@@ -29,20 +31,6 @@ function webpackConfig(target, mode) {
           test: /\.js$/,
           exclude: /node_modules/,
           loader: "eslint-loader",
-        },
-        {
-          test: /\.js$/,
-          loader: 'babel-loader',
-          exclude: /node_modules/,
-          options: {
-            // sourceType: "module",
-            presets: [["@babel/preset-env", {
-              "modules": "commonjs",
-              "targets": {
-                "ie": "11"
-              }
-            }]],
-          }
         },
         {
           test: /\.css$/,
@@ -61,12 +49,30 @@ function webpackConfig(target, mode) {
       colors: true
     },
     devtool: 'source-map',
+    optimization: {
+      minimize: true,
+      minimizer: [new TerserPlugin()],
+    },
   }
   if (target === 'var') {
     options.output.library = 'Painterro';
     options.output.libraryExport = 'default';
-    options.target = 'es5';
-
+    options.target = 'browserslist';
+    options.module.rules.push({
+      test: /\.js$/,
+      loader: 'babel-loader',
+      exclude: /node_modules/,
+      options: {
+        // sourceType: "module",
+        presets: [["@babel/preset-env", {
+          "modules": "commonjs",
+          "useBuiltIns": "entry",
+          "corejs": "2"
+        }]],
+      }
+    });
+  } else {
+    options.target = 'es2020';
   }
   if (mode === 'development') {
     options = {

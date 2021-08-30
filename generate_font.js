@@ -23,7 +23,7 @@ fs.readdir('res/font', function(err, items) {
       classPrefix: 'ptro-icon-',
       baseSelector: '.ptro-icon'
     },
-    types: ['svg', 'ttf', 'woff', 'eot']
+    types: ['ttf', 'woff']
   }, function (error) {
     if (error) {
       console.log('Fail!', error);

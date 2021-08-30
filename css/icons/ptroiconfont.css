@@ -1,9 +1,7 @@
 @font-face {
 	font-family: "ptroiconfont";
-	src: url("ptroiconfont.eot?369c1b36c410d0842646d6396ce5c2b6?#iefix") format("embedded-opentype"),
-url("ptroiconfont.woff?369c1b36c410d0842646d6396ce5c2b6") format("woff"),
-url("ptroiconfont.ttf?369c1b36c410d0842646d6396ce5c2b6") format("truetype"),
-url("ptroiconfont.svg?369c1b36c410d0842646d6396ce5c2b6#ptroiconfont") format("svg");
+	src: url("ptroiconfont.woff?6445e1fd933a6c63917aabe728c217e3") format("woff"),
+url("ptroiconfont.ttf?6445e1fd933a6c63917aabe728c217e3") format("truetype");
 	font-weight: normal;
     font-style: normal;
 }
