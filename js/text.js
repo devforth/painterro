@@ -1,4 +1,3 @@
-// import html2canvas from 'html2canvas/dist/html2canvas.min';
 import { KEYS } from './utils';
 import { tr } from './translation';
 import domtoimage from 'dom-to-image';
@@ -205,7 +204,14 @@ export default class TextTool {
     const origBorder = this.input.style.border;
     const scale = this.main.getScale();
     this.input.style.border = 'none';
-    domtoimage.toPng(this.input)
+    domtoimage.toPng(this.input, {
+      style: {
+        'transform-origin': 'top left',
+        transform: `scale(${scale})`
+      },
+      width: this.input.clientWidth * scale,
+      height: this.input.clientHeight * scale,
+    })
       .then((dataUrl) => {
         const img = new Image();
         img.src = dataUrl;
