@@ -1,6 +1,7 @@
-import html2canvas from 'html2canvas/dist/html2canvas.min';
+// import html2canvas from 'html2canvas/dist/html2canvas.min';
 import { KEYS } from './utils';
 import { tr } from './translation';
+import domtoimage from 'dom-to-image';
 
 export default class TextTool {
   constructor(main) {
@@ -204,23 +205,21 @@ export default class TextTool {
     const origBorder = this.input.style.border;
     const scale = this.main.getScale();
     this.input.style.border = 'none';
-    html2canvas(this.input, {
-      backgroundColor: null,
-      logging: false,
-      scale,
-      scrollX: 0,
-      scrollY: 0,
-    })
-    .then((can) => {
-      this.ctx.drawImage(can, this.scaledCord[0], this.scaledCord[1]);
-      this.input.style.border = origBorder;
-      this.close();
-      this.main.worklog.captureState();
-      this.main.closeActiveTool();
-    })
-    .finally(() => {
-      inputClone.remove();
-    })
+    domtoimage.toPng(this.input)
+      .then((dataUrl) => {
+        const img = new Image();
+        img.src = dataUrl;
+        img.onload = () => {
+          this.ctx.drawImage(img, this.scaledCord[0], this.scaledCord[1]);
+          this.input.style.border = origBorder;
+          this.close();
+          this.main.worklog.captureState();
+          this.main.closeActiveTool();
+        };
+      })
+      .catch(function (error) {
+          console.error('oops, something went wrong!', error);
+      });
   }
 
   close() {
