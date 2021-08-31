@@ -200,22 +200,11 @@ export default class TextTool {
     }
   }
 
-  hiddenInputClone() {
-    const clone = this.input.cloneNode(true);
-    const style = clone.style;
-    style.position = 'fixed';
-    style.top = `${window.innerHeight}px`;
-    style.left = 0;
-    document.body.appendChild(clone);
-    return clone;
-  }
-
   apply() {
     const origBorder = this.input.style.border;
     const scale = this.main.getScale();
     this.input.style.border = 'none';
-    const inputClone = this.hiddenInputClone();
-    html2canvas(inputClone, {
+    html2canvas(this.input, {
       backgroundColor: null,
       logging: false,
       scale,
