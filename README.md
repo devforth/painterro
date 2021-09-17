@@ -72,7 +72,7 @@ Originally Painterro was designed for quick screenshots processing: You make scr
 then open Painterro on your website, paste an image with `Ctrl+V`,
 crop it to interested area, highlight something with line/rectangle tool and/or add some text 
 to the image and save on server with custom save handler (e.g. simple `XHR` request to your backend).
-In addition, you can use Painterro as image editor for any kind of raster images. Please try a [demo](https://hinty.io/login/?next=/add/%3Fpainterro).
+In addition, you can use Painterro as image editor for any kind of raster images. Please try a [demo](https://tracklify.com/painterro_demo/).
 Also painterro has [Wordpress Plugin](https://wordpress.org/plugins/painterro/).
 
 If you want to see some feature in Painterro, please leave (or vote for) an issue [here](https://github.com/devforth/painterro/issues).
@@ -543,7 +543,7 @@ document.onpaste = (event) => {
 };
 ```
 
-
+If you face any painterro errors (exceptions), please reffer to [Painterro page on FixJSError](https://fixjserror.com/package/painterro/)
 
 Development 🔨
 ==============
