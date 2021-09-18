@@ -60,6 +60,7 @@ export default class WorkLog {
     const state = {
       sizew: this.main.size.w,
       sizeh: this.main.size.h,
+      activeToolName: this.main.activeTool ? this.main.activeTool.name : null,
       data: this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h),
     };
     if (this.current === null) {
@@ -93,9 +94,18 @@ export default class WorkLog {
 
   undoState() {
     if (this.current.prev !== null) {
+      const currentToolName = this.current.activeToolName;
       this.current = this.current.prev;
       this.applyState(this.current);
       this.changed(false);
+
+      if (currentToolName) {
+        this.main.closeActiveTool(true);
+        this.main.setActiveTool(this.main.toolByName[currentToolName])
+      } else {
+        this.main.closeActiveTool();
+      }
+      
       if (this.main.params.onUndo) {
         this.main.params.onUndo(this.current);
       }
@@ -104,9 +114,21 @@ export default class WorkLog {
 
   redoState() {
     if (this.current.next !== null) {
+      
       this.current = this.current.next;
       this.applyState(this.current);
       this.changed(false);
+
+      const nextToolName = this.current.activeToolName;
+      console.log(11, nextToolName)
+
+      if (nextToolName) {
+        this.main.closeActiveTool(true);
+        this.main.setActiveTool(this.main.toolByName[nextToolName])
+      } else {
+        this.main.closeActiveTool();
+      }
+
       if (this.main.params.onRedo) {
         this.main.params.onRedo(this.current);
       }

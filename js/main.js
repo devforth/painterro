@@ -343,7 +343,6 @@ class PainterroProc {
       activate: () => {
         if (this.initText) this.wrapper.click();
         this.worklog.undoState();
-        this.closeActiveTool();
       },
       eventListner: () => this.resizer,
     },
@@ -352,7 +351,6 @@ class PainterroProc {
       activate: () => {
         if (this.initText) this.wrapper.click();
         this.worklog.redoState();
-        this.closeActiveTool();
       },
       eventListner: () => this.resizer,
     },
@@ -649,9 +647,9 @@ class PainterroProc {
         const currentActive = this.activeTool;
         this.closeActiveTool(true);
         if (currentActive !== b) {
-          this.setActiveTool(b);
+          this.setActiveTool(b, currentActive);
         } else {
-          this.setActiveTool(this.defaultTool);
+          this.setActiveTool(this.defaultTool, currentActive);
         }
       };
       this.getBtnEl(b).ontouch = this.getBtnEl(b).onclick;
@@ -1276,8 +1274,10 @@ class PainterroProc {
     this.ctx.fill();
   }
 
-  setActiveTool(b) {
+  setActiveTool(b, previous) {
     this.activeTool = b;
+    this.previousActiveTool = previous;
+    
     this.zoomButtonActive = false;
     const btnEl = this.getBtnEl(this.activeTool);
     if (btnEl) {
