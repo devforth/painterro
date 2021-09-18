@@ -647,9 +647,9 @@ class PainterroProc {
         const currentActive = this.activeTool;
         this.closeActiveTool(true);
         if (currentActive !== b) {
-          this.setActiveTool(b, currentActive);
+          this.setActiveTool(b);
         } else {
-          this.setActiveTool(this.defaultTool, currentActive);
+          this.setActiveTool(this.defaultTool);
         }
       };
       this.getBtnEl(b).ontouch = this.getBtnEl(b).onclick;
@@ -1274,9 +1274,8 @@ class PainterroProc {
     this.ctx.fill();
   }
 
-  setActiveTool(b, previous) {
+  setActiveTool(b) {
     this.activeTool = b;
-    this.previousActiveTool = previous;
     
     this.zoomButtonActive = false;
     const btnEl = this.getBtnEl(this.activeTool);

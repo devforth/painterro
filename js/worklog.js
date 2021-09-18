@@ -120,7 +120,6 @@ export default class WorkLog {
       this.changed(false);
 
       const nextToolName = this.current.activeToolName;
-      console.log(11, nextToolName)
 
       if (nextToolName) {
         this.main.closeActiveTool(true);
