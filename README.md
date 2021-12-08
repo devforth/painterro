@@ -398,8 +398,8 @@ For all strings that should be translated, see [langs/en.lang.js]
 Saving image 💾
 ===============
 
-You should provide your save handler, which will post/update image on server or will pass image to another
-frontend components. In this section we will provide several backend examples on python Flask. It is easiest webframework for python. We understand that Frontend Developers might not be super interested in Python things, thats why we provided super simple views code which will help you to understand ho to implement this ir that type of sving. Anyway if you will face any python exception you can use super-helpfull [fixexception.com](https://fixexception.com/) service to fix any issue you will face 💪.
+You should provide your own save handler, that will post/update image on server or will pass image to other
+frontend components. In this section we will provide several backend examples on python Flask (easiest web server for python). Anyway if you will face any python exception you can use super-helpfull [fixexception.com](https://fixexception.com/) service to fix any issue you will face 💪.
 
 Binary saving
 -------------
@@ -417,7 +417,8 @@ var ptro = Painterro({
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://127.0.0.1:5000/save-as-binary/', true);
     xhr.onload = xhr.onerror = function () {
-      done(true);
+      // after saving is done, call done callback
+      done(true); //done(true) will hide painterro, done(false) will leave opened
     };
     xhr.send(formData);
   }
@@ -486,7 +487,8 @@ You can just insert image as data url to any WYSIWYG editor, e.g. TinyMCE:
     var ptro = Painterro({
       saveHandler: function (image, done) {
         tinymce.activeEditor.execCommand('mceInsertContent', false, '<img src="' + image.asDataURL() + '" />');
-        done(true)
+        // after saving is done, call done callback
+        done(true); //done(true) will hide painterro, done(false) will leave opened
       }
     })
 ```
