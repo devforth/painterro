@@ -65,6 +65,18 @@ export default class ControlBuilder {
     };
   }
 
+  buildPaintBucketControl(controlIndex) {
+    const action = () => {
+      const width = document.getElementById(this.main.activeTool.controls[controlIndex].id).value;
+      console.log('buildPaintBucketControl width: ' + width);
+      // this.main.primitiveTool.setLineWidth(width);
+      setParam('activeFillColor', width);
+    };
+    const getValue = () => this.main.primitiveTool.lineWidth;
+
+    return ControlBuilder.buildInputControl('lineWidth', action, getValue, 1, 99);
+  }
+
   buildArrowLengthControl(controlIndex) {
     const action = () => {
       const width = this.main.getElemByIdSafe(this.main.activeTool.controls[controlIndex].id).value;

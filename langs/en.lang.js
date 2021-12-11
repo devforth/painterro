@@ -70,6 +70,8 @@ export default {
     zoomout: 'Zoom Out',
     undo: 'Undo',
     redo: 'Redo',
+    clear: 'Clear',
+    bucket: 'Fill',
   },
   pasteOptions: {
     fit: 'Replace all',
