@@ -109,7 +109,7 @@ export function setDefaults(parameters) {
     params.colorScheme.main;
   params.colorScheme.inputBorderColor = params.colorScheme.inputBorderColor ||
     params.colorScheme.main;
-params.colorScheme.inputBackground = params.colorScheme.inputBackground || '#ffffff';
+  params.colorScheme.inputBackground = params.colorScheme.inputBackground || '#ffffff';
   params.colorScheme.inputShadow = params.colorScheme.inputShadow || 'inset 0 0 4px 1px #ccc';
 
   params.colorScheme.inputText = params.colorScheme.inputText ||
@@ -124,6 +124,8 @@ params.colorScheme.inputBackground = params.colorScheme.inputBackground || '#fff
 
   params.toolbarHeightPx = params.toolbarHeightPx || 40;
   params.buttonSizePx = params.buttonSizePx || 32;
+  params.bucketSensivity = params.bucketSensivity || 100;
+
 
   if (typeof params.defaultSize !== 'object') {
     // otherwise its an object from localstorage

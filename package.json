@@ -37,6 +37,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/preset-env": "^7.12.16",
+    "@vusion/webfonts-generator": "^0.8.0",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.0.2",
     "es6-promise": "^4.2.8",
@@ -52,7 +53,6 @@
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^5.1.4",
     "url-loader": "^4.1.1",
-    "vusion-webfonts-generator": "^0.4.1",
     "webpack": "^5.21.2",
     "webpack-bundle-analyzer": "^4.4.0",
     "webpack-cli": "^4.5.0",

@@ -416,6 +416,7 @@ class PainterroProc {
 
     {
       name: 'bucket',
+      hotkey: 'f',
       controls: [{
         type: 'color',
         title: 'fillColor',

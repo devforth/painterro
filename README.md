@@ -211,7 +211,7 @@ Painterro({
 |`defaultTextStrokeAndShadow` | Enables Stroke and Shadow for text tool by default (easier recognize text on screenshots) | `true` |
 |`defaultSize` | default image size, should be string in format `<width>x<height>` in pixel, e.g. `'200x100'`. If value is `'fill'`(default) than all container size will be used | `'fill'` |
 |`defaultTool` | Tool selected by default | `'select'` | 
-|`hiddenTools` | List of tools that you wish to exclude from toolbar e.g. something from this list `['crop', 'line', 'arrow', 'rect', 'ellipse', 'brush', 'text', 'rotate', 'resize',  'save', 'open', 'close', 'undo', 'redo', 'zoomin', 'zoomout']`, You can't hide default tool | `['redo']` |
+|`hiddenTools` | List of tools that you wish to exclude from toolbar. Subset from this list `['crop', 'line', 'arrow', 'rect', 'ellipse', 'brush', 'text', 'rotate', 'resize',  'save', 'open', 'close', 'undo', 'redo', 'zoomin', 'zoomout', 'bucket']`, You can't hide default tool | `['redo']` |
 |`initText` | Display some centered text before painting (supports HTML). If null, no text will be shown | `null` |
 |`initTextColor` | Color of init text | `'#808080'` |
 |`initTextStyle` | Style of init text | `"26px 'Open Sans', sans-serif"` |
@@ -232,6 +232,7 @@ Painterro({
 |`extraFonts`| By default Text tool supports only several [predefined](https://github.com/devforth/painterro/blob/master/js/text.js#L38) fonts due to compatibility considirations , but yousing this option you can add any fonts you want if you are sure they are available on your page/app | `['Roboto']` |
 |`toolbarHeightPx`| Height of toolbar in pixels | `40` | 
 |`buttonSizePx`| Button for toolbar in pixels | `32` |
+|`bucketSensivity`| Bucket tool sensivity | `100` |
 
 ## Events
 
@@ -378,7 +379,7 @@ If you want to add another language, then:
 5. Add reference in [js/translation.js] inside of your repo. 
 5. After that create pull-request, or just open [issue](https://github.com/devforth/painterro/issues) if you don't know how to create a PR.
 
-🤔 Found a bug in some word for your languate? Fork and use github editor to fix, then create a PR, we will judge the change.
+🤔 Found a bug in some word for your language? Feel free to edit on GitHub directly and suggest a fix.
  
 If you want to translate or change strings without contributing you can do this by passing 
 `translation` parameter, for example:

@@ -39,11 +39,6 @@ export default class PaintBucket {
     }
   }
 
-  setFillColor(color) {
-    this.color = color;
-    this.input.style.color = color;
-  }
-
   paintAt(startX, startY) {
     startX = Math.round(startX);
     startY = Math.round(startY - 1);
@@ -81,7 +76,7 @@ export default class PaintBucket {
   }
 
   matchClickedColor(r, g, b, a) {
-    const limit = 20;
+    const limit = this.main.params.bucketSensivity;
     var matchedR = (Math.abs(r - this.clickedOnColor.r) < limit);
     var matchedG = (Math.abs(g - this.clickedOnColor.g) < limit);
     var matchedB = (Math.abs(b - this.clickedOnColor.b) < limit);

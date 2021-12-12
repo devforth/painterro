@@ -1,4 +1,4 @@
-const webfontsGenerator = require('vusion-webfonts-generator');
+const webfontsGenerator = require('@vusion/webfonts-generator');
 const fs = require('fs');
 
 fs.readdir('res/font', function(err, items) {
