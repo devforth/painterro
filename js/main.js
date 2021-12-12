@@ -18,7 +18,7 @@ import Resizer from './resizer';
 import Inserter from './inserter';
 import Settings from './settings';
 import ControlBuilder from './controlbuilder';
-
+import PaintBucket from './paintBucket';
 
 class PainterroProc {
   constructor(params) {
@@ -413,6 +413,36 @@ class PainterroProc {
         this.zoomImage(e);
       },
     },
+
+    {
+      name: 'bucket',
+      controls: [{
+        type: 'color',
+        title: 'fillColor',
+        target: 'fill',
+        titleFull: 'fillColorFull',
+        action: () => {
+          this.colorPicker.open(this.colorWidgetState.fill);
+        },
+      },
+      ],
+      activate: () => {
+        // this.clear();
+        // this.closeActiveTool();
+        this.toolContainer.style.cursor = 'crosshair';
+        this.primitiveTool.activate('bucket');
+      },
+      eventListner: () => this.paintBucket,
+    },
+
+    {
+      name: 'clear',
+      activate: () => {
+        this.clear();
+        this.closeActiveTool();
+      },
+    },
+
     {
       name: 'save',
       right: true,
@@ -612,6 +642,7 @@ class PainterroProc {
       }
     });
     this.inserter.init(this);
+    this.paintBucket = new PaintBucket(this);
     this.textTool = new TextTool(this);
     this.colorPicker = new ColorPicker(this, (widgetState) => {
       this.colorWidgetState[widgetState.target] = widgetState;
