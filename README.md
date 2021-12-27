@@ -49,7 +49,7 @@ Used by
     </td>
     <td align="center"> 
       <br>
-      <a href="https://tracklify.com" ><img src="https://tracklify.s3.eu-central-1.amazonaws.com/live/attachments/NGDPrTu6HMR4SAV8EeekE/pqUmAUENqEjcRLd1Gr2gtm/tuWej866xioDcDNqjFe8fR/tWidfqZnJqi273KG5FdWRg.svg" height='100px' /></a>
+      <a href="https://tracklify.com" ><img src="https://tracklify.com/static/img/header-logo.4916e646b063.svg" height='100px' /></a>
       <br>
       <a href="https://tracklify.com">Tracklify</a>
       <br>
