@@ -7,6 +7,13 @@ JavaScript painting plugin which allows editing images in a browser.
 Can be easily integrated into any website or webapp by calling simple initialization code.
 
 
+> 🙏🙏🙏 Scream for help to Ukraine 🇺🇦
+> This alert created by company based in Ukraine from shelter.
+> Today, 24 February 2022, Russia started bombing of civillians in whole Ukraine. We are screaming and ask you: please help us, we want to survive, our families, children, older > ones. No one deserve such fear and deaths
+> - If you are from Russia, please, please stop your government by any means including protests. Imagine your children have already died from Putin's bombing. How would you feel?
+> - Please spread the information about bombing of Ukraine in all social way you could. Russia treacherously broke into the territory of a sovereign state. Do not trust Russia, > she is a threat to the whole world
+> - If you have any kind of business cooperation with Russia, please block it and keep most of money on your side
+> - Ask your government to stop Russia from spreading invasion in any way. Russia is nuclear threat to the whole world. You think it is not possible? We thought full country bombing is not possible. Stop Putin NOW, please.
 
 
 Features
