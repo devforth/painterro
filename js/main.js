@@ -954,9 +954,9 @@ class PainterroProc {
           });
 
           if (fingersDist > this.lastFingerDist) {
-            this.documentHandlers.mousewheel(e, 1, true);
+            this.documentHandlers.wheel(e, 1, true);
           } else if (fingersDist < this.lastFingerDist) {
-            this.documentHandlers.mousewheel(e, 1, true);
+            this.documentHandlers.wheel(e, 1, true);
           }
           this.lastFingerDist = fingersDist;
           e.stopPropagation();
@@ -986,7 +986,7 @@ class PainterroProc {
           this.colorPicker.handleMouseUp(e);
         }
       },
-      mousewheel: (e, forceWheenDelta, forceCtrlKey) => {
+      wheel: (e, forceWheenDelta, forceCtrlKey) => {
         if (this.shown) {
           if (forceCtrlKey !== undefined ? forceCtrlKey : e.ctrlKey) {
             this.zoomImage(e, forceWheenDelta);
