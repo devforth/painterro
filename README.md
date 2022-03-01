@@ -9,11 +9,11 @@ Can be easily integrated into any website or webapp by calling simple initializa
 
 > 🙏🙏🙏 Scream for help to Ukraine 🇺🇦
 > This alert created by company based in Ukraine from shelter.
-> Today, 24 February 2022, Russia started bombing of civillians in whole Ukraine. We are screaming and ask you: please help us, we want to survive, our families, children, older > ones. No one deserve such fear and deaths
-> - If you are from Russia, please, please stop your government by any means including protests. Imagine your children have already died from Putin's bombing. How would you feel?
-> - Please spread the information about bombing of Ukraine in all social way you could. Russia treacherously broke into the territory of a sovereign state. Do not trust Russia, > she is a threat to the whole world
-> - If you have any kind of business cooperation with Russia, please block it and keep most of money on your side
-> - Ask your government to stop Russia from spreading invasion in any way. Russia is nuclear threat to the whole world. You think it is not possible? We thought full country bombing is not possible. Stop Putin NOW, please.
+> 24 February 2022, Russia started bombing cities with peacefully civilized population in whole Ukraine. Breaking the laws of war. Killing childrens. This deserves Hague court.
+> 🏠 If you are from Russia, please stop your government by any means including protests, don't trust local media, they are bribed by the government. They always was. I am sure you already feel lie by unexplainable crazy things in your country caused by world sanctions.
+> 💣 Please spread the information about bombing of Ukraine in all social way you could. Russia treacherously broke into the territory of a sovereign state. Do not trust to anything from Russian media, most likely it will be bullshit
+> 💼 If you have any kind of business cooperation with Russia, please block it now and keep most of money on your side, this is the only possible ethical decision
+> ☢️ Ask your government to stop Russia from spreading invasion in any way. Russia is nuclear threat to the whole world. You think it is not possible? We thought that bombing of independent country with population of 44.13 million is also not possible.
 
 
 Features
