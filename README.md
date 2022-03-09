@@ -11,7 +11,7 @@ Can be easily integrated into any website or webapp by calling simple initializa
 > 
 > This alert created by company based in Ukraine from shelter.
 > 
-> 24 February 2022, Russia started bombing cities with peacefully civilized population in whole Ukraine. Breaking the laws of war. Their bombs has been killing children and adults. This deserves Hague court.
+> 24 February 2022, Russia started bombing cities with peacefully civilized population in whole Ukraine. And has been doing it up to this day. Breaking all laws of war. Their bombs has been killing children and adults. This deserves Hague court.
 > - 🏠 If you are from Russia, please stop your government by any means including protests, don't trust local media, they are bribed by the government. They always was. I am sure you already feel lie by unexplainable crazy things in your country caused by world sanctions.
 > - 💣 Please spread the information about bombing of Ukraine in all social way you could. Russia treacherously broke into the territory of a sovereign state. Do not trust to anything from Russian media, most likely it will be bullshit
 > - 💼 If you have any kind of business cooperation with Russia, please block it now and keep most of money on your side, this is the only possible ethical decision
