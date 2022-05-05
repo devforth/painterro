@@ -36,12 +36,16 @@ function firstDefined(...vals) {
   return undefined;
 }
 
-export function setDefaults(parameters) {
+
+
+export function setDefaults(parameters, allToolsNames) {
   loadSettings();
   const params = parameters || {};
   if (params.language) {
     activate(params.language);
   }
+  params.NON_SELECTABLE_TOOLS = ['pixelize', 'crop', 'rotate'];
+
   params.activeColor = settings.activeColor || params.activeColor || '#ff0000';
   params.activeColorAlpha = firstDefined(settings.activeColorAlpha, params.activeColorAlpha, 1.0);
   params.activeAlphaColor = HexToRGBA(params.activeColor, params.activeColorAlpha);
@@ -86,12 +90,20 @@ export function setDefaults(parameters) {
 
   params.worklogLimit = firstDefined(params.worklogLimit, 100);
 
-  params.defaultTool = params.defaultTool || 'select';
   params.hiddenTools = params.hiddenTools || ['redo', 'zoomin', 'zoomout'];
-  const defaultInHiddenIndex = params.hiddenTools.indexOf(params.defaultTool);
-  if (defaultInHiddenIndex > -1) {
-    logError(`Can't hide default tool '${params.defaultTool}', please change default tool to another to hide it`);
-    params.hiddenTools.splice(defaultInHiddenIndex, 1);
+  params.hiddenTools.forEach(t => {
+    if (!allToolsNames.includes(t)) {
+      logError(`Hidden tool with name ${t}`)
+    }
+  })
+
+  if (params.defaultTool) {
+    if (params.hiddenTools.includes(params.defaultTool)) {
+      logError(`Can't hide default tool '${params.defaultTool}', please change default tool to another to hide it`);
+      params.hiddenTools.splice(defaultInHiddenIndex, 1);
+    } 
+  } else {
+    params.defaultTool = allToolsNames.filter(t => !params.hiddenTools.includes(t) && !params.NON_SELECTABLE_TOOLS.includes(t))[0];  // select first tool which supports selecting
   }
 
   params.pixelizePixelSize = settings.pixelizePixelSize || params.pixelizePixelSize || '20%';

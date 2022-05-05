@@ -22,44 +22,15 @@ import PaintBucket from './paintBucket';
 
 class PainterroProc {
   constructor(params) {
+
     addDocumentObjectHelpers();
-    this.params = setDefaults(params);
-    this.controlBuilder = new ControlBuilder(this);
+
     this.getElemByIdSafe = (id) => {
       if (!id) {
         throw new Error(`Can't get element with id=${id}, please create an issue here, we will easily fx it: https://github.com/devforth/painterro/issues/`);
       }
       return document.getElementById(id);
     };
-
-    this.colorWidgetState = {
-      line: {
-        target: 'line',
-        palleteColor: this.params.activeColor,
-        alpha: this.params.activeColorAlpha,
-        alphaColor: this.params.activeAlphaColor,
-      },
-      fill: {
-        target: 'fill',
-        palleteColor: this.params.activeFillColor,
-        alpha: this.params.activeFillColorAlpha,
-        alphaColor: this.params.activeFillAlphaColor,
-      },
-      bg: {
-        target: 'bg',
-        palleteColor: this.params.backgroundFillColor,
-        alpha: this.params.backgroundFillColorAlpha,
-        alphaColor: this.params.backgroundFillAlphaColor,
-      },
-      // stroke: {
-      //   target: 'stroke',
-      //   palleteColor: this.params.textStrokeColor,
-      //   alpha: this.params.textStrokeColorAlpha,
-      //   alphaColor: this.params.textStrokeAlphaColor,
-      // },
-    };
-    this.currentBackground = this.colorWidgetState.bg.alphaColor;
-    this.currentBackgroundAlpha = this.colorWidgetState.bg.alpha;
 
     this.tools = [{
       name: 'select',
@@ -95,7 +66,7 @@ class PainterroProc {
       name: 'line',
       hotkey: 'l',
       controls: [
-        {
+        () => ({
           type: 'color',
           title: 'lineColor',
           target: 'line',
@@ -103,9 +74,9 @@ class PainterroProc {
           action: () => {
             this.colorPicker.open(this.colorWidgetState.line);
           },
-        },
-        this.controlBuilder.buildLineWidthControl(1),
-        this.controlBuilder.buildShadowOnControl(2),
+        }),
+        () => this.controlBuilder.buildLineWidthControl(1),
+        () => this.controlBuilder.buildShadowOnControl(2),
       ],
       activate: () => {
         if (this.initText) this.wrapper.click();
@@ -117,7 +88,7 @@ class PainterroProc {
       name: 'arrow',
       hotkey: 'a',
       controls: [
-        {
+        () => ({
           type: 'color',
           title: 'lineColor',
           target: 'line',
@@ -125,9 +96,9 @@ class PainterroProc {
           action: () => {
             this.colorPicker.open(this.colorWidgetState.line);
           },
-        },
-        this.controlBuilder.buildArrowLengthControl(1),
-        this.controlBuilder.buildShadowOnControl(2),
+        }),
+        () => this.controlBuilder.buildArrowLengthControl(1),
+        () => this.controlBuilder.buildShadowOnControl(2),
       ],
       activate: () => {
         if (this.initText) this.wrapper.click();
@@ -138,7 +109,7 @@ class PainterroProc {
     }, {
       name: 'rect',
       controls: [
-        {
+        () => ({
           type: 'color',
           title: 'lineColor',
           titleFull: 'lineColorFull',
@@ -146,7 +117,8 @@ class PainterroProc {
           action: () => {
             this.colorPicker.open(this.colorWidgetState.line);
           },
-        }, {
+        }),
+        () => ({
           type: 'color',
           title: 'fillColor',
           titleFull: 'fillColorFull',
@@ -154,9 +126,9 @@ class PainterroProc {
           action: () => {
             this.colorPicker.open(this.colorWidgetState.fill);
           },
-        },
-        this.controlBuilder.buildLineWidthControl(2),
-        this.controlBuilder.buildShadowOnControl(3),
+        }),
+        () => this.controlBuilder.buildLineWidthControl(2),
+        () => this.controlBuilder.buildShadowOnControl(3),
       ],
       activate: () => {
         if (this.initText) this.wrapper.click();
@@ -167,7 +139,7 @@ class PainterroProc {
     }, {
       name: 'ellipse',
       controls: [
-        {
+        () => ({
           type: 'color',
           title: 'lineColor',
           titleFull: 'lineColorFull',
@@ -175,7 +147,8 @@ class PainterroProc {
           action: () => {
             this.colorPicker.open(this.colorWidgetState.line);
           },
-        }, {
+        }),
+        () => ({
           type: 'color',
           title: 'fillColor',
           titleFull: 'fillColorFull',
@@ -183,9 +156,9 @@ class PainterroProc {
           action: () => {
             this.colorPicker.open(this.colorWidgetState.fill);
           },
-        },
-        this.controlBuilder.buildLineWidthControl(2),
-        this.controlBuilder.buildShadowOnControl(3),
+        }),
+        () => this.controlBuilder.buildLineWidthControl(2),
+        () => this.controlBuilder.buildShadowOnControl(3),
       ],
       activate: () => {
         if (this.initText) this.wrapper.click();
@@ -196,15 +169,17 @@ class PainterroProc {
     }, {
       name: 'brush',
       hotkey: 'b',
-      controls: [{
-        type: 'color',
-        title: 'lineColor',
-        target: 'line',
-        titleFull: 'lineColorFull',
-        action: () => {
-          this.colorPicker.open(this.colorWidgetState.line);
-        },
-      }, this.controlBuilder.buildLineWidthControl(1),
+      controls: [
+        () => ({
+          type: 'color',
+          title: 'lineColor',
+          target: 'line',
+          titleFull: 'lineColorFull',
+          action: () => {
+            this.colorPicker.open(this.colorWidgetState.line);
+          },
+        }),
+        () => this.controlBuilder.buildLineWidthControl(1),
       ],
       activate: () => {
         if (this.initText) this.wrapper.click();
@@ -214,7 +189,8 @@ class PainterroProc {
       eventListner: () => this.primitiveTool,
     }, {
       name: 'eraser',
-      controls: [this.controlBuilder.buildEraserWidthControl(0),
+      controls: [
+        () => this.controlBuilder.buildEraserWidthControl(0),
       ],
       activate: () => {
         if (this.initText) this.wrapper.click();
@@ -226,7 +202,7 @@ class PainterroProc {
       name: 'text',
       hotkey: 't',
       controls: [
-        {
+        () => ({
           type: 'color',
           title: 'textColor',
           titleFull: 'textColorFull',
@@ -236,8 +212,9 @@ class PainterroProc {
               this.textTool.setFontColor(c.alphaColor);
             });
           },
-        }, this.controlBuilder.buildFontSizeControl(1),
-        {
+        }),
+        () =>this.controlBuilder.buildFontSizeControl(1),
+        () => ({
           type: 'dropdown',
           title: 'fontName',
           titleFull: 'fontNameFull',
@@ -249,8 +226,8 @@ class PainterroProc {
           },
           getValue: () => this.textTool.getFont(),
           getAvailableValues: () => this.textTool.getFonts(),
-        },
-        {
+        }),
+        () => ({
           type: 'bool',
           title: 'fontIsBold',
           titleFull: 'fontIsBoldFull',
@@ -263,8 +240,8 @@ class PainterroProc {
             btn.setAttribute('data-value', state ? 'true' : 'false'); // invert
           },
           getValue: () => this.textTool.isBold,
-        },
-        {
+        }),
+        () => ({
           type: 'bool',
           title: 'fontIsItalic',
           titleFull: 'fontIsItalicFull',
@@ -277,8 +254,8 @@ class PainterroProc {
             btn.setAttribute('data-value', state ? 'true' : 'false');
           },
           getValue: () => this.textTool.isItalic,
-        },
-        {
+        }),
+        () => ({
           type: 'bool',
           title: 'fontStrokeAndShadow',
           titleFull: 'fontStrokeAndShadowFull',
@@ -291,7 +268,7 @@ class PainterroProc {
             btn.setAttribute('data-value', nextState ? 'true' : 'false');
           },
           getValue: () => this.textTool.strokeOn,
-        },
+        }),
       ],
       activate: () => {
         if (this.initText) this.wrapper.click();
@@ -417,15 +394,16 @@ class PainterroProc {
     {
       name: 'bucket',
       hotkey: 'f',
-      controls: [{
-        type: 'color',
-        title: 'fillColor',
-        target: 'fill',
-        titleFull: 'fillColorFull',
-        action: () => {
-          this.colorPicker.open(this.colorWidgetState.fill);
-        },
-      },
+      controls: [
+        () => ({
+          type: 'color',
+          title: 'fillColor',
+          target: 'fill',
+          titleFull: 'fillColorFull',
+          action: () => {
+            this.colorPicker.open(this.colorWidgetState.fill);
+          },
+        }),
       ],
       activate: () => {
         // this.clear();
@@ -447,7 +425,7 @@ class PainterroProc {
     {
       name: 'save',
       right: true,
-      hotkey: this.params.saveByEnter ? 'enter' : false,
+      hotkey: () => this.params.saveByEnter ? 'enter' : false,
       activate: () => {
         if (this.initText) this.wrapper.click();
         this.save();
@@ -472,7 +450,7 @@ class PainterroProc {
       },
     }, {
       name: 'close',
-      hotkey: this.params.hideByEsc ? 'esc' : false,
+      hotkey: () => this.params.hideByEsc ? 'esc' : false,
       right: true,
       activate: () => {
         if (this.initText) this.wrapper.click();
@@ -489,12 +467,54 @@ class PainterroProc {
         }
       },
     }];
+
+    this.params = setDefaults(params, this.tools.map(t => t.name));    
+    
+    this.colorWidgetState = {
+      line: {
+        target: 'line',
+        palleteColor: this.params.activeColor,
+        alpha: this.params.activeColorAlpha,
+        alphaColor: this.params.activeAlphaColor,
+      },
+      fill: {
+        target: 'fill',
+        palleteColor: this.params.activeFillColor,
+        alpha: this.params.activeFillColorAlpha,
+        alphaColor: this.params.activeFillAlphaColor,
+      },
+      bg: {
+        target: 'bg',
+        palleteColor: this.params.backgroundFillColor,
+        alpha: this.params.backgroundFillColorAlpha,
+        alphaColor: this.params.backgroundFillAlphaColor,
+      },
+      // stroke: {
+      //   target: 'stroke',
+      //   palleteColor: this.params.textStrokeColor,
+      //   alpha: this.params.textStrokeColorAlpha,
+      //   alphaColor: this.params.textStrokeAlphaColor,
+      // },
+    };
+    this.currentBackground = this.colorWidgetState.bg.alphaColor;
+    this.currentBackgroundAlpha = this.colorWidgetState.bg.alpha;
+
+
+    this.controlBuilder = new ControlBuilder(this);
+
     this.isMobile = isMobile.any;
     this.toolByName = {};
     this.toolByKeyCode = {};
     this.tools.forEach((t) => {
+      if (t.controls) {
+        t.controls = t.controls.map(t => t());
+      }
       this.toolByName[t.name] = t;
-      if (t.hotkey) {
+      if (t.hotkey instanceof Function) {
+        t.hotkey = t.hotkey();
+      }
+
+      if (t.hotkey && !this.params.hiddenTools.includes(t.name)) {
         if (!KEYS[t.hotkey]) {
           throw new Error(`Key code for ${t.hotkey} not defined in KEYS`);
         }
@@ -522,7 +542,7 @@ class PainterroProc {
     }
     let bar = '';
     let rightBar = '';
-    this.tools.filter(t => this.params.hiddenTools.indexOf(t.name) === -1).forEach((b) => {
+    this.tools.filter(t => !this.params.hiddenTools.includes(t.name)).forEach((b) => {
       const id = genId();
       b.buttonId = id;
       const hotkey = b.hotkey ? ` [${b.hotkey.toUpperCase()}]` : '';
@@ -669,7 +689,7 @@ class PainterroProc {
       }
     });
 
-    this.defaultTool = this.toolByName[this.params.defaultTool] || this.toolByName.select;
+    this.defaultTool = this.toolByName[this.params.defaultTool];
 
     this.tools.filter(t => this.params.hiddenTools.indexOf(t.name) === -1).forEach((b) => {
       this.getBtnEl(b).onclick = () => {
@@ -835,12 +855,16 @@ class PainterroProc {
   }
 
   handleToolEvent(eventHandler, event) {
+    if (this.select.imagePlaced) {
+      return this.select[eventHandler](event);
+    }
     if (this.activeTool && this.activeTool.eventListner) {
       const listner = this.activeTool.eventListner();
       if (listner[eventHandler]) {
         return listner[eventHandler](event);
       }
     }
+    
     return false;
   }
 

@@ -164,7 +164,7 @@ ${Math.round(pxData[i][j][3] / s)})`;
 
   placeAt(l, t, r, b, img) {
     this.main.closeActiveTool(true);
-    this.main.setActiveTool(this.main.toolByName.select);
+    this.main.setActiveTool(this.main.defaultTool);
     const scale = this.getScale();
     this.setLeft(l * scale);
     this.setTop(t * scale);
@@ -190,6 +190,7 @@ ${Math.round(pxData[i][j][3] / s)})`;
     this.show();
     this.reCalcCropperCords();
     this.imagePlaced = true;
+    this.main.select.activate();
     this.placedRatio = img.naturalWidth / img.naturalHeight;
   }
 
@@ -237,6 +238,7 @@ ${Math.round(pxData[i][j][3] / s)})`;
   }
 
   handleMouseDown(event) {
+
     const mainClass = event.target.classList[0];
     const mousDownCallbacks = {
       'ptro-crp-el': () => {

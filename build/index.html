@@ -37,51 +37,48 @@
 
 <script>
 
-window.p = Painterro({
-  hiddenTools: [],
-  //  hideByEsc: true,
-  //  saveByEnter: true,
-  //  shadowScale: 1,
-    // backplateImgUrl: 'https://images.pexels.com/photos/4386297/pexels-photo-4386297.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    // toolbarHeightPx: 50,
-    // buttonSizePx: 42,
-    /* // defaultTool: 'arrow',
-    onChange: (e) => {console.log('onchange e', e)},
-    onUndo: (e) => {console.log('onUndo e', e)},
-    onRedo: (e) => {console.log('onRedo e', e)},
-    //id: 'conatiner',
-    initText: 'Press <b>PrtScr</b>, <b>Ctrl+V</b> to paste screenshot.<br>Press <b>Ctrl+S</b> to save', // todo: different for os-es
-    hiddenTools: ['eraser', 'pixelize', 'rotate', 'settings', 'resize'],
-    //extraFonts: ['Open Sans'],
-    onBeforeClose: function (has, done) {
-      console.log('has unsaved: ', has);
-      window.confirmClose = done;
-    },
-    onImageFailedOpen: () => {
-      console.log('open new image');
-    },
-    */
-    // language: 'ja',
-    //availableLineWidths: [1,2,4,8,16,64],
-    //availableEraserWidths: [1,2,4,8,16,64],
-    //availableFontSizes: [1,2,4,8,16,64],
-    //availableArrowLengths: [10,20,30,40,50,60],
-    //how_to_paste_actions: ['paste_over',],
-    toolbarPosition: 'top',
-    replaceAllOnEmptyBackground: false,
-    //  pixelizeHideUserInput: true,
-    //saveHandler: (saver, done) => {
-    //  console.log('saving', saver.getWidth(), saver.getHeight())
-    //  console.log('hasAlphaChannel', saver.hasAlphaChannel())
-      // console.log('Base64', saver.asDataURL())
-    //  done(true);
-    //}
-    toolbarPosition: 'bottom',
-    // fixMobilePageReloader: false,
-    // defaultTool: 'line',
-    //hiddenTools: ['line']
-    //  hiddenTools: [  'open' ],
-  }).show()
+window.p =  Painterro({
+            language: 'fr',
+            backgroundFillColorAlpha: 0,
+            hideByEsc: true,
+            colorScheme: {
+                main: '#8B817A',
+                control: '#1A1A1A',
+                controlContent: '#fff',
+                controlShadow: 'none',
+                activeControl: '#6F6762',
+                activeControlContent: '#fff',
+                hoverControl: '#6F6762',
+                hoverControlContent: '#fff',
+            },
+            // defaultTool : 'brush',
+            /* hiddenTools: [
+                'select',
+                'crop',
+                'pixelize',
+                'line',
+                'arrow',
+                'rect',
+                'ellipse',
+                // 'brush',
+                // 'eraser',
+                'text',
+                'rotate',
+                'resize',
+                // 'save',
+                'open',
+                // 'close',
+                // 'undo',
+                'redo',
+                // 'zoomin',
+                // 'zoomout',
+                'bucket',
+                'clear',
+                'settings',
+            ], */
+            saveHandler: this._onPainterroSave,
+        });
+  window.p.show()
   const ctx = window.p.ctx; 
 
   // ctx.beginPath();
