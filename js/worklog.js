@@ -57,10 +57,15 @@ export default class WorkLog {
   }
 
   captureState(initial) {
+    let activeToolName = this.main.activeTool ? this.main.activeTool.name : null;
+    if (['pixelize', 'crop', 'rotate'].includes(activeToolName)) {
+      activeToolName = 'select';
+    }
+
     const state = {
       sizew: this.main.size.w,
       sizeh: this.main.size.h,
-      activeToolName: this.main.activeTool ? this.main.activeTool.name : null,
+      activeToolName,
       data: this.ctx.getImageData(0, 0, this.main.size.w, this.main.size.h),
     };
     if (this.current === null) {
@@ -75,6 +80,7 @@ export default class WorkLog {
     }
     state.next = null;
     this.current = state;
+    console.log(111, this.current)
     this.changed(initial);
   }
 
@@ -93,12 +99,12 @@ export default class WorkLog {
   }
 
   undoState() {
+    console.log(22, this.current.prev);
     if (this.current.prev !== null) {
-      const currentToolName = this.current.activeToolName;
+      let currentToolName = this.current.activeToolName;
       this.current = this.current.prev;
       this.applyState(this.current);
       this.changed(false);
-
       if (currentToolName) {
         this.main.closeActiveTool(true);
         this.main.setActiveTool(this.main.toolByName[currentToolName])
