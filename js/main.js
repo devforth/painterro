@@ -1210,6 +1210,24 @@ class PainterroProc {
     return this;
   }
 
+  doScale({width, height, scale}) {
+    if (scale) {
+      if (width || height) {
+        throw new Error(`You can't pass width or height and scale at the same time`)
+      }
+      this.resizer.newW = Math.round(this.size.w * scale);
+      this.resizer.newH = Math.round(this.size.h * scale);
+
+    } else {
+      if (scale) {
+        throw new Error(`You can't pass width or height and scale at the same time`)
+      }
+      this.resizer.newW = width || Math.round(this.size.w * (height / this.size.h));
+      this.resizer.newH = height || Math.round(this.size.h * (width / this.size.w));
+    }
+    this.resizer.scaleButton.onclick();
+  }
+
   openFile(f) {
     if (!f) {
       return;

@@ -339,7 +339,30 @@ API
 
 **.hide()** - hide instance
 
+
 **.save()** - call save (same save as on buttons bar). Can be used if save button is hidden (`hiddenTools: ['save']`)
+
+**.doScale({ width, height, scale })** - scale the image and resize area.
+
+Scale to match the width and scale height proportinally (e.g. 50x32 will become 100->64):
+
+```
+.doScale({width: 100})
+```
+
+Scale to fill width and height (e.g. 50x32 will become 11->15):
+
+```
+.doScale({width: 11, height: 15})
+```
+
+Scale x2  (e.g. 11x12 will become 22->24):
+
+```
+.doScale({ scale: 2 })
+```
+
+
 
 Example:
 
