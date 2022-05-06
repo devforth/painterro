@@ -855,7 +855,7 @@ class PainterroProc {
   }
 
   handleToolEvent(eventHandler, event) {
-    if (this.select.imagePlaced) {
+    if (this.select.imagePlaced || this.select.area.activated) {
       return this.select[eventHandler](event);
     }
     if (this.activeTool && this.activeTool.eventListner) {

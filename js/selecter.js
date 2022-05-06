@@ -163,6 +163,12 @@ ${Math.round(pxData[i][j][3] / s)})`;
   }
 
   placeAt(l, t, r, b, img) {
+
+    if (this.imagePlaced) {
+      // for case when user inserts multiple images one after another without finishing placing them
+      this.finishPlacing();
+    }
+
     this.main.closeActiveTool(true);
     this.main.setActiveTool(this.main.defaultTool);
     const scale = this.getScale();
@@ -202,6 +208,7 @@ ${Math.round(pxData[i][j][3] / s)})`;
       this.area.topl[1],
       this.area.bottoml[0] - this.area.topl[0],
       this.area.bottoml[1] - this.area.topl[1]);
+    this.area.activated = false;
   }
 
   cancelPlacing() {
@@ -212,9 +219,12 @@ ${Math.round(pxData[i][j][3] / s)})`;
   }
 
   handleKeyDown(evt) {
+    console.log(1)
     if (this.main.inserter.handleKeyDown(evt)) {
       return true;
     }
+    console.log(2)
+
     if (this.shown && this.imagePlaced) {
       if (evt.keyCode === KEYS.enter) {
         this.finishPlacing();

@@ -51,8 +51,9 @@ window.p =  Painterro({
                 hoverControl: '#6F6762',
                 hoverControlContent: '#fff',
             },
-            // defaultTool : 'brush',
-            /* hiddenTools: [
+            //defaultTool : 'brush',
+            //how_to_paste_actions: ['extend_right'],
+            /*hiddenTools: [
                 'select',
                 'crop',
                 'pixelize',
@@ -75,8 +76,9 @@ window.p =  Painterro({
                 'bucket',
                 'clear',
                 'settings',
-            ], */
-            saveHandler: this._onPainterroSave,
+            ],
+            */
+           saveHandler: this._onPainterroSave,
         });
   window.p.show()
   const ctx = window.p.ctx; 
