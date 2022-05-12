@@ -872,6 +872,7 @@ class PainterroProc {
     let handled = false;
     const clipFormat = 'image/png';
     if (evt.keyCode === KEYS.c && (evt.ctrlKey || evt.metaKey)) {
+      console.log('handing copy')
       if (!this.inserter.waitChoice && !this.select.imagePlaced && this.select.shown) {
         const a = this.select.area;
         const w = a.bottoml[0] - a.topl[0];
@@ -1019,8 +1020,12 @@ class PainterroProc {
         }
       },
       keydown: (e) => {
-        if (event.target !== document.body) {
-          return; // ignore all focused inputs on page
+        console.log('event.target !== document.body', event.target, document.body);
+        const argetEl = event.target;
+        const ignoreForSelectors = ['input', 'textarea', 'div[contenteditable]'];
+
+        if (ignoreForSelectors.some(selector => argetEl.matches(selector))) {
+          return; // ignore all elemetents which could be focused
         }
         if (this.shown) {
           if (this.colorPicker.handleKeyDown(e)) {
