@@ -34,9 +34,6 @@ export default class PaintBucket {
       }
 
       this.active = true;
-      const ptX = (event.clientX - this.main.elLeft()) + this.main.scroller.scrollLeft;
-      const ptY = (event.clientY - this.main.elTop()) + this.main.scroller.scrollTop;
-
       const cord = [
         (event.clientX - this.main.elLeft()) + this.main.scroller.scrollLeft,
         (event.clientY - this.main.elTop()) + this.main.scroller.scrollTop,
