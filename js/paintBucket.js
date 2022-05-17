@@ -23,6 +23,7 @@ export default class PaintBucket {
 
   handleMouseDown(event) {
     const mainClass = event.target.classList[0];
+    const scale = this.main.getScale();
     if (mainClass === 'ptro-crp-el') {
       this.init();
       this.colorLayerData = this.ctx.getImageData(0, 0, this.canvasWidth, this.canvasHeight);
@@ -35,7 +36,16 @@ export default class PaintBucket {
       this.active = true;
       const ptX = (event.clientX - this.main.elLeft()) + this.main.scroller.scrollLeft;
       const ptY = (event.clientY - this.main.elTop()) + this.main.scroller.scrollTop;
-      this.paintAt(ptX, ptY);
+
+      const cord = [
+        (event.clientX - this.main.elLeft()) + this.main.scroller.scrollLeft,
+        (event.clientY - this.main.elTop()) + this.main.scroller.scrollTop,
+      ];
+      const cur = {
+        x: cord[0] * scale,
+        y: cord[1] * scale,
+      };
+      this.paintAt(cur.x, cur.y);
     }
   }
 
