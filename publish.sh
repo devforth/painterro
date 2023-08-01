@@ -5,8 +5,8 @@
 
 GH_USER=ivictbor
 GH_REPO_USER=devforth
-GH_PASS=`cat ~/.ghtoken`
-WP_PASSWORD=`cat ~/.wppassword`
+GH_PASS=`cat ~/keys/.ghtoken`
+WP_PASSWORD=`cat ~/keys/.wppassword`
 GH_REPO=painterro
 GH_TARGET=master
 ASSETS_PATH=build
