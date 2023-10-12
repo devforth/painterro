@@ -203,15 +203,17 @@ export default class TextTool {
   apply() {
     const origBorder = this.input.style.border;
     const scale = this.main.getScale();
+
     this.input.style.border = 'none';
-    domtoimage.toPng(this.input, {
+    const domToImageConfig = {
       style: {
         'transform-origin': 'top left',
         transform: `scale(${scale})`
       },
-      width: this.input.clientWidth * scale,
-      height: this.input.clientHeight * scale,
-    })
+      width: this.input.clientWidth * (scale < 1 ? (1 / scale) : scale),
+      height: this.input.clientHeight * (scale < 1 ? (1 / scale) : scale),
+    };
+    domtoimage.toPng(this.input, domToImageConfig)
       .then((dataUrl) => {
         const img = new Image();
         img.src = dataUrl;
