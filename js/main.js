@@ -1261,7 +1261,7 @@ class PainterroProc {
 
   adjustSizeFull() {
     const ratio = this.wrapper.documentClientWidth / this.wrapper.documentClientHeight;
-    if (this.zoom === false) {
+    if (this.zoom === false && this.textTool.active === false) {
       if (this.size.w > this.wrapper.documentClientWidth ||
         this.size.h > this.wrapper.documentClientHeight) {
         const newRelation = ratio < this.size.ratio;
