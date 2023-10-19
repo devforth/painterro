@@ -42,6 +42,8 @@ git commit -m "$VERSION"
 git push
 npm publish
 
+ehco "GH USER AND PATH",$GH_USER, $GH_PASS
+
 res=`curl --user "$GH_USER:$GH_PASS" -X POST https://api.github.com/repos/${GH_REPO_USER}/${GH_REPO}/releases \
 -d "
 {
