@@ -202,6 +202,7 @@ export default class TextTool {
 
   apply() {
     const origBorder = this.input.style.border;
+    const origOutline = this.input.style.outline;
     const scale = this.main.getScale();
 
     this.input.style.border = 'none';
@@ -220,6 +221,7 @@ export default class TextTool {
         img.onload = () => {
           this.ctx.drawImage(img, this.scaledCord[0], this.scaledCord[1]);
           this.input.style.border = origBorder;
+          this.input.style.outline = origOutline;
           this.close();
           this.main.worklog.captureState();
           this.main.closeActiveTool();
