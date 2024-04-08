@@ -628,7 +628,7 @@ To start hot-reload dev server (for reloading code "on the fly"):
 ```bash
 npm run dev
 ```
-Then open http://localhost:8080 with demo page
+Then open http://localhost:3000 with demo page
 
 
 Editing source on the fly for painterro imported from side webpack app (e.g. your project SPA)
