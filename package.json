@@ -59,6 +59,7 @@
     "webpack-dev-server": "^4.0.0-beta.0"
   },
   "dependencies": {
+    "caniuse-lite": "^1.0.30001596",
     "core-js": "^3.11.0",
     "dom-to-image": "^2.6.0"
   }

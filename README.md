@@ -591,6 +591,13 @@ If you face any painterro errors (exceptions), please reffer to [Painterro page 
 Development 🔨
 ==============
 
+Latest supported NodeJS version is 16, use nvm to switch to it:
+
+```
+nvm install 16
+nvm use 16
+```
+
 Code written on ES6 which transplited by Babel and packed (minified) to a single file using webpack. All configs are inside so all you have to do after pulling repo is installing node modules:
 
 ```bash
