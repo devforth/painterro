@@ -872,7 +872,6 @@ class PainterroProc {
     let handled = false;
     const clipFormat = 'image/png';
     if (evt.keyCode === KEYS.c && (evt.ctrlKey || evt.metaKey)) {
-      console.log('handing copy')
       if (!this.inserter.waitChoice && !this.select.imagePlaced && this.select.shown) {
         const a = this.select.area;
         const w = a.bottoml[0] - a.topl[0];
@@ -1034,7 +1033,6 @@ class PainterroProc {
         }
       },
       keydown: (e) => {
-        console.log('event.target !== document.body', event.target, document.body);
         const argetEl = event.target;
         const ignoreForSelectors = ['input', 'textarea', 'div[contenteditable]'];
 
