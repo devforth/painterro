@@ -209,7 +209,13 @@ export default class TextTool {
     const domToImageConfig = {
       style: {
         'transform-origin': 'top left',
-        transform: `scale(${scale})`
+        transform: `scale(${scale})`,
+        'overflow-wrap': 'break-word',
+        'word-wrap': 'break-word',
+        'white-space': 'pre-wrap',
+        overflow: 'hidden',
+        width: this.input.clientWidth + 'px',
+        height: this.input.clientHeight + 'px',
       },
       width: this.input.clientWidth * (scale < 1 ? (1 / scale) : scale),
       height: this.input.clientHeight * (scale < 1 ? (1 / scale) : scale),
