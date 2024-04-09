@@ -1179,7 +1179,8 @@ class PainterroProc {
     this.loadedImageType = mimetype;
     this.resize(img.naturalWidth, img.naturalHeight);
     this.ctx.drawImage(img, 0, 0);
-    this.zoomFactor = (this.wrapper.documentClientHeight / this.size.h) - 0.2;
+    const minValue = Math.min(this.wrapper.documentClientHeight / this.size.h, this.wrapper.documentClientWidth / this.size.w);
+    this.zoomFactor = minValue;
     this.adjustSizeFull();
     this.worklog.captureState();
   }
@@ -1262,34 +1263,39 @@ class PainterroProc {
 
   adjustSizeFull() {
     const ratio = this.wrapper.documentClientWidth / this.wrapper.documentClientHeight;
+    
     if (this.zoom === false && this.textTool.active === false) {
-      if (this.size.w > this.wrapper.documentClientWidth ||
-        this.size.h > this.wrapper.documentClientHeight) {
-        const newRelation = ratio < this.size.ratio;
-        this.ratioRelation = newRelation;
-        if (newRelation) {
-          this.canvas.style.width = `${this.wrapper.clientWidth}px`;
-          this.canvas.style.height = 'auto';
+        if (this.size.w > this.wrapper.documentClientWidth ||
+            this.size.h > this.wrapper.documentClientHeight) {
+            const newRelation = ratio < this.size.ratio;
+            this.ratioRelation = newRelation;
+            if (newRelation) {
+                this.canvas.style.width = `${this.wrapper.clientWidth}px`;
+                this.canvas.style.height = 'auto';
+            } else {
+                this.canvas.style.width = 'auto';
+                this.canvas.style.height = `${this.wrapper.clientHeight}px`;
+            }
+            
         } else {
-          this.canvas.style.width = 'auto';
-          this.canvas.style.height = `${this.wrapper.clientHeight}px`;
+            this.canvas.style.width = 'auto';
+            this.canvas.style.height = 'auto';
+            this.ratioRelation = 0;
         }
         this.scroller.style.overflow = 'hidden';
-      } else {
-        this.scroller.style.overflow = 'hidden';
-        this.canvas.style.width = 'auto';
-        this.canvas.style.height = 'auto';
-        this.ratioRelation = 0;
-      }
     } else {
-      this.scroller.style.overflow = 'scroll';
-      this.canvas.style.width = `${this.size.w * this.zoomFactor}px`;
-      this.canvas.style.height = `${this.size.h * this.zoomFactor}px`;
-      this.ratioRelation = 0;
+        if (this.zoom === false) {
+          this.scroller.style.overflow = 'hidden';
+        } else {
+          this.scroller.style.overflow = 'scroll';
+        }
+        this.canvas.style.width = `${this.size.w * this.zoomFactor}px`;
+        this.canvas.style.height = `${this.size.h * this.zoomFactor}px`;
+        this.ratioRelation = 0;
     }
     this.syncToolElement();
     this.select.draw();
-  }
+}
 
   resize(x, y) {
     this.info.innerHTML = `${x}<span>x</span>${y}<br>${(this.originalMime || 'png').replace('image/', '')}`;
