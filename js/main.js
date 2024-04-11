@@ -1001,6 +1001,7 @@ class PainterroProc {
         }
       },
       mousemove: (e) => {
+        const isEvenFromPtro = e.target.classList[0] === 'ptro-crp-el' || e.target.classList[0] === 'ptro-bar'; 
         if (this.shown) {
           this.handleToolEvent('handleMouseMove', e);
           this.colorPicker.handleMouseMove(e);
@@ -1014,7 +1015,8 @@ class PainterroProc {
           if (typeof e.target.tagName !== "undefined" && e.target.tagName.toLowerCase() !== 'input'
               && e.target.tagName.toLowerCase() !== 'button' && e.target.tagName.toLowerCase() !== 'i'
               && e.target.tagName.toLowerCase() !== 'select') {
-            if (!this.zoomButtonActive) e.preventDefault();
+            // prevent default only if we are in paintero area    
+            if (!this.zoomButtonActive && isEvenFromPtro) e.preventDefault();
           }
         }
       },
