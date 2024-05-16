@@ -546,7 +546,7 @@ class PainterroProc {
       const id = genId();
       b.buttonId = id;
       const hotkey = b.hotkey ? ` [${b.hotkey.toUpperCase()}]` : '';
-      const btn = `<button type="button" class="ptro-icon-btn ptro-color-control" title="${tr(`tools.${b.name}`)}${hotkey}" ` +
+      const btn = `<button type="button" aria-label=${b.name} class="ptro-icon-btn ptro-color-control" title="${tr(`tools.${b.name}`)}${hotkey}" ` +
         `id="${id}" >` +
         `<i class="ptro-icon ptro-icon-${b.name}"></i></button>`;
       if (b.right) {
