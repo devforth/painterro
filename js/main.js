@@ -19,6 +19,7 @@ import Inserter from './inserter';
 import Settings from './settings';
 import ControlBuilder from './controlbuilder';
 import PaintBucket from './paintBucket';
+import Filters from './filters';
 
 class PainterroProc {
   constructor(params) {
@@ -137,6 +138,45 @@ class PainterroProc {
       },
       eventListner: () => this.primitiveTool,
     }, {
+      name:'filters',
+      controls: [
+        () => ({
+          type: 'dropdown',
+          title: 'filters',
+          titleFull: 'imageFilters',
+          action: () => {
+            const dropdown = this.activeTool.controls[0].id
+            const value = this.getElemByIdSafe(dropdown).value;
+            this.filters.setFilter(value);
+          },
+          getValue: () => this.filters.getFilter(),
+          getAvailableValues: () => this.filters.getFilters(),
+        }),
+        ()=>(
+          {
+            type: 'int',
+            title: 'percents',
+            titleFull: 'percentsFull',
+            min: 0,
+            max: 100,
+            options: {eventOnChange: true},
+            action: () => {
+              const input = this.getElemByIdSafe(this.activeTool.controls[1].id);
+              const value = input.value;
+              this.filters.setPercents(value);
+              this.filters.applyFilter();
+            },
+            getValue: () => 1,
+          }
+        )
+      ],
+      activate: () => {
+        if (this.initText) this.wrapper.click();
+        this.filters.saveInitImg()
+        this.toolContainer.style.cursor = 'crosshair';
+      }
+    }, 
+    {
       name: 'ellipse',
       controls: [
         () => ({
@@ -579,6 +619,7 @@ class PainterroProc {
         ZoomHelper.html() +
         Resizer.html() +
         Settings.html(this) +
+        Filters.html(this) +
         this.inserter.html()}`;
     this.baseEl.appendChild(this.wrapper);
     this.scroller = this.doc.querySelector(`#${this.id}-wrapper .ptro-scroller`);
@@ -665,6 +706,7 @@ class PainterroProc {
     this.inserter.init(this);
     this.paintBucket = new PaintBucket(this);
     this.textTool = new TextTool(this);
+    this.filters = new Filters(this);
     this.colorPicker = new ColorPicker(this, (widgetState) => {
       this.colorWidgetState[widgetState.target] = widgetState;
       this.doc.querySelector(
@@ -1416,7 +1458,11 @@ class PainterroProc {
     (b.controls || []).forEach((ctl) => {
       if (ctl.type === 'int') {
         this.getElemByIdSafe(ctl.id).value = ctl.getValue();
+        if (ctl.options && ctl.options.eventOnChange){
+          this.getElemByIdSafe(ctl.id).onchange = ctl.action;
+        } else {
         this.getElemByIdSafe(ctl.id).oninput = ctl.action;
+        }
       } else if (ctl.type === 'bool') {
         this.getElemByIdSafe(ctl.id).setAttribute('data-value', ctl.getValue() ? 'true' : 'false');
         this.getElemByIdSafe(ctl.id).onclick = ctl.action;

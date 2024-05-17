@@ -23,8 +23,17 @@ export default {
   fontIsItalicFull: "Курсив",
   shadowOn: "Т",
   shadowOnFull: "Тінь",
+  filtersFull: "Фільтри", 
   fontStrokeAndShadow: "Т+О",
   fontStrokeAndShadowFull: "Тінь та обводка",
+  filters: 'Фільтр',
+  imageFilters: 'Фільтри зображення',
+  percents: "%",
+  percentsFull: "Проценти",
+
+
+
+
 
   fontName: "НШ",
   fontNameFull: "Назва шрифту",
@@ -72,6 +81,7 @@ export default {
     redo: "Повторити",
     clear: "Очистити",
     bucket: "Заливка",
+    filters: "Фільтри",
   },
   pasteOptions: {
     fit: "Замінити все",

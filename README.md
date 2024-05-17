@@ -29,6 +29,7 @@ Features
 - Draw arrows
 - Trash can tool to clear the canvas
 - Paint bucket tool for color fills
+- Add filters to images
 
 <img alt="Painterro gif preview" src="https://raw.githubusercontent.com/devforth/painterro/master/docs/painterro_gif.gif" 
  style="box-shadow: 0 0 20px lightgrey; margin: 0 0 20px 0;" /> 
