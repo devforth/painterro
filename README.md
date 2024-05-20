@@ -241,6 +241,7 @@ Painterro({
 |`toolbarHeightPx`| Height of toolbar in pixels | `40` | 
 |`buttonSizePx`| Button for toolbar in pixels | `32` |
 |`bucketSensivity`| Bucket tool sensivity | `100` |
+|`customTools`| List of the custom tools which will appear at the left menu after default options. Custom tool includes three options : | `{name:string, callBack:function, iconUrl:dataURL string or URL}` |
 
 ## Events
 

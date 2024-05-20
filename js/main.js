@@ -506,7 +506,7 @@ class PainterroProc {
           doClose();
         }
       },
-    }];
+    },...params.customTools.map((ct)=>{return {name:ct.name,activate:ct.callBack,iconUrl:ct.iconUrl}}) || []];
 
     this.params = setDefaults(params, this.tools.map(t => t.name));    
     
@@ -586,7 +586,11 @@ class PainterroProc {
       const id = genId();
       b.buttonId = id;
       const hotkey = b.hotkey ? ` [${b.hotkey.toUpperCase()}]` : '';
-      const btn = `<button type="button" aria-label=${b.name} class="ptro-icon-btn ptro-color-control" title="${tr(`tools.${b.name}`)}${hotkey}" ` +
+      const btn = b.iconUrl
+      ? `<button type="button" aria-label=${b.name} class="ptro-icon-btn ptro-color-control" title="${b.name}" ` +
+      `id="${id}" >` +
+      `<img width="14" src="${b.iconUrl}" alt="${`${b.name}`}" /></button>`
+      : `<button type="button" aria-label=${b.name} class="ptro-icon-btn ptro-color-control" title="${tr(`tools.${b.name}`)}${hotkey}" ` +
         `id="${id}" >` +
         `<i class="ptro-icon ptro-icon-${b.name}"></i></button>`;
       if (b.right) {
