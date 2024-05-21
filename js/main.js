@@ -20,10 +20,12 @@ import Settings from './settings';
 import ControlBuilder from './controlbuilder';
 import PaintBucket from './paintBucket';
 import Filters from './filters';
+import CustomEvents from './customEvents';
 
 class PainterroProc {
   constructor(params) {
-
+    const element =document.querySelector(`#${params.id}`) || document.getElementById('app');
+    this.customEvents = new CustomEvents(element);
     addDocumentObjectHelpers();
 
     this.getElemByIdSafe = (id) => {
@@ -506,7 +508,7 @@ class PainterroProc {
           doClose();
         }
       },
-    },...params.customTools.map((ct)=>{return {name:ct.name,activate:ct.callBack,iconUrl:ct.iconUrl}}) || []];
+    },...params.customTools?.map((ct)=>{return {name:ct.name,activate:ct.callBack,iconUrl:ct.iconUrl}}) || []];
 
     this.params = setDefaults(params, this.tools.map(t => t.name));    
     
@@ -746,6 +748,8 @@ class PainterroProc {
         this.closeActiveTool(true);
         if (currentActive !== b) {
           this.setActiveTool(b);
+          this.customEvents.dispatchEvent('changeActiveTool', b);
+
         } else {
           this.setActiveTool(this.defaultTool);
         }
