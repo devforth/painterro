@@ -339,6 +339,32 @@ API
 
 **.hide()** - hide instance
 
+**.setColor(options)** - sets the color of the chosen tool , or changes initial value of color. `options` should be array with two values, `[target,colorWidgetState]`
+
+available values for `target`:
+
+|`line`|, |`bg`| 
+
+`colorWidgetState` - object with requred properties :
+
+* `palleteColor` - color string . Just indicates which color will be shown on the collor pallete.
+* `alpha` - number in range from 0 to 1. The same but for alpha channel. 
+* `alphaColor` - color string. Color with alpha, which will be using for drawing element.
+
+>NOTE: `paleteColor` and `alpha` is using only for displaing right values in color picker widget, this two options don't effect on color which will be used for drawing elements.
+
+**.setLineWidth()** - set line width for chosen tool. 
+
+**.setArrowLength()** - set width for chosen arrow.
+
+**.setEraserWidth()** - set width of eraser
+
+**.setShadowOn()** - set shadowfor line elements or arrow element. It takes boolean value. 
+
+
+
+
+*
 
 **.save()** - call save (same save as on buttons bar). Can be used if save button is hidden (`hiddenTools: ['save']`)
 

@@ -7,7 +7,7 @@ import '../css/icons/ptroiconfont.css';
 import PainterroSelecter from './selecter';
 import WorkLog from './worklog';
 import { genId, addDocumentObjectHelpers, KEYS, trim,
-  getScrollbarWidth, distance, logError } from './utils';
+  getScrollbarWidth, distance, logError,setPrimitiveToolValue } from './utils';
 import PrimitiveTool from './primitive';
 import ColorPicker, { HexToRGB, rgbToHex } from './colorPicker';
 import { setDefaults, setParam } from './params';
@@ -21,6 +21,7 @@ import ControlBuilder from './controlbuilder';
 import PaintBucket from './paintBucket';
 import Filters from './filters';
 import CustomEvents from './customEvents';
+import { set } from 'lodash';
 
 class PainterroProc {
   constructor(params) {
@@ -1422,6 +1423,42 @@ class PainterroProc {
     this.ctx.fillStyle = this.currentBackground;
     this.ctx.fill();
   }
+
+  setColor(options){
+    this.doc.querySelector(
+      `#${this.id} .ptro-color-btn[data-id='${options[0]}']`).style['background-color'] =
+      options[1].alphaColor;
+    this.colorWidgetState = {...this.colorWidgetState, line: {
+      target: options[0],
+      palleteColor: options[1].palleteColor,
+      alpha:options[1].alpha, 
+      alphaColor: options[1].alphaColor, 
+    }, }
+  
+  }
+
+
+
+  setLineWidth(width) {
+    setPrimitiveToolValue(width,this.primitiveTool,'setLineWidth','lineWidth');
+  }
+
+  setArrowLength(length) {
+    setPrimitiveToolValue(length,this.primitiveTool,'setArrowLength','arrowLength');
+  }
+
+  setEraserWidth(width) {
+    setPrimitiveToolValue(width,this.primitiveTool,'setEraserWidth','eraserWidth');
+  }
+
+  setPixelSize(size) {
+    setPrimitiveToolValue(size,this.primitiveTool,'setPixelSize','pixelSize');
+  }
+
+  setShadowOn(state) {
+    setPrimitiveToolValue(state,this.primitiveTool,'setShadowOn','shadowOn');
+  }
+
 
   setActiveTool(b) {
     this.activeTool = b;
