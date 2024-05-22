@@ -361,11 +361,6 @@ available values for `target`:
 
 **.setShadowOn()** - set shadowfor line elements or arrow element. It takes boolean value. 
 
-
-
-
-*
-
 **.save()** - call save (same save as on buttons bar). Can be used if save button is hidden (`hiddenTools: ['save']`)
 
 **.doScale({ width, height, scale })** - scale the image and resize area.
