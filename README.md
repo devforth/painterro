@@ -6,8 +6,10 @@
 JavaScript painting plugin which allows editing images in a browser.
 Can be easily integrated into any website or webapp by calling simple initialization code.
 
+🆕 Check out our simple and game-changing opensource [Vue admin framework](https://adminforth.dev/) with a great look and extensibility!
 
-> 🙏🙏🙏 Scream for help to Ukraine 🇺🇦
+
+> 🙏🙏🙏 Scream for help to Ukraine 
 > 
 > 24 February 2022, Russia started bombing cities with peacefully civilized population in whole Ukraine. And has been doing it up to this day. Breaking all laws of war. Their bombs has been killing children and adults. This deserves Hague court.
 > - 🏠 If you are from Russia, please stop your government by any means including protests, don't trust local media, they are bribed by the government. They always was. I am sure you already feel lie by unexplainable crazy things in your country caused by world sanctions.
