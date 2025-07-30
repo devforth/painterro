@@ -12,7 +12,7 @@ GH_TARGET=master
 ASSETS_PATH=build
 npm --no-git-tag-version version patch
 VERSION=`grep '"version":' package.json | cut -d\" -f4`
-# npm run build
+npm run build
 
 if [ $? -eq 0 ]; then
     echo BUILD OK
@@ -40,7 +40,7 @@ cd ..
 git add -u
 git commit -m "$VERSION"
 git push
-# npm publish
+npm publish
 
 echo "GH USER AND PATH",$GH_USER, $GH_PASS
 
