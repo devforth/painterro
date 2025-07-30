@@ -240,6 +240,7 @@ Painterro({
 |`toolbarHeightPx`| Height of toolbar in pixels | `40` | 
 |`buttonSizePx`| Button for toolbar in pixels | `32` |
 |`bucketSensivity`| Bucket tool sensivity | `100` |
+|`disableWheelZoom`| Disables the mousewheel zoom with ctrl | `false` |
 
 ## Events
 
@@ -360,6 +361,7 @@ Scale x2  (e.g. 11x12 will become 22->24):
 .doScale({ scale: 2 })
 ```
 
+**setZoom(zoomPercentage)** - sets the current zoom percentage
 
 
 Example:
