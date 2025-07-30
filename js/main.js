@@ -7,7 +7,7 @@ import '../css/icons/ptroiconfont.css';
 import PainterroSelecter from './selecter';
 import WorkLog from './worklog';
 import { genId, addDocumentObjectHelpers, KEYS, trim,
-  getScrollbarWidth, distance, logError } from './utils';
+  getScrollbarWidth, distance, logError,setPrimitiveToolValue } from './utils';
 import PrimitiveTool from './primitive';
 import ColorPicker, { HexToRGB, rgbToHex } from './colorPicker';
 import { setDefaults, setParam } from './params';
@@ -19,10 +19,14 @@ import Inserter from './inserter';
 import Settings from './settings';
 import ControlBuilder from './controlbuilder';
 import PaintBucket from './paintBucket';
+import Filters from './filters';
+import CustomEvents from './customEvents';
+import { set } from 'lodash';
 
 class PainterroProc {
   constructor(params) {
-
+    const element =document.querySelector(`#${params.id}`) || document.getElementById('app');
+    this.customEvents = new CustomEvents(element);
     addDocumentObjectHelpers();
 
     this.getElemByIdSafe = (id) => {
@@ -137,6 +141,45 @@ class PainterroProc {
       },
       eventListner: () => this.primitiveTool,
     }, {
+      name:'filters',
+      controls: [
+        () => ({
+          type: 'dropdown',
+          title: 'filters',
+          titleFull: 'imageFilters',
+          action: () => {
+            const dropdown = this.activeTool.controls[0].id
+            const value = this.getElemByIdSafe(dropdown).value;
+            this.filters.setFilter(value);
+          },
+          getValue: () => this.filters.getFilter(),
+          getAvailableValues: () => this.filters.getFilters(),
+        }),
+        ()=>(
+          {
+            type: 'int',
+            title: 'percents',
+            titleFull: 'percentsFull',
+            min: 0,
+            max: 100,
+            options: {eventOnChange: true},
+            action: () => {
+              const input = this.getElemByIdSafe(this.activeTool.controls[1].id);
+              const value = input.value;
+              this.filters.setPercents(value);
+              this.filters.applyFilter();
+            },
+            getValue: () => 1,
+          }
+        )
+      ],
+      activate: () => {
+        if (this.initText) this.wrapper.click();
+        this.filters.saveInitImg()
+        this.toolContainer.style.cursor = 'crosshair';
+      }
+    }, 
+    {
       name: 'ellipse',
       controls: [
         () => ({
@@ -466,7 +509,7 @@ class PainterroProc {
           doClose();
         }
       },
-    }];
+    },...params.customTools?.map((ct)=>{return {name:ct.name,activate:ct.callBack,iconUrl:ct.iconUrl}}) || []];
 
     this.params = setDefaults(params, this.tools.map(t => t.name));    
     
@@ -546,7 +589,11 @@ class PainterroProc {
       const id = genId();
       b.buttonId = id;
       const hotkey = b.hotkey ? ` [${b.hotkey.toUpperCase()}]` : '';
-      const btn = `<button type="button" class="ptro-icon-btn ptro-color-control" title="${tr(`tools.${b.name}`)}${hotkey}" ` +
+      const btn = b.iconUrl
+      ? `<button type="button" aria-label=${b.name} class="ptro-icon-btn ptro-color-control" title="${b.name}" ` +
+      `id="${id}" >` +
+      `<img width="14" src="${b.iconUrl}" alt="${`${b.name}`}" /></button>`
+      : `<button type="button" aria-label=${b.name} class="ptro-icon-btn ptro-color-control" title="${tr(`tools.${b.name}`)}${hotkey}" ` +
         `id="${id}" >` +
         `<i class="ptro-icon ptro-icon-${b.name}"></i></button>`;
       if (b.right) {
@@ -579,6 +626,7 @@ class PainterroProc {
         ZoomHelper.html() +
         Resizer.html() +
         Settings.html(this) +
+        Filters.html(this) +
         this.inserter.html()}`;
     this.baseEl.appendChild(this.wrapper);
     this.scroller = this.doc.querySelector(`#${this.id}-wrapper .ptro-scroller`);
@@ -665,6 +713,7 @@ class PainterroProc {
     this.inserter.init(this);
     this.paintBucket = new PaintBucket(this);
     this.textTool = new TextTool(this);
+    this.filters = new Filters(this);
     this.colorPicker = new ColorPicker(this, (widgetState) => {
       this.colorWidgetState[widgetState.target] = widgetState;
       this.doc.querySelector(
@@ -700,6 +749,8 @@ class PainterroProc {
         this.closeActiveTool(true);
         if (currentActive !== b) {
           this.setActiveTool(b);
+          this.customEvents.dispatchEvent('changeActiveTool', b);
+
         } else {
           this.setActiveTool(this.defaultTool);
         }
@@ -872,7 +923,6 @@ class PainterroProc {
     let handled = false;
     const clipFormat = 'image/png';
     if (evt.keyCode === KEYS.c && (evt.ctrlKey || evt.metaKey)) {
-      console.log('handing copy')
       if (!this.inserter.waitChoice && !this.select.imagePlaced && this.select.shown) {
         const a = this.select.area;
         const w = a.bottoml[0] - a.topl[0];
@@ -1002,6 +1052,7 @@ class PainterroProc {
         }
       },
       mousemove: (e) => {
+        const isEvenFromPtro = e.target.classList[0] === 'ptro-crp-el' || e.target.classList[0] === 'ptro-bar'; 
         if (this.shown) {
           this.handleToolEvent('handleMouseMove', e);
           this.colorPicker.handleMouseMove(e);
@@ -1015,7 +1066,8 @@ class PainterroProc {
           if (typeof e.target.tagName !== "undefined" && e.target.tagName.toLowerCase() !== 'input'
               && e.target.tagName.toLowerCase() !== 'button' && e.target.tagName.toLowerCase() !== 'i'
               && e.target.tagName.toLowerCase() !== 'select') {
-            if (!this.zoomButtonActive) e.preventDefault();
+            // prevent default only if we are in paintero area    
+            if (!this.zoomButtonActive && isEvenFromPtro) e.preventDefault();
           }
         }
       },
@@ -1034,7 +1086,6 @@ class PainterroProc {
         }
       },
       keydown: (e) => {
-        console.log('event.target !== document.body', event.target, document.body);
         const argetEl = event.target;
         const ignoreForSelectors = ['input', 'textarea', 'div[contenteditable]'];
 
@@ -1179,7 +1230,8 @@ class PainterroProc {
     this.loadedImageType = mimetype;
     this.resize(img.naturalWidth, img.naturalHeight);
     this.ctx.drawImage(img, 0, 0);
-    this.zoomFactor = (this.wrapper.documentClientHeight / this.size.h) - 0.2;
+    const minValue = Math.min(this.wrapper.documentClientHeight / this.size.h, this.wrapper.documentClientWidth / this.size.w);
+    this.zoomFactor = minValue;
     this.adjustSizeFull();
     this.worklog.captureState();
   }
@@ -1310,34 +1362,39 @@ class PainterroProc {
 
   adjustSizeFull() {
     const ratio = this.wrapper.documentClientWidth / this.wrapper.documentClientHeight;
-    if (this.zoom === false) {
-      if (this.size.w > this.wrapper.documentClientWidth ||
-        this.size.h > this.wrapper.documentClientHeight) {
-        const newRelation = ratio < this.size.ratio;
-        this.ratioRelation = newRelation;
-        if (newRelation) {
-          this.canvas.style.width = `${this.wrapper.clientWidth}px`;
-          this.canvas.style.height = 'auto';
+    
+    if (this.zoom === false && this.textTool.active === false) {
+        if (this.size.w > this.wrapper.documentClientWidth ||
+            this.size.h > this.wrapper.documentClientHeight) {
+            const newRelation = ratio < this.size.ratio;
+            this.ratioRelation = newRelation;
+            if (newRelation) {
+                this.canvas.style.width = `${this.wrapper.clientWidth}px`;
+                this.canvas.style.height = 'auto';
+            } else {
+                this.canvas.style.width = 'auto';
+                this.canvas.style.height = `${this.wrapper.clientHeight}px`;
+            }
+            
         } else {
-          this.canvas.style.width = 'auto';
-          this.canvas.style.height = `${this.wrapper.clientHeight}px`;
+            this.canvas.style.width = 'auto';
+            this.canvas.style.height = 'auto';
+            this.ratioRelation = 0;
         }
         this.scroller.style.overflow = 'hidden';
-      } else {
-        this.scroller.style.overflow = 'hidden';
-        this.canvas.style.width = 'auto';
-        this.canvas.style.height = 'auto';
-        this.ratioRelation = 0;
-      }
     } else {
-      this.scroller.style.overflow = 'scroll';
-      this.canvas.style.width = `${this.size.w * this.zoomFactor}px`;
-      this.canvas.style.height = `${this.size.h * this.zoomFactor}px`;
-      this.ratioRelation = 0;
+        if (this.zoom === false) {
+          this.scroller.style.overflow = 'hidden';
+        } else {
+          this.scroller.style.overflow = 'scroll';
+        }
+        this.canvas.style.width = `${this.size.w * this.zoomFactor}px`;
+        this.canvas.style.height = `${this.size.h * this.zoomFactor}px`;
+        this.ratioRelation = 0;
     }
     this.syncToolElement();
     this.select.draw();
-  }
+}
 
   resize(x, y) {
     this.info.innerHTML = `${x}<span>x</span>${y}<br>${(this.originalMime || 'png').replace('image/', '')}`;
@@ -1415,6 +1472,42 @@ class PainterroProc {
     this.ctx.fill();
   }
 
+  setColor(options){
+    this.doc.querySelector(
+      `#${this.id} .ptro-color-btn[data-id='${options[0]}']`).style['background-color'] =
+      options[1].alphaColor;
+    this.colorWidgetState = {...this.colorWidgetState, line: {
+      target: options[0],
+      palleteColor: options[1].palleteColor,
+      alpha:options[1].alpha, 
+      alphaColor: options[1].alphaColor, 
+    }, }
+  
+  }
+
+
+
+  setLineWidth(width) {
+    setPrimitiveToolValue(width,this.primitiveTool,'setLineWidth','lineWidth');
+  }
+
+  setArrowLength(length) {
+    setPrimitiveToolValue(length,this.primitiveTool,'setArrowLength','arrowLength');
+  }
+
+  setEraserWidth(width) {
+    setPrimitiveToolValue(width,this.primitiveTool,'setEraserWidth','eraserWidth');
+  }
+
+  setPixelSize(size) {
+    setPrimitiveToolValue(size,this.primitiveTool,'setPixelSize','pixelSize');
+  }
+
+  setShadowOn(state) {
+    setPrimitiveToolValue(state,this.primitiveTool,'setShadowOn','shadowOn');
+  }
+
+
   setActiveTool(b) {
     this.activeTool = b;
     
@@ -1458,7 +1551,11 @@ class PainterroProc {
     (b.controls || []).forEach((ctl) => {
       if (ctl.type === 'int') {
         this.getElemByIdSafe(ctl.id).value = ctl.getValue();
+        if (ctl.options && ctl.options.eventOnChange){
+          this.getElemByIdSafe(ctl.id).onchange = ctl.action;
+        } else {
         this.getElemByIdSafe(ctl.id).oninput = ctl.action;
+        }
       } else if (ctl.type === 'bool') {
         this.getElemByIdSafe(ctl.id).setAttribute('data-value', ctl.getValue() ? 'true' : 'false');
         this.getElemByIdSafe(ctl.id).onclick = ctl.action;

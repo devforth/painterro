@@ -38,7 +38,7 @@
 <script>
 
 window.p =  Painterro({
-            language: 'fr',
+            language: 'uk',
             backgroundFillColorAlpha: 0,
             hideByEsc: true,
             colorScheme: {
@@ -51,6 +51,7 @@ window.p =  Painterro({
                 hoverControl: '#6F6762',
                 hoverControlContent: '#fff',
             },
+         
             //defaultTool : 'brush',
             //how_to_paste_actions: ['extend_right'],
             /*hiddenTools: [
@@ -115,7 +116,9 @@ window.p =  Painterro({
 //     }
 //   });
 // };
-  
+
+const el = document.getElementById('app')
+el.addEventListener('changeActiveTool',(e)=>{console.log('activeToolHasBeenCHanged',e)})
 
 </script>
 </body>

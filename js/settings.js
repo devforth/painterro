@@ -95,12 +95,12 @@ export default class Settings {
               '<tr>' +
                 `<td class="ptro-label ptro-resize-table-left" style="height:30px;">${tr('backgroundColor')}</td>` +
                 '<td class="ptro-strict-cell">' +
-                  '<button type="button" data-id="bg" class="ptro-color-btn ptro-bordered-btn ptro-color-control" ' +
+                  '<button type="button" aria-label="background" data-id="bg" class="ptro-color-btn ptro-bordered-btn ptro-color-control" ' +
                     'style="margin-top: -12px;"></button>' +
                   '<span class="ptro-btn-color-checkers"></span>' +
                 '</td>' +
                 '<td>' +
-                  `<button type="button" style="margin-top: -2px;" class="ptro-named-btn ptro-clear ptro-color-control" title="${tr('fillPageWith')}">${tr('clear')}</button>` +
+                  `<button type="button" aria-label="fill page width" style="margin-top: -2px;" class="ptro-named-btn ptro-clear ptro-color-control" title="${tr('fillPageWith')}">${tr('clear')}</button>` +
                 '</td>' +
               '</tr>' +
               (!main.params.pixelizeHideUserInput ?
@@ -114,11 +114,11 @@ export default class Settings {
             '<div class="ptro-error" hidden></div>' +
             '<div style="margin-top: 20px">' +
               (!main.params.pixelizeHideUserInput ?
-                '<button type="button" class="ptro-named-btn ptro-apply ptro-color-control">' +
+                '<button type="button" aria-label="apply" class="ptro-named-btn ptro-apply ptro-color-control">' +
                       `${tr('apply')}</button>` +
-                `<button type="button" class="ptro-named-btn ptro-close ptro-color-control">${tr('cancel')}</button>`
+                `<button type="button" aria-label="cancel" class="ptro-named-btn ptro-close ptro-color-control">${tr('cancel')}</button>`
                 :
-                `<button type="button" class="ptro-named-btn ptro-close ptro-color-control">${tr('close')}</button>`
+                `<button type="button" aria-label="close" class="ptro-named-btn ptro-close ptro-color-control">${tr('close')}</button>`
               ) +
             '</div>' +
         '</div>' +

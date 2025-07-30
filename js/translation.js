@@ -1,14 +1,15 @@
-import de from '../langs/de.lang';
-import en from '../langs/en.lang';
-import es from '../langs/es.lang';
-import ca from '../langs/ca.lang';
-import fr from '../langs/fr.lang';
-import pl from '../langs/pl.lang';
-import ptPTl from '../langs/pt-PT.lang';
-import ptBRl from '../langs/pt-BR.lang';
-import ru from '../langs/ru.lang';
-import ja from '../langs/ja.lang';
-import nl from '../langs/nl.lang';
+import de from "../langs/de.lang";
+import en from "../langs/en.lang";
+import es from "../langs/es.lang";
+import ca from "../langs/ca.lang";
+import fr from "../langs/fr.lang";
+import pl from "../langs/pl.lang";
+import ptPTl from "../langs/pt-PT.lang";
+import ptBRl from "../langs/pt-BR.lang";
+import ru from "../langs/ru.lang";
+import ja from "../langs/ja.lang";
+import nl from "../langs/nl.lang";
+import uk from "../langs/uk.lang";
 
 let instance = null;
 
@@ -21,11 +22,12 @@ export default class Translation {
       ca,
       fr,
       pl,
-      'pt-PT': ptPTl,
-      'pt-BR': ptBRl,
+      "pt-PT": ptPTl,
+      "pt-BR": ptBRl,
       ru,
       ja,
       nl,
+      uk,
     };
     this.defaultTranslator = this.translations.en;
   }
@@ -52,7 +54,7 @@ export default class Translation {
   }
 
   tr(sentense) {
-    const levels = sentense.split('.');
+    const levels = sentense.split(".");
     let res = this.translator;
     let fallbackRes = this.defaultTranslator;
     levels.forEach((l) => {

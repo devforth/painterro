@@ -202,22 +202,32 @@ export default class TextTool {
 
   apply() {
     const origBorder = this.input.style.border;
+    const origOutline = this.input.style.outline;
     const scale = this.main.getScale();
+
     this.input.style.border = 'none';
-    domtoimage.toPng(this.input, {
+    const domToImageConfig = {
       style: {
         'transform-origin': 'top left',
-        transform: `scale(${scale})`
+        transform: `scale(${scale})`,
+        'overflow-wrap': 'break-word',
+        'word-wrap': 'break-word',
+        'white-space': 'pre-wrap',
+        overflow: 'hidden',
+        width: this.input.clientWidth + 'px',
+        height: this.input.clientHeight + 'px',
       },
-      width: this.input.clientWidth * scale,
-      height: this.input.clientHeight * scale,
-    })
+      width: this.input.clientWidth * (scale < 1 ? (1 / scale) : scale),
+      height: this.input.clientHeight * (scale < 1 ? (1 / scale) : scale),
+    };
+    domtoimage.toPng(this.input, domToImageConfig)
       .then((dataUrl) => {
         const img = new Image();
         img.src = dataUrl;
         img.onload = () => {
           this.ctx.drawImage(img, this.scaledCord[0], this.scaledCord[1]);
           this.input.style.border = origBorder;
+          this.input.style.outline = origOutline;
           this.close();
           this.main.worklog.captureState();
           this.main.closeActiveTool();
@@ -237,11 +247,11 @@ export default class TextTool {
     return '<span class="ptro-text-tool-input-wrapper">' +
       '<div contenteditable="true" class="ptro-text-tool-input"></div>' +
         '<span class="ptro-text-tool-buttons">' +
-          `<button type="button" class="ptro-text-tool-apply ptro-icon-btn ptro-color-control" title="${tr('apply')}" 
+          `<button type="button" aria-label="apply" class="ptro-text-tool-apply ptro-icon-btn ptro-color-control" title="${tr('apply')}" 
                    style="margin: 2px">` +
             '<i class="ptro-icon ptro-icon-apply"></i>' +
           '</button>' +
-          `<button type="button" class="ptro-text-tool-cancel ptro-icon-btn ptro-color-control" title="${tr('cancel')}"
+          `<button type="button" aria-label="close" class="ptro-text-tool-cancel ptro-icon-btn ptro-color-control" title="${tr('cancel')}"
                    style="margin: 2px">` +
             '<i class="ptro-icon ptro-icon-close"></i>' +
           '</button>' +

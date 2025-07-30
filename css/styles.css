@@ -445,7 +445,7 @@ select.ptro-input {
     min-width: 5px;
     padding: 0 1px;
     overflow-x: hidden;
-    word-wrap: normal;
+    word-wrap: break-word;
     overflow-y: hidden;
     box-sizing: content-box;
     line-height: normal;

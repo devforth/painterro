@@ -57,6 +57,8 @@ export default {
     close: 'Tancar editor',
     eraser: 'Borrador',
     settings: 'Paràmetres',
+    undo: 'Desfer',
+    filters: 'Filtres',
   },
   pasteOptions: {
     fit: 'Reemplaçar tot',

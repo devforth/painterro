@@ -1,6 +1,7 @@
 export function genId() {
-  let text = 'ptro';
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let text = "ptro";
+  const possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   for (let i = 0; i < 20; i += 1) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
@@ -8,23 +9,23 @@ export function genId() {
 }
 
 export function addDocumentObjectHelpers() {
-  if (!('documentOffsetTop' in Element.prototype)) {
-    Object.defineProperty(Element.prototype, 'documentOffsetTop', {
+  if (!("documentOffsetTop" in Element.prototype)) {
+    Object.defineProperty(Element.prototype, "documentOffsetTop", {
       get() {
         return this.getBoundingClientRect().top;
       },
     });
   }
-  if (!('documentOffsetLeft' in Element.prototype)) {
-    Object.defineProperty(Element.prototype, 'documentOffsetLeft', {
+  if (!("documentOffsetLeft" in Element.prototype)) {
+    Object.defineProperty(Element.prototype, "documentOffsetLeft", {
       get() {
         return this.getBoundingClientRect().left;
       },
     });
   }
 
-  if (!('documentClientWidth' in Element.prototype)) {
-    Object.defineProperty(Element.prototype, 'documentClientWidth', {
+  if (!("documentClientWidth" in Element.prototype)) {
+    Object.defineProperty(Element.prototype, "documentClientWidth", {
       get() {
         const rect = this.getBoundingClientRect();
         if (rect.width) {
@@ -37,8 +38,8 @@ export function addDocumentObjectHelpers() {
     });
   }
 
-  if (!('documentClientHeight' in Element.prototype)) {
-    Object.defineProperty(Element.prototype, 'documentClientHeight', {
+  if (!("documentClientHeight" in Element.prototype)) {
+    Object.defineProperty(Element.prototype, "documentClientHeight", {
       get() {
         const rect = this.getBoundingClientRect();
         if (rect.height) {
@@ -70,11 +71,11 @@ export function clearSelection() {
 export function distance(p1, p2) {
   const a = p1.x - p2.x;
   const b = p1.y - p2.y;
-  return Math.sqrt((a * a) + (b * b));
+  return Math.sqrt(a * a + b * b);
 }
 
 export function trim(s) {
-  return String(s).replace(/^\s+|\s+$/g, '');
+  return String(s).replace(/^\s+|\s+$/g, "");
 }
 
 export const KEYS = {
@@ -107,34 +108,36 @@ export const KEYS = {
 export function copyToClipboard(text) {
   if (window.clipboardData && window.clipboardData.setData) {
     // IE specific code path to prevent textarea being shown while dialog is visible.
-    window.clipboardData.setData('Text', text);
-  } else if (document.queryCommandSupported && document.queryCommandSupported('copy')) {
-    const textarea = document.createElement('textarea');
+    window.clipboardData.setData("Text", text);
+  } else if (
+    document.queryCommandSupported &&
+    document.queryCommandSupported("copy")
+  ) {
+    const textarea = document.createElement("textarea");
     textarea.textContent = text;
-    textarea.style.position = 'fixed'; // Prevent scrolling to bottom of page in MS Edge.
+    textarea.style.position = "fixed"; // Prevent scrolling to bottom of page in MS Edge.
     document.body.appendChild(textarea);
     textarea.select();
     try {
-      document.execCommand('copy'); // Security exception may be thrown by some browsers.
+      document.execCommand("copy"); // Security exception may be thrown by some browsers.
     } catch (ex) {
-      console.warn('Copy to clipboard failed.', ex);
+      console.warn("Copy to clipboard failed.", ex);
     } finally {
       document.body.removeChild(textarea);
     }
   }
 }
 
-
 export function getScrollbarWidth() {
-  const outer = document.createElement('div');
-  outer.style.visibility = 'hidden';
-  outer.style.width = '100px';
-  outer.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
+  const outer = document.createElement("div");
+  outer.style.visibility = "hidden";
+  outer.style.width = "100px";
+  outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
   document.body.appendChild(outer);
   const widthNoScroll = outer.offsetWidth;
-  outer.style.overflow = 'scroll';
-  const inner = document.createElement('div');
-  inner.style.width = '100%';
+  outer.style.overflow = "scroll";
+  const inner = document.createElement("div");
+  inner.style.width = "100%";
   outer.appendChild(inner);
   const widthWithScroll = inner.offsetWidth;
   outer.parentNode.removeChild(outer);
@@ -151,12 +154,12 @@ export function imgToDataURL(url, callback, failedCb) {
     reader.readAsDataURL(xhr.response);
   };
   xhr.onerror = () => {
-    if (typeof failedCb === 'function') {
+    if (typeof failedCb === "function") {
       failedCb();
     }
   };
-  xhr.open('GET', url);
-  xhr.responseType = 'blob';
+  xhr.open("GET", url);
+  xhr.responseType = "blob";
   xhr.send();
 }
 
@@ -166,4 +169,21 @@ export function logError(error) {
 
 export function checkIn(what, where) {
   return where.indexOf(what) !== -1;
+}
+
+export function setPrimitiveToolValue(value, primitiveTool, method, param) {
+  primitiveTool[method](value);
+  const selector = `[data-id="${param}"]`;
+  const ctl = document.querySelector(selector);
+  console.log(ctl, value);
+
+  if (ctl) {
+    if (method === "setShadowOn") {
+      ctl.setAttribute("data-value", value ? "true" : "false");
+    } else {
+      ctl.value = value;
+    }
+  } else {
+    console.warn(`Control not found: ${selector}`);
+  }
 }

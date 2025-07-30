@@ -6,8 +6,10 @@
 JavaScript painting plugin which allows editing images in a browser.
 Can be easily integrated into any website or webapp by calling simple initialization code.
 
+🆕 Check out our simple and game-changing opensource [Vue admin framework](https://adminforth.dev/) with a great look and extensibility!
 
-> 🙏🙏🙏 Scream for help to Ukraine 🇺🇦
+
+> 🙏🙏🙏 Scream for help to Ukraine 
 > 
 > 24 February 2022, Russia started bombing cities with peacefully civilized population in whole Ukraine. And has been doing it up to this day. Breaking all laws of war. Their bombs has been killing children and adults. This deserves Hague court.
 > - 🏠 If you are from Russia, please stop your government by any means including protests, don't trust local media, they are bribed by the government. They always was. I am sure you already feel lie by unexplainable crazy things in your country caused by world sanctions.
@@ -29,6 +31,7 @@ Features
 - Draw arrows
 - Trash can tool to clear the canvas
 - Paint bucket tool for color fills
+- Add filters to images
 
 <img alt="Painterro gif preview" src="https://raw.githubusercontent.com/devforth/painterro/master/docs/painterro_gif.gif" 
  style="box-shadow: 0 0 20px lightgrey; margin: 0 0 20px 0;" /> 
@@ -240,6 +243,7 @@ Painterro({
 |`toolbarHeightPx`| Height of toolbar in pixels | `40` | 
 |`buttonSizePx`| Button for toolbar in pixels | `32` |
 |`bucketSensivity`| Bucket tool sensivity | `100` |
+|`customTools`| List of the custom tools which will appear at the left menu after default options. Custom tool includes three options : | `{name:string, callBack:function, iconUrl:dataURL string or URL}` |
 |`disableWheelZoom`| Disables the mousewheel zoom with ctrl | `false` |
 
 ## Events
@@ -338,6 +342,27 @@ API
 
 **.hide()** - hide instance
 
+**.setColor(options)** - sets the color of the chosen tool , or changes initial value of color. `options` should be array with two values, `[target,colorWidgetState]`
+
+available values for `target`:
+
+|`line`|, |`bg`| 
+
+`colorWidgetState` - object with requred properties :
+
+* `palleteColor` - color string . Just indicates which color will be shown on the collor pallete.
+* `alpha` - number in range from 0 to 1. The same but for alpha channel. 
+* `alphaColor` - color string. Color with alpha, which will be using for drawing element.
+
+>NOTE: `paleteColor` and `alpha` is using only for displaing right values in color picker widget, this two options don't effect on color which will be used for drawing elements.
+
+**.setLineWidth()** - set line width for chosen tool. 
+
+**.setArrowLength()** - set width for chosen arrow.
+
+**.setEraserWidth()** - set width of eraser
+
+**.setShadowOn()** - set shadowfor line elements or arrow element. It takes boolean value. 
 
 **.save()** - call save (same save as on buttons bar). Can be used if save button is hidden (`hiddenTools: ['save']`)
 
@@ -593,6 +618,13 @@ If you face any painterro errors (exceptions), please reffer to [Painterro page 
 Development 🔨
 ==============
 
+Latest supported NodeJS version is 16, use nvm to switch to it:
+
+```
+nvm install 16
+nvm use 16
+```
+
 Code written on ES6 which transplited by Babel and packed (minified) to a single file using webpack. All configs are inside so all you have to do after pulling repo is installing node modules:
 
 ```bash
@@ -623,7 +655,7 @@ To start hot-reload dev server (for reloading code "on the fly"):
 ```bash
 npm run dev
 ```
-Then open http://localhost:8080 with demo page
+Then open http://localhost:3000 with demo page
 
 
 Editing source on the fly for painterro imported from side webpack app (e.g. your project SPA)
