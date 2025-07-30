@@ -244,6 +244,7 @@ Painterro({
 |`buttonSizePx`| Button for toolbar in pixels | `32` |
 |`bucketSensivity`| Bucket tool sensivity | `100` |
 |`customTools`| List of the custom tools which will appear at the left menu after default options. Custom tool includes three options : | `{name:string, callBack:function, iconUrl:dataURL string or URL}` |
+|`disableWheelZoom`| Disables the mousewheel zoom with ctrl | `false` |
 
 ## Events
 
@@ -385,6 +386,7 @@ Scale x2  (e.g. 11x12 will become 22->24):
 .doScale({ scale: 2 })
 ```
 
+**setZoom(zoomPercentage)** - sets the current zoom percentage
 
 
 Example:

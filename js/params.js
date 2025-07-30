@@ -131,6 +131,7 @@ export function setDefaults(parameters, allToolsNames) {
 
   params.defaultSize = params.defaultSize || 'fill';
   params.defaultPixelSize = params.defaultPixelSize || 4;
+  params.disableWheelZoom = params.disableWheelZoom || false;
 
   params.extraFonts = params.extraFonts || [];
 

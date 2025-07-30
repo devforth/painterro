@@ -1078,7 +1078,7 @@ class PainterroProc {
         }
       },
       wheel: (e, forceWheenDelta, forceCtrlKey, zoomForce) => {
-        if (this.shown) {
+        if (this.shown && !this.params.disableWheelZoom) {
           if (forceCtrlKey !== undefined ? forceCtrlKey : e.ctrlKey) {
             this.zoomImage(e, forceWheenDelta, zoomForce);
             e.preventDefault();
@@ -1279,6 +1279,54 @@ class PainterroProc {
       this.params.onHide();
     }
     return this;
+  }
+
+  setZoom(zoomPercentage) {
+    if (!this.size) {
+      return;
+    }
+
+    this.zoomFactor = zoomPercentage / 100;
+
+    let minFactor = 1;
+    if (this.size.w > this.wrapper.documentClientWidth) {
+      minFactor = Math.min(minFactor, this.wrapper.documentClientWidth / this.size.w);
+    }
+    if (this.size.h > this.wrapper.documentClientHeight) {
+      minFactor = Math.min(minFactor, this.wrapper.documentClientHeight / this.size.h);
+    }
+
+    if (!this.zoom && this.zoomFactor > minFactor) {
+      this.zoomFactor = minFactor;
+    }
+
+    if (this.zoomFactor < minFactor) {
+      this.zoom = false;
+      this.zoomFactor = minFactor;
+    } else {
+      this.zoom = true;
+    }
+
+    this.adjustSizeFull();
+    this.select.adjustPosition();
+
+    const canvas = this.canvas;
+    const gbr = canvas.getBoundingClientRect();
+
+    this.curCord = [
+      (gbr.right / 2 - this.elLeft()) + this.scroller.scrollLeft,
+      (gbr.bottom / 2 - this.elTop()) + this.scroller.scrollTop,
+    ];
+
+    const scale = this.getScale();
+    this.curCord = [this.curCord[0] * scale, this.curCord[1] * scale];
+
+    if (this.zoom) {
+      this.scroller.scrollLeft = (this.curCord[0] / this.getScale()) -
+          (gbr.right / 2 - this.wrapper.documentOffsetLeft);
+      this.scroller.scrollTop = (this.curCord[1] / this.getScale()) -
+          (gbr.bottom / 2 - this.wrapper.documentOffsetTop);
+    }
   }
 
   doScale({width, height, scale}) {
