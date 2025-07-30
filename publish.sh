@@ -5,14 +5,14 @@
 
 GH_USER=ivictbor
 GH_REPO_USER=devforth
-GH_PASS=`cat ~/keys/.ghtoken`
+GH_PASS=`cat ~/keys/gh_ptro_release_token`
 WP_PASSWORD=`cat ~/keys/.wppassword`
 GH_REPO=painterro
 GH_TARGET=master
 ASSETS_PATH=build
 npm --no-git-tag-version version patch
 VERSION=`grep '"version":' package.json | cut -d\" -f4`
-npm run build
+# npm run build
 
 if [ $? -eq 0 ]; then
     echo BUILD OK
@@ -40,9 +40,9 @@ cd ..
 git add -u
 git commit -m "$VERSION"
 git push
-npm publish
+# npm publish
 
-ehco "GH USER AND PATH",$GH_USER, $GH_PASS
+echo "GH USER AND PATH",$GH_USER, $GH_PASS
 
 res=`curl --user "$GH_USER:$GH_PASS" -X POST https://api.github.com/repos/${GH_REPO_USER}/${GH_REPO}/releases \
 -d "
