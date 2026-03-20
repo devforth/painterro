@@ -2,6 +2,7 @@
 
 **[live demo](https://tracklify.com/painterro_demo/)** | [npm](https://www.npmjs.com/package/painterro) | [GitHub](https://github.com/devforth/painterro)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ![npmvers](https://img.shields.io/npm/v/painterro) ![npmDown](https://img.shields.io/npm/dw/painterro?label=npm%20💾) ![totalNpm](https://img.shields.io/npm/dt/painterro?label=npm%20💾) ![ghdownloads](https://img.shields.io/github/downloads/devforth/painterro/total?label=github%20script%20💾) 
+[![Ask AI](http://tluma.ai/badge)](http://tluma.ai/ask-ai/devforth/painterro)
 
 JavaScript painting plugin which allows editing images in a browser.
 Can be easily integrated into any website or webapp by calling simple initialization code.
